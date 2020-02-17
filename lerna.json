@@ -32,7 +32,7 @@
       "pr(dependency)": ":deciduous_tree: Dependency",
       "pr(chore)": ":turtle: Chore"
     },
-    "repo": "lerna-demo",
+    "repo": "@luban",
     "cacheDir": ".changelog"
   },
   "ignoreChanges": ["CHANGELOG.md", "**/__tests__/**", "**/__mocks__/**", "scripts/**"]
