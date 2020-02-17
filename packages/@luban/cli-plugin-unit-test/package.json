@@ -1,0 +1,41 @@
+{
+  "name": "@luban/cli-plugin-unit-test",
+  "version": "0.0.1",
+  "description": "cli-plugin-unit-test",
+  "keywords": [
+    "unit-test",
+    "plugin",
+    "jest"
+  ],
+  "author": "front-end-captain <18810940932@163.com>",
+  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-unit-test/README.md",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/front-end-captain/luban.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc --pretty",
+    "check:type": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/front-end-captain/luban/issues"
+  },
+  "devDependencies": {
+    "@luban/cli-shared-types": "0.0.1"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}

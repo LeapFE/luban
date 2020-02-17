@@ -1,0 +1,4 @@
+packages/**/**/*.js
+./*.js
+dist
+packages/**/**/bin/*

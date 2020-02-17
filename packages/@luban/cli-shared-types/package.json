@@ -1,0 +1,35 @@
+{
+  "name": "@luban/cli-shared-types",
+  "version": "0.0.1",
+  "description": "some shared definition types for luban-cli",
+  "keywords": ["types", "luban"],
+  "author": "front-end-captain <18810940932@163.com>",
+  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-shared-types/README.md",
+  "license": "MIT",
+  "types": "dist/**/*.d.ts",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "shared",
+    "cli"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/front-end-captain/luban.git"
+  },
+  "scripts": {
+    "build": "tsc --pretty",
+    "check:type": "tsc --noEmit --project tsconfig.checktype.json"
+  },
+  "bugs": {
+    "url": "https://github.com/front-end-captain/luban/issues"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}

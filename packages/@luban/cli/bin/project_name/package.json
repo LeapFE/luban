@@ -1,0 +1,59 @@
+{
+  "name": "project_name",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@luban/cli-plugin-babel": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-babel",
+    "@luban/cli-plugin-eslint": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-eslint",
+    "@luban/cli-plugin-router": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-router",
+    "@luban/cli-plugin-service": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-service",
+    "@luban/cli-plugin-store": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-store",
+    "@luban/cli-plugin-stylelint": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-stylelint",
+    "@luban/cli-plugin-typescript": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-typescript",
+    "@luban/cli-plugin-unit-test": "file:/Users/xiexianglei/project_brendan/luban/packages/@luban/cli-plugin-unit-test"
+  },
+  "__luban_config__": {
+    "plugins": {
+      "@luban/cli-plugin-service": {
+        "projectName": "project_name",
+        "preset": {
+          "plugins": {
+            "@luban/cli-plugin-service": {},
+            "@luban/cli-plugin-babel": {},
+            "@luban/cli-plugin-typescript": {},
+            "@luban/cli-plugin-eslint": {},
+            "@luban/cli-plugin-stylelint": {},
+            "@luban/cli-plugin-router": {},
+            "@luban/cli-plugin-store": {},
+            "@luban/cli-plugin-unit-test": {}
+          },
+          "language": "ts",
+          "eslint": "standard",
+          "cssPreprocessor": "less",
+          "stylelint": true,
+          "router": true,
+          "store": true,
+          "unitTest": true,
+          "uiLibrary": []
+        }
+      },
+      "@luban/cli-plugin-babel": {},
+      "@luban/cli-plugin-typescript": {},
+      "@luban/cli-plugin-eslint": {},
+      "@luban/cli-plugin-stylelint": {},
+      "@luban/cli-plugin-router": {},
+      "@luban/cli-plugin-store": {},
+      "@luban/cli-plugin-unit-test": {}
+    },
+    "language": "ts",
+    "eslint": "standard",
+    "cssPreprocessor": "less",
+    "stylelint": true,
+    "router": true,
+    "store": true,
+    "unitTest": true,
+    "uiLibrary": []
+  }
+}

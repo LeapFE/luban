@@ -1,0 +1,46 @@
+{
+  "name": "@luban/cli-shared-utils",
+  "version": "0.0.1",
+  "description": "cli shared utils",
+  "keywords": [
+    "utils"
+  ],
+  "author": "front-end-captain <18810940932@163.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/front-end-captain/luban.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc --pretty",
+    "check:type": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/front-end-captain/luban/issues"
+  },
+  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-shared-utils/README.md",
+  "devDependencies": {
+    "@types/hapi__joi": "^16.0.9",
+    "@types/lru-cache": "^5.1.0",
+    "@types/node-ipc": "^9.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "lru-cache": "^5.1.1",
+    "node-ipc": "^9.1.1",
+    "open": "^7.0.2",
+    "ora": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}

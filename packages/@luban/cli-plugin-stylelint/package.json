@@ -1,0 +1,45 @@
+{
+  "name": "@luban/cli-plugin-stylelint",
+  "version": "0.0.1",
+  "description": "cli-plugin-stylelint",
+  "keywords": [
+    "stylelint",
+    "plugin"
+  ],
+  "author": "front-end-captain <18810940932@163.com>",
+  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-stylelint/README.md",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/front-end-captain/luban.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc --pretty",
+    "check:type": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/front-end-captain/luban/issues"
+  },
+  "dependencies": {
+    "stylelint-webpack-plugin": "^1.2.3"
+  },
+  "devDependencies": {
+    "@luban/cli-shared-types": "0.0.1",
+    "@types/stylelint-webpack-plugin": "^0.1.5",
+    "@types/webpack-chain": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}

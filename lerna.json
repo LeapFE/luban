@@ -1,0 +1,39 @@
+{
+  "packages": ["packages/@luban/cli*"],
+  "npmClient": "yarn",
+  "registry": "https://registry.npmjs.org/",
+  "version": "0.0.1",
+  "useWorkspaces": true,
+  "command": {
+    "create": {
+      "license": "MIT"
+    },
+    "publish": {
+      "allowBranch": "master",
+      "bump": "patch",
+      "ignoreChanges": ["*.md", "scripts/**"],
+      "verifyAccess": true,
+      "verifyRegistry": true,
+      "conventionalCommits": true,
+      "message": "chore(release): publish"
+    },
+    "version": {
+      "allowBranch": "master",
+      "ignoreChanges": ["*.md", "scripts/**"],
+      "conventionalCommits": true,
+      "message": "chore(release): version"
+    }
+  },
+  "changelog": {
+    "labels": {
+      "pr(enhancement)": ":rocket: Enhancement",
+      "pr(bug)": ":bug: Bug Fix",
+      "pr(documentation)": ":book: Documentation",
+      "pr(dependency)": ":deciduous_tree: Dependency",
+      "pr(chore)": ":turtle: Chore"
+    },
+    "repo": "lerna-demo",
+    "cacheDir": ".changelog"
+  },
+  "ignoreChanges": ["CHANGELOG.md", "**/__tests__/**", "**/__mocks__/**", "scripts/**"]
+}

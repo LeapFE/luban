@@ -1,0 +1,75 @@
+{
+  "name": "luban",
+  "private": true,
+  "workspaces": [
+    "packages/@luban/*"
+  ],
+  "scripts": {
+    "eslint:packages": "eslint -c packages/.eslintrc packages/@luban/**/*.ts",
+    "eslint:scripts": "eslint -c scripts/.eslintrc scripts/*.js",
+    "format:packages": "prettier --write packages/@luban/**/*.ts",
+    "format:scripts": "prettier --write scripts/*.js",
+    "check:type:changed": "node scripts/build.js --check --onlyChanged",
+    "check:type": "node scripts/build.js --check",
+    "build:changed": "node scripts/build.js --onlyChanged",
+    "build": "node scripts/build.js",
+    "publish": "node scripts/publish.js",
+    "test:changed": "node scripts/test.js --onlyChanged",
+    "test": "node scripts/test.js",
+    "jest-coverage": "yarn jest --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
+    "commit": "yarn run test:changed && yarn run check:type:changed && git-cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/chalk": "^2.2.0",
+    "@types/fs-extra": "^8.0.1",
+    "@types/jest": "^25.1.1",
+    "@types/semver": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "babel-eslint": "^10.0.3",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "husky": "^4.2.1",
+    "jest": "^25.1.0",
+    "lerna": "^3.20.2",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.1",
+    "ts-jest": "^25.1.0",
+    "typescript": "^3.7.5"
+  },
+  "repository": "https://github.com/front-end-captain/luban.git",
+  "author": "front-end-captain <18810940932@163.com>",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "packages/**/**/*.ts": [
+      "npm run eslint:packages",
+      "npm run eslint:scripts",
+      "npm run format:packages",
+      "npm run format:scripts"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "execa": "^4.0.0",
+    "fs-extra": "^8.1.0",
+    "semver": "^7.1.2"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}
