@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-service",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A development runtime environment dependency",
   "keywords": [
     "webpack",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^16.1.7",
-    "@luban-cli/cli-shared-utils": "0.0.1",
+    "@luban-cli/cli-shared-utils": "0.0.2",
     "address": "^1.1.2",
     "babel-loader": "^8.0.6",
     "chalk": "^2.4.2",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.6.0",
-    "@luban-cli/cli-shared-types": "0.0.1",
+    "@luban-cli/cli-shared-types": "0.0.2",
     "@types/default-gateway": "^3.0.0",
     "@types/express": "^4.17.1",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",

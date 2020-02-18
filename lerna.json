@@ -1,8 +1,10 @@
 {
-  "packages": ["packages/@luban/*"],
+  "packages": [
+    "packages/@luban/*"
+  ],
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "useWorkspaces": true,
   "command": {
     "create": {
@@ -11,7 +13,10 @@
     "publish": {
       "allowBranch": "master",
       "bump": "patch",
-      "ignoreChanges": ["*.md", "scripts/**"],
+      "ignoreChanges": [
+        "*.md",
+        "scripts/**"
+      ],
       "verifyAccess": true,
       "verifyRegistry": true,
       "conventionalCommits": true,
@@ -19,7 +24,10 @@
     },
     "version": {
       "allowBranch": "master",
-      "ignoreChanges": ["*.md", "scripts/**"],
+      "ignoreChanges": [
+        "*.md",
+        "scripts/**"
+      ],
       "conventionalCommits": true,
       "message": "chore(release): version"
     }
@@ -35,5 +43,10 @@
     "repo": "@luban-cli",
     "cacheDir": ".changelog"
   },
-  "ignoreChanges": ["CHANGELOG.md", "**/__tests__/**", "**/__mocks__/**", "scripts/**"]
+  "ignoreChanges": [
+    "CHANGELOG.md",
+    "**/__tests__/**",
+    "**/__mocks__/**",
+    "scripts/**"
+  ]
 }
