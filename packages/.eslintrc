@@ -20,6 +20,7 @@
   },
   "rules": {
     "@typescript-eslint/no-inferrable-types": 0,
-    "no-debugger": "error"
+    "no-debugger": "error",
+    "no-unused-vars": "error"
   }
 }

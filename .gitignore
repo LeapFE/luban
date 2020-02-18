@@ -18,6 +18,7 @@ pids
 .out
 build
 _site
+packages/**/project_name/**
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release

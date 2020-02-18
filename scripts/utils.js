@@ -8,7 +8,7 @@ module.exports = {
    */
   getChangedPackages() {
     const { stdout } = shell.exec(
-      "git diff HEAD --stat --compact-summary -- ./packages/**/**/src/**",
+      "git diff HEAD --stat --compact-summary -- ./packages/**/**/src/** -- ./packages/**/cli-shared-types/dist/**",
     );
     const changedFiles = stdout.split("\n");
 
