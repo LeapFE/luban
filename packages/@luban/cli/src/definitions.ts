@@ -25,6 +25,9 @@ export type CliOptions = Partial<{
 
   // 创建项目时安装插件时下载本地插件，仅仅是为了测试
   localPlugin: boolean;
+
+  // 创建项目时手动选择特性
+  manual?: boolean;
 }>;
 
 /**

@@ -58,6 +58,7 @@ program
   .option("-g, --git [message]", "Force git initialization with initial commit message")
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("-l, --localPlugin", "Install local plugins while create project for test or debug")
+  .option("-m, --manual", "Manual select features while create project")
   .action((name, cmd) => {
     if (name === "") {
       console.error("Please specify the project directory:");
@@ -80,6 +81,7 @@ program
       );
     }
 
+    // 指定 --git [message] 时将强制为项目执行 git init
     if (process.argv.includes("-g") || process.argv.includes("--git")) {
       options.forceGit = true;
     }

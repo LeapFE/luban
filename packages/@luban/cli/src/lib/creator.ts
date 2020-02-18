@@ -8,6 +8,7 @@ import inquirer, {
 } from "inquirer";
 import chalk from "chalk";
 import path from "path";
+import cloneDeep from "lodash.clonedeep";
 
 import { PackageManager } from "../utils/packageManager";
 import { PromptModuleAPI } from "./promptModuleAPI";
@@ -19,11 +20,11 @@ import {
   logWithSpinner,
   stopSpinner,
   log,
-  clearConsole,
   hasGit,
   hasProjectGit,
   writeFileTree,
   loadModule,
+  warn,
 } from "@luban-cli/cli-shared-utils";
 
 import { Generator } from "./generator";
@@ -39,7 +40,7 @@ import {
   SUPPORTED_PACKAGE_MANAGER,
   FinalAnswers,
 } from "../definitions";
-import cloneDeep from "lodash.clonedeep";
+import { defaultPreset, confirmUseDefaultPresetMsg } from "../constants";
 
 type FeaturePrompt = CheckboxQuestion<Array<{ name: string; value: any; short?: string }>>;
 
@@ -80,7 +81,15 @@ class Creator {
   public async create(): Promise<void> {
     const { options, context, name, shouldInitGit, run } = this;
 
-    const preset = await this.promptAndResolvePreset();
+    if (!options.manual) {
+      const useDefaultPreset = await this.confirmUseDefaultPrest();
+      if (!useDefaultPreset) {
+        warn("You cancel current operation.");
+        process.exit(1);
+      }
+    }
+
+    const preset = await this.promptAndResolvePreset(options.manual || false);
 
     const adaptedPreset = cloneDeep(preset);
 
@@ -92,7 +101,6 @@ class Creator {
     const packageManager = this._pkgManager || "npm";
     const pkgManager = new PackageManager({ context, forcePackageManager: packageManager });
 
-    await clearConsole();
     logWithSpinner(`✨`, `Creating project in ${chalk.yellow(context)}.`);
     log();
 
@@ -195,10 +203,10 @@ class Creator {
     return execa(command, args, { cwd: this.context });
   }
 
-  public async promptAndResolvePreset(): Promise<Preset> {
-    await clearConsole();
-
-    // TODO 根据 --manual 使用默认的 preset
+  public async promptAndResolvePreset(manual: boolean): Promise<Preset> {
+    if (!manual) {
+      return defaultPreset;
+    }
 
     /**
      * @type FinallyAnswers
@@ -212,6 +220,32 @@ class Creator {
     this.promptCompletedCallbacks.forEach((cb) => cb(answers as FinalAnswers, preset));
 
     return preset;
+  }
+
+  public printDefaultPreset(): void {
+    log();
+    log("List default prest");
+    Object.keys(defaultPreset).forEach((key: string) => {
+      if (key === "plugins" || key === "configs") {
+        return;
+      }
+      log(`  ${chalk.green(key)}: ${chalk.yellowBright(defaultPreset[key])}`);
+    });
+    log();
+  }
+
+  public async confirmUseDefaultPrest(): Promise<boolean> {
+    const { useDefaultPreset } = await inquirer.prompt<{ useDefaultPreset: boolean }>([
+      {
+        type: "confirm",
+        name: "useDefaultPreset",
+        message: confirmUseDefaultPresetMsg,
+        default: true,
+      },
+    ]);
+
+    this.printDefaultPreset();
+    return useDefaultPreset;
   }
 
   public shouldInitGit(cliOptions: CliOptions): boolean {

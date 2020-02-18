@@ -20,7 +20,9 @@ declare class Creator {
     constructor(name: string, context: string, options: CliOptions, promptModules: Array<(api: PromptModuleAPI) => void>);
     create(): Promise<void>;
     run(command: string, args?: any): ExecaChildProcess;
-    promptAndResolvePreset(): Promise<Preset>;
+    promptAndResolvePreset(manual: boolean): Promise<Preset>;
+    printDefaultPreset(): void;
+    confirmUseDefaultPrest(): Promise<boolean>;
     shouldInitGit(cliOptions: CliOptions): boolean;
     resolveFinalPrompts(): QuestionCollection;
     resolveOutroPrompts(): ListQuestion[];

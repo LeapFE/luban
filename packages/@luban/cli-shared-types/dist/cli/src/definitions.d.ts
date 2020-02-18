@@ -8,6 +8,7 @@ export declare type CliOptions = Partial<{
     forceGit: boolean;
     force: boolean;
     localPlugin: boolean;
+    manual?: boolean;
 }>;
 export declare type SUPPORTED_PACKAGE_MANAGER = "npm";
 export declare type PACKAGE_MANAGER_CONFIG = {

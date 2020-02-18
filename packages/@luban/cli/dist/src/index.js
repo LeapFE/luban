@@ -46,6 +46,7 @@ commander_1.default
     .option("-g, --git [message]", "Force git initialization with initial commit message")
     .option("-f, --force", "Overwrite target directory if it exists")
     .option("-l, --localPlugin", "Install local plugins while create project for test or debug")
+    .option("-m, --manual", "Manual select features while create project")
     .action((name, cmd) => {
     if (name === "") {
         console.error("Please specify the project directory:");

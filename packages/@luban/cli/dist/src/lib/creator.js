@@ -16,6 +16,7 @@ const execa_1 = __importDefault(require("execa"));
 const inquirer_1 = __importDefault(require("inquirer"));
 const chalk_1 = __importDefault(require("chalk"));
 const path_1 = __importDefault(require("path"));
+const lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
 const packageManager_1 = require("../utils/packageManager");
 const promptModuleAPI_1 = require("./promptModuleAPI");
 const sortObject_1 = require("../utils/sortObject");
@@ -23,7 +24,7 @@ const getReadme_1 = require("./../utils/getReadme");
 const getVersions_1 = require("../utils/getVersions");
 const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const generator_1 = require("./generator");
-const lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
+const constants_1 = require("../constants");
 class Creator {
     constructor(name, context, options, promptModules) {
         this.name = name;
@@ -41,13 +42,19 @@ class Creator {
     create() {
         return __awaiter(this, void 0, void 0, function* () {
             const { options, context, name, shouldInitGit, run } = this;
-            const preset = yield this.promptAndResolvePreset();
+            if (!options.manual) {
+                const useDefaultPreset = yield this.confirmUseDefaultPrest();
+                if (!useDefaultPreset) {
+                    cli_shared_utils_1.warn("You cancel current operation.");
+                    process.exit(1);
+                }
+            }
+            const preset = yield this.promptAndResolvePreset(options.manual || false);
             const adaptedPreset = lodash_clonedeep_1.default(preset);
             const rootOptions = { projectName: name, preset };
             adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
             const packageManager = this._pkgManager || "npm";
             const pkgManager = new packageManager_1.PackageManager({ context, forcePackageManager: packageManager });
-            yield cli_shared_utils_1.clearConsole();
             cli_shared_utils_1.logWithSpinner(`✨`, `Creating project in ${chalk_1.default.yellow(context)}.`);
             cli_shared_utils_1.log();
             const resolvedPlugins = yield this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins));
@@ -121,15 +128,42 @@ class Creator {
         }
         return execa_1.default(command, args, { cwd: this.context });
     }
-    promptAndResolvePreset() {
+    promptAndResolvePreset(manual) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield cli_shared_utils_1.clearConsole();
+            if (!manual) {
+                return constants_1.defaultPreset;
+            }
             const answers = yield inquirer_1.default.prompt(this.resolveFinalPrompts());
             const preset = {
                 plugins: { "@luban-cli/cli-plugin-service": {} },
             };
             this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
             return preset;
+        });
+    }
+    printDefaultPreset() {
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.log("List default prest");
+        Object.keys(constants_1.defaultPreset).forEach((key) => {
+            if (key === "plugins" || key === "configs") {
+                return;
+            }
+            cli_shared_utils_1.log(`  ${chalk_1.default.green(key)}: ${chalk_1.default.yellowBright(constants_1.defaultPreset[key])}`);
+        });
+        cli_shared_utils_1.log();
+    }
+    confirmUseDefaultPrest() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { useDefaultPreset } = yield inquirer_1.default.prompt([
+                {
+                    type: "confirm",
+                    name: "useDefaultPreset",
+                    message: constants_1.confirmUseDefaultPresetMsg,
+                    default: true,
+                },
+            ]);
+            this.printDefaultPreset();
+            return useDefaultPreset;
         });
     }
     shouldInitGit(cliOptions) {
