@@ -1,6 +1,5 @@
-import { GeneratorAPI } from "@luban/cli-shared-types/dist/cli/src/lib/generatorAPI";
-import { RootOptions } from "@luban/cli-shared-types/dist/shared";
-
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
   const isTSProject = !!options.preset.plugins["cli-plugin-typescript"];
@@ -10,7 +9,12 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   let parserOptions = {};
   let eslintRules = {};
 
-  const eslintExtends = ["eslint:recommended", "plugin:react/recommended", "prettier", "prettier/react"];
+  const eslintExtends = [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react",
+  ];
   const eslintPlugins = ["react-hooks"];
 
   if (isTSProject) {

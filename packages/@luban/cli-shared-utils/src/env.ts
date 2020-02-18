@@ -106,7 +106,9 @@ export const installedBrowsers = function(): typeof browsers {
 
     // get firefox version
     // https://community.spiceworks.com/topic/111518-how-to-determine-version-of-installed-firefox-in-windows-batchscript
-    const firefoxQueryResult = tryRun('reg query "HKLM\\Software\\Mozilla\\Mozilla Firefox" /v CurrentVersion');
+    const firefoxQueryResult = tryRun(
+      'reg query "HKLM\\Software\\Mozilla\\Mozilla Firefox" /v CurrentVersion',
+    );
     if (firefoxQueryResult) {
       const matched = firefoxQueryResult.match(/REG_SZ\s+(\S*)$/);
       browsers.firefox = matched && matched[1];

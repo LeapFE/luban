@@ -26,9 +26,8 @@ function default_1(cli) {
     });
     cli.onPromptComplete((answers, preset) => {
         preset.eslint = answers.eslint;
-        preset.plugins["@luban/cli-plugin-eslint"] = {};
+        preset.plugins["@luban-cli/cli-plugin-eslint"] = {};
     });
 }
 exports.default = default_1;
-;
 //# sourceMappingURL=linter.js.map

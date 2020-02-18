@@ -20,11 +20,11 @@ function default_1(cli) {
     cli.onPromptComplete((answers, preset) => {
         preset.language = answers.language;
         if (answers.language === "js") {
-            preset.plugins["@luban/li-plugin-babel"] = {};
+            preset.plugins["@luban-cli/cli-plugin-babel"] = {};
         }
         if (answers.language === "ts") {
-            preset.plugins["@luban/cli-plugin-babel"] = {};
-            preset.plugins["@luban/cli-plugin-typescript"] = {};
+            preset.plugins["@luban-cli/cli-plugin-babel"] = {};
+            preset.plugins["@luban-cli/cli-plugin-typescript"] = {};
         }
     });
 }

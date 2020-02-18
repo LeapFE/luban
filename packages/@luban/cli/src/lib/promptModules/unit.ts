@@ -11,7 +11,7 @@ export default function(cli: PromptModuleAPI): void {
   cli.onPromptComplete((answers, preset) => {
     preset.unitTest = answers.unitTest;
     if (answers.unitTest) {
-      preset.plugins["@luban/cli-plugin-unit-test"] = {};
+      preset.plugins["@luban-cli/cli-plugin-unit-test"] = {};
     }
   });
 }

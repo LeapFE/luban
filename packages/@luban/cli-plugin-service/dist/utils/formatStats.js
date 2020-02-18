@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const zlib_1 = __importDefault(require("zlib"));
@@ -64,7 +64,9 @@ function formatStats(stats, dir, api) {
     ui.div(makeRow(chalk_1.default.cyan.bold(`File`), chalk_1.default.cyan.bold(`Size`), chalk_1.default.cyan.bold(`Gzipped`)) +
         `\n\n` +
         assets
-            .map((asset) => makeRow(/js$/.test(asset.name) ? chalk_1.default.green(path_1.default.join(dir, asset.name)) : chalk_1.default.blue(path_1.default.join(dir, asset.name)), formatSize(asset.size), getGzippedSize(asset)))
+            .map((asset) => makeRow(/js$/.test(asset.name)
+            ? chalk_1.default.green(path_1.default.join(dir, asset.name))
+            : chalk_1.default.blue(path_1.default.join(dir, asset.name)), formatSize(asset.size), getGzippedSize(asset)))
             .join(`\n`));
     return `${ui.toString()}\n\n  ${chalk_1.default.gray(`Images and other types of assets omitted.`)}\n`;
 }

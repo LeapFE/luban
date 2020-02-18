@@ -45,7 +45,8 @@ exports.extendJSConfig = function (value, source) {
     if (exportsIdentifier) {
         recast_1.types.visit(ast, {
             visitVariableDeclarator({ node }) {
-                if (node.id.name === exportsIdentifier && node.init.type === "ObjectExpression") {
+                if (node.id.name === exportsIdentifier &&
+                    node.init.type === "ObjectExpression") {
                     augmentExports(node.init);
                 }
                 return false;

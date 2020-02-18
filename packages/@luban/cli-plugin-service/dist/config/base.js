@@ -120,9 +120,13 @@ function default_1(api, options) {
             tls: "empty",
             child_process: "empty",
         });
-        webpackConfig.plugin("define").use(require("webpack").DefinePlugin, [resolveClientEnv_1.resolveClientEnv(options)]);
+        webpackConfig
+            .plugin("define")
+            .use(require("webpack").DefinePlugin, [resolveClientEnv_1.resolveClientEnv(options)]);
         webpackConfig.plugin("clean").use(clean_webpack_plugin_1.CleanWebpackPlugin, [{ verbose: true }]);
-        webpackConfig.optimization.minimizer("terser").use(terser_webpack_plugin_1.default, [terserOptions_1.terserOptions(options)]);
+        webpackConfig.optimization
+            .minimizer("terser")
+            .use(terser_webpack_plugin_1.default, [terserOptions_1.terserOptions(options)]);
     });
 }
 exports.default = default_1;

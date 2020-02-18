@@ -31,7 +31,7 @@ function default_1(api, rootOptions) {
             },
         ]);
     }
-    if (rootOptions.preset.plugins["@luban/cli-plugin-eslint"]) {
+    if (rootOptions.preset.plugins["@luban-cli/cli-plugin-eslint"]) {
         api.extendPackage({
             devDependencies: {
                 "babel-plugin-transform-react-remove-prop-types": "^0.4.24",

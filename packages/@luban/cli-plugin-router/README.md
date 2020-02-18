@@ -1,1 +1,1 @@
-# `@luban/cli-plugin-router`
+# `@luban-cli/cli-plugin-router`

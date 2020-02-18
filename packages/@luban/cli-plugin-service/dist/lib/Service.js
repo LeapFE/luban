@@ -12,7 +12,7 @@ const deepmerge_1 = __importDefault(require("deepmerge"));
 const chalk_1 = __importDefault(require("chalk"));
 const dotenv_1 = require("dotenv");
 const dotenv_expand_1 = __importDefault(require("dotenv-expand"));
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const PluginAPI_1 = require("./PluginAPI");
 const options_1 = require("./options");
 const defaultPackageFields = {
@@ -204,7 +204,10 @@ class Service {
         return resolved;
     }
     resolveLubanConfig() {
-        let initConfig = { useConfigFiles: false, plugins: { "@luban/cli-plugin-service": {} } };
+        let initConfig = {
+            useConfigFiles: false,
+            plugins: { "@luban-cli/cli-plugin-service": {} },
+        };
         try {
             const pkg = fs_1.default.readFileSync(path_1.default.resolve(this.context, "./package.json")).toString();
             initConfig = JSON.parse(pkg)["__luban_config__"];

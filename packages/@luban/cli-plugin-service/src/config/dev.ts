@@ -1,6 +1,6 @@
 import HtmlWebpackPlugin, { Options as HtmlPluginOptions } from "html-webpack-plugin";
 import { existsSync } from "fs";
-import { error } from "@luban/cli-shared-utils";
+import { error } from "@luban-cli/cli-shared-utils";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../definitions";

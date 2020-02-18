@@ -1,11 +1,9 @@
-import { loadModule } from "@luban/cli-shared-utils";
+import { loadModule } from "@luban-cli/cli-shared-utils";
 import merge from "deepmerge";
 import { safeLoad, safeDump } from "js-yaml";
 
-
 import { extendJSConfig } from "./extendJSConfig";
 import { stringifyJS } from "./stringifyJS";
-
 
 export const mergeArrayWithDedupe = (a: any, b: any): any[] => Array.from(new Set([...a, ...b]));
 const mergeOptions = {
@@ -22,7 +20,15 @@ const transformJS = {
       return null;
     }
   },
-  write: function({ value, existing, source }: { value: any; existing: any[]; source: any }): string {
+  write: function({
+    value,
+    existing,
+    source,
+  }: {
+    value: any;
+    existing: any[];
+    source: any;
+  }): string {
     if (existing) {
       // We merge only the modified keys
       const changedData = {};

@@ -23,14 +23,15 @@ class PluginAPI {
         });
     }
     isTSProject() {
-        return this.hasPlugin("@luban/cli-plugin-typescript");
+        return this.hasPlugin("@luban-cli/cli-plugin-typescript");
     }
     useTsWithBabel() {
         const initConfig = this.resolveInitConfig();
         if (initConfig.plugins["cli-plugin-babel"] && initConfig.plugins["cli-plugin-typescript"]) {
             return true;
         }
-        if (initConfig.plugins["cli-plugin-typescript"] && initConfig.plugins["cli-plugin-typescript"].useTsWithBabel) {
+        if (initConfig.plugins["cli-plugin-typescript"] &&
+            initConfig.plugins["cli-plugin-typescript"].useTsWithBabel) {
             return true;
         }
         return false;
@@ -47,7 +48,8 @@ class PluginAPI {
     }
     setMode(mode) {
         process.env.LUBAN_CLI_SERVICE_MODE = mode;
-        process.env.NODE_ENV = process.env.BABEL_ENV = mode === "production" || mode === "test" ? mode : "development";
+        process.env.NODE_ENV = process.env.BABEL_ENV =
+            mode === "production" || mode === "test" ? mode : "development";
         this.service.loadEnv(mode);
     }
     registerCommand(name, opts, fn) {

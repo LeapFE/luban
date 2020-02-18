@@ -6,7 +6,7 @@ function default_1(api, options) {
         api.extendPackage({
             devDependencies: {
                 "@types/styled-components": "^4.4.0",
-            }
+            },
         });
     }
     api.extendPackage({

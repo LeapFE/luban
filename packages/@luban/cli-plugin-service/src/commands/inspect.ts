@@ -4,7 +4,7 @@ import { InspectCliArgs, ParsedArgs } from "./../definitions";
 import Config from "webpack-chain";
 import { highlight } from "cli-highlight";
 import chalk from "chalk";
-import { get } from "@luban/cli-shared-utils";
+import { get } from "@luban-cli/cli-shared-utils";
 
 export default function(api: PluginAPI): void {
   api.registerCommand(
@@ -29,7 +29,8 @@ export default function(api: PluginAPI): void {
       let hasUnnamedRule: boolean = false;
       if (args.rule) {
         res = webpackConfig.module
-          ? webpackConfig.module.rules.find((r: any) => (r as any).__ruleNames[0] === args.rule) || {}
+          ? webpackConfig.module.rules.find((r: any) => (r as any).__ruleNames[0] === args.rule) ||
+            {}
           : {};
       } else if (args.plugin) {
         res = webpackConfig.plugins
@@ -46,7 +47,9 @@ export default function(api: PluginAPI): void {
             })
           : {};
       } else if (args.plugins) {
-        res = webpackConfig.plugins ? webpackConfig.plugins.map((p: any) => p.__pluginName || p.constructor.name) : {};
+        res = webpackConfig.plugins
+          ? webpackConfig.plugins.map((p: any) => p.__pluginName || p.constructor.name)
+          : {};
       } else if (paths.length > 1) {
         res = {};
         paths.forEach((path: string) => {

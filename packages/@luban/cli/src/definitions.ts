@@ -3,7 +3,7 @@ import {
   RootOptions as rootOptions,
   RawPlugin as rawPlugin,
   Preset as preset,
-} from "@luban/cli-shared-types/dist/shared";
+} from "@luban-cli/cli-shared-types/dist/shared";
 
 import { GeneratorAPI } from "./lib/generatorAPI";
 

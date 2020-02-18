@@ -1,5 +1,5 @@
 {
-  "name": "@luban/cli-plugin-eslint",
+  "name": "@luban-cli/cli-plugin-eslint",
   "version": "0.0.1",
   "description": "cli-plugin-eslint",
   "author": "front-end-captain <18810940932@163.com>",
@@ -29,7 +29,7 @@
     "url": "https://github.com/front-end-captain/luban/issues"
   },
   "devDependencies": {
-    "@luban/cli-shared-types": "0.0.1"
+    "@luban-cli/cli-shared-types": "0.0.1"
   },
   "engines": {
     "node": ">=10"

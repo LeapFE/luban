@@ -1,4 +1,4 @@
-import { createSchema, validate } from "@luban/cli-shared-utils";
+import { createSchema, validate } from "@luban-cli/cli-shared-utils";
 import { ProjectConfig } from "./../definitions";
 
 const schema = createSchema((joi) =>
@@ -20,11 +20,7 @@ const schema = createSchema((joi) =>
 );
 
 export function validateProjectConfig(options: any): void {
-  validate(
-    options,
-    schema,
-    { allowUnknown: true },
-  );
+  validate(options, schema, { allowUnknown: true });
 }
 
 export const defaultsProjectConfig: ProjectConfig = {

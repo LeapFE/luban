@@ -1,2 +1,2 @@
-# @luban/cli-shared-utils
+# @luban-cli/cli-shared-utils
 > utils for luban

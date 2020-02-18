@@ -55,7 +55,10 @@ export const extendJSConfig = function(value: any, source: string): string {
   if (exportsIdentifier) {
     types.visit(ast, {
       visitVariableDeclarator({ node }: NodePath<namedTypes.VariableDeclarator>) {
-        if ((node.id as any).name === exportsIdentifier && (node as any).init.type === "ObjectExpression") {
+        if (
+          (node.id as any).name === exportsIdentifier &&
+          (node as any).init.type === "ObjectExpression"
+        ) {
           augmentExports(node.init);
         }
         return false;

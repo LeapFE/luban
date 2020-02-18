@@ -101,14 +101,19 @@ class GeneratorAPI {
    * @param {object} options - generator options passed to this plugin
    * @param {object} rootOptions - root options (the entire preset)
    */
-  constructor(id: string, generator: Generator, options: Record<string, any>, rootOptions: RootOptions) {
+  constructor(
+    id: string,
+    generator: Generator,
+    options: Record<string, any>,
+    rootOptions: RootOptions,
+  ) {
     this.id = id;
     this.generator = generator;
     this.options = options;
     this.rootOptions = rootOptions;
 
     this.pluginsData = generator.plugins
-      .filter(({ id }) => id !== "@luban/cli-plugin-service")
+      .filter(({ id }) => id !== "@luban-cli/cli-plugin-service")
       .map(({ id }) => ({
         name: id,
         link: "",
@@ -212,7 +217,11 @@ class GeneratorAPI {
    * @param {object} [additionalData] - additional data available to templates.
    * @param {object} [ejsOptions] - options for ejs.
    */
-  public render(source: any, additionalData: Record<string, any> = {}, ejsOptions: EJSOptions = {}): void {
+  public render(
+    source: any,
+    additionalData: Record<string, any> = {},
+    ejsOptions: EJSOptions = {},
+  ): void {
     const baseDir = extractCallDir();
 
     if (isString(source)) {
@@ -296,7 +305,9 @@ class GeneratorAPI {
    */
   public get entryFile(): string {
     if (this._entryFile) return this._entryFile;
-    this._entryFile = fs.existsSync(this.resolve("src/index.tsx")) ? "src/index.tsx" : "src/index.jsx";
+    this._entryFile = fs.existsSync(this.resolve("src/index.tsx"))
+      ? "src/index.tsx"
+      : "src/index.jsx";
 
     return this._entryFile;
   }

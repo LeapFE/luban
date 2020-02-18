@@ -5,7 +5,7 @@ import { PackageManager } from "./packageManager";
 const pm = new PackageManager({ context: process.cwd() });
 
 async function getAndCacheLatestVersion(cached: string): Promise<string | SemVer> {
-  const version = await pm.getRemoteVersion("@luban/cli", "latest");
+  const version = await pm.getRemoteVersion("@luban-cli/cli", "latest");
 
   if (!version) {
     return cached;

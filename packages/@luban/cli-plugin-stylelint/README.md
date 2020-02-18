@@ -1,1 +1,1 @@
-# `@luban/cli-plugin-stylelint`
+# `@luban-cli/cli-plugin-stylelint`

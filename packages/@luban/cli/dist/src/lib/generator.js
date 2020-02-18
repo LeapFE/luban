@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ejs_1 = __importDefault(require("ejs"));
 const semver_1 = __importDefault(require("semver"));
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const generatorAPI_1 = require("./generatorAPI");
 const packageManager_1 = require("../utils/packageManager");
 const sortObject_1 = require("../utils/sortObject");
@@ -37,8 +37,10 @@ class Generator {
         this.postProcessFilesCbs = [];
         this.exitLogs = [];
         this.allPluginIds = Object.keys(this.pkg.dependencies || {}).concat(Object.keys(this.pkg.devDependencies || {}));
-        const cliService = plugins.find((p) => p.id === "@luban/cli-plugin-service");
-        this.rootOptions = cliService ? cliService.options : constants_1.defaultRootOptions;
+        const cliService = plugins.find((p) => p.id === "@luban-cli/cli-plugin-service");
+        this.rootOptions = cliService
+            ? cliService.options
+            : constants_1.defaultRootOptions;
     }
     initPlugins() {
         return __awaiter(this, void 0, void 0, function* () {

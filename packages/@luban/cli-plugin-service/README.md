@@ -1,11 +1,11 @@
-## @luban/luban-cli-service
-`@luban/luban-cli-service` 是一个开发时运行环境依赖，一个单独的包，局部安装在使用 `@luban/cli` 创建的项目中，提供了：
+## @luban-cli/luban-cli-service
+`@luban-cli/luban-cli-service` 是一个开发时运行环境依赖，一个单独的包，局部安装在使用 `@luban-cli/cli` 创建的项目中，提供了：
 
 - 加载其他 CLI 插件的核心服务
 - 一份合理的 webpack 配置
 - 提供 `luban-cli-service serve` `luban-cli-service build` 等命令
 
-使用 `@luban/cli` 创建的项目中，其中 `package.json` 文件的 `scripts` 字段会增加三个脚本：
+使用 `@luban-cli/cli` 创建的项目中，其中 `package.json` 文件的 `scripts` 字段会增加三个脚本：
 
 ```json
 {

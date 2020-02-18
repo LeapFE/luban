@@ -2,7 +2,7 @@ import StylelintPlugin from "stylelint-webpack-plugin";
 import Config from "webpack-chain";
 import { join } from "path";
 
-import { PluginAPI } from "@luban/cli-shared-types/dist/cli-service/lib/PluginAPI";
+import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
 
 export default function(api: PluginAPI): void {
   api.chainWebpack((webpackConfig: Config) => {

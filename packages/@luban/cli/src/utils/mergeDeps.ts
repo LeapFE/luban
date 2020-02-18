@@ -1,5 +1,5 @@
 import semver from "semver";
-import { warn } from "@luban/cli-shared-utils";
+import { warn } from "@luban-cli/cli-shared-utils";
 
 import { tryGetNewerRange } from "./tryGetNewerRange";
 
@@ -22,14 +22,18 @@ export const resolveDeps = function(
     const r1 = to[name];
     const r2 = from[name];
     const sourceGeneratorId = sources[name];
-    const isValidURI = r2.match(/^(?:file|git|git\+ssh|git\+http|git\+https|git\+file|https?):/) != null;
+    const isValidURI =
+      r2.match(/^(?:file|git|git\+ssh|git\+http|git\+https|git\+file|https?):/) != null;
     const isValidGitHub = r2.match(/^[^/]+\/[^/]+/) != null;
 
     // if they are the same, do nothing. Helps when non semver type deps are used
     if (r1 === r2) continue;
 
     if (!isValidGitHub && !isValidURI && !semver.validRange(r2)) {
-      warn(`invalid version range for dependency "${name}":\n\n` + `- ${r2} injected by generator "${generatorId}"`);
+      warn(
+        `invalid version range for dependency "${name}":\n\n` +
+          `- ${r2} injected by generator "${generatorId}"`,
+      );
       continue;
     }
 
@@ -51,13 +55,17 @@ export const resolveDeps = function(
       // warn incompatible version requirements
       if (
         !forceNewVersion &&
-        (!semver.validRange(r1semver) || !semver.validRange(r2semver) || !semver.intersects(r1semver, r2semver))
+        (!semver.validRange(r1semver) ||
+          !semver.validRange(r2semver) ||
+          !semver.intersects(r1semver, r2semver))
       ) {
         warn(
           `conflicting versions for project dependency "${name}":\n\n` +
             `- ${r1} injected by generator "${sourceGeneratorId}"\n` +
             `- ${r2} injected by generator "${generatorId}"\n\n` +
-            `Using ${didGetNewer ? `newer ` : ``}version (${res[name]}), but this may cause build errors.`,
+            `Using ${didGetNewer ? `newer ` : ``}version (${
+              res[name]
+            }), but this may cause build errors.`,
         );
       }
     }

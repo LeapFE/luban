@@ -1,6 +1,6 @@
 import ejs, { render as EJSRenderFunction } from "ejs";
 import semver from "semver";
-import { writeFileTree, log, info, done, warn, error } from "@luban/cli-shared-utils";
+import { writeFileTree, log, info, done, warn, error } from "@luban-cli/cli-shared-utils";
 
 import { GeneratorAPI } from "./generatorAPI";
 import { PackageManager } from "../utils/packageManager";
@@ -40,7 +40,10 @@ export class Generator {
   private readonly allPluginIds: string[];
   public readonly exitLogs: Array<{ id: string; msg: string; type: string }>;
 
-  constructor(context: string, { pkg = { name: "", version: "" }, plugins, files = {} }: RestParams) {
+  constructor(
+    context: string,
+    { pkg = { name: "", version: "" }, plugins, files = {} }: RestParams,
+  ) {
     this.context = context;
     this.plugins = plugins;
     this.pkg = Object.assign({}, pkg);
@@ -54,10 +57,14 @@ export class Generator {
     this.exitLogs = [];
 
     // load all the other plugins
-    this.allPluginIds = Object.keys(this.pkg.dependencies || {}).concat(Object.keys(this.pkg.devDependencies || {}));
+    this.allPluginIds = Object.keys(this.pkg.dependencies || {}).concat(
+      Object.keys(this.pkg.devDependencies || {}),
+    );
 
-    const cliService = plugins.find((p) => p.id === "@luban/cli-plugin-service");
-    this.rootOptions = cliService ? (cliService.options as Required<RootOptions>) : defaultRootOptions;
+    const cliService = plugins.find((p) => p.id === "@luban-cli/cli-plugin-service");
+    this.rootOptions = cliService
+      ? (cliService.options as Required<RootOptions>)
+      : defaultRootOptions;
   }
 
   public async initPlugins(): Promise<void> {

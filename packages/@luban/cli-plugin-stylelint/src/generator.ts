@@ -1,5 +1,5 @@
-import { GeneratorAPI } from "@luban/cli-shared-types/dist/cli/src/lib/generatorAPI";
-import { RootOptions } from "@luban/cli-shared-types/dist/shared";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
   const processors: (string | (string | Record<string, any>)[])[] = [];
@@ -7,7 +7,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     "stylelint-config-standard",
     "stylelint-config-prettier",
   ];
-  let rules: Record<string ,any> = {};
+  let rules: Record<string, any> = {};
   let lintScript = "stylelint src/*.css src/**/*.css";
 
   const isTSProject = !!options.preset.plugins["cli-plugin-typescript"];

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const html_webpack_plugin_1 = __importDefault(require("html-webpack-plugin"));
 const fs_1 = require("fs");
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const resolveClientEnv_1 = require("./../utils/resolveClientEnv");
 function default_1(api, options) {
     api.chainWebpack((webpackConfig) => {

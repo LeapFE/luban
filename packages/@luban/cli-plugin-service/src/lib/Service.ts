@@ -7,7 +7,7 @@ import deepmerge from "deepmerge";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { error, warn, loadModule, log } from "@luban/cli-shared-utils";
+import { error, warn, loadModule, log } from "@luban-cli/cli-shared-utils";
 
 import { PluginAPI } from "./PluginAPI";
 import { defaultsProjectConfig, validateProjectConfig } from "./options";
@@ -174,7 +174,9 @@ class Service {
     return chainableConfig;
   }
 
-  public resolveWebpackConfig(chainableConfig = this.resolveChainableWebpackConfig()): WebpackConfiguration {
+  public resolveWebpackConfig(
+    chainableConfig = this.resolveChainableWebpackConfig(),
+  ): WebpackConfiguration {
     let config = chainableConfig.toConfig();
     this.webpackRawConfigCallback.forEach((fn) => {
       if (typeof fn === "function") {
@@ -278,7 +280,11 @@ class Service {
   }
 
   public resolveLubanConfig(): Preset {
-    let initConfig: Preset = { useConfigFiles: false, plugins: { "@luban/cli-plugin-service": {} } };
+    // TODO wrong initConfig
+    let initConfig: Preset = {
+      useConfigFiles: false,
+      plugins: { "@luban-cli/cli-plugin-service": {} },
+    };
     try {
       const pkg = fs.readFileSync(path.resolve(this.context, "./package.json")).toString();
       initConfig = JSON.parse(pkg)["__luban_config__"];

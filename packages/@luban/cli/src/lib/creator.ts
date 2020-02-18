@@ -24,7 +24,7 @@ import {
   hasProjectGit,
   writeFileTree,
   loadModule,
-} from "@luban/cli-shared-utils";
+} from "@luban-cli/cli-shared-utils";
 
 import { Generator } from "./generator";
 
@@ -86,7 +86,7 @@ class Creator {
 
     const rootOptions = { projectName: name, preset };
 
-    adaptedPreset.plugins["@luban/cli-plugin-service"] = rootOptions;
+    adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
 
     // NOTE unsupported the npm client `yarn`. `this._pkgManager` is always undefined
     const packageManager = this._pkgManager || "npm";
@@ -112,7 +112,7 @@ class Creator {
     deps.forEach((dep: string) => {
       let packageDirName = "";
       let packageDirPath = "";
-      const packageDirNameMatchResult = /^@luban\/(cli-plugin-.+)$/.exec(dep);
+      const packageDirNameMatchResult = /^@luban-cli\/(cli-plugin-.+)$/.exec(dep);
       if (Array.isArray(packageDirNameMatchResult)) {
         packageDirName = packageDirNameMatchResult[1];
         packageDirPath = path.resolve(process.cwd(), `../../${packageDirName}`);
@@ -206,7 +206,7 @@ class Creator {
     const answers = await inquirer.prompt(this.resolveFinalPrompts());
 
     const preset: Preset = {
-      plugins: { "@luban/cli-plugin-service": {} },
+      plugins: { "@luban-cli/cli-plugin-service": {} },
     };
 
     this.promptCompletedCallbacks.forEach((cb) => cb(answers as FinalAnswers, preset));
@@ -256,7 +256,7 @@ class Creator {
   }
 
   public async resolvePlugins(rawPlugins: RawPlugin): Promise<ResolvedPlugin[]> {
-    const sortedRawPlugins = sortObject(rawPlugins, ["@luban/cli-plugin-service"], true);
+    const sortedRawPlugins = sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
     const plugins: ResolvedPlugin[] = [];
 
     const pluginIDs = Object.keys(sortedRawPlugins);

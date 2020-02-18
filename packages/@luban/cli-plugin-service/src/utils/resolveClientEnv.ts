@@ -2,7 +2,10 @@ import { ProjectConfig } from "./../definitions";
 
 const prefixRE = /^APP_/;
 
-export function resolveClientEnv(options: Required<ProjectConfig>, raw?: boolean): Record<string, any> {
+export function resolveClientEnv(
+  options: Required<ProjectConfig>,
+  raw?: boolean,
+): Record<string, any> {
   const env: Record<string, any> = {};
   Object.keys(process.env).forEach((key) => {
     if (prefixRE.test(key) || key === "NODE_ENV") {

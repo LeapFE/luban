@@ -1,11 +1,4 @@
-import {
-  hasGit,
-  hasProjectGit,
-  isLinux,
-  isMacintosh,
-  isWindows,
-  installedBrowsers,
-} from "./env";
+import { hasGit, hasProjectGit, isLinux, isMacintosh, isWindows, installedBrowsers } from "./env";
 import { IpcMessenger } from "./ipc";
 import { log, warn, error, info, done, clearConsole } from "./logger";
 import { loadModule, resolveModule, clearModule } from "./module";

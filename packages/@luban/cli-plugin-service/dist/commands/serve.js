@@ -25,7 +25,7 @@ const webpack_1 = __importStar(require("webpack"));
 const portfinder_1 = __importDefault(require("portfinder"));
 const webpack_dev_server_1 = __importDefault(require("webpack-dev-server"));
 const chalk_1 = __importDefault(require("chalk"));
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const fs_1 = require("fs");
 const prepareURLs_1 = require("./../utils/prepareURLs");
 const defaultServerConfig = {
@@ -89,8 +89,14 @@ function default_1(api, options) {
         }
         const useHttps = args.https || projectDevServerOptions.https || defaultServerConfig.https;
         const protocol = useHttps ? "https" : "http";
-        const host = args.host || process.env.DEV_SERVER_HOST || projectDevServerOptions.host || defaultServerConfig.host;
-        const _port = args.port || process.env.DEV_SERVER_PORT || projectDevServerOptions.port || defaultServerConfig.port;
+        const host = args.host ||
+            process.env.DEV_SERVER_HOST ||
+            projectDevServerOptions.host ||
+            defaultServerConfig.host;
+        const _port = args.port ||
+            process.env.DEV_SERVER_PORT ||
+            projectDevServerOptions.port ||
+            defaultServerConfig.port;
         const port = yield portfinder_1.default.getPortPromise({ port: Number(_port) });
         const rawPublicUrl = args.public || projectDevServerOptions.public;
         const publicUrl = rawPublicUrl
@@ -113,7 +119,9 @@ function default_1(api, options) {
                     });
             const devClients = [
                 require.resolve("webpack-dev-server/client") + sockjsUrl,
-                require.resolve(projectDevServerOptions.hotOnly ? "webpack/hot/only-dev-server" : "webpack/hot/dev-server"),
+                require.resolve(projectDevServerOptions.hotOnly
+                    ? "webpack/hot/only-dev-server"
+                    : "webpack/hot/dev-server"),
             ];
             addDevClientToEntry(webpackConfig, devClients);
         }
@@ -147,7 +155,9 @@ function default_1(api, options) {
                     });
                     return;
                 }
-                const networkUrl = publicUrl ? publicUrl.replace(/([^/])$/, "$1/") : urls.lanUrlForTerminal;
+                const networkUrl = publicUrl
+                    ? publicUrl.replace(/([^/])$/, "$1/")
+                    : urls.lanUrlForTerminal;
                 console.log();
                 console.log(`  App running at:`);
                 console.log(`  - Local:   ${chalk_1.default.cyan(urls.localUrlForTerminal)}`);
@@ -161,7 +171,8 @@ function default_1(api, options) {
                     console.log(`  To exit the server, use ${chalk_1.default.red("control + z")}`);
                     console.log();
                     if (args.open || projectDevServerOptions.open) {
-                        const pageUri = projectDevServerOptions.openPage && typeof projectDevServerOptions.openPage === "string"
+                        const pageUri = projectDevServerOptions.openPage &&
+                            typeof projectDevServerOptions.openPage === "string"
                             ? projectDevServerOptions.openPage
                             : "";
                         cli_shared_utils_1.openBrowser(localUrlForBrowser + pageUri);

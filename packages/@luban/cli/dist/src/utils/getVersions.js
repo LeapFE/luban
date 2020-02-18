@@ -14,7 +14,7 @@ const packageManager_1 = require("./packageManager");
 const pm = new packageManager_1.PackageManager({ context: process.cwd() });
 function getAndCacheLatestVersion(cached) {
     return __awaiter(this, void 0, void 0, function* () {
-        const version = yield pm.getRemoteVersion("@luban/cli", "latest");
+        const version = yield pm.getRemoteVersion("@luban-cli/cli", "latest");
         if (!version) {
             return cached;
         }

@@ -19,7 +19,10 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
 
     const filename = getAssetsPath(options, `css/[name]${isProduction ? ".[hash:8]" : ""}.css`);
 
-    const chunkFilename = getAssetsPath(options, `css/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`);
+    const chunkFilename = getAssetsPath(
+      options,
+      `css/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`,
+    );
 
     const extractOptions = {
       filename,

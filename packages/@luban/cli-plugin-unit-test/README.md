@@ -1,1 +1,1 @@
-# `@luban/cli-plugin-unit-test`
+# `@luban-cli/cli-plugin-unit-test`

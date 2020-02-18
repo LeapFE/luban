@@ -11,7 +11,7 @@ exports.defaultRootOptions = {
         store: true,
         unitTest: true,
         plugins: {
-            "@luban/cli-plugin-service": {},
+            "@luban-cli/cli-plugin-service": {},
         },
     },
 };

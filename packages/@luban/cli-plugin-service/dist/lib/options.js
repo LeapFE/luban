@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const schema = cli_shared_utils_1.createSchema((joi) => joi.object({
     publicPath: joi.string(),
     outputDir: joi.string(),

@@ -1,5 +1,5 @@
 {
-    "name": "@luban/cli",
+    "name": "@luban-cli/cli",
     "version": "0.0.1",
     "description": "a scaffold to create a react app",
     "bin": {
@@ -35,7 +35,7 @@
         "url": "https://github.com/front-end-captain/luban/issues"
     },
     "dependencies": {
-        "@luban/cli-shared-utils": "0.0.1",
+        "@luban-cli/cli-shared-utils": "0.0.1",
         "chalk": "^3.0.0",
         "commander": "^4.1.0",
         "deepmerge": "^4.2.2",
@@ -53,7 +53,7 @@
         "yaml-front-matter": "^4.1.0"
     },
     "devDependencies": {
-        "@luban/cli-shared-types": "0.0.1",
+        "@luban-cli/cli-shared-types": "0.0.1",
         "@types/didyoumean": "^1.2.0",
         "@types/ejs": "^3.0.0",
         "@types/inquirer": "^6.5.0",

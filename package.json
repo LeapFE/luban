@@ -5,9 +5,9 @@
     "packages/@luban/*"
   ],
   "scripts": {
-    "eslint:packages": "eslint -c packages/.eslintrc packages/@luban/**/*.ts",
+    "eslint:packages": "eslint -c packages/.eslintrc packages/**/*.ts",
     "eslint:scripts": "eslint -c scripts/.eslintrc scripts/*.js",
-    "format:packages": "prettier --write packages/@luban/**/*.ts",
+    "format:packages": "prettier --write packages/**/*.ts",
     "format:scripts": "prettier --write scripts/*.js",
     "check:type:changed": "node scripts/build.js --check --onlyChanged",
     "check:type": "node scripts/build.js --check",
@@ -17,7 +17,8 @@
     "test:changed": "node scripts/test.js --onlyChanged",
     "test": "node scripts/test.js",
     "jest-coverage": "yarn jest --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
-    "commit": "yarn run test:changed && yarn run check:type:changed && git-cz"
+    "commit": "yarn run test:changed && yarn run check:type:changed && git-cz",
+    "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -51,11 +52,13 @@
     }
   },
   "lint-staged": {
-    "packages/**/**/*.ts": [
-      "npm run eslint:packages",
-      "npm run eslint:scripts",
-      "npm run format:packages",
-      "npm run format:scripts"
+    "packages/**/*.ts": [
+      "yarn run format:packages",
+      "yarn run eslint:packages"
+    ],
+    "scripts/**/*.js": [
+      "yarn run format:scripts",
+      "yarn run eslint:scripts"
     ]
   },
   "config": {

@@ -1,1 +1,1 @@
-# `@luban/cli-plugin-eslint`
+# `@luban-cli/cli-plugin-eslint`

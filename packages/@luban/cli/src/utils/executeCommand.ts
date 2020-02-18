@@ -1,6 +1,6 @@
 import execa from "execa";
 import { EventEmitter } from "events";
-import { log } from "@luban/cli-shared-utils";
+import { log } from "@luban-cli/cli-shared-utils";
 
 class InstallProgress extends EventEmitter {
   private _progress: number;
@@ -33,7 +33,11 @@ class InstallProgress extends EventEmitter {
 }
 
 const progress = new InstallProgress();
-export const executeCommand = async function executeCommand(command: string, args: any[], cwd: string): Promise<void> {
+export const executeCommand = async function executeCommand(
+  command: string,
+  args: any[],
+  cwd: string,
+): Promise<void> {
   progress.enabled = false;
 
   try {

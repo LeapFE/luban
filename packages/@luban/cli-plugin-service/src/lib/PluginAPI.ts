@@ -40,7 +40,8 @@ class PluginAPI {
   }
 
   public isTSProject(): boolean {
-    return this.hasPlugin("@luban/cli-plugin-typescript");
+    // 是否存在 tsconfig.json
+    return this.hasPlugin("@luban-cli/cli-plugin-typescript");
   }
 
   public useTsWithBabel(): boolean {
@@ -50,7 +51,10 @@ class PluginAPI {
       return true;
     }
 
-    if (initConfig.plugins["cli-plugin-typescript"] && initConfig.plugins["cli-plugin-typescript"].useTsWithBabel) {
+    if (
+      initConfig.plugins["cli-plugin-typescript"] &&
+      initConfig.plugins["cli-plugin-typescript"].useTsWithBabel
+    ) {
       return true;
     }
 
@@ -76,7 +80,8 @@ class PluginAPI {
     process.env.LUBAN_CLI_SERVICE_MODE = mode;
     // by default, NODE_ENV and BABEL_ENV are set to "development" unless mode
     // is production or test. However this can be overwritten in .env files.
-    process.env.NODE_ENV = process.env.BABEL_ENV = mode === "production" || mode === "test" ? mode : "development";
+    process.env.NODE_ENV = process.env.BABEL_ENV =
+      mode === "production" || mode === "test" ? mode : "development";
     // load .env files based on mode
     this.service.loadEnv(mode);
   }

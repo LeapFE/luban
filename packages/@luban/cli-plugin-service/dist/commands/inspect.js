@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const webpack_chain_1 = __importDefault(require("webpack-chain"));
 const cli_highlight_1 = require("cli-highlight");
 const chalk_1 = __importDefault(require("chalk"));
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 function default_1(api) {
     api.registerCommand("inspect", {
         description: "inspect internal webpack config",
@@ -26,7 +26,8 @@ function default_1(api) {
         let hasUnnamedRule = false;
         if (args.rule) {
             res = webpackConfig.module
-                ? webpackConfig.module.rules.find((r) => r.__ruleNames[0] === args.rule) || {}
+                ? webpackConfig.module.rules.find((r) => r.__ruleNames[0] === args.rule) ||
+                    {}
                 : {};
         }
         else if (args.plugin) {
@@ -44,7 +45,9 @@ function default_1(api) {
                 : {};
         }
         else if (args.plugins) {
-            res = webpackConfig.plugins ? webpackConfig.plugins.map((p) => p.__pluginName || p.constructor.name) : {};
+            res = webpackConfig.plugins
+                ? webpackConfig.plugins.map((p) => p.__pluginName || p.constructor.name)
+                : {};
         }
         else if (paths.length > 1) {
             res = {};

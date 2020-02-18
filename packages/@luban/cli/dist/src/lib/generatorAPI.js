@@ -80,7 +80,7 @@ class GeneratorAPI {
         this.options = options;
         this.rootOptions = rootOptions;
         this.pluginsData = generator.plugins
-            .filter(({ id }) => id !== "@luban/cli-plugin-service")
+            .filter(({ id }) => id !== "@luban-cli/cli-plugin-service")
             .map(({ id }) => ({
             name: id,
             link: "",
@@ -187,7 +187,9 @@ class GeneratorAPI {
     get entryFile() {
         if (this._entryFile)
             return this._entryFile;
-        this._entryFile = fs_1.default.existsSync(this.resolve("src/index.tsx")) ? "src/index.tsx" : "src/index.jsx";
+        this._entryFile = fs_1.default.existsSync(this.resolve("src/index.tsx"))
+            ? "src/index.tsx"
+            : "src/index.jsx";
         return this._entryFile;
     }
     hasNoAnyFeatures() {

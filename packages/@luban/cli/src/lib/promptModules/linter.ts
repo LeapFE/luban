@@ -26,9 +26,8 @@ export default function(cli: PromptModuleAPI): void {
     ],
   });
 
-
   cli.onPromptComplete((answers, preset) => {
     preset.eslint = answers.eslint;
-    preset.plugins["@luban/cli-plugin-eslint"] = {};
+    preset.plugins["@luban-cli/cli-plugin-eslint"] = {};
   });
-};
+}

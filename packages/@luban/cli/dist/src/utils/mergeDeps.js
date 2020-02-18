@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const semver_1 = __importDefault(require("semver"));
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const tryGetNewerRange_1 = require("./tryGetNewerRange");
 const extractSemver = function (r) {
     return r.replace(/^.+#semver:/, "");
@@ -23,7 +23,8 @@ exports.resolveDeps = function (generatorId, to, from, sources, forceNewVersion)
         if (r1 === r2)
             continue;
         if (!isValidGitHub && !isValidURI && !semver_1.default.validRange(r2)) {
-            cli_shared_utils_1.warn(`invalid version range for dependency "${name}":\n\n` + `- ${r2} injected by generator "${generatorId}"`);
+            cli_shared_utils_1.warn(`invalid version range for dependency "${name}":\n\n` +
+                `- ${r2} injected by generator "${generatorId}"`);
             continue;
         }
         if (!r1) {
@@ -40,7 +41,9 @@ exports.resolveDeps = function (generatorId, to, from, sources, forceNewVersion)
                 sources[name] = generatorId;
             }
             if (!forceNewVersion &&
-                (!semver_1.default.validRange(r1semver) || !semver_1.default.validRange(r2semver) || !semver_1.default.intersects(r1semver, r2semver))) {
+                (!semver_1.default.validRange(r1semver) ||
+                    !semver_1.default.validRange(r2semver) ||
+                    !semver_1.default.intersects(r1semver, r2semver))) {
                 cli_shared_utils_1.warn(`conflicting versions for project dependency "${name}":\n\n` +
                     `- ${r1} injected by generator "${sourceGeneratorId}"\n` +
                     `- ${r2} injected by generator "${generatorId}"\n\n` +

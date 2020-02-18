@@ -21,7 +21,7 @@ const promptModuleAPI_1 = require("./promptModuleAPI");
 const sortObject_1 = require("../utils/sortObject");
 const getReadme_1 = require("./../utils/getReadme");
 const getVersions_1 = require("../utils/getVersions");
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const generator_1 = require("./generator");
 const lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
 class Creator {
@@ -44,7 +44,7 @@ class Creator {
             const preset = yield this.promptAndResolvePreset();
             const adaptedPreset = lodash_clonedeep_1.default(preset);
             const rootOptions = { projectName: name, preset };
-            adaptedPreset.plugins["@luban/cli-plugin-service"] = rootOptions;
+            adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
             const packageManager = this._pkgManager || "npm";
             const pkgManager = new packageManager_1.PackageManager({ context, forcePackageManager: packageManager });
             yield cli_shared_utils_1.clearConsole();
@@ -63,7 +63,7 @@ class Creator {
             deps.forEach((dep) => {
                 let packageDirName = "";
                 let packageDirPath = "";
-                const packageDirNameMatchResult = /^@luban\/(cli-plugin-.+)$/.exec(dep);
+                const packageDirNameMatchResult = /^@luban-cli\/(cli-plugin-.+)$/.exec(dep);
                 if (Array.isArray(packageDirNameMatchResult)) {
                     packageDirName = packageDirNameMatchResult[1];
                     packageDirPath = path_1.default.resolve(process.cwd(), `../../${packageDirName}`);
@@ -126,7 +126,7 @@ class Creator {
             yield cli_shared_utils_1.clearConsole();
             const answers = yield inquirer_1.default.prompt(this.resolveFinalPrompts());
             const preset = {
-                plugins: { "@luban/cli-plugin-service": {} },
+                plugins: { "@luban-cli/cli-plugin-service": {} },
             };
             this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
             return preset;
@@ -165,7 +165,7 @@ class Creator {
     }
     resolvePlugins(rawPlugins) {
         return __awaiter(this, void 0, void 0, function* () {
-            const sortedRawPlugins = sortObject_1.sortObject(rawPlugins, ["@luban/cli-plugin-service"], true);
+            const sortedRawPlugins = sortObject_1.sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
             const plugins = [];
             const pluginIDs = Object.keys(sortedRawPlugins);
             for (const id of pluginIDs) {

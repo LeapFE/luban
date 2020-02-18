@@ -1,4 +1,4 @@
-# @luban/cli
+# @luban-cli/cli
 > 一个快速创建 React 应用的的脚手架，并提供对 TypeScript, ESLint, StyleLint, Styled-Components/Less, UnitTest, StateManager 等特性开箱即用的方案。
 
 ### 如何使用
@@ -6,7 +6,7 @@
 ##### 安装
 
 ```sh
-npm i @luban/cli -g
+npm i @luban-cli/cli -g
 ```
 
 ##### 创建一个项目
@@ -63,21 +63,21 @@ luban init --help
 
 ### CLI 服务
 
-## @luban/cli-plugin-service
-`@luban/cli-plugin-service` 是一个开发时运行环境依赖，一个单独的包，局部安装在使用 `@luban/cli` 创建的项目中，提供了：
+## @luban-cli/cli-plugin-service
+`@luban-cli/cli-plugin-service` 是一个开发时运行环境依赖，一个单独的包，局部安装在使用 `@luban-cli/cli` 创建的项目中，提供了：
 
 - 加载其他 CLI 插件的核心服务
 - 一份合理的 webpack 配置
-- 提供 `@luban/cli-plugin-service serve` `@luban/cli-plugin-service build` 等命令
+- 提供 `@luban-cli/cli-plugin-service serve` `@luban-cli/cli-plugin-service build` 等命令
 
-使用 `@luban/cli` 创建的项目中，其中 `package.json` 文件的 `scripts` 字段会增加三个脚本：
+使用 `@luban-cli/cli` 创建的项目中，其中 `package.json` 文件的 `scripts` 字段会增加三个脚本：
 
 ```json
 {
   "scripts": {
-    "serve": "@luban/cli-plugin-service serve --open",
-    "build": "@luban/cli-plugin-service build",
-    "inspect": "@luban/cli-plugin-service inspect"
+    "serve": "cli-plugin-service serve --open",
+    "build": "cli-plugin-service build",
+    "inspect": "cli-plugin-service inspect"
   }
 }
 ```
@@ -88,7 +88,7 @@ luban init --help
 npm run serve
 ```
 
-#### @luban/cli-plugin-service serve
+#### cli-plugin-service serve
 
 ``` json
 用法：luban-cli-service serve [options]
@@ -106,7 +106,7 @@ npm run serve
 
 该脚本命令会启动一个基于 `webpack-dev-server` 的本地开发服务，并且会附加一些默认的配置和功能。
 
-#### @luban/cli-plugin-service build
+#### cli-plugin-service build
 
 ```json
 用法：luban-cli-service build [options]
@@ -121,7 +121,7 @@ npm run serve
 
 该命令会以 [dist] 为默认目录产生一个可以用于生产环境的包，自动的 verdor chunk splitting。其中 chunk mainfest 会内联在 html 文件中。
 
-#### @luban/cli-plugin-service inspect
+#### cli-plugin-service inspect
 
 > 用来审查特定环境下的 webpack 配置
 
@@ -129,17 +129,17 @@ npm run serve
 
 ```shell
 // 审查 development 环境下的 webpack 配置并输出到 config.txt 文件中
-@luban/cli-plugin-service inspect --mode=development > config.txt
+cli-plugin-service inspect --mode=development > config.txt
 ```
 
 审查特定规则/插件的配置:
 
 ``` shell
 // 审查关于 css 规则的配置
-@luban/cli-plugin-service inspect --rule=css
+cli-plugin-service inspect --rule=css
 
 // 生产 html 插件的配置
-@luban/cli-plugin-service inspect --plugin=html
+cli-plugin-service inspect --plugin=html
 ```
 
 
@@ -310,7 +310,7 @@ module.exports = {
 Cli-srevice 对外暴露了 `inspect` 命令用于审查配置好的 webpack 配置，该命令会将解析好的 webpack 配置，包括通过链式修改的配置打印到 stdout，也可以重定向到一个文件方便查看:
 
 ``` shell
-@luban/cli-plugin-service inspect > config.txt
+cli-plugin-service inspect > config.txt
 ```
 
 其输出的 webpack 配置并不是一个有效的配置文件，而是一个用于审查的被序列化的格式。
@@ -319,10 +319,10 @@ Cli-srevice 对外暴露了 `inspect` 命令用于审查配置好的 webpack 配
 
 ```shell
 # 查看 eslint 的配置
-@luban/cli-plugin-service inspect --rule eslint
+cli-plugin-service inspect --rule eslint
 
 # 查看 html-webpacl-plugin 的配置
-@luban/cli-plugin-service inspect --plugin html
+cli-plugin-service inspect --plugin html
 ```
 
 
@@ -367,7 +367,7 @@ FOO=bar
 APP_URL=https://example.com/
 ```
 
-被载入的环境变量会对 @luban/cli-plugin-service 以及其插件、依赖可用。
+被载入的环境变量会对 @luban-cli/cli-plugin-service 以及其插件、依赖可用。
 
 > ❗️提示
 >
@@ -377,20 +377,20 @@ APP_URL=https://example.com/
 
 一个 CLI 创建的项目通常有两种模式：
 
-+ `development` 模式被用于 `@luban/cli-plugin-service serve`
-+ `production` 模式被用于 `@luban/cli-plugin-service build`
++ `development` 模式被用于 `cli-plugin-service serve`
++ `production` 模式被用于 `cli-plugin-service build`
 
 模式(mode) 不同于 `process.env.NODE_ENV` ，一个模式下可以包含多个环境变量。可以为 `.env` 文件添加模式后缀来指定特定模式下的环境变量，比如在项目根目录下创建 `.env.development` 文件，这个文件就会在 development 模式被载入。
 
 然后可以通过 mode 参数来使用特定模式下的环境变量:
 
 ```shell
-@luban/cli-plugin-service serve --mode development
+cli-plugin-service serve --mode development
 ```
 
 > ❗️提示
 >
-> `@luban/cli-plugin-service server` 会将 `process.env.NODE_ENV` 设置为 `development`, `@luban/cli-plugin-service build` 会将 `process.env.NODE_ENV` 设置为 `production`, 建议不要将 `process.env.NODE_ENV` 设置为其他值，因为其他库也可能使用了这个值来区分环境。
+> `cli-plugin-service server` 会将 `process.env.NODE_ENV` 设置为 `development`, `cli-plugin-service build` 会将 `process.env.NODE_ENV` 设置为 `production`, 建议不要将 `process.env.NODE_ENV` 设置为其他值，因为其他库也可能使用了这个值来区分环境。
 
 **示例：mock 模式**
 
@@ -407,8 +407,8 @@ MOCK=true
 APP_URL=https://example.mock.com
 ```
 
-1. 运行 `@luban/cli-plugin-service build` 将会加载可能存在的 .env, .env.production, .env.production.local 文件，然后根据这些文件中的环境变量来构建可用于生产环境应用。
-2. 运行 `@luban/cli-plugin-service build --mode=mock` 将会加载可能存在的 .env.mock, .env.mock.local 文件，然后根据这些环境变量来构建可用于生产环境的应用。
+1. 运行 `cli-plugin-service build` 将会加载可能存在的 .env, .env.production, .env.production.local 文件，然后根据这些文件中的环境变量来构建可用于生产环境应用。
+2. 运行 `cli-plugin-service build --mode=mock` 将会加载可能存在的 .env.mock, .env.mock.local 文件，然后根据这些环境变量来构建可用于生产环境的应用。
 
 这两种情况下，由于运行的是 build 命令，所以都是构建用于生产环境的应用，但是在 mock 模式下，`process.env.APP_URL` 将会被覆写为另外一个值。
 

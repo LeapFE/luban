@@ -1,6 +1,5 @@
-import { GeneratorAPI } from "@luban/cli-shared-types/dist/cli/src/lib/generatorAPI";
-import { RootOptions } from "@luban/cli-shared-types/dist/shared";
-
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): void {
   const babelConfigPreset: Array<string | Array<string | Record<string, any>>> = [
@@ -39,7 +38,7 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     ]);
   }
 
-  if (rootOptions.preset.plugins["@luban/cli-plugin-eslint"]) {
+  if (rootOptions.preset.plugins["@luban-cli/cli-plugin-eslint"]) {
     api.extendPackage({
       devDependencies: {
         "babel-plugin-transform-react-remove-prop-types": "^0.4.24",

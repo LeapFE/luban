@@ -155,9 +155,13 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       child_process: "empty",
     });
 
-    webpackConfig.plugin("define").use(require("webpack").DefinePlugin, [resolveClientEnv(options)]);
+    webpackConfig
+      .plugin("define")
+      .use(require("webpack").DefinePlugin, [resolveClientEnv(options)]);
     webpackConfig.plugin("clean").use(CleanWebpackPlugin, [{ verbose: true }]);
 
-    webpackConfig.optimization.minimizer("terser").use(TerserWebpackPlugin, [terserOptions(options)]);
+    webpackConfig.optimization
+      .minimizer("terser")
+      .use(TerserWebpackPlugin, [terserOptions(options)]);
   });
 }

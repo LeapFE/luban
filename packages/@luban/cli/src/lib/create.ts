@@ -3,7 +3,7 @@ import path from "path";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import validateProjectName from "validate-npm-package-name";
-import { clearConsole, stopSpinner } from "@luban/cli-shared-utils";
+import { clearConsole, stopSpinner } from "@luban-cli/cli-shared-utils";
 import { CliOptions } from "../definitions";
 
 import { Creator } from "./creator";

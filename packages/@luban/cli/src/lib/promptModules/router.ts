@@ -11,7 +11,7 @@ export default function(cli: PromptModuleAPI): void {
   cli.onPromptComplete((answers, preset) => {
     preset.router = answers.router;
     if (answers.router) {
-      preset.plugins["@luban/cli-plugin-router"] = {};
+      preset.plugins["@luban-cli/cli-plugin-router"] = {};
     }
   });
-};
+}

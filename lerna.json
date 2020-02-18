@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/@luban/cli*"],
+  "packages": ["packages/@luban/*"],
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "version": "0.0.1",
@@ -32,7 +32,7 @@
       "pr(dependency)": ":deciduous_tree: Dependency",
       "pr(chore)": ":turtle: Chore"
     },
-    "repo": "@luban",
+    "repo": "@luban-cli",
     "cacheDir": ".changelog"
   },
   "ignoreChanges": ["CHANGELOG.md", "**/__tests__/**", "**/__mocks__/**", "scripts/**"]

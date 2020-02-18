@@ -4,10 +4,12 @@ import { Configuration as WebpackConfig } from "webpack";
 import Config from "webpack-chain";
 import webpack, { HotModuleReplacementPlugin, ProgressPlugin } from "webpack";
 import portfinder from "portfinder";
-import WebpackDevServer, { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
+import WebpackDevServer, {
+  Configuration as WebpackDevServerConfiguration,
+} from "webpack-dev-server";
 import { Application } from "express";
 import chalk from "chalk";
-import { openBrowser, IpcMessenger, log, error } from "@luban/cli-shared-utils";
+import { openBrowser, IpcMessenger, log, error } from "@luban-cli/cli-shared-utils";
 import { existsSync } from "fs";
 
 import { PluginAPI } from "./../lib/PluginAPI";
@@ -70,7 +72,10 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
       const webpackConfig = api.resolveWebpackConfig();
 
-      const projectDevServerOptions = Object.assign(webpackConfig.devServer || {}, options.devServer);
+      const projectDevServerOptions = Object.assign(
+        webpackConfig.devServer || {},
+        options.devServer,
+      );
       const entryFileOfApp = api.getEntryFile();
 
       if (!existsSync(api.resolve(args.entry || `src/${entryFileOfApp}`))) {
@@ -90,9 +95,17 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
       const useHttps = args.https || projectDevServerOptions.https || defaultServerConfig.https;
       const protocol = useHttps ? "https" : "http";
-      const host = args.host || process.env.DEV_SERVER_HOST || projectDevServerOptions.host || defaultServerConfig.host;
+      const host =
+        args.host ||
+        process.env.DEV_SERVER_HOST ||
+        projectDevServerOptions.host ||
+        defaultServerConfig.host;
 
-      const _port = args.port || process.env.DEV_SERVER_PORT || projectDevServerOptions.port || defaultServerConfig.port;
+      const _port =
+        args.port ||
+        process.env.DEV_SERVER_PORT ||
+        projectDevServerOptions.port ||
+        defaultServerConfig.port;
       const port = await portfinder.getPortPromise({ port: Number(_port) });
 
       const rawPublicUrl = args.public || projectDevServerOptions.public;
@@ -102,7 +115,12 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           : `${protocol}://${rawPublicUrl}`
         : null;
 
-      const urls = prepareUrls(protocol, host, port, isAbsoluteUrl(options.publicPath) ? "/" : options.publicPath);
+      const urls = prepareUrls(
+        protocol,
+        host,
+        port,
+        isAbsoluteUrl(options.publicPath) ? "/" : options.publicPath,
+      );
       const localUrlForBrowser = publicUrl || urls.localUrlForBrowser;
 
       // inject dev & hot-reload middleware entries
@@ -121,7 +139,11 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           // dev server client
           require.resolve("webpack-dev-server/client") + sockjsUrl,
           // hmr client
-          require.resolve(projectDevServerOptions.hotOnly ? "webpack/hot/only-dev-server" : "webpack/hot/dev-server"),
+          require.resolve(
+            projectDevServerOptions.hotOnly
+              ? "webpack/hot/only-dev-server"
+              : "webpack/hot/dev-server",
+          ),
         ];
         // inject dev/hot client
         addDevClientToEntry(webpackConfig, devClients);
@@ -178,7 +200,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
             return;
           }
 
-          const networkUrl = publicUrl ? publicUrl.replace(/([^/])$/, "$1/") : urls.lanUrlForTerminal;
+          const networkUrl = publicUrl
+            ? publicUrl.replace(/([^/])$/, "$1/")
+            : urls.lanUrlForTerminal;
 
           console.log();
           console.log(`  App running at:`);
@@ -198,7 +222,8 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
             if (args.open || projectDevServerOptions.open) {
               const pageUri =
-                projectDevServerOptions.openPage && typeof projectDevServerOptions.openPage === "string"
+                projectDevServerOptions.openPage &&
+                typeof projectDevServerOptions.openPage === "string"
                   ? projectDevServerOptions.openPage
                   : "";
               openBrowser(localUrlForBrowser + pageUri);

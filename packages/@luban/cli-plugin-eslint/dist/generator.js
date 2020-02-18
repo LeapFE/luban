@@ -5,7 +5,12 @@ function default_1(api, options) {
     const eslintParser = isTSProject ? "@typescript-eslint/parser" : "babel-eslint";
     let parserOptions = {};
     let eslintRules = {};
-    const eslintExtends = ["eslint:recommended", "plugin:react/recommended", "prettier", "prettier/react"];
+    const eslintExtends = [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "prettier/react",
+    ];
     const eslintPlugins = ["react-hooks"];
     if (isTSProject) {
         api.extendPackage({

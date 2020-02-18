@@ -1,1 +1,1 @@
-# `@luban/cli-plugin-babel`
+# `@luban-cli/cli-plugin-babel`

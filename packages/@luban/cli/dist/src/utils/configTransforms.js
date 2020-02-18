@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const deepmerge_1 = __importDefault(require("deepmerge"));
 const js_yaml_1 = require("js-yaml");
 const extendJSConfig_1 = require("./extendJSConfig");
@@ -22,7 +22,7 @@ const transformJS = {
             return null;
         }
     },
-    write: function ({ value, existing, source }) {
+    write: function ({ value, existing, source, }) {
         if (existing) {
             const changedData = {};
             Object.keys(value).forEach((key) => {

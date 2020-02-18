@@ -10,10 +10,9 @@ function default_1(cli) {
     cli.onPromptComplete((answers, preset) => {
         preset.stylelint = answers.stylelint;
         if (answers.stylelint) {
-            preset.plugins["@luban/cli-plugin-stylelint"] = {};
+            preset.plugins["@luban-cli/cli-plugin-stylelint"] = {};
         }
     });
 }
 exports.default = default_1;
-;
 //# sourceMappingURL=stylelint.js.map

@@ -10,10 +10,9 @@ function default_1(cli) {
     cli.onPromptComplete((answers, preset) => {
         preset.router = answers.router;
         if (answers.router) {
-            preset.plugins["@luban/cli-plugin-router"] = {};
+            preset.plugins["@luban-cli/cli-plugin-router"] = {};
         }
     });
 }
 exports.default = default_1;
-;
 //# sourceMappingURL=router.js.map

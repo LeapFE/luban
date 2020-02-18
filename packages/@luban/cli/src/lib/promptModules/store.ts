@@ -11,7 +11,7 @@ export default function(cli: PromptModuleAPI): void {
   cli.onPromptComplete((answers, preset) => {
     preset.store = answers.store;
     if (answers.store) {
-      preset.plugins["@luban/cli-plugin-store"] = {};
+      preset.plugins["@luban-cli/cli-plugin-store"] = {};
     }
   });
 }

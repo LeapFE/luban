@@ -17,7 +17,7 @@ const path_1 = __importDefault(require("path"));
 const chalk_1 = __importDefault(require("chalk"));
 const inquirer_1 = __importDefault(require("inquirer"));
 const validate_npm_package_name_1 = __importDefault(require("validate-npm-package-name"));
-const cli_shared_utils_1 = require("@luban/cli-shared-utils");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const creator_1 = require("./creator");
 function getPromptModules() {
     return [

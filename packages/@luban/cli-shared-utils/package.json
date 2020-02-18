@@ -1,5 +1,5 @@
 {
-  "name": "@luban/cli-shared-utils",
+  "name": "@luban-cli/cli-shared-utils",
   "version": "0.0.1",
   "description": "cli shared utils",
   "keywords": [

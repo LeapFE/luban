@@ -1,1 +1,1 @@
-# `@luban/cli-plugin-typescript`
+# `@luban-cli/cli-plugin-typescript`

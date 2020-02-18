@@ -11,7 +11,7 @@ export default function(cli: PromptModuleAPI): void {
   cli.onPromptComplete((answers, preset) => {
     preset.stylelint = answers.stylelint;
     if (answers.stylelint) {
-      preset.plugins["@luban/cli-plugin-stylelint"] = {};
+      preset.plugins["@luban-cli/cli-plugin-stylelint"] = {};
     }
   });
-};
+}
