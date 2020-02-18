@@ -1,2 +1,2 @@
 import { PromptModuleAPI } from "../promptModuleAPI";
-export default function(cli: PromptModuleAPI): void;
+export default function (cli: PromptModuleAPI): void;
