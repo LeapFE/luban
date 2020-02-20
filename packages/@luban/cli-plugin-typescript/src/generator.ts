@@ -2,7 +2,7 @@ import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/gener
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
-  api.render("./../../../template/typescript");
+  api.render("./template");
 
   if (options.preset.cssPreprocessor === "styled-components") {
     api.extendPackage({

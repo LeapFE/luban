@@ -16,8 +16,15 @@ function default_1(api, options) {
             filename,
             chunkFilename,
         };
-        const miniCssOptions = Object.assign(Object.assign({}, loaderOptions.miniCss), { hmr: !isProduction, reloadAll: !isProduction });
-        const cssLoaderOptions = Object.assign(Object.assign({}, loaderOptions.css), { sourceMap });
+        const miniCssOptions = {
+            ...loaderOptions.miniCss,
+            hmr: !isProduction,
+            reloadAll: !isProduction,
+        };
+        const cssLoaderOptions = {
+            ...loaderOptions.css,
+            sourceMap,
+        };
         const cssRule = webpackConfig.module.rule("css");
         cssRule
             .test(/\.css$/)
@@ -28,14 +35,11 @@ function default_1(api, options) {
             .use("css-loader")
             .loader("css-loader")
             .options(cssLoaderOptions)
+            .end()
+            .use("postcss")
+            .loader("postcss-loader")
+            .options({ ...loaderOptions.postcss, sourceMap, ident: "postcss" })
             .end();
-        if (!api.hasNoAnyFeatures) {
-            cssRule
-                .use("postcss")
-                .loader("postcss-loader")
-                .options(Object.assign(Object.assign({}, loaderOptions.postcss), { sourceMap, ident: "postcss" }))
-                .end();
-        }
         if (createConfig.cssPreprocessor === "less") {
             const lessRule = webpackConfig.module.rule("less");
             lessRule
@@ -46,17 +50,22 @@ function default_1(api, options) {
                 .end()
                 .use("css-loader")
                 .loader("css-loader")
-                .options(Object.assign(Object.assign({}, cssLoaderOptions), { sourceMap, importLoaders: 2, modules: {
+                .options({
+                ...cssLoaderOptions,
+                sourceMap,
+                importLoaders: 2,
+                modules: {
                     localIdentName: "[local]-[hash:base64:5]",
-                } }))
+                },
+            })
                 .end()
                 .use("postcss-loader")
                 .loader("postcss-loader")
-                .options(Object.assign(Object.assign({}, loaderOptions.postcss), { sourceMap, ident: "postcss" }))
+                .options({ ...loaderOptions.postcss, sourceMap, ident: "postcss" })
                 .end()
                 .use("less-loader")
                 .loader("less-loader")
-                .options(Object.assign(Object.assign({}, loaderOptions.less), { sourceMap, noIeCompat: true }))
+                .options({ ...loaderOptions.less, sourceMap, noIeCompat: true })
                 .end();
         }
         if (extract) {

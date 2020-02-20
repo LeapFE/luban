@@ -21,7 +21,7 @@
     "url": "git+https://github.com/front-end-captain/luban.git"
   },
   "scripts": {
-    "build": "rimraf dist && tsc --pretty",
+    "build": "rimraf dist && tsc --pretty && cp -ri src/template dist/template",
     "check:type": "tsc --noEmit",
     "watch": "yarn run build -- --watch --diagnostics"
   },

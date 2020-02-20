@@ -84,14 +84,8 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       }
 
       webpackConfig.entry = {
-        app: [api.resolve(args.entry || `src/${entryFileOfApp}`)],
+        app: ["react-hot-loader/patch", api.resolve(args.entry || `src/${entryFileOfApp}`)],
       };
-
-      if (!api.hasNoAnyFeatures) {
-        webpackConfig.entry = {
-          app: ["react-hot-loader/patch", api.resolve(args.entry || `src/${entryFileOfApp}`)],
-        };
-      }
 
       const useHttps = args.https || projectDevServerOptions.https || defaultServerConfig.https;
       const protocol = useHttps ? "https" : "http";

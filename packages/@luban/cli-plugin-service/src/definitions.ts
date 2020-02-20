@@ -3,43 +3,27 @@ import webpack from "webpack";
 import webpackDevServer, { Configuration as WebpackDevServerConfig } from "webpack-dev-server";
 import { Application } from "express";
 
+import {
+  RootOptions as rootOptions,
+  RawPlugin as rawPlugin,
+  Preset as preset,
+  BasePkgFields as basePkgFields,
+} from "@luban-cli/cli-shared-types/dist/shared";
+
 import { PluginAPI } from "./lib/PluginAPI";
 
 import { defaultsProjectConfig } from "./lib/options";
 
-export type RootOptions = { projectName?: string; preset?: Preset };
+export type RootOptions = rootOptions;
 
-export type RawPlugin = {
-  "@luban-cli/cli-plugin-babel"?: Record<string, any>;
-  "@luban-cli/cli-plugin-typescript"?: Record<string, any>;
-  "@luban-cli/cli-plugin-eslint"?: Record<string, any>;
-  "@luban-cli/cli-plugin-stylelint"?: Record<string, any>;
-  "@luban-cli/cli-plugin-router"?: Record<string, any>;
-  "@luban-cli/cli-plugin-store"?: Record<string, any>;
-  "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
-  "@luban-cli/cli-plugin-service": RootOptions;
-};
+export type RawPlugin = rawPlugin;
 
 /**
  * @description package.json fields, name and version must required
  *
  * @see https://docs.npmjs.com/creating-a-package-json-file
  */
-export type BasePkgFields = {
-  name: string;
-  description?: "";
-  version: string;
-  main?: string;
-  scripts?: Record<string, string>;
-  repository?: Record<string, string>;
-  devDependencies?: Record<string, string>;
-  dependencies?: Record<string, string>;
-  keywords?: string[];
-  author?: string;
-  browserslist?: string[];
-  homepage?: string;
-  ["__luban_config__"]?: Preset;
-} & Record<string, any>;
+export type BasePkgFields = basePkgFields;
 
 export type PluginApplyCallback = (api: PluginAPI, options: Record<string, any>) => void;
 export type InlinePlugin = {
@@ -189,12 +173,7 @@ export type InspectCliArgs = Partial<{
   help: boolean;
 }>;
 
-export type Preset = {
-  useConfigFiles: boolean;
-  cssPreprocessor?: "less" | "styled-components";
-  plugins: RawPlugin;
-  configs?: Record<string, string>;
-};
+export type Preset = preset;
 
 export type PLUGIN_IDS = keyof RawPlugin;
 

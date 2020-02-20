@@ -1,13 +1,40 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
+import { SimpleMapPolyfill } from "./mapPolyfill";
+
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const isTSProject = !!options.preset.plugins["cli-plugin-typescript"];
+  const eslintParser =
+    options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
 
-  const eslintParser = isTSProject ? "@typescript-eslint/parser" : "babel-eslint";
+  let parserOptions: Record<string, any> = {
+    ecmaVersion: 11,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
+  };
+  const eslintRules = new SimpleMapPolyfill<string, string | Array<string | Record<string, any>>>([
+    ["quotes", ["error", "double"]],
+    ["semi", ["error", "always"]],
+    ["react/display-name", ["warn"]],
+    ["react/prop-types", ["error"]],
+    ["space-before-function-paren", ["error", "never"]],
+    ["comma-dangle", ["error", "always-multiline"]],
+  ]);
+  const eslintPlugins = ["react-hooks"];
 
-  let parserOptions = {};
-  let eslintRules = {};
+  const eslintSettings = {
+    react: {
+      createClass: "createReactClass",
+      pragma: "React",
+      version: "detect",
+      flowVersion: "0.53",
+    },
+    propWrapperFunctions: ["forbidExtraProps", { property: "freeze", object: "Object" }],
+    linkComponents: ["Hyperlink", { name: "Link", linkAttribute: "to" }],
+    "import/extensions": [".ts", ".tsx"],
+  };
 
   const eslintExtends = [
     "eslint:recommended",
@@ -15,21 +42,45 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     "prettier",
     "prettier/react",
   ];
-  const eslintPlugins = ["react-hooks"];
 
-  if (isTSProject) {
+  if (options.preset.language === "js") {
+    api.extendPackage({
+      scripts: {
+        eslint: "eslint --config .eslintrc --ext .jsx,.js src/",
+        "format:js": "prettier --write src/**/*.{js,jsx}",
+        "format:check:js": "prettier --check src/**/*.{js,jsx}",
+      },
+      devDependencies: {
+        "babel-eslint": "^10.0.3",
+      },
+      dependencies: {
+        "prop-types": "^15.7.2",
+      },
+    });
+  }
+
+  if (options.preset.language === "ts") {
     api.extendPackage({
       scripts: {
         eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
-        check: "tsc",
-        format: "prettier --write src/**/*.{ts,tsx}",
-        "check-format": "prettier --check src/**/*.{ts,tsx}",
+        check: "tsc --noEmit",
+        "format:ts": "prettier --write src/**/*.{ts,tsx}",
+        "format:check:ts": "prettier --check src/**/*.{ts,tsx}",
       },
       devDependencies: {
         "@typescript-eslint/parser": "^2.7.0",
         "@typescript-eslint/eslint-plugin": "^2.7.0",
       },
     });
+
+    eslintPlugins.push("@typescript-eslint");
+    eslintExtends.push(
+      "prettier/@typescript-eslint",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:import/typescript",
+    );
 
     parserOptions = {
       ecmaVersion: 11,
@@ -38,57 +89,52 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         jsx: true,
       },
       project: "./tsconfig.json",
-      tsconfigRootDir: "./",
-    };
-
-    eslintPlugins.push("@typescript-eslint");
-    eslintExtends.push(
-      "prettier/@typescript-eslint",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-    );
-  } else {
-    api.extendPackage({
-      scripts: {
-        eslint: "eslint --config .eslintrc --ext .jsx,.js src/",
-        format: "prettier --write src/**/*.{js,jsx}",
-        "check-format": "prettier --check src/**/*.{js,jsx}",
-      },
-      devDependencies: {
-        "babel-eslint": "^10.0.3",
-      },
-    });
-
-    parserOptions = {
-      ecmaVersion: 11,
-      sourceType: "module",
-      ecmaFeatures: {
-        jsx: true,
-      },
     };
   }
 
-  const lintFileSuffix = isTSProject ? "src/**/*.{ts,tsx}" : "src/**/*.{js,jsx}";
+  if (options.preset.eslint === "standard") {
+    api.extendPackage({
+      devDependencies: {
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+      },
+    });
+  }
+
+  if (options.preset.eslint === "airbnb") {
+    api.extendPackage({
+      devDependencies: {
+        "eslint-config-airbnb": "^18.0.1",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-import": "^2.18.2",
+      },
+    });
+
+    eslintExtends.push("airbnb");
+
+    if (options.preset.language === "ts") {
+      eslintRules.set("react/prop-types", ["off"]);
+      eslintRules.set("react/state-in-constructor", ["warn"]);
+      eslintRules.set("import/no-unresolved", ["off"]);
+      eslintRules.set("react/jsx-filename-extension", ["error", { extensions: [".ts", ".tsx"] }]);
+      eslintRules.set("import/extensions", ["off"]);
+    }
+  }
 
   api.extendPackage({
     devDependencies: {
       eslint: "^6.6.0",
       "eslint-config-prettier": "^6.6.0",
-      "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
       "eslint-plugin-react": "^7.16.0",
       "eslint-plugin-react-hooks": "^2.3.0",
-      "stylelint-webpack-plugin": "^1.1.0",
     },
   });
 
-  if (!isTSProject) {
-    api.extendPackage({
-      dependencies: {
-        "prop-types": "^15.7.2",
-      },
-    });
-  }
+  const lintFileSuffix =
+    options.preset.language === "ts" ? "src/**/*.{ts,tsx}" : "src/**/*.{js,jsx}";
 
   if (api.isGitRepository()) {
     api.extendPackage({
@@ -102,99 +148,17 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         },
       },
       "lint-staged": {
-        [lintFileSuffix]: ["npm run eslint", "npm run check-format", "git add"],
+        [lintFileSuffix]: ["npm run eslint", `npm run format:check:${options.preset.language}`],
       },
     });
   }
 
-  const eslintConfig = options.preset.plugins["cli-plugin-eslint"]
-    ? options.preset.plugins["cli-plugin-eslint"].config
-    : "base";
-
-  if (eslintConfig === "base") {
-    if (isTSProject) {
-      eslintRules = {
-        "react/display-name": ["warn"],
-        "react/prop-types": "off",
-      };
-    } else {
-      eslintRules = {
-        "react/display-name": ["warn"],
-      };
-    }
-  }
-
-  if (eslintConfig === "standard") {
-    api.extendPackage({
-      devDependencies: {
-        "eslint-config-standard": "^14.1.0",
-        "eslint-plugin-import": "^2.18.2",
-        "eslint-plugin-node": "^10.0.0",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-standard": "^4.0.1",
-      },
-    });
-
-    eslintExtends.push("standard", "prettier/standard");
-
-    if (isTSProject) {
-      eslintRules = {
-        quotes: ["error", "double"],
-        semi: ["error", "always"],
-        "space-before-function-paren": ["error", "never"],
-        "comma-dangle": ["error", "always-multiline"],
-        "react/prop-types": "off",
-      };
-    } else {
-      eslintRules = {
-        quotes: ["error", "double"],
-        semi: ["error", "always"],
-        "space-before-function-paren": ["error", "never"],
-        "comma-dangle": ["error", "always-multiline"],
-      };
-    }
-  }
-
-  if (eslintConfig === "airbnb") {
-    api.extendPackage({
-      devDependencies: {
-        "eslint-config-airbnb": "^18.0.1",
-        "eslint-plugin-jsx-a11y": "^6.2.3",
-        "eslint-plugin-import": "^2.18.2",
-      },
-    });
-
-    eslintExtends.push("airbnb");
-
-    if (isTSProject) {
-      eslintRules = {
-        "react/display-name": ["warn"],
-        "react/prop-types": ["off"],
-        "import/no-unresolved": ["off"],
-        "react/jsx-filename-extension": ["error", { extensions: [".ts", ".tsx"] }],
-        "import/prefer-default-export": ["off"],
-        "react/state-in-constructor": ["warn"],
-        "no-unused-vars": ["error"],
-        quotes: ["error", "double"],
-      };
-    } else {
-      eslintRules = {
-        "react/display-name": ["warn"],
-        "import/no-unresolved": ["off"],
-        "react/jsx-filename-extension": ["error", { extensions: [".js", ".jsx"] }],
-        "import/prefer-default-export": ["off"],
-        "react/state-in-constructor": ["warn"],
-        "no-unused-vars": ["error"],
-        quotes: ["error", "double"],
-      };
-    }
-  }
-
-  api.render("./../../../template/eslint", {
+  api.render("./template", {
     eslintExtends: JSON.stringify(eslintExtends),
     eslintPlugins: JSON.stringify(eslintPlugins),
     parserOptions: JSON.stringify(parserOptions),
     eslintParser: JSON.stringify(eslintParser),
-    eslintRules: JSON.stringify(eslintRules),
+    eslintRules: JSON.stringify(eslintRules.toPlainObject()),
+    settings: JSON.stringify(eslintSettings),
   });
 }

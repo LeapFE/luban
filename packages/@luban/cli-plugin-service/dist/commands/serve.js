@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -63,7 +54,7 @@ function default_1(api, options) {
             "--https": `use https (default: ${defaultServerConfig.https})`,
             "--public": `specify the public network URL for the HMR client`,
         },
-    }, (args) => __awaiter(this, void 0, void 0, function* () {
+    }, async (args) => {
         const isProduction = process.env.NODE_ENV === "production";
         api.chainWebpack((webpackConfig) => {
             if (!isProduction) {
@@ -80,13 +71,8 @@ function default_1(api, options) {
             process.exit();
         }
         webpackConfig.entry = {
-            app: [api.resolve(args.entry || `src/${entryFileOfApp}`)],
+            app: ["react-hot-loader/patch", api.resolve(args.entry || `src/${entryFileOfApp}`)],
         };
-        if (!api.hasNoAnyFeatures) {
-            webpackConfig.entry = {
-                app: ["react-hot-loader/patch", api.resolve(args.entry || `src/${entryFileOfApp}`)],
-            };
-        }
         const useHttps = args.https || projectDevServerOptions.https || defaultServerConfig.https;
         const protocol = useHttps ? "https" : "http";
         const host = args.host ||
@@ -97,7 +83,7 @@ function default_1(api, options) {
             process.env.DEV_SERVER_PORT ||
             projectDevServerOptions.port ||
             defaultServerConfig.port;
-        const port = yield portfinder_1.default.getPortPromise({ port: Number(_port) });
+        const port = await portfinder_1.default.getPortPromise({ port: Number(_port) });
         const rawPublicUrl = args.public || projectDevServerOptions.public;
         const publicUrl = rawPublicUrl
             ? /^[a-zA-Z]+:\/\//.test(rawPublicUrl)
@@ -126,19 +112,34 @@ function default_1(api, options) {
             addDevClientToEntry(webpackConfig, devClients);
         }
         const compiler = webpack_1.default(webpackConfig);
-        const webpackDevServerOptions = Object.assign(Object.assign({}, projectDevServerOptions), { clientLogLevel: "info", historyApiFallback: {
+        const webpackDevServerOptions = {
+            ...projectDevServerOptions,
+            clientLogLevel: "info",
+            historyApiFallback: {
                 disableDotRule: true,
                 rewrites: [{ from: /./, to: path_1.default.posix.join(options.publicPath || "/", "index.html") }],
-            }, contentBase: api.resolve("public"), watchContentBase: !isProduction, hot: !isProduction, compress: isProduction, publicPath: options.publicPath, overlay: { warnings: false, errors: true }, https: useHttps, before: (app, server) => {
+            },
+            contentBase: api.resolve("public"),
+            watchContentBase: !isProduction,
+            hot: !isProduction,
+            compress: isProduction,
+            publicPath: options.publicPath,
+            overlay: { warnings: false, errors: true },
+            https: useHttps,
+            before: (app, server) => {
                 api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
                 projectDevServerOptions.before && projectDevServerOptions.before(app, server, compiler);
-            }, open: false, stats: {
+            },
+            open: false,
+            stats: {
                 version: true,
                 timings: true,
                 colors: true,
                 modules: false,
                 children: false,
-            }, proxy: projectDevServerOptions.proxy });
+            },
+            proxy: projectDevServerOptions.proxy,
+        };
         const server = new webpack_dev_server_1.default(compiler, webpackDevServerOptions);
         ["SIGINT", "SIGTERM"].forEach((signal) => {
             process.on(signal, () => {
@@ -195,7 +196,7 @@ function default_1(api, options) {
                 }
             });
         });
-    }));
+    });
 }
 exports.default = default_1;
 //# sourceMappingURL=serve.js.map

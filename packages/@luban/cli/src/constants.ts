@@ -1,6 +1,6 @@
 import { RootOptions, Preset } from "./definitions";
 
-export const defaultPreset: Preset = {
+export const defaultPreset: Required<Preset> = {
   language: "ts",
   eslint: "standard",
   cssPreprocessor: "less",
@@ -8,6 +8,7 @@ export const defaultPreset: Preset = {
   router: true,
   store: true,
   unitTest: true,
+  uiLibrary: [],
   plugins: {
     "@luban-cli/cli-plugin-service": {},
     "@luban-cli/cli-plugin-babel": {},

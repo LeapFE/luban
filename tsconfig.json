@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ESNext",
     "module": "CommonJS",
     "allowJs": true,
     "moduleResolution": "node",
@@ -13,9 +13,10 @@
     "suppressImplicitAnyIndexErrors": true,
     "downlevelIteration": true,
     "lib": [
-      "es2017",
-      "es2015",
-      "es6"
+      "ES2017",
+      "ES2016",
+      "ES2015",
+      "ES5",
     ],
     "types": [
       "node"

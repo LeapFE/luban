@@ -69,6 +69,7 @@ class Creator {
 
     this.run = this.run.bind(this);
     this.shouldInitGit = this.shouldInitGit.bind(this);
+    this.formatConfigFiles = this.formatConfigFiles.bind(this);
 
     this.injectedPrompts = [];
     this.promptCompletedCallbacks = [];
@@ -79,7 +80,7 @@ class Creator {
   }
 
   public async create(): Promise<void> {
-    const { options, context, name, shouldInitGit, run } = this;
+    const { options, context, name, shouldInitGit, run, formatConfigFiles } = this;
 
     if (!options.manual) {
       const useDefaultPreset = await this.confirmUseDefaultPrest();
@@ -104,8 +105,6 @@ class Creator {
     logWithSpinner(`✨`, `Creating project in ${chalk.yellow(context)}.`);
     log();
 
-    const resolvedPlugins = await this.resolvePlugins(cloneDeep(adaptedPreset.plugins));
-
     const { latestMinor } = await getVersions();
 
     const pkg: BasePkgFields = {
@@ -114,6 +113,8 @@ class Creator {
       private: true,
       devDependencies: {},
       ["__luban_config__"]: adaptedPreset,
+      // this field is for test
+      ["__USE_LOCAL_PLUGIN__"]: this.installLocalPlugin,
     };
 
     const deps = Object.keys(adaptedPreset.plugins);
@@ -152,6 +153,11 @@ class Creator {
 
     log();
 
+    const resolvedPlugins = await this.resolvePlugins(
+      cloneDeep(adaptedPreset.plugins),
+      options.localPlugin || false,
+    );
+
     log(`🚀  Invoking plugin's generators...`);
     const generator = new Generator(context, { plugins: resolvedPlugins, pkg: pkg });
     await generator.generate();
@@ -170,6 +176,17 @@ class Creator {
     await writeFileTree(context, {
       "README.md": generateReadme(generator.pkg, packageManager),
     });
+
+    log();
+    log();
+
+    stopSpinner();
+    log("🎨  formatting some file...");
+    try {
+      await formatConfigFiles(adaptedPreset);
+    } catch (e) {
+      warn("format file failure, but does not effect to create project");
+    }
 
     log();
 
@@ -203,7 +220,24 @@ class Creator {
     return execa(command, args, { cwd: this.context });
   }
 
-  public async promptAndResolvePreset(manual: boolean): Promise<Preset> {
+  public async formatConfigFiles(preset: Required<Preset>): Promise<void> {
+    const { run } = this;
+
+    const formatArgs = ["--parser=json", "--write"];
+    const formatFiles = ["./.babelrc", "./.eslintrc", "./.postcssrc"];
+
+    if (preset.stylelint) {
+      formatFiles.push("./.stylelintrc ");
+    }
+
+    if (preset.language === "ts") {
+      formatFiles.push("./tsconfig.json");
+    }
+
+    await run("./node_modules/prettier/bin-prettier.js", formatArgs.concat(formatFiles));
+  }
+
+  public async promptAndResolvePreset(manual: boolean): Promise<Required<Preset>> {
     if (!manual) {
       return defaultPreset;
     }
@@ -219,7 +253,7 @@ class Creator {
 
     this.promptCompletedCallbacks.forEach((cb) => cb(answers as FinalAnswers, preset));
 
-    return preset;
+    return preset as Required<Preset>;
   }
 
   public printDefaultPreset(): void {
@@ -289,14 +323,18 @@ class Creator {
     return outroPrompts;
   }
 
-  public async resolvePlugins(rawPlugins: RawPlugin): Promise<ResolvedPlugin[]> {
+  public async resolvePlugins(
+    rawPlugins: RawPlugin,
+    useLocalPlugins: boolean,
+  ): Promise<ResolvedPlugin[]> {
     const sortedRawPlugins = sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
     const plugins: ResolvedPlugin[] = [];
 
     const pluginIDs = Object.keys(sortedRawPlugins);
 
     for (const id of pluginIDs) {
-      const apply = loadModule(`${id}/generator`, this.context) || ((): void => undefined);
+      const filePath = useLocalPlugins ? `${id}/dist/generator` : `${id}/generator`;
+      const apply = loadModule(filePath, this.context) || ((): void => undefined);
       plugins.push({ id: id as PLUGIN_ID, apply, options: sortedRawPlugins[id] || {} });
     }
     return plugins;

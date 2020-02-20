@@ -7,7 +7,7 @@ import deepmerge from "deepmerge";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { error, warn, loadModule, log } from "@luban-cli/cli-shared-utils";
+import { error, warn, loadModule, log, info } from "@luban-cli/cli-shared-utils";
 
 import { PluginAPI } from "./PluginAPI";
 import { defaultsProjectConfig, validateProjectConfig } from "./options";
@@ -73,6 +73,7 @@ class Service {
   public plugins: ServicePlugin[];
   public mode: string;
   private inlineProjectOptions?: ProjectConfig;
+  private readonly useLocalPlugin: boolean;
 
   constructor(context: string, { plugins, pkg, projectOptions, useBuiltIn }: ResetParams) {
     Object.defineProperties(process, {
@@ -91,6 +92,9 @@ class Service {
     this.webpackRawConfigCallback = [];
     this.commands = {};
     this.pkg = this.resolvePkg(pkg);
+
+    this.useLocalPlugin =
+      this.pkg.__USE_LOCAL_PLUGIN__ || JSON.parse(process.env.USE_LOCAL_PLUGIN || "") || false;
 
     this.inlineProjectOptions = projectOptions;
 
@@ -148,11 +152,17 @@ class Service {
   }
 
   public resolvePlugins(inlinePlugins: InlinePlugin[], useBuiltIn: boolean): ServicePlugin[] {
-    const prefixRE = /^@\/luban\/cli-plugin-/;
-    const idToPlugin = (id: string): InlinePlugin => ({
-      id: id.replace(/^.\//, "built-in:"),
-      apply: prefixRE.test(id) ? loadModule(id, this.context) : require(id).default,
-    });
+    const prefixRE = /^@luban-cli\/cli-plugin-/;
+    const idToPlugin = (id: string): InlinePlugin => {
+      const filePath = this.useLocalPlugin ? `${id}/dist/index.js` : `${id}/index.js`;
+
+      return {
+        id: id.replace(/^.\//, "built-in:"),
+        apply: prefixRE.test(id)
+          ? loadModule(filePath, this.context) || ((): void => undefined)
+          : require(id).default,
+      };
+    };
 
     const builtInPlugins = builtInPluginsRelativePath.map(idToPlugin);
 
@@ -206,10 +216,9 @@ class Service {
     const load = (path: string): void => {
       const env = dotenvConfig({ path });
       dotenvExpand(env);
-      log(`try to load dotenv file ${chalk.green(path)}`);
 
-      if (env.error) {
-        warn(`load ${path} file failure, please check it exist`);
+      if (!env.error) {
+        info(`loaded dotenv file ${chalk.green(path)} successfully`);
       }
 
       log();
@@ -280,18 +289,16 @@ class Service {
   }
 
   public resolveLubanConfig(): Preset {
-    // TODO wrong initConfig
     let initConfig: Preset = {
-      useConfigFiles: false,
       plugins: { "@luban-cli/cli-plugin-service": {} },
     };
-    try {
-      const pkg = fs.readFileSync(path.resolve(this.context, "./package.json")).toString();
-      initConfig = JSON.parse(pkg)["__luban_config__"];
-      return initConfig;
-    } catch (error) {
-      return initConfig;
+
+    const pkg = this.resolvePkg();
+    if (pkg.__luban_config__) {
+      initConfig = pkg.__luban_config__;
     }
+
+    return initConfig;
   }
 }
 

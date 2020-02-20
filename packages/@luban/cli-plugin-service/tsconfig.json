@@ -9,6 +9,9 @@
   "include": [
     "./src",
   ],
+  "exclude": [
+    "./src/template"
+  ],
   "files": [
     "./types.d.ts"
   ]

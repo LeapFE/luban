@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -23,9 +14,7 @@ const yaml = require("yaml-front-matter");
 const mergeDeps_1 = require("../utils/mergeDeps");
 const configTransforms_1 = require("../utils/configTransforms");
 const execa_1 = __importDefault(require("execa"));
-const isString = (val) => typeof val === "string";
-const isFunction = (val) => typeof val === "function";
-const isObject = (val) => val && typeof val === "object";
+const isObject = (val) => val !== null && typeof val === "object";
 function extractCallDir() {
     const obj = { stack: "" };
     Error.captureStackTrace(obj);
@@ -71,7 +60,7 @@ function renderFile(name, data, ejsOptions) {
             }
         }
     }
-    return ejs_1.default.render(finalTemplate, data, Object.assign(Object.assign({}, ejsOptions), { async: false }));
+    return ejs_1.default.render(finalTemplate, data, { ...ejsOptions, async: false });
 }
 class GeneratorAPI {
     constructor(id, generator, options, rootOptions) {
@@ -131,11 +120,11 @@ class GeneratorAPI {
     }
     render(source, additionalData = {}, ejsOptions = {}) {
         const baseDir = extractCallDir();
-        if (isString(source)) {
+        if (typeof source === "string") {
             source = path_1.default.resolve(baseDir, source);
-            this._injectFileMiddleware((files) => __awaiter(this, void 0, void 0, function* () {
+            this._injectFileMiddleware(async (files) => {
                 const data = this._resolveData(additionalData);
-                const _files = yield globby_1.default(["**/*"], { cwd: source });
+                const _files = await globby_1.default(["**/*"], { cwd: source });
                 for (const rawPath of _files) {
                     const targetPath = rawPath
                         .split("/")
@@ -155,9 +144,9 @@ class GeneratorAPI {
                         files[targetPath] = content;
                     }
                 }
-            }));
+            });
         }
-        else if (isObject(source)) {
+        else if (typeof source === "object" && source !== null) {
             this._injectFileMiddleware((files) => {
                 const data = this._resolveData(additionalData);
                 for (const targetPath in source) {
@@ -169,7 +158,7 @@ class GeneratorAPI {
                 }
             });
         }
-        else if (isFunction(source)) {
+        else if (typeof source === "function") {
             this._injectFileMiddleware(source);
         }
     }
@@ -191,20 +180,6 @@ class GeneratorAPI {
             ? "src/index.tsx"
             : "src/index.jsx";
         return this._entryFile;
-    }
-    hasNoAnyFeatures() {
-        return this.generator.plugins.length === 1;
-    }
-    useTsWithBabel() {
-        if (this.generator.rootOptions.preset.plugins["cli-plugin-babel"] &&
-            this.generator.rootOptions.preset.plugins["cli-plugin-typescript"]) {
-            return true;
-        }
-        if (this.generator.rootOptions.preset.plugins["cli-plugin-typescript"] &&
-            this.generator.rootOptions.preset.plugins["cli-plugin-typescript"].useTsWithBabel) {
-            return true;
-        }
-        return false;
     }
     run(command, args) {
         if (!args) {

@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -33,94 +24,104 @@ class Creator {
         this.installLocalPlugin = options.localPlugin || false;
         this.run = this.run.bind(this);
         this.shouldInitGit = this.shouldInitGit.bind(this);
+        this.formatConfigFiles = this.formatConfigFiles.bind(this);
         this.injectedPrompts = [];
         this.promptCompletedCallbacks = [];
         this.outroPrompts = this.resolveOutroPrompts();
         const promptAPI = new promptModuleAPI_1.PromptModuleAPI(this);
         promptModules.forEach((m) => m(promptAPI));
     }
-    create() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { options, context, name, shouldInitGit, run } = this;
-            if (!options.manual) {
-                const useDefaultPreset = yield this.confirmUseDefaultPrest();
-                if (!useDefaultPreset) {
-                    cli_shared_utils_1.warn("You cancel current operation.");
-                    process.exit(1);
-                }
+    async create() {
+        const { options, context, name, shouldInitGit, run, formatConfigFiles } = this;
+        if (!options.manual) {
+            const useDefaultPreset = await this.confirmUseDefaultPrest();
+            if (!useDefaultPreset) {
+                cli_shared_utils_1.warn("You cancel current operation.");
+                process.exit(1);
             }
-            const preset = yield this.promptAndResolvePreset(options.manual || false);
-            const adaptedPreset = lodash_clonedeep_1.default(preset);
-            const rootOptions = { projectName: name, preset };
-            adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
-            const packageManager = this._pkgManager || "npm";
-            const pkgManager = new packageManager_1.PackageManager({ context, forcePackageManager: packageManager });
-            cli_shared_utils_1.logWithSpinner(`✨`, `Creating project in ${chalk_1.default.yellow(context)}.`);
-            cli_shared_utils_1.log();
-            const resolvedPlugins = yield this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins));
-            const { latestMinor } = yield getVersions_1.getVersions();
-            const pkg = {
-                name,
-                version: "0.1.0",
-                private: true,
-                devDependencies: {},
-                ["__luban_config__"]: adaptedPreset,
-            };
-            const deps = Object.keys(adaptedPreset.plugins);
-            deps.forEach((dep) => {
-                let packageDirName = "";
-                let packageDirPath = "";
-                const packageDirNameMatchResult = /^@luban-cli\/(cli-plugin-.+)$/.exec(dep);
-                if (Array.isArray(packageDirNameMatchResult)) {
-                    packageDirName = packageDirNameMatchResult[1];
-                    packageDirPath = path_1.default.resolve(process.cwd(), `../../${packageDirName}`);
-                }
-                pkg.devDependencies[dep] = this.installLocalPlugin
-                    ? `file:${packageDirPath}`
-                    : `~${latestMinor}`;
-            });
-            yield cli_shared_utils_1.writeFileTree(context, {
-                "package.json": JSON.stringify(pkg, null, 2),
-            });
-            const shouldInitGitFlag = shouldInitGit(options);
-            if (shouldInitGitFlag) {
-                cli_shared_utils_1.logWithSpinner(`🗃`, `Initializing git repository...`);
-                yield run("git init");
+        }
+        const preset = await this.promptAndResolvePreset(options.manual || false);
+        const adaptedPreset = lodash_clonedeep_1.default(preset);
+        const rootOptions = { projectName: name, preset };
+        adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
+        const packageManager = this._pkgManager || "npm";
+        const pkgManager = new packageManager_1.PackageManager({ context, forcePackageManager: packageManager });
+        cli_shared_utils_1.logWithSpinner(`✨`, `Creating project in ${chalk_1.default.yellow(context)}.`);
+        cli_shared_utils_1.log();
+        const { latestMinor } = await getVersions_1.getVersions();
+        const pkg = {
+            name,
+            version: "0.1.0",
+            private: true,
+            devDependencies: {},
+            ["__luban_config__"]: adaptedPreset,
+            ["__USE_LOCAL_PLUGIN__"]: this.installLocalPlugin,
+        };
+        const deps = Object.keys(adaptedPreset.plugins);
+        deps.forEach((dep) => {
+            let packageDirName = "";
+            let packageDirPath = "";
+            const packageDirNameMatchResult = /^@luban-cli\/(cli-plugin-.+)$/.exec(dep);
+            if (Array.isArray(packageDirNameMatchResult)) {
+                packageDirName = packageDirNameMatchResult[1];
+                packageDirPath = path_1.default.resolve(process.cwd(), `../../${packageDirName}`);
             }
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.stopSpinner();
-            cli_shared_utils_1.log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
-            cli_shared_utils_1.log();
-            yield pkgManager.install();
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.log(`🚀  Invoking plugin's generators...`);
-            const generator = new generator_1.Generator(context, { plugins: resolvedPlugins, pkg: pkg });
-            yield generator.generate();
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.stopSpinner();
-            cli_shared_utils_1.log(`📦   Installing additional dependencies...`);
-            yield pkgManager.install();
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.stopSpinner();
-            cli_shared_utils_1.logWithSpinner("📄   Generating README.md...");
-            yield cli_shared_utils_1.writeFileTree(context, {
-                "README.md": getReadme_1.generateReadme(generator.pkg, packageManager),
-            });
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.log(chalk_1.default.green("🎉   create project successfully!"));
-            cli_shared_utils_1.log(`
+            pkg.devDependencies[dep] = this.installLocalPlugin
+                ? `file:${packageDirPath}`
+                : `~${latestMinor}`;
+        });
+        await cli_shared_utils_1.writeFileTree(context, {
+            "package.json": JSON.stringify(pkg, null, 2),
+        });
+        const shouldInitGitFlag = shouldInitGit(options);
+        if (shouldInitGitFlag) {
+            cli_shared_utils_1.logWithSpinner(`🗃`, `Initializing git repository...`);
+            await run("git init");
+        }
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.stopSpinner();
+        cli_shared_utils_1.log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
+        cli_shared_utils_1.log();
+        await pkgManager.install();
+        cli_shared_utils_1.log();
+        const resolvedPlugins = await this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins), options.localPlugin || false);
+        cli_shared_utils_1.log(`🚀  Invoking plugin's generators...`);
+        const generator = new generator_1.Generator(context, { plugins: resolvedPlugins, pkg: pkg });
+        await generator.generate();
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.stopSpinner();
+        cli_shared_utils_1.log(`📦   Installing additional dependencies...`);
+        await pkgManager.install();
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.stopSpinner();
+        cli_shared_utils_1.logWithSpinner("📄   Generating README.md...");
+        await cli_shared_utils_1.writeFileTree(context, {
+            "README.md": getReadme_1.generateReadme(generator.pkg, packageManager),
+        });
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.stopSpinner();
+        cli_shared_utils_1.log("🎨  formatting some file...");
+        try {
+            await formatConfigFiles(adaptedPreset);
+        }
+        catch (e) {
+            cli_shared_utils_1.warn("format file failure, but does not effect to create project");
+        }
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.log(chalk_1.default.green("🎉   create project successfully!"));
+        cli_shared_utils_1.log(`
       ${chalk_1.default.bgWhiteBright.black("🚀   Run Application  ")}
       ${chalk_1.default.yellow(`cd ${name}`)}
       ${chalk_1.default.yellow("npm start")}
     `);
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.log(`🔗  More documentation to visit ${chalk_1.default.underline(`${require("./../../package.json").homepage}`)}`);
-            cli_shared_utils_1.log();
-            cli_shared_utils_1.log(chalk_1.default.redBright("💻   Happy coding"));
-            cli_shared_utils_1.log();
-            generator.printExitLogs();
-            process.exit(1);
-        });
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.log(`🔗  More documentation to visit ${chalk_1.default.underline(`${require("./../../package.json").homepage}`)}`);
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.log(chalk_1.default.redBright("💻   Happy coding"));
+        cli_shared_utils_1.log();
+        generator.printExitLogs();
+        process.exit(1);
     }
     run(command, args) {
         if (!args) {
@@ -128,18 +129,28 @@ class Creator {
         }
         return execa_1.default(command, args, { cwd: this.context });
     }
-    promptAndResolvePreset(manual) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!manual) {
-                return constants_1.defaultPreset;
-            }
-            const answers = yield inquirer_1.default.prompt(this.resolveFinalPrompts());
-            const preset = {
-                plugins: { "@luban-cli/cli-plugin-service": {} },
-            };
-            this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
-            return preset;
-        });
+    async formatConfigFiles(preset) {
+        const { run } = this;
+        const formatArgs = ["--parser=json", "--write"];
+        const formatFiles = ["./.babelrc", "./.eslintrc", "./.postcssrc"];
+        if (preset.stylelint) {
+            formatFiles.push("./.stylelintrc ");
+        }
+        if (preset.language === "ts") {
+            formatFiles.push("./tsconfig.json");
+        }
+        await run("./node_modules/prettier/bin-prettier.js", formatArgs.concat(formatFiles));
+    }
+    async promptAndResolvePreset(manual) {
+        if (!manual) {
+            return constants_1.defaultPreset;
+        }
+        const answers = await inquirer_1.default.prompt(this.resolveFinalPrompts());
+        const preset = {
+            plugins: { "@luban-cli/cli-plugin-service": {} },
+        };
+        this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
+        return preset;
     }
     printDefaultPreset() {
         cli_shared_utils_1.log();
@@ -152,19 +163,17 @@ class Creator {
         });
         cli_shared_utils_1.log();
     }
-    confirmUseDefaultPrest() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { useDefaultPreset } = yield inquirer_1.default.prompt([
-                {
-                    type: "confirm",
-                    name: "useDefaultPreset",
-                    message: constants_1.confirmUseDefaultPresetMsg,
-                    default: true,
-                },
-            ]);
-            this.printDefaultPreset();
-            return useDefaultPreset;
-        });
+    async confirmUseDefaultPrest() {
+        const { useDefaultPreset } = await inquirer_1.default.prompt([
+            {
+                type: "confirm",
+                name: "useDefaultPreset",
+                message: constants_1.confirmUseDefaultPresetMsg,
+                default: true,
+            },
+        ]);
+        this.printDefaultPreset();
+        return useDefaultPreset;
     }
     shouldInitGit(cliOptions) {
         if (!cli_shared_utils_1.hasGit()) {
@@ -197,17 +206,16 @@ class Creator {
         const outroPrompts = [];
         return outroPrompts;
     }
-    resolvePlugins(rawPlugins) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const sortedRawPlugins = sortObject_1.sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
-            const plugins = [];
-            const pluginIDs = Object.keys(sortedRawPlugins);
-            for (const id of pluginIDs) {
-                const apply = cli_shared_utils_1.loadModule(`${id}/generator`, this.context) || (() => undefined);
-                plugins.push({ id: id, apply, options: sortedRawPlugins[id] || {} });
-            }
-            return plugins;
-        });
+    async resolvePlugins(rawPlugins, useLocalPlugins) {
+        const sortedRawPlugins = sortObject_1.sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
+        const plugins = [];
+        const pluginIDs = Object.keys(sortedRawPlugins);
+        for (const id of pluginIDs) {
+            const filePath = useLocalPlugins ? `${id}/dist/generator` : `${id}/generator`;
+            const apply = cli_shared_utils_1.loadModule(filePath, this.context) || (() => undefined);
+            plugins.push({ id: id, apply, options: sortedRawPlugins[id] || {} });
+        }
+        return plugins;
     }
 }
 exports.Creator = Creator;

@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build:types": "tsc --pretty --project tsconfig.type.json",
-    "build": "rimraf dist && tsc --pretty && yarn run build:types",
+    "build": "rimraf dist && tsc --pretty && yarn run build:types && cp -ri src/template dist/template",
     "check:type": "tsc --noEmit",
     "watch": "yarn run build -- --watch --diagnostics"
   },
@@ -69,7 +69,7 @@
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-chain": "^6.0.0",
-    "webpack-dev-server": "^3.10.3",
+    "webpack-dev-server": "^3.8.2",
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {

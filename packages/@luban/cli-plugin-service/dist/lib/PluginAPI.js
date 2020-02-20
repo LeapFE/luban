@@ -8,7 +8,6 @@ class PluginAPI {
     constructor(id, service) {
         this.id = id;
         this.service = service;
-        this.hasNoAnyFeatures = Object.keys(this.resolveInitConfig().plugins).length === 0;
     }
     getCwd() {
         return this.service.context;
@@ -22,29 +21,11 @@ class PluginAPI {
             return p.id === id || p.id.replace(prefixRE, "") === id;
         });
     }
-    isTSProject() {
-        return this.hasPlugin("@luban-cli/cli-plugin-typescript");
-    }
-    useTsWithBabel() {
-        const initConfig = this.resolveInitConfig();
-        if (initConfig.plugins["cli-plugin-babel"] && initConfig.plugins["cli-plugin-typescript"]) {
-            return true;
-        }
-        if (initConfig.plugins["cli-plugin-typescript"] &&
-            initConfig.plugins["cli-plugin-typescript"].useTsWithBabel) {
-            return true;
-        }
-        return false;
-    }
     resolveInitConfig() {
         return this.service.resolveLubanConfig();
     }
     getEntryFile() {
-        const initConfig = this.resolveInitConfig();
-        if (initConfig && Object.keys(initConfig.plugins).length === 0) {
-            return "index.js";
-        }
-        return this.isTSProject() ? "index.tsx" : "index.jsx";
+        return this.resolveInitConfig().language === "ts" ? "index.tsx" : "index.jsx";
     }
     setMode(mode) {
         process.env.LUBAN_CLI_SERVICE_MODE = mode;

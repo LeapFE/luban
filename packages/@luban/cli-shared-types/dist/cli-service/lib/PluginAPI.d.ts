@@ -4,13 +4,10 @@ import Config from "webpack-chain";
 declare class PluginAPI {
     id: string;
     service: Service;
-    hasNoAnyFeatures: boolean;
     constructor(id: string, service: Service);
     getCwd(): string;
     resolve(_path: string): string;
     hasPlugin(id: PLUGIN_IDS): boolean;
-    isTSProject(): boolean;
-    useTsWithBabel(): boolean;
     resolveInitConfig(): Preset;
     getEntryFile(): string;
     setMode(mode: string): void;

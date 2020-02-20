@@ -1,2 +1,1 @@
-import { BasePkgFields } from "../definitions";
-export declare const generateReadme: (pkg: BasePkgFields, packageManager: "npm") => string;
+export declare const generateReadme: (pkg: import("@luban-cli/cli-shared-types/dist/shared").BasePkgFields, packageManager: "npm") => string;

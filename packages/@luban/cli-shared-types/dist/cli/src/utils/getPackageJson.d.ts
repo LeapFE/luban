@@ -1,2 +1,1 @@
-import { BasePkgFields } from "../definitions";
-export declare const getPackageJson: (projectPath: string) => BasePkgFields;
+export declare const getPackageJson: (projectPath: string) => import("@luban-cli/cli-shared-types/dist/shared").BasePkgFields;

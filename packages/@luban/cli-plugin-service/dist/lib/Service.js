@@ -55,6 +55,8 @@ class Service {
         this.webpackRawConfigCallback = [];
         this.commands = {};
         this.pkg = this.resolvePkg(pkg);
+        this.useLocalPlugin =
+            this.pkg.__USE_LOCAL_PLUGIN__ || JSON.parse(process.env.USE_LOCAL_PLUGIN || "") || false;
         this.inlineProjectOptions = projectOptions;
         this.plugins = this.resolvePlugins(plugins || [], useBuiltIn || false);
     }
@@ -97,11 +99,16 @@ class Service {
         return Promise.resolve(fn(args, rawArgv));
     }
     resolvePlugins(inlinePlugins, useBuiltIn) {
-        const prefixRE = /^@\/luban\/cli-plugin-/;
-        const idToPlugin = (id) => ({
-            id: id.replace(/^.\//, "built-in:"),
-            apply: prefixRE.test(id) ? cli_shared_utils_1.loadModule(id, this.context) : require(id).default,
-        });
+        const prefixRE = /^@luban-cli\/cli-plugin-/;
+        const idToPlugin = (id) => {
+            const filePath = this.useLocalPlugin ? `${id}/dist/index.js` : `${id}/index.js`;
+            return {
+                id: id.replace(/^.\//, "built-in:"),
+                apply: prefixRE.test(id)
+                    ? cli_shared_utils_1.loadModule(filePath, this.context) || (() => undefined)
+                    : require(id).default,
+            };
+        };
         const builtInPlugins = builtInPluginsRelativePath.map(idToPlugin);
         if (inlinePlugins.length !== 0) {
             return useBuiltIn !== false ? builtInPlugins.concat(inlinePlugins) : inlinePlugins;
@@ -149,9 +156,8 @@ class Service {
         const load = (path) => {
             const env = dotenv_1.config({ path });
             dotenv_expand_1.default(env);
-            cli_shared_utils_1.log(`try to load dotenv file ${chalk_1.default.green(path)}`);
-            if (env.error) {
-                cli_shared_utils_1.warn(`load ${path} file failure, please check it exist`);
+            if (!env.error) {
+                cli_shared_utils_1.info(`loaded dotenv file ${chalk_1.default.green(path)} successfully`);
             }
             cli_shared_utils_1.log();
         };
@@ -205,17 +211,13 @@ class Service {
     }
     resolveLubanConfig() {
         let initConfig = {
-            useConfigFiles: false,
             plugins: { "@luban-cli/cli-plugin-service": {} },
         };
-        try {
-            const pkg = fs_1.default.readFileSync(path_1.default.resolve(this.context, "./package.json")).toString();
-            initConfig = JSON.parse(pkg)["__luban_config__"];
-            return initConfig;
+        const pkg = this.resolvePkg();
+        if (pkg.__luban_config__) {
+            initConfig = pkg.__luban_config__;
         }
-        catch (error) {
-            return initConfig;
-        }
+        return initConfig;
     }
 }
 exports.Service = Service;

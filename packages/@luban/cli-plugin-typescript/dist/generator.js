@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function default_1(api, options) {
-    api.render("./../../../template/typescript");
+    api.render("./template");
     if (options.preset.cssPreprocessor === "styled-components") {
         api.extendPackage({
             devDependencies: {

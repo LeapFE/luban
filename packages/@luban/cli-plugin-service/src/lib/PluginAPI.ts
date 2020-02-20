@@ -15,13 +15,10 @@ import Config from "webpack-chain";
 class PluginAPI {
   public id: string;
   public service: Service;
-  public hasNoAnyFeatures: boolean;
 
   constructor(id: string, service: Service) {
     this.id = id;
     this.service = service;
-
-    this.hasNoAnyFeatures = Object.keys(this.resolveInitConfig().plugins).length === 0;
   }
 
   public getCwd(): string {
@@ -39,39 +36,12 @@ class PluginAPI {
     });
   }
 
-  public isTSProject(): boolean {
-    // 是否存在 tsconfig.json
-    return this.hasPlugin("@luban-cli/cli-plugin-typescript");
-  }
-
-  public useTsWithBabel(): boolean {
-    const initConfig = this.resolveInitConfig();
-
-    if (initConfig.plugins["cli-plugin-babel"] && initConfig.plugins["cli-plugin-typescript"]) {
-      return true;
-    }
-
-    if (
-      initConfig.plugins["cli-plugin-typescript"] &&
-      initConfig.plugins["cli-plugin-typescript"].useTsWithBabel
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
   public resolveInitConfig(): Preset {
     return this.service.resolveLubanConfig();
   }
 
   public getEntryFile(): string {
-    const initConfig = this.resolveInitConfig();
-    if (initConfig && Object.keys(initConfig.plugins).length === 0) {
-      return "index.js";
-    }
-
-    return this.isTSProject() ? "index.tsx" : "index.jsx";
+    return this.resolveInitConfig().language === "ts" ? "index.tsx" : "index.jsx";
   }
 
   // set project mode.

@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -42,25 +33,21 @@ class Generator {
             ? cliService.options
             : constants_1.defaultRootOptions;
     }
-    initPlugins() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { rootOptions } = this;
-            for (const plugin of this.plugins) {
-                const { id, apply, options } = plugin;
-                const api = new generatorAPI_1.GeneratorAPI(id, this, options, rootOptions);
-                yield apply(api, rootOptions);
-            }
-        });
+    async initPlugins() {
+        const { rootOptions } = this;
+        for (const plugin of this.plugins) {
+            const { id, apply, options } = plugin;
+            const api = new generatorAPI_1.GeneratorAPI(id, this, options, rootOptions);
+            await apply(api, rootOptions);
+        }
     }
-    generate() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.initPlugins();
-            const initialFiles = Object.assign({}, this.files);
-            yield this.resolveFiles();
-            this.sortPkg();
-            this.files["package.json"] = JSON.stringify(this.pkg, null, 2) + "\n";
-            yield cli_shared_utils_1.writeFileTree(this.context, this.files, initialFiles);
-        });
+    async generate() {
+        await this.initPlugins();
+        const initialFiles = Object.assign({}, this.files);
+        await this.resolveFiles();
+        this.sortPkg();
+        this.files["package.json"] = JSON.stringify(this.pkg, null, 2) + "\n";
+        await cli_shared_utils_1.writeFileTree(this.context, this.files, initialFiles);
     }
     sortPkg() {
         this.pkg.dependencies = sortObject_1.sortObject(this.pkg.dependencies || {});
@@ -90,16 +77,14 @@ class Generator {
             "jest",
         ]);
     }
-    resolveFiles() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const files = this.files;
-            for (const middleware of this.fileMiddlewares) {
-                yield middleware(files, ejs_1.default.render);
-            }
-            for (const postProcess of this.postProcessFilesCbs) {
-                yield postProcess(files);
-            }
-        });
+    async resolveFiles() {
+        const files = this.files;
+        for (const middleware of this.fileMiddlewares) {
+            await middleware(files, ejs_1.default.render);
+        }
+        for (const postProcess of this.postProcessFilesCbs) {
+            await postProcess(files);
+        }
     }
     hasPlugin(_id, _version) {
         return [...this.plugins.map((p) => p.id), ...this.allPluginIds].some((id) => {

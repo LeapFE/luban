@@ -6,22 +6,17 @@ export default function(cli: PromptModuleAPI): void {
     name: "eslint",
     type: "list",
     message: "Pick a linter config:",
-    default: "standard",
+    default: "airbnb",
     choices: () => [
       {
-        name: "ESLint + Basic config",
-        value: "base",
-        short: "Basic",
+        name: "ESLint + Airbnb config",
+        value: "airbnb",
+        short: "Airbnb",
       },
       {
         name: "ESLint + Standard config",
         value: "standard",
         short: "Standard",
-      },
-      {
-        name: "ESLint + Airbnb config",
-        value: "airbnb",
-        short: "Airbnb",
       },
     ],
   });

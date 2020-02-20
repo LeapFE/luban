@@ -25,7 +25,7 @@ function default_1(api, options) {
     };
     const isProduction = process.env.NODE_ENV === "production";
     const entryFileOfApp = api.getEntryFile();
-    const isTSProject = api.isTSProject();
+    const isTSProject = api.resolveInitConfig().language === "ts";
     api.chainWebpack((webpackConfig) => {
         webpackConfig
             .mode("development")
@@ -52,7 +52,7 @@ function default_1(api, options) {
         const jsRule = webpackConfig.module.rule("js");
         const tsRule = webpackConfig.module.rule("ts");
         const eslintRule = webpackConfig.module.rule("eslint");
-        if (api.resolveInitConfig().plugins["cli-plugin-eslint"]) {
+        if (api.resolveInitConfig().eslint) {
             eslintRule
                 .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
                 .enforce("pre")
@@ -62,7 +62,7 @@ function default_1(api, options) {
                 .loader("eslint-loader")
                 .end();
         }
-        if (api.useTsWithBabel() && isProduction) {
+        if (isProduction) {
             tsRule
                 .test(/\.ts[x]?$/)
                 .exclude.add(/node_modules/)
@@ -82,7 +82,7 @@ function default_1(api, options) {
                 .options({ transpileOnly: true })
                 .end();
         }
-        if (!api.hasNoAnyFeatures) {
+        if (!isTSProject && !isProduction) {
             jsRule
                 .test(/\.jsx?$/)
                 .include.add(api.resolve("src"))

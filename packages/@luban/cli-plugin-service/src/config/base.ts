@@ -41,7 +41,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
   const entryFileOfApp = api.getEntryFile();
 
-  const isTSProject = api.isTSProject();
+  const isTSProject = api.resolveInitConfig().language === "ts";
 
   api.chainWebpack((webpackConfig: Config) => {
     webpackConfig
@@ -75,7 +75,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     const eslintRule = webpackConfig.module.rule("eslint");
 
-    if (api.resolveInitConfig().plugins["cli-plugin-eslint"]) {
+    if (api.resolveInitConfig().eslint) {
       eslintRule
         .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
         .enforce("pre")
@@ -86,9 +86,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         .end();
     }
 
-    // 具有 typescript feature 并且在生产环境下 使用 babel-loader 来编译 ts code
-    // babel-loader 会根据 browserList 像最终的代码包中注入 polyfill
-    if (api.useTsWithBabel() && isProduction) {
+    if (isProduction) {
       tsRule
         .test(/\.ts[x]?$/)
         .exclude.add(/node_modules/)
@@ -99,7 +97,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         .end();
     }
 
-    // 具有 typescript feature 并且在开发环境下 使用 t's-loader 来编译 ts code
     if (isTSProject && !isProduction) {
       tsRule
         .test(/\.ts[x]?$/)
@@ -111,7 +108,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         .end();
     }
 
-    if (!api.hasNoAnyFeatures) {
+    if (!isTSProject && !isProduction) {
       jsRule
         .test(/\.jsx?$/)
         .include.add(api.resolve("src"))

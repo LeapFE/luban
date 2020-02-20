@@ -1,5 +1,5 @@
 import { Options as EJSOptions } from "ejs";
-import { Generator } from "./generator";
+import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
 import { ExecaChildProcess } from "execa";
 declare class GeneratorAPI {
@@ -16,13 +16,11 @@ declare class GeneratorAPI {
     get cliVersion(): string;
     hasPlugin(id: string, version: string): boolean;
     extendPackage(fields: Partial<BasePkgFields> | ((pbk: Partial<BasePkgFields>) => Partial<BasePkgFields>), forceNewVersion?: boolean): void;
-    render(source: any, additionalData?: Record<string, any>, ejsOptions?: EJSOptions): void;
+    render(source: string | Record<string | number | symbol, any> | fileMiddlewareCallback, additionalData?: Record<string, any>, ejsOptions?: EJSOptions): void;
     postProcessFiles(cb: () => void): void;
     addExitLog(msg: string, type?: string): void;
     static makeJSOnlyValue(str: string): () => void;
     get entryFile(): string;
-    hasNoAnyFeatures(): boolean;
-    useTsWithBabel(): boolean;
     run(command: string, args?: any): ExecaChildProcess;
     isGitRepository(): boolean;
 }

@@ -2,37 +2,12 @@ import Config from "webpack-chain";
 import webpack from "webpack";
 import webpackDevServer, { Configuration as WebpackDevServerConfig } from "webpack-dev-server";
 import { Application } from "express";
+import { RootOptions as rootOptions, RawPlugin as rawPlugin, Preset as preset, BasePkgFields as basePkgFields } from "@luban-cli/cli-shared-types/dist/shared";
 import { PluginAPI } from "./lib/PluginAPI";
 import { defaultsProjectConfig } from "./lib/options";
-export declare type RootOptions = {
-    projectName?: string;
-    preset?: Preset;
-};
-export declare type RawPlugin = {
-    "@luban-cli/cli-plugin-babel"?: Record<string, any>;
-    "@luban-cli/cli-plugin-typescript"?: Record<string, any>;
-    "@luban-cli/cli-plugin-eslint"?: Record<string, any>;
-    "@luban-cli/cli-plugin-stylelint"?: Record<string, any>;
-    "@luban-cli/cli-plugin-router"?: Record<string, any>;
-    "@luban-cli/cli-plugin-store"?: Record<string, any>;
-    "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
-    "@luban-cli/cli-plugin-service": RootOptions;
-};
-export declare type BasePkgFields = {
-    name: string;
-    description?: "";
-    version: string;
-    main?: string;
-    scripts?: Record<string, string>;
-    repository?: Record<string, string>;
-    devDependencies?: Record<string, string>;
-    dependencies?: Record<string, string>;
-    keywords?: string[];
-    author?: string;
-    browserslist?: string[];
-    homepage?: string;
-    ["__luban_config__"]?: Preset;
-} & Record<string, any>;
+export declare type RootOptions = rootOptions;
+export declare type RawPlugin = rawPlugin;
+export declare type BasePkgFields = basePkgFields;
 export declare type PluginApplyCallback = (api: PluginAPI, options: Record<string, any>) => void;
 export declare type InlinePlugin = {
     id: string;
@@ -99,12 +74,7 @@ export declare type InspectCliArgs = Partial<{
     verbose: boolean;
     help: boolean;
 }>;
-export declare type Preset = {
-    useConfigFiles: boolean;
-    cssPreprocessor?: "less" | "styled-components";
-    plugins: RawPlugin;
-    configs?: Record<string, string>;
-};
+export declare type Preset = preset;
 export declare type PLUGIN_IDS = keyof RawPlugin;
 export declare type CliArgs = ServeCliArgs | BuildCliArgs | InspectCliArgs;
 export declare type ParsedArgs<T extends Record<string | number, any> = CliArgs> = {

@@ -8,6 +8,7 @@ exports.defaultPreset = {
     router: true,
     store: true,
     unitTest: true,
+    uiLibrary: [],
     plugins: {
         "@luban-cli/cli-plugin-service": {},
         "@luban-cli/cli-plugin-babel": {},

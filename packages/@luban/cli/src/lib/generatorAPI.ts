@@ -13,9 +13,7 @@ import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
 import execa, { ExecaChildProcess } from "execa";
 
-const isString = (val: unknown): boolean => typeof val === "string";
-const isFunction = (val: unknown): boolean => typeof val === "function";
-const isObject = (val: unknown): boolean => val && typeof val === "object";
+const isObject = (val: unknown): boolean => val !== null && typeof val === "object";
 
 function extractCallDir(): string {
   // extract api.render() callsite file location using error stack
@@ -218,17 +216,19 @@ class GeneratorAPI {
    * @param {object} [ejsOptions] - options for ejs.
    */
   public render(
-    source: any,
+    source: string | Record<string | number | symbol, any> | fileMiddlewareCallback,
     additionalData: Record<string, any> = {},
     ejsOptions: EJSOptions = {},
   ): void {
     const baseDir = extractCallDir();
 
-    if (isString(source)) {
+    if (typeof source === "string") {
       source = path.resolve(baseDir, source);
+
       this._injectFileMiddleware(async (files) => {
         const data = this._resolveData(additionalData);
-        const _files = await globby(["**/*"], { cwd: source });
+        const _files = await globby(["**/*"], { cwd: source as string });
+
         for (const rawPath of _files) {
           const targetPath = rawPath
             .split("/")
@@ -244,7 +244,8 @@ class GeneratorAPI {
               return filename;
             })
             .join("/");
-          const sourcePath = path.resolve(source, rawPath);
+
+          const sourcePath = path.resolve(source as string, rawPath);
           const content = renderFile(sourcePath, data, ejsOptions);
           // only set file if it's not all whitespace, or is a Buffer (binary files)
           if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {
@@ -252,10 +253,11 @@ class GeneratorAPI {
           }
         }
       });
-    } else if (isObject(source)) {
+    } else if (typeof source === "object" && source !== null) {
       this._injectFileMiddleware((files) => {
         const data = this._resolveData(additionalData);
-        for (const targetPath in source) {
+
+        for (const targetPath in source as Record<string | symbol | number, any>) {
           const sourcePath = path.resolve(baseDir, source[targetPath]);
           const content = renderFile(sourcePath, data, ejsOptions);
           if (Buffer.isBuffer(content) || content.trim()) {
@@ -263,7 +265,7 @@ class GeneratorAPI {
           }
         }
       });
-    } else if (isFunction(source)) {
+    } else if (typeof source === "function") {
       this._injectFileMiddleware(source);
     }
   }
@@ -293,7 +295,7 @@ class GeneratorAPI {
    * @param {*} str JS expression as a string
    */
   public static makeJSOnlyValue(str: string): () => void {
-    const fn = () => undefined;
+    const fn = (): undefined => undefined;
     fn.__expression = str;
     return fn;
   }
@@ -310,28 +312,6 @@ class GeneratorAPI {
       : "src/index.jsx";
 
     return this._entryFile;
-  }
-
-  public hasNoAnyFeatures(): boolean {
-    return this.generator.plugins.length === 1;
-  }
-
-  public useTsWithBabel(): boolean {
-    if (
-      this.generator.rootOptions.preset.plugins["cli-plugin-babel"] &&
-      this.generator.rootOptions.preset.plugins["cli-plugin-typescript"]
-    ) {
-      return true;
-    }
-
-    if (
-      this.generator.rootOptions.preset.plugins["cli-plugin-typescript"] &&
-      this.generator.rootOptions.preset.plugins["cli-plugin-typescript"].useTsWithBabel
-    ) {
-      return true;
-    }
-
-    return false;
   }
 
   public run(command: string, args?: any): ExecaChildProcess {

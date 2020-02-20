@@ -65,6 +65,9 @@ commander_1.default
     if (process.argv.includes("-g") || process.argv.includes("--git")) {
         options.forceGit = true;
     }
+    if (process.argv.includes("-l") || process.argv.includes("--localPlugin")) {
+        process.env.USE_LOCAL_PLUGIN = "true";
+    }
     create_1.init(name, options);
 });
 commander_1.default

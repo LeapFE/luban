@@ -3,6 +3,11 @@ import {
   RootOptions as rootOptions,
   RawPlugin as rawPlugin,
   Preset as preset,
+  ESLinterConfig as esLinterConfig,
+  DevLanguage as devLanguage,
+  CssPreprocessor as cssPreprocessor,
+  UILibrary as uiLibrary,
+  BasePkgFields as basePkgFields,
 } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { GeneratorAPI } from "./lib/generatorAPI";
@@ -50,13 +55,13 @@ export type PACKAGE_MANAGER_CONFIG = {
  */
 export type CONFIG_FILE_TYPE = "js" | "json" | "yaml" | "lines";
 
-export type ESLinterConfig = "base" | "airbnb" | "standard";
+export type ESLinterConfig = esLinterConfig;
 
-export type DevLanguage = "js" | "ts";
+export type DevLanguage = devLanguage;
 
-export type CssPreprocessor = "less" | "styled-components";
+export type CssPreprocessor = cssPreprocessor;
 
-export type UILibrary = "ant-design" | "ant-design-mobile";
+export type UILibrary = uiLibrary;
 
 export type RootOptions = rootOptions;
 
@@ -100,18 +105,4 @@ export type InquirerQuestionType = keyof QuestionMap;
  *
  * @see https://docs.npmjs.com/creating-a-package-json-file
  */
-export type BasePkgFields = {
-  name: string;
-  description?: "";
-  version: string;
-  main?: string;
-  scripts?: Record<string, string>;
-  repository?: Record<string, string>;
-  devDependencies?: Record<string, string>;
-  dependencies?: Record<string, string>;
-  keywords?: string[];
-  author?: string;
-  browserslist?: string[];
-  homepage?: string;
-  ["__luban_config__"]?: Preset;
-} & Record<string, any>;
+export type BasePkgFields = basePkgFields;

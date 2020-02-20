@@ -1,0 +1,7 @@
+  
+# https://prettier.io/docs/en/ignore.html
+
+**/*.md
+**/*.svg
+**/*.html
+package.json

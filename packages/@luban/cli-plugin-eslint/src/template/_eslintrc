@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "parser": <%- eslintParser %>,
+  "parserOptions": <%- parserOptions %>,
+  "extends": <%- eslintExtends %>,
+  "plugins": <%- eslintPlugins %>,
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "globals": {
+    "process": true
+  },
+  "settings": <%- settings %>,
+  "rules": <%- eslintRules %>
+}

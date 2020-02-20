@@ -10,6 +10,7 @@ import { Creator } from "./creator";
 import { PromptModuleAPI } from "./promptModuleAPI";
 
 function getPromptModules(): Array<(api: PromptModuleAPI) => void> {
+  // TODO add prompt module apiRequest
   return [
     "language",
     "linter",

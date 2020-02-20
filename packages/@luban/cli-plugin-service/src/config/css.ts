@@ -51,15 +51,11 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       .use("css-loader")
       .loader("css-loader")
       .options(cssLoaderOptions)
+      .end()
+      .use("postcss")
+      .loader("postcss-loader")
+      .options({ ...loaderOptions.postcss, sourceMap, ident: "postcss" })
       .end();
-
-    if (!api.hasNoAnyFeatures) {
-      cssRule
-        .use("postcss")
-        .loader("postcss-loader")
-        .options({ ...loaderOptions.postcss, sourceMap, ident: "postcss" })
-        .end();
-    }
 
     if (createConfig.cssPreprocessor === "less") {
       const lessRule = webpackConfig.module.rule("less");

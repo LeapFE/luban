@@ -75,7 +75,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       },
     },
     async (args: ParsedArgs<BuildCliArgs>) => {
-      const entryFileOfApp = api.isTSProject() ? "index.tsx" : "index.jsx";
+      const entryFileOfApp = api.getEntryFile();
       args.entry = args.entry || `src/${entryFileOfApp}`;
 
       await build(args, api, options);

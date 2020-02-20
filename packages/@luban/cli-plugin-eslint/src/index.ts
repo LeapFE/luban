@@ -1,5 +1,5 @@
-import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
+// import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
 
-export default function(api: PluginAPI): void {
+export default function(): void {
   // console.log("TODO this is cli-plugin-eslint for cli-service call");
 }

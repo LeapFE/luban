@@ -1,4 +1,4 @@
-export type RootOptions = { projectName?: string; preset?: Preset };
+export type RootOptions = { projectName?: string; preset?: Required<Preset> };
 
 export type RawPlugin = {
   "@luban-cli/cli-plugin-babel"?: Record<string, any>;
@@ -11,7 +11,7 @@ export type RawPlugin = {
   "@luban-cli/cli-plugin-service": RootOptions;
 };
 
-export type ESLinterConfig = "base" | "airbnb" | "standard";
+export type ESLinterConfig = "airbnb" | "standard";
 
 export type DevLanguage = "js" | "ts";
 
@@ -32,5 +32,26 @@ export type Preset = {
   unitTest?: boolean;
   uiLibrary?: UILibrary[];
   plugins: RawPlugin;
-  configs?: Record<string, any>;
 };
+
+/**
+ * @description package.json fields, name and version must required
+ *
+ * @see https://docs.npmjs.com/creating-a-package-json-file
+ */
+export type BasePkgFields = {
+  name: string;
+  description?: "";
+  version: string;
+  main?: string;
+  scripts?: Record<string, string>;
+  repository?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  dependencies?: Record<string, string>;
+  keywords?: string[];
+  author?: string;
+  browserslist?: string[];
+  homepage?: string;
+  ["__luban_config__"]?: Required<Preset>;
+  ["__USE_LOCAL_PLUGIN__"]?: boolean;
+} & Record<string, any>;

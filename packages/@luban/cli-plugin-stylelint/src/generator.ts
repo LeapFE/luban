@@ -8,9 +8,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     "stylelint-config-prettier",
   ];
   let rules: Record<string, any> = {};
-  let lintScript = "stylelint src/*.css src/**/*.css";
-
-  const isTSProject = !!options.preset.plugins["cli-plugin-typescript"];
+  let lintScript = "stylelint src/**/*.css";
 
   if (options.preset.cssPreprocessor === "styled-components") {
     processors.push([
@@ -22,19 +20,24 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       },
     ]);
 
-    if (isTSProject) {
-      lintScript = "stylelint src/*.css src/*.css.ts src/**/*.css src/**/*.css.ts";
-    } else {
-      lintScript = "stylelint src/*.css src/*.css.js src/**/*.css src/**/*.css.js";
-    }
-  }
-
-  if (options.preset.cssPreprocessor === "styled-components") {
     extendsConfig.push("stylelint-config-styled-components");
+
+    api.extendPackage({
+      devDependencies: {
+        "stylelint-config-styled-components": "^0.1.1",
+        "stylelint-processor-styled-components": "^1.8.0",
+      },
+      scripts: {
+        "format:style": `prettier --write src/**/*.{css,css.${options.preset.language}}`,
+        "format:check:style": `prettier --check src/**/*.{css,css.${options.preset.language}}`,
+      },
+    });
+
+    lintScript = `stylelint src/**/*.{css,css.${options.preset.language}}`;
   }
 
   if (options.preset.cssPreprocessor === "less") {
-    lintScript = "stylelint src/*.css src/*.less src/**/*.css src/**/*.less";
+    lintScript = "stylelint src/**/*.{css,less}";
     rules = {
       "block-closing-brace-empty-line-before": null,
       "block-closing-brace-newline-after": null,
@@ -51,14 +54,31 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       "declaration-block-single-line-max-declarations": null,
       "selector-list-comma-newline-after": null,
     };
+
+    api.extendPackage({
+      scripts: {
+        "format:style": "prettier --write src/**/*.{css,less}",
+        "format:check:style": "prettier --check src/**/*.{css,less}",
+      },
+    });
+  }
+
+  let lintStyleFileSuffix = "src/**/*.{css,less}";
+
+  if (options.preset.cssPreprocessor === "styled-components") {
+    if (options.preset.language === "js") {
+      lintStyleFileSuffix = "src/**/*.{css,css.js}";
+    }
+
+    if (options.preset.language === "ts") {
+      lintStyleFileSuffix = "src/**/*.{css,css.ts}";
+    }
   }
 
   api.extendPackage({
     devDependencies: {
-      stylelint: "^12.0.0",
+      stylelint: "^13.0.0",
       "stylelint-config-standard": "^19.0.0",
-      "stylelint-config-styled-components": "^0.1.1",
-      "stylelint-processor-styled-components": "^1.8.0",
       "stylelint-config-prettier": "^6.0.0",
     },
     scripts: {
@@ -66,7 +86,15 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  api.render("./../../../template/stylelint", {
+  if (api.isGitRepository()) {
+    api.extendPackage({
+      "lint-staged": {
+        [lintStyleFileSuffix]: ["npm run eslint", "npm run format:check:style"],
+      },
+    });
+  }
+
+  api.render("./template", {
     processors: JSON.stringify(processors),
     extendsConfig: JSON.stringify(extendsConfig),
     rules: JSON.stringify(rules),

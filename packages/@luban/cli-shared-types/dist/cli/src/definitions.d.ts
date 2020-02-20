@@ -1,5 +1,5 @@
 import { QuestionMap } from "inquirer";
-import { RootOptions as rootOptions, RawPlugin as rawPlugin, Preset as preset } from "@luban-cli/cli-shared-types/dist/shared";
+import { RootOptions as rootOptions, RawPlugin as rawPlugin, Preset as preset, ESLinterConfig as esLinterConfig, DevLanguage as devLanguage, CssPreprocessor as cssPreprocessor, UILibrary as uiLibrary, BasePkgFields as basePkgFields } from "@luban-cli/cli-shared-types/dist/shared";
 import { GeneratorAPI } from "./lib/generatorAPI";
 export declare type CliOptions = Partial<{
     registry: string;
@@ -20,10 +20,10 @@ export declare type PACKAGE_MANAGER_CONFIG = {
     };
 };
 export declare type CONFIG_FILE_TYPE = "js" | "json" | "yaml" | "lines";
-export declare type ESLinterConfig = "base" | "airbnb" | "standard";
-export declare type DevLanguage = "js" | "ts";
-export declare type CssPreprocessor = "less" | "styled-components";
-export declare type UILibrary = "ant-design" | "ant-design-mobile";
+export declare type ESLinterConfig = esLinterConfig;
+export declare type DevLanguage = devLanguage;
+export declare type CssPreprocessor = cssPreprocessor;
+export declare type UILibrary = uiLibrary;
 export declare type RootOptions = rootOptions;
 export declare type RawPlugin = rawPlugin;
 export declare type Preset = preset;
@@ -49,19 +49,5 @@ export declare type FinalAnswers = {
 };
 export declare type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;
 export declare type InquirerQuestionType = keyof QuestionMap;
-export declare type BasePkgFields = {
-    name: string;
-    description?: "";
-    version: string;
-    main?: string;
-    scripts?: Record<string, string>;
-    repository?: Record<string, string>;
-    devDependencies?: Record<string, string>;
-    dependencies?: Record<string, string>;
-    keywords?: string[];
-    author?: string;
-    browserslist?: string[];
-    homepage?: string;
-    ["__luban_config__"]?: Preset;
-} & Record<string, any>;
+export declare type BasePkgFields = basePkgFields;
 export {};
