@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/front-end-captain/luban/compare/v0.0.3...v0.0.4) (2020-02-21)
+
+
+### Bug Fixes
+
+* **cli:** fix @luban-cli/cli dependencies ([157df2b](https://github.com/front-end-captain/luban/commit/157df2b5f57396d7cd79db19dca71b294580d7df))
+
+
+
+
+
 ## [0.0.3](https://github.com/front-end-captain/luban/compare/v0.0.2...v0.0.3) (2020-02-21)
 
 
