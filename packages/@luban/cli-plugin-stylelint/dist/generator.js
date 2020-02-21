@@ -86,7 +86,7 @@ function default_1(api, options) {
     api.render("./template", {
         processors: JSON.stringify(processors),
         extendsConfig: JSON.stringify(extendsConfig),
-        stylelintRules: JSON.stringify(stylelintRules.toPlainObject()),
+        rules: JSON.stringify(stylelintRules.toPlainObject()),
     });
 }
 exports.default = default_1;
