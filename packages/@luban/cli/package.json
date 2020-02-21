@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a scaffold to create a react app",
   "bin": {
     "luban": "bin/index.js"
@@ -35,7 +35,7 @@
     "url": "https://github.com/front-end-captain/luban/issues"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "0.0.2",
+    "@luban-cli/cli-shared-utils": "0.0.3",
     "chalk": "^3.0.0",
     "commander": "^4.1.0",
     "deepmerge": "^4.2.2",
@@ -49,12 +49,12 @@
     "lodash.clonedeep": "^4.5.0",
     "minimist": "^1.2.0",
     "recast": "^0.18.5",
+    "semver": "^7.1.2",
     "validate-npm-package-name": "^3.0.0",
-    "yaml-front-matter": "^4.1.0",
-    "semver": "^7.1.2"
+    "yaml-front-matter": "^4.1.0"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "0.0.2",
+    "@luban-cli/cli-shared-types": "0.0.3",
     "@types/didyoumean": "^1.2.0",
     "@types/ejs": "^3.0.0",
     "@types/inquirer": "^6.5.0",
