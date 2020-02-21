@@ -104,6 +104,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   api.render("./template", {
     processors: JSON.stringify(processors),
     extendsConfig: JSON.stringify(extendsConfig),
-    stylelintRules: JSON.stringify(stylelintRules.toPlainObject()),
+    rules: JSON.stringify(stylelintRules.toPlainObject()),
   });
 }
