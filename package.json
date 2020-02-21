@@ -17,7 +17,7 @@
     "test:changed": "node scripts/test.js --onlyChanged",
     "test": "node scripts/test.js",
     "jest-coverage": "yarn jest --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
-    "commit": "yarn run test:changed && yarn run check:type:changed && git-cz",
+    "commit": "yarn run test:changed && yarn run format:packages && yarn run build:changed && git-cz",
     "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {
