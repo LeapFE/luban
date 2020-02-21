@@ -7,6 +7,7 @@ import { logWithSpinner, stopSpinner, pauseSpinner, resumeSpinner, failSpinner }
 import { createSchema, validate, validateSync } from "./validate";
 import { writeFileTree } from "./writeFileTree";
 import { set, get, unset } from "./object";
+import { SimpleMapPolyfill } from "./mapPolyfill";
 export {
   hasGit,
   hasProjectGit,
@@ -37,4 +38,5 @@ export {
   set,
   get,
   unset,
+  SimpleMapPolyfill,
 };

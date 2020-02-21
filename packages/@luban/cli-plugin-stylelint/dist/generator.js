@@ -1,12 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 function default_1(api, options) {
     const processors = [];
     const extendsConfig = [
         "stylelint-config-standard",
         "stylelint-config-prettier",
     ];
-    let rules = {};
+    const stylelintRules = new cli_shared_utils_1.SimpleMapPolyfill([
+        ["comment-empty-line-before", ["always"]],
+        [
+            "rule-empty-line-before",
+            [
+                "always",
+                {
+                    ignore: ["after-comment", "first-nested"],
+                },
+            ],
+        ],
+    ]);
     let lintScript = "stylelint src/**/*.css";
     if (options.preset.cssPreprocessor === "styled-components") {
         processors.push([
@@ -21,7 +33,7 @@ function default_1(api, options) {
         api.extendPackage({
             devDependencies: {
                 "stylelint-config-styled-components": "^0.1.1",
-                "stylelint-processor-styled-components": "^1.8.0",
+                "stylelint-processor-styled-components": "^1.10.0",
             },
             scripts: {
                 "format:style": `prettier --write src/**/*.{css,css.${options.preset.language}}`,
@@ -32,22 +44,12 @@ function default_1(api, options) {
     }
     if (options.preset.cssPreprocessor === "less") {
         lintScript = "stylelint src/**/*.{css,less}";
-        rules = {
-            "block-closing-brace-empty-line-before": null,
-            "block-closing-brace-newline-after": null,
-            "block-closing-brace-newline-before": null,
-            "block-closing-brace-space-before": null,
-            "block-opening-brace-newline-after": null,
-            "block-opening-brace-space-after": null,
-            "block-opening-brace-space-before": null,
-            "declaration-block-semicolon-newline-after": null,
-            "declaration-block-semicolon-space-after": null,
-            "declaration-block-semicolon-space-before": null,
-            "declaration-block-trailing-semicolon": null,
-            "declaration-colon-space-after": null,
-            "declaration-block-single-line-max-declarations": null,
-            "selector-list-comma-newline-after": null,
-        };
+        stylelintRules.set("selector-pseudo-class-no-unknown", [
+            true,
+            {
+                ignorePseudoClasses: ["export", "import", "global", "local", "external"],
+            },
+        ]);
         api.extendPackage({
             scripts: {
                 "format:style": "prettier --write src/**/*.{css,less}",
@@ -68,7 +70,7 @@ function default_1(api, options) {
         devDependencies: {
             stylelint: "^13.0.0",
             "stylelint-config-standard": "^19.0.0",
-            "stylelint-config-prettier": "^6.0.0",
+            "stylelint-config-prettier": "^8.0.1",
         },
         scripts: {
             stylelint: lintScript,
@@ -84,7 +86,7 @@ function default_1(api, options) {
     api.render("./template", {
         processors: JSON.stringify(processors),
         extendsConfig: JSON.stringify(extendsConfig),
-        rules: JSON.stringify(rules),
+        stylelintRules: JSON.stringify(stylelintRules.toPlainObject()),
     });
 }
 exports.default = default_1;

@@ -56,4 +56,3 @@ class SimpleMapPolyfill {
     }
 }
 exports.SimpleMapPolyfill = SimpleMapPolyfill;
-//# sourceMappingURL=mapPolyfill.js.map

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mapPolyfill_1 = require("./mapPolyfill");
+const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 function default_1(api, options) {
     const eslintParser = options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
     let parserOptions = {
@@ -10,7 +10,7 @@ function default_1(api, options) {
             jsx: true,
         },
     };
-    const eslintRules = new mapPolyfill_1.SimpleMapPolyfill([
+    const eslintRules = new cli_shared_utils_1.SimpleMapPolyfill([
         ["quotes", ["error", "double"]],
         ["semi", ["error", "always"]],
         ["react/display-name", ["warn"]],

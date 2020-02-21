@@ -1,13 +1,30 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
+import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
+
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
   const processors: (string | (string | Record<string, any>)[])[] = [];
   const extendsConfig: (string | (string | Record<string, any>)[])[] = [
     "stylelint-config-standard",
     "stylelint-config-prettier",
   ];
-  let rules: Record<string, any> = {};
+  const stylelintRules = new SimpleMapPolyfill<
+    string,
+    string | Array<string | Record<string, any> | boolean>
+  >([
+    ["comment-empty-line-before", ["always"]],
+
+    [
+      "rule-empty-line-before",
+      [
+        "always",
+        {
+          ignore: ["after-comment", "first-nested"],
+        },
+      ],
+    ],
+  ]);
   let lintScript = "stylelint src/**/*.css";
 
   if (options.preset.cssPreprocessor === "styled-components") {
@@ -25,7 +42,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     api.extendPackage({
       devDependencies: {
         "stylelint-config-styled-components": "^0.1.1",
-        "stylelint-processor-styled-components": "^1.8.0",
+        "stylelint-processor-styled-components": "^1.10.0",
       },
       scripts: {
         "format:style": `prettier --write src/**/*.{css,css.${options.preset.language}}`,
@@ -38,22 +55,12 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
   if (options.preset.cssPreprocessor === "less") {
     lintScript = "stylelint src/**/*.{css,less}";
-    rules = {
-      "block-closing-brace-empty-line-before": null,
-      "block-closing-brace-newline-after": null,
-      "block-closing-brace-newline-before": null,
-      "block-closing-brace-space-before": null,
-      "block-opening-brace-newline-after": null,
-      "block-opening-brace-space-after": null,
-      "block-opening-brace-space-before": null,
-      "declaration-block-semicolon-newline-after": null,
-      "declaration-block-semicolon-space-after": null,
-      "declaration-block-semicolon-space-before": null,
-      "declaration-block-trailing-semicolon": null,
-      "declaration-colon-space-after": null,
-      "declaration-block-single-line-max-declarations": null,
-      "selector-list-comma-newline-after": null,
-    };
+    stylelintRules.set("selector-pseudo-class-no-unknown", [
+      true,
+      {
+        ignorePseudoClasses: ["export", "import", "global", "local", "external"],
+      },
+    ]);
 
     api.extendPackage({
       scripts: {
@@ -79,7 +86,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     devDependencies: {
       stylelint: "^13.0.0",
       "stylelint-config-standard": "^19.0.0",
-      "stylelint-config-prettier": "^6.0.0",
+      "stylelint-config-prettier": "^8.0.1",
     },
     scripts: {
       stylelint: lintScript,
@@ -97,6 +104,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   api.render("./template", {
     processors: JSON.stringify(processors),
     extendsConfig: JSON.stringify(extendsConfig),
-    rules: JSON.stringify(rules),
+    stylelintRules: JSON.stringify(stylelintRules.toPlainObject()),
   });
 }

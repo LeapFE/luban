@@ -7,4 +7,5 @@ import { logWithSpinner, stopSpinner, pauseSpinner, resumeSpinner, failSpinner }
 import { createSchema, validate, validateSync } from "./validate";
 import { writeFileTree } from "./writeFileTree";
 import { set, get, unset } from "./object";
-export { hasGit, hasProjectGit, isLinux, isMacintosh, isWindows, installedBrowsers, IpcMessenger, log, warn, error, info, done, clearConsole, loadModule, resolveModule, clearModule, openBrowser, logWithSpinner, stopSpinner, pauseSpinner, resumeSpinner, failSpinner, createSchema, validate, validateSync, writeFileTree, set, get, unset, };
+import { SimpleMapPolyfill } from "./mapPolyfill";
+export { hasGit, hasProjectGit, isLinux, isMacintosh, isWindows, installedBrowsers, IpcMessenger, log, warn, error, info, done, clearConsole, loadModule, resolveModule, clearModule, openBrowser, logWithSpinner, stopSpinner, pauseSpinner, resumeSpinner, failSpinner, createSchema, validate, validateSync, writeFileTree, set, get, unset, SimpleMapPolyfill, };

@@ -38,3 +38,5 @@ const object_1 = require("./object");
 exports.set = object_1.set;
 exports.get = object_1.get;
 exports.unset = object_1.unset;
+const mapPolyfill_1 = require("./mapPolyfill");
+exports.SimpleMapPolyfill = mapPolyfill_1.SimpleMapPolyfill;

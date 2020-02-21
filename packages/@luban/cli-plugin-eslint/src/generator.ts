@@ -1,7 +1,7 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
-import { SimpleMapPolyfill } from "./mapPolyfill";
+import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
   const eslintParser =
