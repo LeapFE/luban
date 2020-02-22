@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/front-end-captain/luban/compare/v0.0.5...v0.0.6) (2020-02-22)
+
+
+### Bug Fixes
+
+* can't find plugin's generator while create project ([26d78cb](https://github.com/front-end-captain/luban/commit/26d78cb4405794c1fdc2527460f99c04c6f5b769))
+
+
+
+
+
 ## [0.0.5](https://github.com/front-end-captain/luban/compare/v0.0.4...v0.0.5) (2020-02-22)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-service
