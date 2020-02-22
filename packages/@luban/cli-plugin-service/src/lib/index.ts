@@ -1,5 +1,6 @@
-import { Service } from "./Service";
 import minimist from "minimist";
+
+import { Service } from "./Service";
 
 const service = new Service(process.cwd(), {});
 

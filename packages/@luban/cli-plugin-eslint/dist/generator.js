@@ -60,7 +60,7 @@ function default_1(api, options) {
                 "format:check:ts": "prettier --check src/**/*.{ts,tsx}",
             },
             devDependencies: {
-                "@typescript-eslint/parser": "^2.7.0",
+                "@typescript-eslint/parser": "^2.20.0",
                 "@typescript-eslint/eslint-plugin": "^2.7.0",
             },
         });
@@ -79,19 +79,18 @@ function default_1(api, options) {
         api.extendPackage({
             devDependencies: {
                 "eslint-config-standard": "^14.1.0",
-                "eslint-plugin-import": "^2.18.2",
                 "eslint-plugin-node": "^10.0.0",
                 "eslint-plugin-promise": "^4.2.1",
                 "eslint-plugin-standard": "^4.0.1",
             },
         });
+        eslintExtends.push("standard");
     }
     if (options.preset.eslint === "airbnb") {
         api.extendPackage({
             devDependencies: {
                 "eslint-config-airbnb": "^18.0.1",
                 "eslint-plugin-jsx-a11y": "^6.2.3",
-                "eslint-plugin-import": "^2.18.2",
             },
         });
         eslintExtends.push("airbnb");
@@ -106,9 +105,11 @@ function default_1(api, options) {
     api.extendPackage({
         devDependencies: {
             eslint: "^6.6.0",
-            "eslint-config-prettier": "^6.6.0",
+            "eslint-config-prettier": "^6.10.0",
             "eslint-plugin-react": "^7.16.0",
-            "eslint-plugin-react-hooks": "^2.3.0",
+            "eslint-plugin-react-hooks": "^2.4.0",
+            "eslint-plugin-import": "^2.18.2",
+            "eslint-loader": "^3.0.3",
         },
     });
     const lintFileSuffix = options.preset.language === "ts" ? "src/**/*.{ts,tsx}" : "src/**/*.{js,jsx}";

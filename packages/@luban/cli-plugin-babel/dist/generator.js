@@ -19,10 +19,16 @@ function default_1(api, rootOptions) {
             "@babel/runtime": "^7.7.2",
             "@babel/preset-react": "^7.7.0",
             "core-js": "^3.4.2",
+            "babel-loader": "^8.0.6",
         },
     });
     if (rootOptions.preset.language === "ts") {
         babelConfigPreset.push("@babel/preset-typescript");
+        api.extendPackage({
+            devDependencies: {
+                "@babel/preset-typescript": "^7.8.0",
+            },
+        });
     }
     if (rootOptions.preset.language === "js") {
         babelConfigPlugins.push("@babel/plugin-proposal-object-rest-spread", "@babel/plugin-proposal-class-properties");

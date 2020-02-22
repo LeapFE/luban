@@ -1,7 +1,7 @@
 import { Options as EJSOptions } from "ejs";
+import { ExecaChildProcess } from "execa";
 import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
-import { ExecaChildProcess } from "execa";
 declare class GeneratorAPI {
     private readonly id;
     private readonly generator;

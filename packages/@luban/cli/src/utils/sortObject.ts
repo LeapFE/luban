@@ -1,7 +1,7 @@
 export const sortObject = function<T extends Record<string, any>>(
   obj: T,
   keyOrder?: Array<keyof T>,
-  dontSortByUnicode?: boolean,
+  notSortByUnicode?: boolean,
 ): T {
   const res: Record<keyof T, any> = Object.create({});
 
@@ -16,7 +16,7 @@ export const sortObject = function<T extends Record<string, any>>(
 
   const keys: Array<keyof T> = Object.keys(obj);
 
-  !dontSortByUnicode && keys.sort();
+  !notSortByUnicode && keys.sort();
   keys.forEach((key) => {
     res[key] = obj[key];
   });

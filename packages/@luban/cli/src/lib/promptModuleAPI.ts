@@ -1,5 +1,6 @@
-import { Creator } from "./creator";
 import { CheckboxQuestion, ChoiceOptions, DistinctQuestion } from "inquirer";
+
+import { Creator } from "./creator";
 
 import { PromptCompleteCallback } from "../definitions";
 

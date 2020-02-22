@@ -1,7 +1,8 @@
 import { parse, print, types } from "recast";
-import { stringifyJS } from "./stringifyJS";
 import { namedTypes } from "ast-types";
 import { NodePath } from "ast-types/lib/node-path";
+
+import { stringifyJS } from "./stringifyJS";
 
 export const extendJSConfig = function(value: any, source: string): string {
   let exportsIdentifier: any = null;

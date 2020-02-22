@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sortObject = function (obj, keyOrder, dontSortByUnicode) {
+exports.sortObject = function (obj, keyOrder, notSortByUnicode) {
     const res = Object.create({});
     if (keyOrder) {
         keyOrder.forEach((key) => {
@@ -11,7 +11,7 @@ exports.sortObject = function (obj, keyOrder, dontSortByUnicode) {
         });
     }
     const keys = Object.keys(obj);
-    !dontSortByUnicode && keys.sort();
+    !notSortByUnicode && keys.sort();
     keys.forEach((key) => {
         res[key] = obj[key];
     });

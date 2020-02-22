@@ -1,4 +1,6 @@
 import path from "path";
+import Config from "webpack-chain";
+
 import { Service } from "./Service";
 import {
   WebpackChainCallback,
@@ -10,7 +12,6 @@ import {
   PLUGIN_IDS,
   CliArgs,
 } from "../definitions";
-import Config from "webpack-chain";
 
 class PluginAPI {
   public id: string;

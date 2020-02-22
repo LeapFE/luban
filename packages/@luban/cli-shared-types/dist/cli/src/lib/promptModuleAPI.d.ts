@@ -1,5 +1,5 @@
-import { Creator } from "./creator";
 import { ChoiceOptions, DistinctQuestion } from "inquirer";
+import { Creator } from "./creator";
 import { PromptCompleteCallback } from "../definitions";
 declare type ExtraChoiceOptions = Partial<{
     description: string;

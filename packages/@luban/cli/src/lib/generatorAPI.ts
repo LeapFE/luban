@@ -5,13 +5,13 @@ import merge from "deepmerge";
 import resolve from "resolve";
 import { isBinaryFileSync } from "isbinaryfile";
 import globby from "globby";
+import execa, { ExecaChildProcess } from "execa";
 import yaml = require("yaml-front-matter");
 
 import { resolveDeps } from "../utils/mergeDeps";
 import { mergeArrayWithDedupe } from "../utils/configTransforms";
 import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
-import execa, { ExecaChildProcess } from "execa";
 
 const isObject = (val: unknown): boolean => val !== null && typeof val === "object";
 

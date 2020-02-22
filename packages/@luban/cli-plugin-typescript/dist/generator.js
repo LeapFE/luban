@@ -14,6 +14,7 @@ function default_1(api, options) {
             "@types/react": "^16.9.11",
             "@types/react-dom": "^16.9.4",
             typescript: "^3.7.2",
+            "ts-loader": "^6.2.1",
         },
     });
 }

@@ -1,6 +1,6 @@
+import Config from "webpack-chain";
 import { Service } from "./Service";
 import { WebpackChainCallback, WebpackRawConfigCallback, WebpackDevServerConfigCallback, CommandFn, WebpackConfiguration, Preset, PLUGIN_IDS, CliArgs } from "../definitions";
-import Config from "webpack-chain";
 declare class PluginAPI {
     id: string;
     service: Service;

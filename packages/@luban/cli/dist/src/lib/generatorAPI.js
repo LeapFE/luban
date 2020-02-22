@@ -10,10 +10,10 @@ const deepmerge_1 = __importDefault(require("deepmerge"));
 const resolve_1 = __importDefault(require("resolve"));
 const isbinaryfile_1 = require("isbinaryfile");
 const globby_1 = __importDefault(require("globby"));
+const execa_1 = __importDefault(require("execa"));
 const yaml = require("yaml-front-matter");
 const mergeDeps_1 = require("../utils/mergeDeps");
 const configTransforms_1 = require("../utils/configTransforms");
-const execa_1 = __importDefault(require("execa"));
 const isObject = (val) => val !== null && typeof val === "object";
 function extractCallDir() {
     const obj = { stack: "" };

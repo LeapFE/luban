@@ -43,6 +43,7 @@
     "packages/**/**/__test__",
     "packages/**/**/dist",
     "packages/**/**/bin",
+    "packages/**/**/src/template/**",
     "./*.js"
   ]
 }

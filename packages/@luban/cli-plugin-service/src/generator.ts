@@ -19,13 +19,17 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     dependencies: {
       react: "^16.12.0",
       "react-dom": "^16.12.0",
-      "react-hot-loader": "^4.12.16",
+      "react-hot-loader": "^4.12.19",
     },
     devDependencies: {
       prettier: "^1.19.1",
       autoprefixer: "^9.7.1",
       cssnano: "^4.1.10",
       "postcss-preset-env": "^6.7.0",
+      "css-loader": "^3.4.0",
+      "file-loader": "^5.1.0",
+      "postcss-loader": "^3.0.0",
+      "url-loader": "^3.0.0",
     },
     browserslist: [
       "last 1 version",
