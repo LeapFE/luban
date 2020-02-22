@@ -97,12 +97,20 @@ class Service {
         return Promise.resolve(fn(args, rawArgv));
     }
     resolvePlugins(inlinePlugins, useBuiltIn) {
+        const loadPluginServiceWithWarn = (id, context) => {
+            let serviceApply = cli_shared_utils_1.loadModule(`${id}/dist/index.js`, context);
+            if (typeof serviceApply !== "function") {
+                cli_shared_utils_1.warn(`service of plugin [${id}] not found while resolving plugin, use default service function instead`);
+                serviceApply = () => undefined;
+            }
+            return serviceApply;
+        };
         const prefixRE = /^@luban-cli\/cli-plugin-/;
         const idToPlugin = (id) => {
             return {
                 id: id.replace(/^.\//, "built-in:"),
                 apply: prefixRE.test(id)
-                    ? cli_shared_utils_1.loadModule(`${id}/dist/index.js`, this.context) || (() => undefined)
+                    ? loadPluginServiceWithWarn(id, this.context)
                     : require(id).default,
             };
         };

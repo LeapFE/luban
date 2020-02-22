@@ -74,8 +74,11 @@ export type Preset = preset;
 
 export type PLUGIN_ID = keyof RawPlugin;
 
-interface ApplyFn {
+export interface ApplyFn {
   (api: GeneratorAPI, rootOptions: RootOptions): void;
+  /**
+   * @deprecated
+   */
   hooks?: (api: GeneratorAPI, rootOptions: RootOptions, pluginIds: string[]) => void;
 }
 

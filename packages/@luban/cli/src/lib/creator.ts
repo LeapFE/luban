@@ -39,6 +39,7 @@ import {
   PLUGIN_ID,
   SUPPORTED_PACKAGE_MANAGER,
   FinalAnswers,
+  ApplyFn,
 } from "../definitions";
 import { defaultPreset, confirmUseDefaultPresetMsg } from "../constants";
 
@@ -324,9 +325,25 @@ class Creator {
 
     const pluginIDs = Object.keys(sortedRawPlugins);
 
+    const loadPluginGeneratorWithWarn = (id: string, context: string): ApplyFn => {
+      let generatorApply = loadModule(`${id}/dist/generator`, context);
+
+      if (typeof generatorApply !== "function") {
+        warn(
+          `generator of plugin [${id}] not found while resolving plugin, use default generator function instead`,
+        );
+        generatorApply = (): void => undefined;
+      }
+
+      return generatorApply as ApplyFn;
+    };
+
     for (const id of pluginIDs) {
-      const apply = loadModule(`${id}/dist/generator`, this.context) || ((): void => undefined);
-      plugins.push({ id: id as PLUGIN_ID, apply, options: sortedRawPlugins[id] || {} });
+      plugins.push({
+        id: id as PLUGIN_ID,
+        apply: loadPluginGeneratorWithWarn(id, this.context),
+        options: sortedRawPlugins[id] || {},
+      });
     }
     return plugins;
   }

@@ -209,9 +209,20 @@ class Creator {
         const sortedRawPlugins = sortObject_1.sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
         const plugins = [];
         const pluginIDs = Object.keys(sortedRawPlugins);
+        const loadPluginGeneratorWithWarn = (id, context) => {
+            let generatorApply = cli_shared_utils_1.loadModule(`${id}/dist/generator`, context);
+            if (typeof generatorApply !== "function") {
+                cli_shared_utils_1.warn(`generator of plugin [${id}] not found while resolving plugin, use default generator function instead`);
+                generatorApply = () => undefined;
+            }
+            return generatorApply;
+        };
         for (const id of pluginIDs) {
-            const apply = cli_shared_utils_1.loadModule(`${id}/dist/generator`, this.context) || (() => undefined);
-            plugins.push({ id: id, apply, options: sortedRawPlugins[id] || {} });
+            plugins.push({
+                id: id,
+                apply: loadPluginGeneratorWithWarn(id, this.context),
+                options: sortedRawPlugins[id] || {},
+            });
         }
         return plugins;
     }

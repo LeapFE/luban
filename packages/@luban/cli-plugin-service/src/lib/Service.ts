@@ -25,6 +25,7 @@ import {
   ParsedArgs,
   CliArgs,
   WebpackConfiguration,
+  PluginApplyCallback,
 } from "./../definitions";
 
 type ResetParams = Partial<{
@@ -148,12 +149,25 @@ class Service {
   }
 
   public resolvePlugins(inlinePlugins: InlinePlugin[], useBuiltIn: boolean): ServicePlugin[] {
+    const loadPluginServiceWithWarn = (id: string, context: string): PluginApplyCallback => {
+      let serviceApply = loadModule(`${id}/dist/index.js`, context);
+
+      if (typeof serviceApply !== "function") {
+        warn(
+          `service of plugin [${id}] not found while resolving plugin, use default service function instead`,
+        );
+        serviceApply = (): void => undefined;
+      }
+
+      return serviceApply;
+    };
+
     const prefixRE = /^@luban-cli\/cli-plugin-/;
     const idToPlugin = (id: string): InlinePlugin => {
       return {
         id: id.replace(/^.\//, "built-in:"),
         apply: prefixRE.test(id)
-          ? loadModule(`${id}/dist/index.js`, this.context) || ((): void => undefined)
+          ? loadPluginServiceWithWarn(id, this.context)
           : require(id).default,
       };
     };

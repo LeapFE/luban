@@ -28,7 +28,7 @@ export declare type RootOptions = rootOptions;
 export declare type RawPlugin = rawPlugin;
 export declare type Preset = preset;
 export declare type PLUGIN_ID = keyof RawPlugin;
-interface ApplyFn {
+export interface ApplyFn {
     (api: GeneratorAPI, rootOptions: RootOptions): void;
     hooks?: (api: GeneratorAPI, rootOptions: RootOptions, pluginIds: string[]) => void;
 }
@@ -50,4 +50,3 @@ export declare type FinalAnswers = {
 export declare type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;
 export declare type InquirerQuestionType = keyof QuestionMap;
 export declare type BasePkgFields = basePkgFields;
-export {};
