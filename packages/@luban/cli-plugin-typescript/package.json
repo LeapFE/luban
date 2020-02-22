@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-typescript",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "cli-plugin-typescript",
   "keywords": [
     "typescript"
@@ -31,7 +31,7 @@
     "url": "https://github.com/front-end-captain/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "0.0.6"
+    "@luban-cli/cli-shared-types": "0.0.7"
   },
   "engines": {
     "node": ">=10"

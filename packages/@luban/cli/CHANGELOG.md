@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/front-end-captain/luban/compare/v0.0.6...v0.0.7) (2020-02-22)
+
+
+### Bug Fixes
+
+* fix plugin service and shared utils dependencies ([055c88f](https://github.com/front-end-captain/luban/commit/055c88f39cd0e20f2839bc4b6940635a6cfd1dd3))
+
+
+
+
+
 ## [0.0.6](https://github.com/front-end-captain/luban/compare/v0.0.5...v0.0.6) (2020-02-22)
 
 
