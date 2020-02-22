@@ -1,7 +1,7 @@
 import { hot } from "react-hot-loader/root";
 import React from "react";
 
-import logo from "../assets/logo.svg";
+import logo from "./assets/logo.svg";
 
 import styles from "./App.less";
 

@@ -1,7 +1,7 @@
 import { hot } from "react-hot-loader/root";
 import React, { FunctionComponent } from "react";
 
-import logo from "../assets/logo.svg";
+import logo from "./assets/logo.svg";
 
 import { AppWrapper, GlobalStyle } from "./App.css";
 

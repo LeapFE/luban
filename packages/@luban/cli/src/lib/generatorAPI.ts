@@ -16,15 +16,19 @@ import { BasePkgFields, RootOptions } from "../definitions";
 const isObject = (val: unknown): boolean => val !== null && typeof val === "object";
 
 function extractCallDir(): string {
-  // extract api.render() callsite file location using error stack
-  const obj: { stack: string } = { stack: "" };
-  Error.captureStackTrace(obj);
-  const callSite = obj.stack.split("\n")[3];
+  const errorStack: { stack: string } = { stack: "" };
+  Error.captureStackTrace(errorStack);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const fileName = callSite.match(/\s\((.*):\d+:\d+\)$/)[1];
-  return path.dirname(fileName);
+  const callSite = errorStack.stack.split("\n")[3];
+
+  if (callSite) {
+    const fileNameMatchResult = callSite.match(/\s\((.*):\d+:\d+\)$/);
+    if (Array.isArray(fileNameMatchResult)) {
+      return path.dirname(fileNameMatchResult[1]);
+    }
+  }
+
+  return "";
 }
 
 const replaceBlockRE = /<%# REPLACE %>([^]*?)<%# END_REPLACE %>/g;

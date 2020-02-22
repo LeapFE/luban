@@ -16,11 +16,16 @@ const mergeDeps_1 = require("../utils/mergeDeps");
 const configTransforms_1 = require("../utils/configTransforms");
 const isObject = (val) => val !== null && typeof val === "object";
 function extractCallDir() {
-    const obj = { stack: "" };
-    Error.captureStackTrace(obj);
-    const callSite = obj.stack.split("\n")[3];
-    const fileName = callSite.match(/\s\((.*):\d+:\d+\)$/)[1];
-    return path_1.default.dirname(fileName);
+    const errorStack = { stack: "" };
+    Error.captureStackTrace(errorStack);
+    const callSite = errorStack.stack.split("\n")[3];
+    if (callSite) {
+        const fileNameMatchResult = callSite.match(/\s\((.*):\d+:\d+\)$/);
+        if (Array.isArray(fileNameMatchResult)) {
+            return path_1.default.dirname(fileNameMatchResult[1]);
+        }
+    }
+    return "";
 }
 const replaceBlockRE = /<%# REPLACE %>([^]*?)<%# END_REPLACE %>/g;
 function renderFile(name, data, ejsOptions) {
