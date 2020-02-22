@@ -73,7 +73,6 @@ class Service {
   public plugins: ServicePlugin[];
   public mode: string;
   private inlineProjectOptions?: ProjectConfig;
-  private readonly useLocalPlugin: boolean;
 
   constructor(context: string, { plugins, pkg, projectOptions, useBuiltIn }: ResetParams) {
     Object.defineProperties(process, {
@@ -92,9 +91,6 @@ class Service {
     this.webpackRawConfigCallback = [];
     this.commands = {};
     this.pkg = this.resolvePkg(pkg);
-
-    this.useLocalPlugin =
-      this.pkg.__USE_LOCAL_PLUGIN__ || JSON.parse(process.env.USE_LOCAL_PLUGIN || "") || false;
 
     this.inlineProjectOptions = projectOptions;
 
@@ -154,12 +150,10 @@ class Service {
   public resolvePlugins(inlinePlugins: InlinePlugin[], useBuiltIn: boolean): ServicePlugin[] {
     const prefixRE = /^@luban-cli\/cli-plugin-/;
     const idToPlugin = (id: string): InlinePlugin => {
-      const filePath = this.useLocalPlugin ? `${id}/dist/index.js` : `${id}/index.js`;
-
       return {
         id: id.replace(/^.\//, "built-in:"),
         apply: prefixRE.test(id)
-          ? loadModule(filePath, this.context) || ((): void => undefined)
+          ? loadModule(`${id}/dist/index.js`, this.context) || ((): void => undefined)
           : require(id).default,
       };
     };

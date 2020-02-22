@@ -55,7 +55,6 @@ class Creator {
             private: true,
             devDependencies: {},
             ["__luban_config__"]: adaptedPreset,
-            ["__USE_LOCAL_PLUGIN__"]: this.installLocalPlugin,
         };
         const deps = Object.keys(adaptedPreset.plugins);
         deps.forEach((dep) => {
@@ -84,7 +83,7 @@ class Creator {
         cli_shared_utils_1.log();
         await pkgManager.install();
         cli_shared_utils_1.log();
-        const resolvedPlugins = await this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins), options.localPlugin || false);
+        const resolvedPlugins = await this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins));
         cli_shared_utils_1.log(`🚀  Invoking plugin's generators...`);
         const generator = new generator_1.Generator(context, { plugins: resolvedPlugins, pkg: pkg });
         await generator.generate();
@@ -206,13 +205,12 @@ class Creator {
         const outroPrompts = [];
         return outroPrompts;
     }
-    async resolvePlugins(rawPlugins, useLocalPlugins) {
+    async resolvePlugins(rawPlugins) {
         const sortedRawPlugins = sortObject_1.sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
         const plugins = [];
         const pluginIDs = Object.keys(sortedRawPlugins);
         for (const id of pluginIDs) {
-            const filePath = useLocalPlugins ? `${id}/dist/generator` : `${id}/generator`;
-            const apply = cli_shared_utils_1.loadModule(filePath, this.context) || (() => undefined);
+            const apply = cli_shared_utils_1.loadModule(`${id}/dist/generator`, this.context) || (() => undefined);
             plugins.push({ id: id, apply, options: sortedRawPlugins[id] || {} });
         }
         return plugins;

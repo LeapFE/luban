@@ -18,7 +18,6 @@ declare class Service {
     plugins: ServicePlugin[];
     mode: string;
     private inlineProjectOptions?;
-    private readonly useLocalPlugin;
     constructor(context: string, { plugins, pkg, projectOptions, useBuiltIn }: ResetParams);
     private init;
     run(name: string, args?: ParsedArgs, rawArgv?: string[]): Promise<void>;

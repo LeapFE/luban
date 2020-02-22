@@ -6,7 +6,7 @@
 这里被依赖的 package 要表明版本号
 
 #### 添加全局依赖
-1. `yarn -W -D <package_name>`
+1. `yarn add -W -D <package_name>`
 
 #### 为目录 @luban 下的某一个 package 添加依赖
 1. `yarn workspace`

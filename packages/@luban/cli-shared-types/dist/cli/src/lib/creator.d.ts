@@ -27,6 +27,6 @@ declare class Creator {
     shouldInitGit(cliOptions: CliOptions): boolean;
     resolveFinalPrompts(): QuestionCollection;
     resolveOutroPrompts(): ListQuestion[];
-    resolvePlugins(rawPlugins: RawPlugin, useLocalPlugins: boolean): Promise<ResolvedPlugin[]>;
+    resolvePlugins(rawPlugins: RawPlugin): Promise<ResolvedPlugin[]>;
 }
 export { Creator };

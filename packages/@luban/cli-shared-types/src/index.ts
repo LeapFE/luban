@@ -53,5 +53,8 @@ export type BasePkgFields = {
   browserslist?: string[];
   homepage?: string;
   ["__luban_config__"]?: Required<Preset>;
+  /**
+   * @deprecated
+   */
   ["__USE_LOCAL_PLUGIN__"]?: boolean;
 } & Record<string, any>;
