@@ -14,6 +14,8 @@ import { PluginAPI } from "./lib/PluginAPI";
 
 import { defaultsProjectConfig } from "./lib/options";
 
+export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
+
 export type RootOptions = rootOptions;
 
 export type RawPlugin = rawPlugin;
@@ -36,11 +38,11 @@ export type WebpackRawConfigCallback =
   | ((config: webpack.Configuration) => webpack.Configuration | undefined)
   | webpack.Configuration;
 export type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
-export type CommandFn<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
+export type CommandCallback<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
 export type CommandList<P> = Record<
-  string,
+  builtinServiceCommandName,
   {
-    fn: CommandFn<P>;
+    commandCallback: CommandCallback<P>;
     opts: Record<string, any> | null | PluginApplyCallback;
   }
 >;

@@ -26,6 +26,7 @@ import {
   CliArgs,
   WebpackConfiguration,
   PluginApplyCallback,
+  builtinServiceCommandName,
 } from "./../definitions";
 
 type ResetParams = Partial<{
@@ -44,11 +45,19 @@ const builtInPluginsRelativePath = [
   "./../commands/serve",
   "./../commands/build",
   "./../commands/inspect",
+  "./../commands/help",
   "./../config/base",
   "./../config/css",
   "./../config/dev",
   "./../config/prod",
 ];
+
+const builtinServiceCommandNameList = new Set<builtinServiceCommandName>([
+  "build",
+  "inspect",
+  "serve",
+  "help",
+]);
 
 const defaultPreset: Required<Preset> = {
   language: "ts",
@@ -90,7 +99,7 @@ class Service {
   public webpackChainCallback: WebpackChainCallback[];
   public webpackRawConfigCallback: WebpackRawConfigCallback[];
   public webpackDevServerConfigCallback: WebpackDevServerConfigCallback[];
-  public commands: CommandList<CliArgs>;
+  public commands: Partial<CommandList<CliArgs>>;
   public projectConfig: ProjectConfig;
   public plugins: ServicePlugin[];
   public mode: string;
@@ -119,10 +128,10 @@ class Service {
     this.plugins = this.resolvePlugins(plugins || [], useBuiltIn || false);
   }
 
-  private init(mode: string): void {
+  private init(mode: string, commandName: builtinServiceCommandName): void {
     this.mode = mode;
 
-    this.loadEnv(mode);
+    this.loadAndSetEnv(mode, commandName);
 
     this.projectConfig = deepmerge(
       defaultsProjectConfig,
@@ -143,7 +152,11 @@ class Service {
     }
   }
 
-  public run(name: string, args: ParsedArgs = { _: [] }, rawArgv: string[] = []): Promise<void> {
+  public run(
+    name?: builtinServiceCommandName,
+    args: ParsedArgs = { _: [] },
+    rawArgv: string[] = [],
+  ): Promise<void> {
     if (!name) {
       error(`please specify command name`);
       process.exit(1);
@@ -151,22 +164,20 @@ class Service {
 
     const mode: string = args.mode || (name === "build" ? "production" : "development");
 
-    this.init(mode);
+    this.init(mode, name);
 
+    // after init, all command registered
     args._ = args._ || [];
-    let command = this.commands[name];
-    if (!command && name) {
-      error(`command "${name}" does not exist.`);
-      process.exit(1);
-    }
-    if (!command || args.help) {
-      command = this.commands.help;
+    let command = (this.commands as CommandList<CliArgs>)[name];
+    if (!builtinServiceCommandNameList.has(name) || args.help) {
+      command = (this.commands as CommandList<CliArgs>).help;
     } else {
-      args._.shift();
+      args._.shift(); // remove command itself
       rawArgv.shift();
     }
-    const { fn } = command;
-    return Promise.resolve(fn(args, rawArgv));
+
+    const { commandCallback } = command;
+    return Promise.resolve(commandCallback(args, rawArgv));
   }
 
   public resolvePlugins(inlinePlugins: InlinePlugin[], useBuiltIn: boolean): ServicePlugin[] {
@@ -237,9 +248,9 @@ class Service {
     }
   }
 
-  public loadEnv(mode?: string): void {
+  public loadAndSetEnv(mode: string, commandName: builtinServiceCommandName): void {
     const basePath = path.resolve(this.context, ".env");
-    const baseModePath = path.resolve(this.context, `.env${mode ? `.${mode}` : ``}`);
+    const baseModePath = path.resolve(this.context, `.env.${mode}`);
     const localModePath = `${baseModePath}.local`;
 
     const load = (path: string): void => {
@@ -260,16 +271,23 @@ class Service {
     load(baseModePath);
     load(basePath);
 
-    if (mode) {
-      const defaultNodeEnv = mode === "development" ? "development" : "production";
+    const writeEnv = (key: string, value: any): void => {
+      Object.defineProperty(process.env, key, {
+        value: value,
+        writable: false,
+        configurable: false,
+        enumerable: true,
+      });
+    };
 
-      if (process.env.NODE_ENV === undefined) {
-        process.env.NODE_ENV = defaultNodeEnv;
-      }
+    if (commandName === "serve" || commandName === "inspect") {
+      writeEnv("NODE_ENV", "development");
+      writeEnv("BABEL_ENV", "development");
+    }
 
-      if (process.env.BABEL_ENV === undefined) {
-        process.env.BABEL_ENV = defaultNodeEnv;
-      }
+    if (commandName === "build") {
+      writeEnv("NODE_ENV", "production");
+      writeEnv("BABEL_ENV", "production");
     }
   }
 

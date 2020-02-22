@@ -16,7 +16,7 @@ class PluginAPI {
         return path_1.default.resolve(this.service.context, _path);
     }
     hasPlugin(id) {
-        const prefixRE = /^cli-plugin-/;
+        const prefixRE = /^@luban-cli\/cli-plugin-/;
         return this.service.plugins.some((p) => {
             return p.id === id || p.id.replace(prefixRE, "") === id;
         });
@@ -27,18 +27,19 @@ class PluginAPI {
     getEntryFile() {
         return this.resolveInitConfig().language === "ts" ? "index.tsx" : "index.jsx";
     }
-    setMode(mode) {
+    setMode(mode, commandName) {
         process.env.LUBAN_CLI_SERVICE_MODE = mode;
-        process.env.NODE_ENV = process.env.BABEL_ENV =
-            mode === "production" || mode === "test" ? mode : "development";
-        this.service.loadEnv(mode);
+        this.service.loadAndSetEnv(mode, commandName);
     }
-    registerCommand(name, opts, fn) {
+    registerCommand(name, opts, callback) {
+        let commandCallback = callback;
         if (typeof opts === "function") {
-            fn = opts;
+            commandCallback = opts;
             opts = null;
         }
-        this.service.commands[name] = { fn, opts };
+        if (typeof commandCallback === "function") {
+            this.service.commands[name] = { commandCallback, opts };
+        }
     }
     chainWebpack(fn) {
         this.service.webpackChainCallback.push(fn);

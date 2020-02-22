@@ -5,6 +5,7 @@ import { Application } from "express";
 import { RootOptions as rootOptions, RawPlugin as rawPlugin, Preset as preset, BasePkgFields as basePkgFields } from "@luban-cli/cli-shared-types/dist/shared";
 import { PluginAPI } from "./lib/PluginAPI";
 import { defaultsProjectConfig } from "./lib/options";
+export declare type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
 export declare type RootOptions = rootOptions;
 export declare type RawPlugin = rawPlugin;
 export declare type BasePkgFields = basePkgFields;
@@ -17,9 +18,9 @@ export declare type ServicePlugin = InlinePlugin;
 export declare type WebpackChainCallback = (config: Config) => void;
 export declare type WebpackRawConfigCallback = ((config: webpack.Configuration) => webpack.Configuration | undefined) | webpack.Configuration;
 export declare type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
-export declare type CommandFn<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
-export declare type CommandList<P> = Record<string, {
-    fn: CommandFn<P>;
+export declare type CommandCallback<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
+export declare type CommandList<P> = Record<builtinServiceCommandName, {
+    commandCallback: CommandCallback<P>;
     opts: Record<string, any> | null | PluginApplyCallback;
 }>;
 export declare type DefaultProjectConfig = Partial<typeof defaultsProjectConfig>;

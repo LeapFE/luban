@@ -23,11 +23,18 @@ const builtInPluginsRelativePath = [
     "./../commands/serve",
     "./../commands/build",
     "./../commands/inspect",
+    "./../commands/help",
     "./../config/base",
     "./../config/css",
     "./../config/dev",
     "./../config/prod",
 ];
+const builtinServiceCommandNameList = new Set([
+    "build",
+    "inspect",
+    "serve",
+    "help",
+]);
 const defaultPreset = {
     language: "ts",
     eslint: "standard",
@@ -78,9 +85,9 @@ class Service {
         this.inlineProjectOptions = projectOptions;
         this.plugins = this.resolvePlugins(plugins || [], useBuiltIn || false);
     }
-    init(mode) {
+    init(mode, commandName) {
         this.mode = mode;
-        this.loadEnv(mode);
+        this.loadAndSetEnv(mode, commandName);
         this.projectConfig = deepmerge_1.default(options_1.defaultsProjectConfig, this.loadProjectOptions(this.inlineProjectOptions || options_1.defaultsProjectConfig));
         this.plugins.forEach(({ id, apply }) => {
             const api = new PluginAPI_1.PluginAPI(id, this);
@@ -99,22 +106,18 @@ class Service {
             process.exit(1);
         }
         const mode = args.mode || (name === "build" ? "production" : "development");
-        this.init(mode);
+        this.init(mode, name);
         args._ = args._ || [];
         let command = this.commands[name];
-        if (!command && name) {
-            cli_shared_utils_1.error(`command "${name}" does not exist.`);
-            process.exit(1);
-        }
-        if (!command || args.help) {
+        if (!builtinServiceCommandNameList.has(name) || args.help) {
             command = this.commands.help;
         }
         else {
             args._.shift();
             rawArgv.shift();
         }
-        const { fn } = command;
-        return Promise.resolve(fn(args, rawArgv));
+        const { commandCallback } = command;
+        return Promise.resolve(commandCallback(args, rawArgv));
     }
     resolvePlugins(inlinePlugins, useBuiltIn) {
         const loadPluginServiceWithWarn = (id, context) => {
@@ -174,9 +177,9 @@ class Service {
             return defaultPackageFields;
         }
     }
-    loadEnv(mode) {
+    loadAndSetEnv(mode, commandName) {
         const basePath = path_1.default.resolve(this.context, ".env");
-        const baseModePath = path_1.default.resolve(this.context, `.env${mode ? `.${mode}` : ``}`);
+        const baseModePath = path_1.default.resolve(this.context, `.env.${mode}`);
         const localModePath = `${baseModePath}.local`;
         const load = (path) => {
             const env = dotenv_1.config({ path });
@@ -189,14 +192,21 @@ class Service {
         load(localModePath);
         load(baseModePath);
         load(basePath);
-        if (mode) {
-            const defaultNodeEnv = mode === "development" ? "development" : "production";
-            if (process.env.NODE_ENV === undefined) {
-                process.env.NODE_ENV = defaultNodeEnv;
-            }
-            if (process.env.BABEL_ENV === undefined) {
-                process.env.BABEL_ENV = defaultNodeEnv;
-            }
+        const writeEnv = (key, value) => {
+            Object.defineProperty(process.env, key, {
+                value: value,
+                writable: false,
+                configurable: false,
+                enumerable: true,
+            });
+        };
+        if (commandName === "serve" || commandName === "inspect") {
+            writeEnv("NODE_ENV", "development");
+            writeEnv("BABEL_ENV", "development");
+        }
+        if (commandName === "build") {
+            writeEnv("NODE_ENV", "production");
+            writeEnv("BABEL_ENV", "production");
         }
     }
     loadProjectOptions(inlineOptions) {

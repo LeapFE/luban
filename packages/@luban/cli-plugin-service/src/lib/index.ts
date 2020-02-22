@@ -2,11 +2,13 @@ import minimist from "minimist";
 
 import { Service } from "./Service";
 
+import { builtinServiceCommandName } from "./../definitions";
+
 const service = new Service(process.cwd(), {});
 
 const rawArgv: string[] = process.argv.slice(2);
 const args = minimist(rawArgv);
-const command = args._[0];
+const command = args._[0] as builtinServiceCommandName;
 
 service.run(command, args, rawArgv).catch((err: Error) => {
   console.error(err);

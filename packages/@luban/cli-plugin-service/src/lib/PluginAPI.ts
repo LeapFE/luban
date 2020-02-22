@@ -6,11 +6,12 @@ import {
   WebpackChainCallback,
   WebpackRawConfigCallback,
   WebpackDevServerConfigCallback,
-  CommandFn,
+  CommandCallback,
   WebpackConfiguration,
   Preset,
   PLUGIN_IDS,
   CliArgs,
+  builtinServiceCommandName,
 } from "../definitions";
 
 class PluginAPI {
@@ -31,7 +32,7 @@ class PluginAPI {
   }
 
   public hasPlugin(id: PLUGIN_IDS): boolean {
-    const prefixRE = /^cli-plugin-/;
+    const prefixRE = /^@luban-cli\/cli-plugin-/;
     return this.service.plugins.some((p) => {
       return p.id === id || p.id.replace(prefixRE, "") === id;
     });
@@ -47,26 +48,27 @@ class PluginAPI {
 
   // set project mode.
   // this should be called by any registered command as early as possible.
-  public setMode(mode: string): void {
+  public setMode(mode: string, commandName: builtinServiceCommandName): void {
     process.env.LUBAN_CLI_SERVICE_MODE = mode;
-    // by default, NODE_ENV and BABEL_ENV are set to "development" unless mode
-    // is production or test. However this can be overwritten in .env files.
-    process.env.NODE_ENV = process.env.BABEL_ENV =
-      mode === "production" || mode === "test" ? mode : "development";
-    // load .env files based on mode
-    this.service.loadEnv(mode);
+    this.service.loadAndSetEnv(mode, commandName);
   }
 
   public registerCommand(
-    name: string,
-    opts: Record<string, any> | null | CommandFn<CliArgs>,
-    fn: CommandFn<CliArgs>,
+    name: builtinServiceCommandName,
+    opts: Record<string, any> | CommandCallback<CliArgs> | null,
+    callback?: CommandCallback<CliArgs>,
   ): void {
+    let commandCallback = callback;
+
+    // if opts is function, ignore callback param
     if (typeof opts === "function") {
-      fn = opts as CommandFn<CliArgs>;
+      commandCallback = opts as CommandCallback<CliArgs>;
       opts = null;
     }
-    this.service.commands[name] = { fn, opts };
+
+    if (typeof commandCallback === "function") {
+      this.service.commands[name] = { commandCallback, opts };
+    }
   }
 
   public chainWebpack(fn: WebpackChainCallback): void {
