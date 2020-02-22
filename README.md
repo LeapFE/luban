@@ -1,12 +1,8 @@
 # luban
-a scaffold to create a react app
+> a scaffold to create a react app
 
-### Install
-```shell
-npm install @luban-cli/cli -g
-```
+## Documentation
 
-### Use
-```shell
-luban init <project_name>
-```
+## License
+
+[MIT](https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli/LICENSE)
