@@ -54,6 +54,7 @@
     "minimist": "^1.2.0",
     "portfinder": "^1.0.25",
     "read-pkg": "^5.2.0",
+    "semver": "7.1.2",
     "terser-webpack-plugin": "^2.2.1",
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
