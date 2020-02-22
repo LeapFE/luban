@@ -52,17 +52,15 @@ function default_1(api, options) {
         const jsRule = webpackConfig.module.rule("js");
         const tsRule = webpackConfig.module.rule("ts");
         const eslintRule = webpackConfig.module.rule("eslint");
-        if (api.resolveInitConfig().eslint) {
-            eslintRule
-                .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
-                .enforce("pre")
-                .exclude.add(/node_modules/)
-                .end()
-                .use("eslint-loader")
-                .loader("eslint-loader")
-                .end();
-        }
-        if (isProduction) {
+        eslintRule
+            .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
+            .enforce("pre")
+            .exclude.add(/node_modules/)
+            .end()
+            .use("eslint-loader")
+            .loader("eslint-loader")
+            .end();
+        if (isTSProject && isProduction) {
             tsRule
                 .test(/\.ts[x]?$/)
                 .exclude.add(/node_modules/)
@@ -82,7 +80,7 @@ function default_1(api, options) {
                 .options({ transpileOnly: true })
                 .end();
         }
-        if (!isTSProject && !isProduction) {
+        if (!isTSProject) {
             jsRule
                 .test(/\.jsx?$/)
                 .include.add(api.resolve("src"))

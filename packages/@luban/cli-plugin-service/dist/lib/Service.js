@@ -28,6 +28,26 @@ const builtInPluginsRelativePath = [
     "./../config/dev",
     "./../config/prod",
 ];
+const defaultPreset = {
+    language: "ts",
+    eslint: "standard",
+    cssPreprocessor: "less",
+    stylelint: true,
+    router: true,
+    store: true,
+    unitTest: true,
+    uiLibrary: [],
+    plugins: {
+        "@luban-cli/cli-plugin-service": {},
+        "@luban-cli/cli-plugin-babel": {},
+        "@luban-cli/cli-plugin-eslint": {},
+        "@luban-cli/cli-plugin-router": {},
+        "@luban-cli/cli-plugin-store": {},
+        "@luban-cli/cli-plugin-stylelint": {},
+        "@luban-cli/cli-plugin-typescript": {},
+        "@luban-cli/cli-plugin-unit-test": {},
+    },
+};
 function ensureSlash(config, key) {
     if (typeof config[key] === "string") {
         config[key] = config[key].replace(/^([^/])/, "/$1").replace(/([^/])$/, "$1/");
@@ -215,9 +235,7 @@ class Service {
         return resolved;
     }
     resolveLubanConfig() {
-        let initConfig = {
-            plugins: { "@luban-cli/cli-plugin-service": {} },
-        };
+        let initConfig = defaultPreset;
         const pkg = this.resolvePkg();
         if (pkg.__luban_config__) {
             initConfig = pkg.__luban_config__;

@@ -37,7 +37,7 @@ class PluginAPI {
     });
   }
 
-  public resolveInitConfig(): Preset {
+  public resolveInitConfig(): Required<Preset> {
     return this.service.resolveLubanConfig();
   }
 

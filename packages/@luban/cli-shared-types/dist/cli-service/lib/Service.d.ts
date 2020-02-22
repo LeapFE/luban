@@ -27,6 +27,6 @@ declare class Service {
     resolvePkg(inlinePkg?: BasePkgFields): BasePkgFields;
     loadEnv(mode?: string): void;
     loadProjectOptions(inlineOptions: ProjectConfig): ProjectConfig;
-    resolveLubanConfig(): Preset;
+    resolveLubanConfig(): Required<Preset>;
 }
 export { Service };

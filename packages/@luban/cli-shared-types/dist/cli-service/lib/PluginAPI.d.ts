@@ -8,7 +8,7 @@ declare class PluginAPI {
     getCwd(): string;
     resolve(_path: string): string;
     hasPlugin(id: PLUGIN_IDS): boolean;
-    resolveInitConfig(): Preset;
+    resolveInitConfig(): Required<Preset>;
     getEntryFile(): string;
     setMode(mode: string): void;
     registerCommand(name: string, opts: Record<string, any> | null | CommandFn<CliArgs>, fn: CommandFn<CliArgs>): void;

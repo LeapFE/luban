@@ -74,19 +74,20 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
     const tsRule = webpackConfig.module.rule("ts");
 
     const eslintRule = webpackConfig.module.rule("eslint");
+    eslintRule
+      .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
+      .enforce("pre")
+      .exclude.add(/node_modules/)
+      .end()
+      .use("eslint-loader")
+      .loader("eslint-loader")
+      .end();
 
-    if (api.resolveInitConfig().eslint) {
-      eslintRule
-        .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
-        .enforce("pre")
-        .exclude.add(/node_modules/)
-        .end()
-        .use("eslint-loader")
-        .loader("eslint-loader")
-        .end();
-    }
-
-    if (isProduction) {
+    /**
+     * 生产环境下 使用 babel 来编译 ts 代码，并针对目标运行环境（浏览器）注入 polyfill 代码
+     * 开发环境下 使用 ts-loader 来编译 ts 代码，但是不会注入 polyfill 代码
+     */
+    if (isTSProject && isProduction) {
       tsRule
         .test(/\.ts[x]?$/)
         .exclude.add(/node_modules/)
@@ -108,7 +109,10 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         .end();
     }
 
-    if (!isTSProject && !isProduction) {
+    /**
+     * 生产和开发环境下对 js 代码都使用 babel 来转译代码，同时针对目标运行环境（浏览器）注入 polyfill 代码
+     */
+    if (!isTSProject) {
       jsRule
         .test(/\.jsx?$/)
         .include.add(api.resolve("src"))
