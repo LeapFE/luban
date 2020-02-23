@@ -19,17 +19,21 @@ function default_1(api, options) {
         ["comma-dangle", ["error", "always-multiline"]],
     ]);
     const eslintPlugins = ["react-hooks"];
-    const eslintSettings = {
-        react: {
-            createClass: "createReactClass",
-            pragma: "React",
-            version: "detect",
-            flowVersion: "0.53",
-        },
-        propWrapperFunctions: ["forbidExtraProps", { property: "freeze", object: "Object" }],
-        linkComponents: ["Hyperlink", { name: "Link", linkAttribute: "to" }],
-        "import/extensions": [".ts", ".tsx"],
-    };
+    const eslintSettings = new cli_shared_utils_1.SimpleMapPolyfill([
+        [
+            "react",
+            [
+                {
+                    createClass: "createReactClass",
+                    pragma: "React",
+                    version: "detect",
+                    flowVersion: "0.53",
+                },
+            ],
+        ],
+        ["propWrapperFunctions", ["forbidExtraProps", { property: "freeze", object: "Object" }]],
+        ["linkComponents", ["Hyperlink", { name: "Link", linkAttribute: "to" }]],
+    ]);
     const eslintExtends = [
         "eslint:recommended",
         "plugin:react/recommended",
@@ -74,6 +78,7 @@ function default_1(api, options) {
             },
             project: "./tsconfig.json",
         };
+        eslintSettings.set("import/extensions", [".ts", ".tsx"]);
     }
     if (options.preset.eslint === "standard") {
         api.extendPackage({
@@ -135,7 +140,7 @@ function default_1(api, options) {
         parserOptions: JSON.stringify(parserOptions),
         eslintParser: JSON.stringify(eslintParser),
         eslintRules: JSON.stringify(eslintRules.toPlainObject()),
-        settings: JSON.stringify(eslintSettings),
+        settings: JSON.stringify(eslintSettings.toPlainObject()),
     });
 }
 exports.default = default_1;

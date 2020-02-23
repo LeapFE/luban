@@ -24,17 +24,24 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   ]);
   const eslintPlugins = ["react-hooks"];
 
-  const eslintSettings = {
-    react: {
-      createClass: "createReactClass",
-      pragma: "React",
-      version: "detect",
-      flowVersion: "0.53",
-    },
-    propWrapperFunctions: ["forbidExtraProps", { property: "freeze", object: "Object" }],
-    linkComponents: ["Hyperlink", { name: "Link", linkAttribute: "to" }],
-    "import/extensions": [".ts", ".tsx"],
-  };
+  const eslintSettings = new SimpleMapPolyfill<
+    string,
+    string | Array<string | Record<string, any>>
+  >([
+    [
+      "react",
+      [
+        {
+          createClass: "createReactClass",
+          pragma: "React",
+          version: "detect",
+          flowVersion: "0.53",
+        },
+      ],
+    ],
+    ["propWrapperFunctions", ["forbidExtraProps", { property: "freeze", object: "Object" }]],
+    ["linkComponents", ["Hyperlink", { name: "Link", linkAttribute: "to" }]],
+  ]);
 
   const eslintExtends = [
     "eslint:recommended",
@@ -90,6 +97,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       },
       project: "./tsconfig.json",
     };
+
+    eslintSettings.set("import/extensions", [".ts", ".tsx"]);
   }
 
   if (options.preset.eslint === "standard") {
@@ -161,6 +170,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     parserOptions: JSON.stringify(parserOptions),
     eslintParser: JSON.stringify(eslintParser),
     eslintRules: JSON.stringify(eslintRules.toPlainObject()),
-    settings: JSON.stringify(eslintSettings),
+    settings: JSON.stringify(eslintSettings.toPlainObject()),
   });
 }
