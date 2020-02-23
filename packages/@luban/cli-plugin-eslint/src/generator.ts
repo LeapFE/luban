@@ -7,13 +7,20 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   const eslintParser =
     options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
 
-  let parserOptions: Record<string, any> = {
-    ecmaVersion: 11,
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-    },
-  };
+  const parserOptions = new SimpleMapPolyfill<
+    string,
+    string | number | Record<string, any> | Array<string | Record<string, any>>
+  >([
+    ["ecmaVersion", 11],
+    ["sourceType", "module"],
+    [
+      "ecmaFeatures",
+      {
+        jsx: true,
+      },
+    ],
+  ]);
+
   const eslintRules = new SimpleMapPolyfill<string, string | Array<string | Record<string, any>>>([
     ["quotes", ["error", "double"]],
     ["semi", ["error", "always"]],
@@ -89,16 +96,12 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       "plugin:import/typescript",
     );
 
-    parserOptions = {
-      ecmaVersion: 11,
-      sourceType: "module",
-      ecmaFeatures: {
-        jsx: true,
-      },
-      project: "./tsconfig.json",
-    };
+    parserOptions.set("project", "./tsconfig.json");
 
     eslintSettings.set("import/extensions", [".ts", ".tsx"]);
+
+    eslintRules.set("react/prop-types", ["off"]);
+    eslintRules.set("import/prefer-default-export", ["off"]);
   }
 
   if (options.preset.eslint === "standard") {
@@ -125,7 +128,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     eslintExtends.push("airbnb");
 
     if (options.preset.language === "ts") {
-      eslintRules.set("react/prop-types", ["off"]);
       eslintRules.set("react/state-in-constructor", ["warn"]);
       eslintRules.set("import/no-unresolved", ["off"]);
       eslintRules.set("react/jsx-filename-extension", ["error", { extensions: [".ts", ".tsx"] }]);
@@ -167,7 +169,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   api.render("./template", {
     eslintExtends: JSON.stringify(eslintExtends),
     eslintPlugins: JSON.stringify(eslintPlugins),
-    parserOptions: JSON.stringify(parserOptions),
+    parserOptions: JSON.stringify(parserOptions.toPlainObject()),
     eslintParser: JSON.stringify(eslintParser),
     eslintRules: JSON.stringify(eslintRules.toPlainObject()),
     settings: JSON.stringify(eslintSettings.toPlainObject()),

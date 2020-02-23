@@ -3,13 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 function default_1(api, options) {
     const eslintParser = options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
-    let parserOptions = {
-        ecmaVersion: 11,
-        sourceType: "module",
-        ecmaFeatures: {
-            jsx: true,
-        },
-    };
+    const parserOptions = new cli_shared_utils_1.SimpleMapPolyfill([
+        ["ecmaVersion", 11],
+        ["sourceType", "module"],
+        [
+            "ecmaFeatures",
+            {
+                jsx: true,
+            },
+        ],
+    ]);
     const eslintRules = new cli_shared_utils_1.SimpleMapPolyfill([
         ["quotes", ["error", "double"]],
         ["semi", ["error", "always"]],
@@ -70,15 +73,10 @@ function default_1(api, options) {
         });
         eslintPlugins.push("@typescript-eslint");
         eslintExtends.push("prettier/@typescript-eslint", "plugin:@typescript-eslint/recommended-requiring-type-checking", "plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:import/typescript");
-        parserOptions = {
-            ecmaVersion: 11,
-            sourceType: "module",
-            ecmaFeatures: {
-                jsx: true,
-            },
-            project: "./tsconfig.json",
-        };
+        parserOptions.set("project", "./tsconfig.json");
         eslintSettings.set("import/extensions", [".ts", ".tsx"]);
+        eslintRules.set("react/prop-types", ["off"]);
+        eslintRules.set("import/prefer-default-export", ["off"]);
     }
     if (options.preset.eslint === "standard") {
         api.extendPackage({
@@ -100,7 +98,6 @@ function default_1(api, options) {
         });
         eslintExtends.push("airbnb");
         if (options.preset.language === "ts") {
-            eslintRules.set("react/prop-types", ["off"]);
             eslintRules.set("react/state-in-constructor", ["warn"]);
             eslintRules.set("import/no-unresolved", ["off"]);
             eslintRules.set("react/jsx-filename-extension", ["error", { extensions: [".ts", ".tsx"] }]);
@@ -137,7 +134,7 @@ function default_1(api, options) {
     api.render("./template", {
         eslintExtends: JSON.stringify(eslintExtends),
         eslintPlugins: JSON.stringify(eslintPlugins),
-        parserOptions: JSON.stringify(parserOptions),
+        parserOptions: JSON.stringify(parserOptions.toPlainObject()),
         eslintParser: JSON.stringify(eslintParser),
         eslintRules: JSON.stringify(eslintRules.toPlainObject()),
         settings: JSON.stringify(eslintSettings.toPlainObject()),
