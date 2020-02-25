@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/front-end-captain/luban/compare/v0.0.8...v0.0.9) (2020-02-25)
+
+
+### Bug Fixes
+
+* **cli:** fix cli build config and fix init git repository condition ([1974a9b](https://github.com/front-end-captain/luban/commit/1974a9b60a8c8588aee20c6681c824f33fef8135))
+
+
+
+
+
 ## [0.0.8](https://github.com/front-end-captain/luban/compare/v0.0.7...v0.0.8) (2020-02-25)
 
 
