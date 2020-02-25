@@ -71,6 +71,7 @@ class Creator {
     this.run = this.run.bind(this);
     this.shouldInitGit = this.shouldInitGit.bind(this);
     this.formatConfigFiles = this.formatConfigFiles.bind(this);
+    this.fixLintErrors = this.fixLintErrors.bind(this);
 
     this.injectedPrompts = [];
     this.promptCompletedCallbacks = [];
@@ -81,7 +82,7 @@ class Creator {
   }
 
   public async create(): Promise<void> {
-    const { options, context, name, shouldInitGit, run, formatConfigFiles } = this;
+    const { options, context, name, shouldInitGit, run, formatConfigFiles, fixLintErrors } = this;
 
     if (!options.manual) {
       const useDefaultPreset = await this.confirmUseDefaultPrest();
@@ -177,6 +178,17 @@ class Creator {
     log();
 
     stopSpinner();
+    log("💄  fix some lint errors...");
+    try {
+      await fixLintErrors(adaptedPreset);
+    } catch (e) {
+      warn("fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
+    }
+
+    log();
+    log();
+
+    stopSpinner();
     log("🎨  formatting some file...");
     try {
       await formatConfigFiles(adaptedPreset);
@@ -231,6 +243,22 @@ class Creator {
     }
 
     await run("./node_modules/prettier/bin-prettier.js", formatArgs.concat(formatFiles));
+  }
+
+  public async fixLintErrors(preset: Required<Preset>): Promise<void> {
+    const { run } = this;
+
+    const formatArgs = ["--config=.eslintrc", "--fix", "src/"];
+
+    if (preset.language === "ts") {
+      formatArgs.push("--ext=.tsx,.ts");
+    }
+
+    if (preset.language === "js") {
+      formatArgs.push("--ext=.jsx,.js");
+    }
+
+    await run("./node_modules/eslint/bin/eslint.js", formatArgs);
   }
 
   public async promptAndResolvePreset(manual: boolean): Promise<Required<Preset>> {

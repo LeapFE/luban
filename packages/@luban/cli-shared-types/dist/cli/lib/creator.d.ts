@@ -21,6 +21,7 @@ declare class Creator {
     create(): Promise<void>;
     run(command: string, args?: any): ExecaChildProcess;
     formatConfigFiles(preset: Required<Preset>): Promise<void>;
+    fixLintErrors(preset: Required<Preset>): Promise<void>;
     promptAndResolvePreset(manual: boolean): Promise<Required<Preset>>;
     printDefaultPreset(): void;
     confirmUseDefaultPrest(): Promise<boolean>;

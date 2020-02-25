@@ -25,6 +25,7 @@ class Creator {
         this.run = this.run.bind(this);
         this.shouldInitGit = this.shouldInitGit.bind(this);
         this.formatConfigFiles = this.formatConfigFiles.bind(this);
+        this.fixLintErrors = this.fixLintErrors.bind(this);
         this.injectedPrompts = [];
         this.promptCompletedCallbacks = [];
         this.outroPrompts = this.resolveOutroPrompts();
@@ -32,7 +33,7 @@ class Creator {
         promptModules.forEach((m) => m(promptAPI));
     }
     async create() {
-        const { options, context, name, shouldInitGit, run, formatConfigFiles } = this;
+        const { options, context, name, shouldInitGit, run, formatConfigFiles, fixLintErrors } = this;
         if (!options.manual) {
             const useDefaultPreset = await this.confirmUseDefaultPrest();
             if (!useDefaultPreset) {
@@ -100,6 +101,16 @@ class Creator {
         cli_shared_utils_1.log();
         cli_shared_utils_1.log();
         cli_shared_utils_1.stopSpinner();
+        cli_shared_utils_1.log("💄  fix some lint errors...");
+        try {
+            await fixLintErrors(adaptedPreset);
+        }
+        catch (e) {
+            cli_shared_utils_1.warn("fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
+        }
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.log();
+        cli_shared_utils_1.stopSpinner();
         cli_shared_utils_1.log("🎨  formatting some file...");
         try {
             await formatConfigFiles(adaptedPreset);
@@ -139,6 +150,17 @@ class Creator {
             formatFiles.push("./tsconfig.json");
         }
         await run("./node_modules/prettier/bin-prettier.js", formatArgs.concat(formatFiles));
+    }
+    async fixLintErrors(preset) {
+        const { run } = this;
+        const formatArgs = ["--config=.eslintrc", "--fix", "src/"];
+        if (preset.language === "ts") {
+            formatArgs.push("--ext=.tsx,.ts");
+        }
+        if (preset.language === "js") {
+            formatArgs.push("--ext=.jsx,.js");
+        }
+        await run("./node_modules/eslint/bin/eslint.js", formatArgs);
     }
     async promptAndResolvePreset(manual) {
         if (!manual) {

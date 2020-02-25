@@ -47,6 +47,7 @@ function default_1(api, options) {
         api.extendPackage({
             scripts: {
                 eslint: "eslint --config .eslintrc --ext .jsx,.js src/",
+                "eslint:fix": "eslint --fix --config .eslintrc --ext .jsx,.js src/",
                 "format:js": "prettier --write src/**/*.{js,jsx}",
                 "format:check:js": "prettier --check src/**/*.{js,jsx}",
             },
@@ -62,6 +63,7 @@ function default_1(api, options) {
         api.extendPackage({
             scripts: {
                 eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
+                "eslint:fix": "eslint --fix --config .eslintrc --ext .tsx,.ts src/",
                 check: "tsc --noEmit",
                 "format:ts": "prettier --write src/**/*.{ts,tsx}",
                 "format:check:ts": "prettier --check src/**/*.{ts,tsx}",
