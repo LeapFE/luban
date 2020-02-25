@@ -25,8 +25,8 @@ class SimpleMapPolyfill {
         }
         else {
             const targetKeyIndex = this._keys.findIndex((k) => k === key);
-            this._keys = Array.from(this._keys).splice(targetKeyIndex, 1, key);
-            this._values = Array.from(this._values).splice(targetKeyIndex, 1, value);
+            this._keys.splice(targetKeyIndex, 1, key);
+            this._values.splice(targetKeyIndex, 1, value);
         }
         return this;
     }
