@@ -28,10 +28,10 @@ export const defaultsProjectConfig: ProjectConfig = {
   outputDir: "dist",
   assetsDir: "",
   indexPath: "index.html",
-  productionSourceMap: true,
+  productionSourceMap: false,
   css: {
-    extract: true,
-    sourceMap: false,
+    extract: undefined,
+    sourceMap: undefined,
     loaderOptions: {
       css: {},
       less: {},

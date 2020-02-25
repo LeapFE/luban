@@ -9,7 +9,7 @@ function default_1(api, options) {
     api.chainWebpack((webpackConfig) => {
         const isProduction = process.env.NODE_ENV === "production";
         const createConfig = api.resolveInitConfig();
-        const { css: { extract, sourceMap, loaderOptions }, } = options;
+        const { css: { extract = isProduction, sourceMap = !isProduction, loaderOptions }, } = options;
         const filename = getAssetsPath_1.getAssetsPath(options, `css/[name]${isProduction ? ".[hash:8]" : ""}.css`);
         const chunkFilename = getAssetsPath_1.getAssetsPath(options, `css/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`);
         const extractOptions = {
@@ -26,15 +26,24 @@ function default_1(api, options) {
             sourceMap,
         };
         const cssRule = webpackConfig.module.rule("css");
+        cssRule.test(/\.css$/).end();
+        if (extract) {
+            cssRule
+                .use("extract-css")
+                .loader(mini_css_extract_plugin_1.default.loader)
+                .options(miniCssOptions)
+                .end();
+        }
+        else {
+            cssRule
+                .use("style-loader")
+                .loader("style-loader")
+                .end();
+        }
         cssRule
-            .test(/\.css$/)
-            .use("extract-css")
-            .loader(mini_css_extract_plugin_1.default.loader)
-            .options(miniCssOptions)
-            .end()
             .use("css-loader")
             .loader("css-loader")
-            .options(cssLoaderOptions)
+            .options({ ...cssLoaderOptions, importLoaders: 1 })
             .end()
             .use("postcss")
             .loader("postcss-loader")
@@ -42,12 +51,21 @@ function default_1(api, options) {
             .end();
         if (createConfig.cssPreprocessor === "less") {
             const lessRule = webpackConfig.module.rule("less");
+            lessRule.test(/\.less$/).end();
+            if (extract) {
+                lessRule
+                    .use("extract-css")
+                    .loader(mini_css_extract_plugin_1.default.loader)
+                    .options(miniCssOptions)
+                    .end();
+            }
+            else {
+                lessRule
+                    .use("style-loader")
+                    .loader("style-loader")
+                    .end();
+            }
             lessRule
-                .test(/\.less$/)
-                .use("extract-css")
-                .loader(mini_css_extract_plugin_1.default.loader)
-                .options(miniCssOptions)
-                .end()
                 .use("css-loader")
                 .loader("css-loader")
                 .options({

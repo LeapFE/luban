@@ -32,8 +32,8 @@ declare type OptionsOfCssLoader = {
     miniCss: Record<string, any>;
 };
 declare type CssConfig = {
-    extract: boolean;
-    sourceMap: boolean;
+    extract?: boolean;
+    sourceMap?: boolean;
     loaderOptions: OptionsOfCssLoader;
 };
 export declare type ProjectConfig = {

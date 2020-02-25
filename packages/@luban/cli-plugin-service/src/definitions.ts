@@ -60,16 +60,17 @@ type OptionsOfCssLoader = {
 type CssConfig = {
   /**
    * @description 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)
-   * process.env.NODE_ENV === "production"
    *
-   * @default false
+   * @default process.env.NODE_ENV === "production"
    */
-  extract: boolean;
+  extract?: boolean;
 
   /**
    * @description 是否为 CSS 开启 source map
+   *
+   * @default process.env.NODE_ENV === "development"
    */
-  sourceMap: boolean;
+  sourceMap?: boolean;
 
   /**
    * @description 一些处理 css 的 loader 的配置项
@@ -103,7 +104,7 @@ export type ProjectConfig = {
 
   /**
    * @description 是否在生成环境下开启 sourceMap
-   * @default true
+   * @default false
    */
   productionSourceMap: boolean;
 

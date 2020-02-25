@@ -30,6 +30,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       "file-loader": "^5.1.0",
       "postcss-loader": "^3.0.0",
       "url-loader": "^3.0.0",
+      "style-loader": "^1.1.3",
     },
     browserslist: [
       "last 1 version",

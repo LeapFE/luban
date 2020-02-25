@@ -14,7 +14,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     const createConfig = api.resolveInitConfig();
 
     const {
-      css: { extract, sourceMap, loaderOptions },
+      css: { extract = isProduction, sourceMap = !isProduction, loaderOptions },
     } = options;
 
     const filename = getAssetsPath(options, `css/[name]${isProduction ? ".[hash:8]" : ""}.css`);
@@ -42,15 +42,25 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
 
     const cssRule = webpackConfig.module.rule("css");
 
+    cssRule.test(/\.css$/).end();
+
+    if (extract) {
+      cssRule
+        .use("extract-css")
+        .loader(MiniCssExtractPlugin.loader)
+        .options(miniCssOptions)
+        .end();
+    } else {
+      cssRule
+        .use("style-loader")
+        .loader("style-loader")
+        .end();
+    }
+
     cssRule
-      .test(/\.css$/)
-      .use("extract-css")
-      .loader(MiniCssExtractPlugin.loader)
-      .options(miniCssOptions)
-      .end()
       .use("css-loader")
       .loader("css-loader")
-      .options(cssLoaderOptions)
+      .options({ ...cssLoaderOptions, importLoaders: 1 })
       .end()
       .use("postcss")
       .loader("postcss-loader")
@@ -60,12 +70,22 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     if (createConfig.cssPreprocessor === "less") {
       const lessRule = webpackConfig.module.rule("less");
 
+      lessRule.test(/\.less$/).end();
+
+      if (extract) {
+        lessRule
+          .use("extract-css")
+          .loader(MiniCssExtractPlugin.loader)
+          .options(miniCssOptions)
+          .end();
+      } else {
+        lessRule
+          .use("style-loader")
+          .loader("style-loader")
+          .end();
+      }
+
       lessRule
-        .test(/\.less$/)
-        .use("extract-css")
-        .loader(MiniCssExtractPlugin.loader)
-        .options(miniCssOptions)
-        .end()
         .use("css-loader")
         .loader("css-loader")
         .options({
