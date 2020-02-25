@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-unit-test",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "cli-plugin-unit-test",
   "keywords": [
     "unit-test",
@@ -33,7 +33,7 @@
     "url": "https://github.com/front-end-captain/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "0.0.11"
+    "@luban-cli/cli-shared-types": "0.0.12"
   },
   "engines": {
     "node": ">=10"
