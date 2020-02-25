@@ -38,4 +38,4 @@ if (!semver.satisfies(process.version, requiredVersion)) {
   process.exit(1);
 }
 
-require("./../dist/src/index");
+require("./../dist/index");
