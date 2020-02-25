@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/front-end-captain/luban/compare/v0.0.7...v0.0.8) (2020-02-25)
+
+
+### Features
+
+* **cli,plugin-service:** warn when cli,plugin-service resolve plugin ([b2b9fdb](https://github.com/front-end-captain/luban/commit/b2b9fdbcfd86904beecd9abdb5401c36cc365a04))
+* **cli,service:** move dir assets to src in service template ([2de26cd](https://github.com/front-end-captain/luban/commit/2de26cd6fe8fccb30a3328adade93e330a625766))
+
+
+
+
+
 ## [0.0.7](https://github.com/front-end-captain/luban/compare/v0.0.6...v0.0.7) (2020-02-22)
 
 

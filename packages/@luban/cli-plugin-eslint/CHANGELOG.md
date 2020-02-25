@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/front-end-captain/luban/compare/v0.0.7...v0.0.8) (2020-02-25)
+
+
+### Bug Fixes
+
+* **eslint:** correction generate eslint rules ([b61a370](https://github.com/front-end-captain/luban/commit/b61a37064af9a7fbcae1d09403559f0b6e326369))
+* **eslint:** fix settings of eslint config ([0733507](https://github.com/front-end-captain/luban/commit/0733507de79fe34df1f76154dbf4dcfdaafe7a34))
+
+
+
+
+
 ## [0.0.7](https://github.com/front-end-captain/luban/compare/v0.0.6...v0.0.7) (2020-02-22)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
