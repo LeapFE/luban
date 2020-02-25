@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/front-end-captain/luban/compare/v0.0.10...v0.0.11) (2020-02-25)
+
+
+### Bug Fixes
+
+* **router,service,utils:** fix some bugs ([4d20904](https://github.com/front-end-captain/luban/commit/4d209046513689f1ed2f92d5e04b71f6a8eb8e17))
+
+
+
+
+
 ## [0.0.10](https://github.com/front-end-captain/luban/compare/v0.0.9...v0.0.10) (2020-02-25)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-service

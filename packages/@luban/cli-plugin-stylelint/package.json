@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-stylelint",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "cli-plugin-stylelint",
   "keywords": [
     "stylelint",
@@ -32,12 +32,12 @@
     "url": "https://github.com/front-end-captain/luban/issues"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "0.0.10",
+    "@luban-cli/cli-shared-utils": "0.0.11",
     "stylelint": "^13.0.0",
     "stylelint-webpack-plugin": "^1.2.3"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "0.0.10",
+    "@luban-cli/cli-shared-types": "0.0.11",
     "@types/stylelint-webpack-plugin": "^0.1.5",
     "@types/webpack-chain": "^5.2.0"
   },
