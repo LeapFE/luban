@@ -294,7 +294,7 @@ class Creator {
       return true;
     }
 
-    return hasProjectGit(this.context);
+    return !hasProjectGit(this.context);
   }
 
   public resolveFinalPrompts(): QuestionCollection {

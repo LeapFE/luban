@@ -5,6 +5,10 @@
   "bin": {
     "luban": "bin/index.js"
   },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "cli",
     "react",
@@ -12,7 +16,7 @@
   ],
   "scripts": {
     "build:types": "tsc --pretty --project tsconfig.type.json",
-    "build": "rimraf dist && tsc --pretty --project tsconfig.json && yarn run build:types",
+    "build": "rimraf dist && tsc --pretty && yarn run build:types",
     "postinstall": "node postInstall.js",
     "check:type": "tsc --noEmit",
     "watch": "yarn run build -- --watch --diagnostics"

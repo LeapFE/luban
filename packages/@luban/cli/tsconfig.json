@@ -11,6 +11,5 @@
   ],
   "files": [
     "./types.d.ts",
-    "src/definitions.ts"
   ]
 }

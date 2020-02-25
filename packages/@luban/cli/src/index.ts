@@ -8,8 +8,6 @@ import minimist from "minimist";
 
 didYouMean.threshold = 0.6;
 
-import packageJson from "../package.json";
-
 import { enhanceErrorMessages } from "./utils/enhanceErrorMessages";
 import { CliOptions } from "./definitions";
 import { init } from "./lib/create";
@@ -45,7 +43,7 @@ function cleanArgs(cmd: any): CliOptions {
 
 const programName = "luban init";
 
-program.version(packageJson.version).usage("<command> [options]");
+program.version(require("../package.json").version).usage("<command> [options]");
 
 program
   .command("init <project-directory>")
