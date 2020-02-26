@@ -113,7 +113,6 @@ function default_1(api, options) {
         }
         const compiler = webpack_1.default(webpackConfig);
         const webpackDevServerOptions = {
-            ...projectDevServerOptions,
             clientLogLevel: "info",
             historyApiFallback: {
                 disableDotRule: true,
@@ -138,7 +137,7 @@ function default_1(api, options) {
                 modules: false,
                 children: false,
             },
-            proxy: projectDevServerOptions.proxy,
+            ...projectDevServerOptions,
         };
         const server = new webpack_dev_server_1.default(compiler, webpackDevServerOptions);
         ["SIGINT", "SIGTERM"].forEach((signal) => {

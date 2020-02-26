@@ -146,7 +146,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       const compiler = webpack(webpackConfig);
 
       const webpackDevServerOptions: WebpackDevServerConfiguration = {
-        ...projectDevServerOptions,
         clientLogLevel: "info",
         historyApiFallback: {
           disableDotRule: true,
@@ -171,7 +170,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           modules: false,
           children: false,
         },
-        proxy: projectDevServerOptions.proxy,
+        ...projectDevServerOptions,
       };
 
       // create server

@@ -30,14 +30,14 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     };
 
     const miniCssOptions = {
-      ...loaderOptions.miniCss,
       hmr: !isProduction,
       reloadAll: !isProduction,
+      ...loaderOptions.miniCss,
     };
 
     const cssLoaderOptions = {
-      ...loaderOptions.css,
       sourceMap,
+      ...loaderOptions.css,
     };
 
     const cssRule = webpackConfig.module.rule("css");
@@ -60,11 +60,11 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     cssRule
       .use("css-loader")
       .loader("css-loader")
-      .options({ ...cssLoaderOptions, importLoaders: 1 })
+      .options({ importLoaders: 1, ...cssLoaderOptions })
       .end()
       .use("postcss")
       .loader("postcss-loader")
-      .options({ ...loaderOptions.postcss, sourceMap, ident: "postcss" })
+      .options({ sourceMap, ident: "postcss", ...loaderOptions.postcss })
       .end();
 
     if (createConfig.cssPreprocessor === "less") {
@@ -89,21 +89,21 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
         .use("css-loader")
         .loader("css-loader")
         .options({
-          ...cssLoaderOptions,
           sourceMap,
           importLoaders: 2,
           modules: {
             localIdentName: "[local]-[hash:base64:5]",
           },
+          ...cssLoaderOptions,
         })
         .end()
         .use("postcss-loader")
         .loader("postcss-loader")
-        .options({ ...loaderOptions.postcss, sourceMap, ident: "postcss" })
+        .options({ sourceMap, ident: "postcss", ...loaderOptions.postcss })
         .end()
         .use("less-loader")
         .loader("less-loader")
-        .options({ ...loaderOptions.less, sourceMap, noIeCompat: true })
+        .options({ sourceMap, noIeCompat: true, ...loaderOptions.less })
         .end();
     }
 
