@@ -79,7 +79,7 @@ function default_1(api, options) {
     if (api.isGitRepository()) {
         api.extendPackage({
             "lint-staged": {
-                [lintStyleFileSuffix]: ["npm run eslint", "npm run format:check:style"],
+                [lintStyleFileSuffix]: ["npm run stylelint", "npm run format:check:style"],
             },
         });
     }
