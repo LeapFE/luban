@@ -6,6 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const chalk_1 = __importDefault(require("chalk"));
 const constants_1 = require("./../constants");
+function printValue(value) {
+    if (typeof value === "string") {
+        return chalk_1.default.yellowBright(value);
+    }
+    if (typeof value === "boolean") {
+        return chalk_1.default.yellowBright("✔");
+    }
+    if (Array.isArray(value)) {
+        return chalk_1.default.yellowBright(value.join(", "));
+    }
+    return "";
+}
 function printDefaultPreset(preset) {
     cli_shared_utils_1.log();
     cli_shared_utils_1.log("List default preset");
@@ -16,11 +28,7 @@ function printDefaultPreset(preset) {
         if (key === "uiLibrary" && preset["uiLibrary"].length === 0) {
             return;
         }
-        if (key === "uiLibrary" && preset["uiLibrary"].length > 0) {
-            cli_shared_utils_1.log(`  ${chalk_1.default.green(constants_1.defaultPresetNameMap["uiLibrary"])}: ${chalk_1.default.yellowBright(preset["uiLibrary"].join(", "))}`);
-            return;
-        }
-        cli_shared_utils_1.log(`  ${chalk_1.default.green(constants_1.defaultPresetNameMap[key])}: ${chalk_1.default.yellowBright(preset[key])}`);
+        cli_shared_utils_1.log(`  ${chalk_1.default.green(constants_1.defaultPresetNameMap[key])}: ${printValue(preset[key])}`);
     });
     cli_shared_utils_1.log();
 }

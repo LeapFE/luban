@@ -4,6 +4,20 @@ import chalk from "chalk";
 
 import { defaultPresetNameMap } from "./../constants";
 
+function printValue(value: unknown): string {
+  if (typeof value === "string") {
+    return chalk.yellowBright(value);
+  }
+  if (typeof value === "boolean") {
+    return chalk.yellowBright("✔");
+  }
+  if (Array.isArray(value)) {
+    return chalk.yellowBright(value.join(", "));
+  }
+
+  return "";
+}
+
 export function printDefaultPreset(preset: Required<Preset>): void {
   log();
   log("List default preset");
@@ -14,15 +28,7 @@ export function printDefaultPreset(preset: Required<Preset>): void {
     if (key === "uiLibrary" && preset["uiLibrary"].length === 0) {
       return;
     }
-    if (key === "uiLibrary" && preset["uiLibrary"].length > 0) {
-      log(
-        `  ${chalk.green(defaultPresetNameMap["uiLibrary"])}: ${chalk.yellowBright(
-          preset["uiLibrary"].join(", "),
-        )}`,
-      );
-      return;
-    }
-    log(`  ${chalk.green(defaultPresetNameMap[key])}: ${chalk.yellowBright(preset[key])}`);
+    log(`  ${chalk.green(defaultPresetNameMap[key])}: ${printValue(preset[key])}`);
   });
   log();
 }
