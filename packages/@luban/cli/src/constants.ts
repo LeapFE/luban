@@ -40,7 +40,7 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "stylelint",
   "router",
   "store",
-  "unitTest",
+  // "unitTest",
   "uiLibrary",
 ];
 

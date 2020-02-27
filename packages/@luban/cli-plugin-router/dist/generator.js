@@ -8,7 +8,7 @@ function default_1(api, options) {
             },
         });
         if (options.preset.language === "js") {
-            api.render("./template");
+            api.render("./template/js");
         }
         if (options.preset.language === "ts") {
             api.render("./template/ts");

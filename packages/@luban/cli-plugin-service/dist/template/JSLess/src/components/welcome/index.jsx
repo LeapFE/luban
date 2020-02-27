@@ -1,4 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+<%_ if (useRouter) { _%>
+import { Todo } from "../todo";
+<%_ } _%>
 
 import logo from "../../assets/logo.svg";
 
@@ -7,10 +12,13 @@ import styles from "./index.less";
 const Welcome = ({ pageName }) => (
   <div className={styles.App}>
     <header className={styles["App-header"]}>
+      <%_ if (useRouter) { _%>
+      <Todo />
+      <%_ } _%>
       <h2>
-        This is
+        This is&nbsp;
         {pageName}
-        page
+        &nbsp;page
       </h2>
       <img src={logo} className={styles["App-logo"]} alt="logo" />
       <p>
@@ -35,5 +43,9 @@ const Welcome = ({ pageName }) => (
     </header>
   </div>
 );
+
+Welcome.propTypes = {
+  pageName: PropTypes.string.isRequired,
+};
 
 export { Welcome };

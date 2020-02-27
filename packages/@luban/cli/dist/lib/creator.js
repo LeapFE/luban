@@ -102,7 +102,7 @@ class Creator {
         cli_shared_utils_1.log();
         cli_shared_utils_1.log();
         cli_shared_utils_1.stopSpinner();
-        cli_shared_utils_1.log("💄  fix some lint errors...");
+        cli_shared_utils_1.log("💄  fix and format some lint errors...");
         try {
             await fixLintErrors(adaptedPreset);
         }
@@ -112,7 +112,7 @@ class Creator {
         cli_shared_utils_1.log();
         cli_shared_utils_1.log();
         cli_shared_utils_1.stopSpinner();
-        cli_shared_utils_1.log("🎨  formatting some file...");
+        cli_shared_utils_1.log("🎨  formatting some config file...");
         try {
             await formatConfigFiles(adaptedPreset);
         }
@@ -154,14 +154,18 @@ class Creator {
     }
     async fixLintErrors(preset) {
         const { run } = this;
-        const formatArgs = ["--config=.eslintrc", "--fix", "src/"];
+        const lintArgs = ["--config=.eslintrc", "--fix", "src/"];
+        const formatArgs = ["--write", "src/**/*.{ts,tsx}"];
         if (preset.language === "ts") {
-            formatArgs.push("--ext=.tsx,.ts");
+            lintArgs.push("--ext=.tsx,.ts");
+            formatArgs.push("src/**/*.{ts,tsx}");
         }
         if (preset.language === "js") {
-            formatArgs.push("--ext=.jsx,.js");
+            lintArgs.push("--ext=.jsx,.js");
+            formatArgs.push("src/**/*.{js,jsx}");
         }
-        await run("./node_modules/eslint/bin/eslint.js", formatArgs);
+        await run("./node_modules/eslint/bin/eslint.js", lintArgs);
+        await run("./node_modules/prettier/bin-prettier.js", formatArgs);
     }
     async promptAndResolvePreset(manual) {
         if (!manual) {

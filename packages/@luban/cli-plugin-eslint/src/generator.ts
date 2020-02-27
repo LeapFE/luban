@@ -28,6 +28,21 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     ["react/prop-types", ["error"]],
     ["space-before-function-paren", ["error", "never"]],
     ["comma-dangle", ["error", "always-multiline"]],
+    ["max-len", ["error", { code: 120, ignoreUrls: true, ignoreComments: true }]],
+    ["arrow-body-style", ["error", "always"]],
+    [
+      "object-curly-newline",
+      [
+        "error",
+        {
+          ObjectExpression: "always",
+          ObjectPattern: { multiline: true },
+          ImportDeclaration: "never",
+          ExportDeclaration: { multiline: true, minProperties: 3 },
+        },
+      ],
+    ],
+    ["indent", ["off"]],
   ]);
   const eslintPlugins = ["react-hooks"];
 
@@ -72,6 +87,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         "prop-types": "^15.7.2",
       },
     });
+
+    eslintSettings.set("import/extensions", [".js", ".jsx"]);
   }
 
   if (options.preset.language === "ts") {
@@ -103,7 +120,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     eslintSettings.set("import/extensions", [".ts", ".tsx"]);
 
     eslintRules.set("react/prop-types", ["off"]);
-    eslintRules.set("import/prefer-default-export", ["off"]);
   }
 
   if (options.preset.eslint === "standard") {
@@ -129,9 +145,13 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
     eslintExtends.push("airbnb");
 
+    eslintRules.set("import/prefer-default-export", ["off"]);
+    eslintRules.set("import/no-unresolved", ["off"]);
+    eslintRules.set("jsx-a11y/click-events-have-key-events", ["off"]);
+    eslintRules.set("jsx-a11y/no-noninteractive-element-interactions", ["off"]);
+
     if (options.preset.language === "ts") {
       eslintRules.set("react/state-in-constructor", ["warn"]);
-      eslintRules.set("import/no-unresolved", ["off"]);
       eslintRules.set("react/jsx-filename-extension", ["error", { extensions: [".ts", ".tsx"] }]);
       eslintRules.set("import/extensions", ["off"]);
     }

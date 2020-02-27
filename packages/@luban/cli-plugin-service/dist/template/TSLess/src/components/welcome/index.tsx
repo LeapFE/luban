@@ -1,5 +1,9 @@
 import React, { FunctionComponent } from "react";
 
+<%_ if (useRouter) { _%>
+import { Todo } from "../todo";
+<%_ } _%>
+
 import logo from "./../../assets/logo.svg";
 
 import styles from "./index.less";
@@ -11,7 +15,14 @@ interface WelcomeProps {
 const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
   <div className={styles.App}>
     <header className={styles["App-header"]}>
-      <h2>This is {pageName} page</h2>
+      <%_ if (useRouter) { _%>
+      <Todo />
+      <%_ } _%>
+      <h2>
+        This is&nbsp;
+        {pageName}
+        &nbsp;page
+      </h2>
       <img src={logo} className={styles["App-logo"]} alt="logo" />
       <p>
         <span role="img" aria-label="keyboard">

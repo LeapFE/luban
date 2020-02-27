@@ -179,7 +179,7 @@ class Creator {
     log();
 
     stopSpinner();
-    log("💄  fix some lint errors...");
+    log("💄  fix and format some lint errors...");
     try {
       await fixLintErrors(adaptedPreset);
     } catch (e) {
@@ -190,7 +190,7 @@ class Creator {
     log();
 
     stopSpinner();
-    log("🎨  formatting some file...");
+    log("🎨  formatting some config file...");
     try {
       await formatConfigFiles(adaptedPreset);
     } catch (e) {
@@ -249,17 +249,21 @@ class Creator {
   public async fixLintErrors(preset: Required<Preset>): Promise<void> {
     const { run } = this;
 
-    const formatArgs = ["--config=.eslintrc", "--fix", "src/"];
+    const lintArgs = ["--config=.eslintrc", "--fix", "src/"];
+    const formatArgs = ["--write", "src/**/*.{ts,tsx}"];
 
     if (preset.language === "ts") {
-      formatArgs.push("--ext=.tsx,.ts");
+      lintArgs.push("--ext=.tsx,.ts");
+      formatArgs.push("src/**/*.{ts,tsx}");
     }
 
     if (preset.language === "js") {
-      formatArgs.push("--ext=.jsx,.js");
+      lintArgs.push("--ext=.jsx,.js");
+      formatArgs.push("src/**/*.{js,jsx}");
     }
 
-    await run("./node_modules/eslint/bin/eslint.js", formatArgs);
+    await run("./node_modules/eslint/bin/eslint.js", lintArgs);
+    await run("./node_modules/prettier/bin-prettier.js", formatArgs);
   }
 
   public async promptAndResolvePreset(manual: boolean): Promise<Required<Preset>> {

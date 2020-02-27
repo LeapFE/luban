@@ -37,7 +37,6 @@ exports.defaultPromptModule = [
     "stylelint",
     "router",
     "store",
-    "unitTest",
     "uiLibrary",
 ];
 exports.defaultRootOptions = {

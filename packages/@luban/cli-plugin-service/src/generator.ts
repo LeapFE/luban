@@ -59,26 +59,28 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       });
     }
 
+    const useRouter = options.preset.router;
+
     if (options.preset.cssPreprocessor === "less" && options.preset.language === "js") {
-      api.render("./template/JSLess", { modifyFile });
+      api.render("./template/JSLess", { modifyFile, useRouter });
     }
 
     if (options.preset.cssPreprocessor === "less" && options.preset.language === "ts") {
-      api.render("./template/TSLess", { modifyFile });
+      api.render("./template/TSLess", { modifyFile, useRouter });
     }
 
     if (
       options.preset.cssPreprocessor === "styled-components" &&
       options.preset.language === "js"
     ) {
-      api.render("./template/JSstyledComponents", { modifyFile });
+      api.render("./template/JSstyledComponents", { modifyFile, useRouter });
     }
 
     if (
       options.preset.cssPreprocessor === "styled-components" &&
       options.preset.language === "ts"
     ) {
-      api.render("./template/TSstyledComponents", { modifyFile });
+      api.render("./template/TSstyledComponents", { modifyFile, useRouter });
     }
   }
 }
