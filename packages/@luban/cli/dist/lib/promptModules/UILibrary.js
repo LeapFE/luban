@@ -21,4 +21,4 @@ function default_1(cli) {
     });
 }
 exports.default = default_1;
-//# sourceMappingURL=UILibrary.js.map
+//# sourceMappingURL=uiLibrary.js.map

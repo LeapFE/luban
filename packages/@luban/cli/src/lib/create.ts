@@ -9,18 +9,10 @@ import { CliOptions } from "../definitions";
 import { Creator } from "./creator";
 import { PromptModuleAPI } from "./promptModuleAPI";
 
+import { defaultPromptModule } from "./../constants";
+
 function getPromptModules(): Array<(api: PromptModuleAPI) => void> {
-  // TODO add prompt module apiRequest
-  return [
-    "language",
-    "linter",
-    "cssPreprocessor",
-    "stylelint",
-    "router",
-    "store",
-    "unit",
-    "UILibrary",
-  ].map((file) => require(`./promptModules/${file}`).default);
+  return defaultPromptModule.map((file) => require(`./promptModules/${file}`).default);
 }
 
 async function create(projectName: string, options: CliOptions): Promise<void> {

@@ -5,7 +5,7 @@ export default function(cli: PromptModuleAPI): void {
     name: "store",
     type: "confirm",
     default: true,
-    message: "Manage the app state with a centralized store?",
+    message: "Manage the app state with a centralized store",
   });
 
   cli.onPromptComplete((answers, preset) => {

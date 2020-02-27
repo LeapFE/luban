@@ -5,7 +5,7 @@ function default_1(cli) {
         name: "store",
         type: "confirm",
         default: true,
-        message: "Manage the app state with a centralized store?",
+        message: "Manage the app state with a centralized store",
     });
     cli.onPromptComplete((answers, preset) => {
         preset.store = answers.store;

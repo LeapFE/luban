@@ -5,7 +5,7 @@ function default_1(cli) {
         name: "unitTest",
         type: "confirm",
         default: true,
-        message: "Add a Unit Testing solution with Jest?",
+        message: "Add a Unit Testing solution with Jest",
     });
     cli.onPromptComplete((answers, preset) => {
         preset.unitTest = answers.unitTest;
@@ -15,4 +15,4 @@ function default_1(cli) {
     });
 }
 exports.default = default_1;
-//# sourceMappingURL=unit.js.map
+//# sourceMappingURL=unitTest.js.map

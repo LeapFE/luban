@@ -25,4 +25,4 @@ function default_1(cli) {
     });
 }
 exports.default = default_1;
-//# sourceMappingURL=linter.js.map
+//# sourceMappingURL=eslint.js.map

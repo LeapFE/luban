@@ -5,7 +5,7 @@ export default function(cli: PromptModuleAPI): void {
     name: "router",
     type: "confirm",
     default: true,
-    message: "Use Router to build the app with dynamic pages?",
+    message: "Use Router to build the app with dynamic pages",
   });
 
   cli.onPromptComplete((answers, preset) => {

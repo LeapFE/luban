@@ -13,6 +13,7 @@ const promptModuleAPI_1 = require("./promptModuleAPI");
 const sortObject_1 = require("../utils/sortObject");
 const getReadme_1 = require("./../utils/getReadme");
 const getVersions_1 = require("../utils/getVersions");
+const printPreset_1 = require("../utils/printPreset");
 const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const generator_1 = require("./generator");
 const constants_1 = require("../constants");
@@ -173,17 +174,6 @@ class Creator {
         this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
         return preset;
     }
-    printDefaultPreset() {
-        cli_shared_utils_1.log();
-        cli_shared_utils_1.log("List default prest");
-        Object.keys(constants_1.defaultPreset).forEach((key) => {
-            if (key === "plugins" || key === "configs") {
-                return;
-            }
-            cli_shared_utils_1.log(`  ${chalk_1.default.green(key)}: ${chalk_1.default.yellowBright(constants_1.defaultPreset[key])}`);
-        });
-        cli_shared_utils_1.log();
-    }
     async confirmUseDefaultPrest() {
         const { useDefaultPreset } = await inquirer_1.default.prompt([
             {
@@ -193,7 +183,7 @@ class Creator {
                 default: true,
             },
         ]);
-        this.printDefaultPreset();
+        printPreset_1.printDefaultPreset(constants_1.defaultPreset);
         return useDefaultPreset;
     }
     shouldInitGit(cliOptions) {

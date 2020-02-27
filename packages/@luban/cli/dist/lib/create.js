@@ -10,17 +10,9 @@ const inquirer_1 = __importDefault(require("inquirer"));
 const validate_npm_package_name_1 = __importDefault(require("validate-npm-package-name"));
 const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const creator_1 = require("./creator");
+const constants_1 = require("./../constants");
 function getPromptModules() {
-    return [
-        "language",
-        "linter",
-        "cssPreprocessor",
-        "stylelint",
-        "router",
-        "store",
-        "unit",
-        "UILibrary",
-    ].map((file) => require(`./promptModules/${file}`).default);
+    return constants_1.defaultPromptModule.map((file) => require(`./promptModules/${file}`).default);
 }
 async function create(projectName, options) {
     const cwd = process.cwd();

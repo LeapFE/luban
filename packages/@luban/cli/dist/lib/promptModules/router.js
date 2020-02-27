@@ -5,7 +5,7 @@ function default_1(cli) {
         name: "router",
         type: "confirm",
         default: true,
-        message: "Use Router to build the app with dynamic pages?",
+        message: "Use Router to build the app with dynamic pages",
     });
     cli.onPromptComplete((answers, preset) => {
         preset.router = answers.router;

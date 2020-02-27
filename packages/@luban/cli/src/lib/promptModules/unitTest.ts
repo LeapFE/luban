@@ -5,7 +5,7 @@ export default function(cli: PromptModuleAPI): void {
     name: "unitTest",
     type: "confirm",
     default: true,
-    message: "Add a Unit Testing solution with Jest?",
+    message: "Add a Unit Testing solution with Jest",
   });
 
   cli.onPromptComplete((answers, preset) => {

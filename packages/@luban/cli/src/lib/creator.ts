@@ -15,6 +15,7 @@ import { PromptModuleAPI } from "./promptModuleAPI";
 import { sortObject } from "../utils/sortObject";
 import { generateReadme } from "./../utils/getReadme";
 import { getVersions } from "../utils/getVersions";
+import { printDefaultPreset } from "../utils/printPreset";
 
 import {
   logWithSpinner,
@@ -280,18 +281,6 @@ class Creator {
     return preset as Required<Preset>;
   }
 
-  public printDefaultPreset(): void {
-    log();
-    log("List default prest");
-    Object.keys(defaultPreset).forEach((key: string) => {
-      if (key === "plugins" || key === "configs") {
-        return;
-      }
-      log(`  ${chalk.green(key)}: ${chalk.yellowBright(defaultPreset[key])}`);
-    });
-    log();
-  }
-
   public async confirmUseDefaultPrest(): Promise<boolean> {
     const { useDefaultPreset } = await inquirer.prompt<{ useDefaultPreset: boolean }>([
       {
@@ -302,7 +291,7 @@ class Creator {
       },
     ]);
 
-    this.printDefaultPreset();
+    printDefaultPreset(defaultPreset);
     return useDefaultPreset;
   }
 

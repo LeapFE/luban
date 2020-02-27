@@ -2,7 +2,7 @@ import { RootOptions, Preset } from "./definitions";
 
 export const defaultPreset: Required<Preset> = {
   language: "ts",
-  eslint: "standard",
+  eslint: "airbnb",
   cssPreprocessor: "less",
   stylelint: true,
   router: true,
@@ -20,6 +20,29 @@ export const defaultPreset: Required<Preset> = {
     "@luban-cli/cli-plugin-unit-test": {},
   },
 };
+
+export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string> = {
+  language: "development language",
+  eslint: "eslint config",
+  cssPreprocessor: "css pre-processor",
+  stylelint: "use stylelint",
+  router: "use router(based on React-Router)",
+  store: "use centralized store(based ont rematch)",
+  unitTest: "use unit test(based ont jest + enzyme)",
+  uiLibrary: "integrate UI Component library",
+};
+
+// TODO add prompt module apiRequest
+export const defaultPromptModule: Array<keyof Preset> = [
+  "language",
+  "eslint",
+  "cssPreprocessor",
+  "stylelint",
+  "router",
+  "store",
+  "unitTest",
+  "uiLibrary",
+];
 
 export const defaultRootOptions: Required<RootOptions> = {
   projectName: "",

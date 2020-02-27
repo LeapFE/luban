@@ -23,7 +23,6 @@ declare class Creator {
     formatConfigFiles(preset: Required<Preset>): Promise<void>;
     fixLintErrors(preset: Required<Preset>): Promise<void>;
     promptAndResolvePreset(manual: boolean): Promise<Required<Preset>>;
-    printDefaultPreset(): void;
     confirmUseDefaultPrest(): Promise<boolean>;
     shouldInitGit(cliOptions: CliOptions): boolean;
     resolveFinalPrompts(): QuestionCollection;
