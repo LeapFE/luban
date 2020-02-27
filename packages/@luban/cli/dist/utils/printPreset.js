@@ -8,7 +8,7 @@ const chalk_1 = __importDefault(require("chalk"));
 const constants_1 = require("./../constants");
 function printDefaultPreset(preset) {
     cli_shared_utils_1.log();
-    cli_shared_utils_1.log("List default prest");
+    cli_shared_utils_1.log("List default preset");
     Object.keys(preset).forEach((key) => {
         if (key === "plugins" || key === "configs") {
             return;

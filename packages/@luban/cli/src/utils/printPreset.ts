@@ -6,7 +6,7 @@ import { defaultPresetNameMap } from "./../constants";
 
 export function printDefaultPreset(preset: Required<Preset>): void {
   log();
-  log("List default prest");
+  log("List default preset");
   Object.keys(preset).forEach((key: string) => {
     if (key === "plugins" || key === "configs") {
       return;
