@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/front-end-captain/luban/compare/v0.0.12...v0.0.13) (2020-02-27)
+
+
+### Bug Fixes
+
+* **stylelint:** fix lint-staged script name ([9c976e7](https://github.com/front-end-captain/luban/commit/9c976e7da82b088abfbce5322dbce914a5e0c238))
+
+
+
+
+
 ## [0.0.12](https://github.com/front-end-captain/luban/compare/v0.0.11...v0.0.12) (2020-02-25)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
