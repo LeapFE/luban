@@ -32,13 +32,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       "url-loader": "^3.0.0",
       "style-loader": "^1.1.3",
     },
-    browserslist: [
-      "last 1 version",
-      "> 1%",
-      "maintained node versions",
-      "not ie <= 10",
-      "not dead",
-    ],
   });
 
   if (options.preset.cssPreprocessor) {
