@@ -12,11 +12,11 @@
 1. `yarn workspace`
 
 #### 如何提交代码到远端仓库
-1. `git add .`
-2. `yarn commit`
+1. `git add -- .`
+2. `yarn run commit`
 3. `git push`
 
-NOTE `yarn commit` 之前运行单元测试(`yarn run test:changed`)和对 TypeScript 代码进行类型检查(`yarn run check:type:changed`)
+⚠️ `yarn run commit` 之前运行单元测试(`yarn run test:changed`)和对 TypeScript 代码进行类型检查(`yarn run check:type:changed`)
 
 
 #### 如何发布版本
