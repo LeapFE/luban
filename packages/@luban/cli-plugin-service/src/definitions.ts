@@ -48,7 +48,7 @@ export type CommandList<P> = Record<
 >;
 export type DefaultProjectConfig = Partial<typeof defaultsProjectConfig>;
 
-export type WebpackConfiguration = webpack.Configuration;
+export type WebpackConfiguration = webpack.Configuration & { devServer?: WebpackDevServerConfig };
 
 type OptionsOfCssLoader = {
   css: Record<string, any>;

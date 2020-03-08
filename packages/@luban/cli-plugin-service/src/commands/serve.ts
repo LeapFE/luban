@@ -239,7 +239,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           }
         });
 
-        server.listen(port, host, (err) => {
+        server.listen(port, host, (err?: Error) => {
           if (err) {
             reject(err);
           }

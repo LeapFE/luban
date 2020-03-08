@@ -1,8 +1,5 @@
 import { PromptModuleAPI } from "../promptModuleAPI";
 
-/**
- * @unsupported
- */
 export default function(cli: PromptModuleAPI): void {
   cli.injectPrompt({
     name: "uiLibrary",

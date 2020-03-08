@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const terser_webpack_plugin_1 = __importDefault(require("terser-webpack-plugin"));
 const clean_webpack_plugin_1 = require("clean-webpack-plugin");
+const tsImportPluginFactory = require("ts-import-plugin");
 const getAssetsPath_1 = require("./../utils/getAssetsPath");
 const resolveClientEnv_1 = require("./../utils/resolveClientEnv");
 const terserOptions_1 = require("./../utils/terserOptions");
@@ -23,6 +24,31 @@ function default_1(api, options) {
             },
         };
     };
+    const getTsLoaderOptions = (uiLibraries) => {
+        const importPlugins = [];
+        if (uiLibraries.includes("ant-design")) {
+            importPlugins.push({
+                libraryName: "antd",
+                libraryDirectory: "lib",
+                style: "css",
+            });
+        }
+        if (uiLibraries.includes("ant-design-mobile")) {
+            importPlugins.push({
+                libraryName: "antd-mobile",
+                libraryDirectory: "lib",
+                style: "css",
+            });
+        }
+        return {
+            transpileOnly: true,
+            getCustomTransformers: () => {
+                return {
+                    before: [tsImportPluginFactory(importPlugins)],
+                };
+            },
+        };
+    };
     const isProduction = process.env.NODE_ENV === "production";
     const entryFileOfApp = api.getEntryFile();
     const isTSProject = api.resolveInitConfig().language === "ts";
@@ -37,7 +63,7 @@ function default_1(api, options) {
             .filename("[name].js")
             .publicPath(options.publicPath);
         webpackConfig.resolve.extensions
-            .merge([".ts", ".json", ".tsx", ".js", ".jsx"])
+            .merge([".js", ".jsx", ".ts", ".json", ".tsx"])
             .end()
             .modules.add("node_modules")
             .add(api.resolve("node_modules"))
@@ -77,7 +103,7 @@ function default_1(api, options) {
                 .end()
                 .use("ts-loader")
                 .loader("ts-loader")
-                .options({ transpileOnly: true })
+                .options(getTsLoaderOptions(api.resolveInitConfig().uiLibrary))
                 .end();
         }
         if (!isTSProject) {

@@ -3,6 +3,12 @@ import { ProjectConfig, UrlLoaderOptions } from "./../definitions";
 import Config from "webpack-chain";
 import TerserWebpackPlugin from "terser-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import { Options as TSImportPluginOptions } from "ts-import-plugin";
+import { LoaderOptions as TSLoaderOptions } from "ts-loader/dist/interfaces";
+import { UILibrary } from "@luban-cli/cli-shared-types/dist/shared";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const tsImportPluginFactory = require("ts-import-plugin");
 
 import { getAssetsPath } from "./../utils/getAssetsPath";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
@@ -37,6 +43,38 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
     };
   };
 
+  const getTsLoaderOptions = (uiLibraries: UILibrary[]): Partial<TSLoaderOptions> => {
+    const importPlugins: TSImportPluginOptions[] = [];
+
+    if (uiLibraries.includes("ant-design")) {
+      importPlugins.push({
+        libraryName: "antd",
+        libraryDirectory: "lib",
+        style: "css",
+      });
+    }
+
+    if (uiLibraries.includes("ant-design-mobile")) {
+      importPlugins.push({
+        libraryName: "antd-mobile",
+        libraryDirectory: "lib",
+        style: "css",
+      });
+    }
+
+    return {
+      transpileOnly: true,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      getCustomTransformers: () => {
+        return {
+          before: [tsImportPluginFactory(importPlugins)],
+        };
+      },
+    };
+  };
+
   const isProduction = process.env.NODE_ENV === "production";
 
   const entryFileOfApp = api.getEntryFile();
@@ -55,7 +93,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       .publicPath(options.publicPath);
 
     webpackConfig.resolve.extensions
-      .merge([".ts", ".json", ".tsx", ".js", ".jsx"])
+      .merge([".js", ".jsx", ".ts", ".json", ".tsx"])
       .end()
       .modules.add("node_modules")
       .add(api.resolve("node_modules"))
@@ -105,7 +143,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         .end()
         .use("ts-loader")
         .loader("ts-loader")
-        .options({ transpileOnly: true })
+        .options(getTsLoaderOptions(api.resolveInitConfig().uiLibrary))
         .end();
     }
 

@@ -24,7 +24,9 @@ export declare type CommandList<P> = Record<builtinServiceCommandName, {
     opts: Record<string, any> | null | PluginApplyCallback;
 }>;
 export declare type DefaultProjectConfig = Partial<typeof defaultsProjectConfig>;
-export declare type WebpackConfiguration = webpack.Configuration;
+export declare type WebpackConfiguration = webpack.Configuration & {
+    devServer?: WebpackDevServerConfig;
+};
 declare type OptionsOfCssLoader = {
     css: Record<string, any>;
     less: Record<string, any>;
