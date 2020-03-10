@@ -8,7 +8,6 @@ export const defaultPreset: Required<Preset> = {
   router: true,
   store: true,
   unitTest: true,
-  uiLibrary: [],
   plugins: {
     "@luban-cli/cli-plugin-service": {},
     "@luban-cli/cli-plugin-babel": {},
@@ -29,7 +28,6 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
   router: "use router(based on React-Router)",
   store: "use centralized store(based ont rematch)",
   unitTest: "use unit test(based ont jest + enzyme)",
-  uiLibrary: "integrate UI Component library",
 };
 
 // TODO add prompt module apiRequest
@@ -41,7 +39,6 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "router",
   "store",
   // "unitTest",
-  "uiLibrary",
 ];
 
 export const defaultRootOptions: Required<RootOptions> = {

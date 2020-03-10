@@ -67,33 +67,6 @@ function default_1(api, rootOptions) {
             },
         };
     }
-    if (rootOptions.preset.uiLibrary.length > 0) {
-        api.extendPackage({
-            devDependencies: {
-                "babel-plugin-import": "^1.13.0",
-            },
-        });
-    }
-    if (rootOptions.preset.uiLibrary.includes("ant-design")) {
-        babelConfigPlugins.push([
-            "import",
-            {
-                libraryName: "antd",
-                style: "css",
-            },
-            "antd",
-        ]);
-    }
-    if (rootOptions.preset.uiLibrary.includes("ant-design-mobile")) {
-        babelConfigPlugins.push([
-            "import",
-            {
-                libraryName: "antd-mobile",
-                style: "css",
-            },
-            "antd-mobile",
-        ]);
-    }
     api.render("./template", {
         presets: JSON.stringify(babelConfigPreset),
         plugins: JSON.stringify(babelConfigPlugins),

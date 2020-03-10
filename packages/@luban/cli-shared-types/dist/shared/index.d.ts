@@ -24,7 +24,6 @@ export declare type Preset = {
     router?: boolean;
     store?: boolean;
     unitTest?: boolean;
-    uiLibrary?: UILibrary[];
     plugins: RawPlugin;
 };
 export declare type BasePkgFields = {

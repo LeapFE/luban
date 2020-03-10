@@ -17,6 +17,9 @@ export type DevLanguage = "js" | "ts";
 
 export type CssPreprocessor = "less" | "styled-components";
 
+/**
+ * @deprecated
+ */
 export type UILibrary = "ant-design" | "ant-design-mobile";
 
 /**
@@ -30,7 +33,7 @@ export type Preset = {
   router?: boolean;
   store?: boolean;
   unitTest?: boolean;
-  uiLibrary?: UILibrary[];
+  // uiLibrary?: UILibrary[];
   plugins: RawPlugin;
 };
 

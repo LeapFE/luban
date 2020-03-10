@@ -76,28 +76,4 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       api.render("./template/TSstyledComponents", { modifyFile, useRouter });
     }
   }
-
-  if (options.preset.uiLibrary.length > 0) {
-    api.extendPackage({
-      devDependencies: {
-        "ts-import-plugin": "^1.6.5",
-      },
-    });
-
-    if (options.preset.uiLibrary.includes("ant-design")) {
-      api.extendPackage({
-        dependencies: {
-          antd: "^3.26.12",
-        },
-      });
-    }
-
-    if (options.preset.uiLibrary.includes("ant-design-mobile")) {
-      api.extendPackage({
-        dependencies: {
-          "antd-mobile": "^2.3.1",
-        },
-      });
-    }
-  }
 }

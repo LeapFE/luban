@@ -18,7 +18,8 @@
     "test": "node scripts/test.js",
     "jest-coverage": "yarn jest --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
     "commit": "yarn run test:changed && yarn run format:packages && yarn run build:changed && git-cz",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

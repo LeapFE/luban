@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const terser_webpack_plugin_1 = __importDefault(require("terser-webpack-plugin"));
 const clean_webpack_plugin_1 = require("clean-webpack-plugin");
-const tsImportPluginFactory = require("ts-import-plugin");
 const getAssetsPath_1 = require("./../utils/getAssetsPath");
 const resolveClientEnv_1 = require("./../utils/resolveClientEnv");
 const terserOptions_1 = require("./../utils/terserOptions");
@@ -21,31 +20,6 @@ function default_1(api, options) {
                 options: {
                     name: genAssetSubPath(dir),
                 },
-            },
-        };
-    };
-    const getTsLoaderOptions = (uiLibraries) => {
-        const importPlugins = [];
-        if (uiLibraries.includes("ant-design")) {
-            importPlugins.push({
-                libraryName: "antd",
-                libraryDirectory: "lib",
-                style: "css",
-            });
-        }
-        if (uiLibraries.includes("ant-design-mobile")) {
-            importPlugins.push({
-                libraryName: "antd-mobile",
-                libraryDirectory: "lib",
-                style: "css",
-            });
-        }
-        return {
-            transpileOnly: true,
-            getCustomTransformers: () => {
-                return {
-                    before: [tsImportPluginFactory(importPlugins)],
-                };
             },
         };
     };
@@ -103,7 +77,7 @@ function default_1(api, options) {
                 .end()
                 .use("ts-loader")
                 .loader("ts-loader")
-                .options(getTsLoaderOptions(api.resolveInitConfig().uiLibrary))
+                .options({ transpileOnly: true })
                 .end();
         }
         if (!isTSProject) {

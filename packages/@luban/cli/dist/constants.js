@@ -8,7 +8,6 @@ exports.defaultPreset = {
     router: true,
     store: true,
     unitTest: true,
-    uiLibrary: [],
     plugins: {
         "@luban-cli/cli-plugin-service": {},
         "@luban-cli/cli-plugin-babel": {},
@@ -28,7 +27,6 @@ exports.defaultPresetNameMap = {
     router: "use router(based on React-Router)",
     store: "use centralized store(based ont rematch)",
     unitTest: "use unit test(based ont jest + enzyme)",
-    uiLibrary: "integrate UI Component library",
 };
 exports.defaultPromptModule = [
     "language",
@@ -37,7 +35,6 @@ exports.defaultPromptModule = [
     "stylelint",
     "router",
     "store",
-    "uiLibrary",
 ];
 exports.defaultRootOptions = {
     projectName: "",
