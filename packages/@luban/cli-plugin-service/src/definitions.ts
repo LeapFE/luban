@@ -59,7 +59,7 @@ type OptionsOfCssLoader = {
 
 type CssConfig = {
   /**
-   * @description 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)
+   * @description 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到文档中的内联样式代码)
    *
    * @default process.env.NODE_ENV === "production"
    */
@@ -87,6 +87,7 @@ export type ProjectConfig = {
 
   /**
    * @description 生产环境下应用打包的目录
+   * @default "dist"
    */
   outputDir?: string;
 

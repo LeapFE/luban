@@ -20,8 +20,9 @@
     "commit": "yarn run test:changed && yarn run format:packages && yarn run build:changed && git-cz",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "doc:dev": "vuepress dev doc",
-    "doc:build": "vuepress build doc",
+    "doc:dev": "vuepress dev doc --open --temp .temp",
+    "doc:build": "vuepress build doc --temp .temp",
+    "doc:info": "vuepress view-info docs --temp .temp",
     "pub:doc": "now --prod"
   },
   "devDependencies": {
@@ -33,6 +34,9 @@
     "@types/semver": "^7.1.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
+    "@vuepress/plugin-active-header-links": "^1.3.1",
+    "@vuepress/plugin-back-to-top": "^1.3.1",
+    "@vuepress/plugin-medium-zoom": "^1.3.1",
     "babel-eslint": "^10.0.3",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.1.0",
@@ -49,7 +53,8 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^25.1.0",
     "typescript": "^3.7.5",
-    "vuepress": "^1.3.1"
+    "vuepress": "^1.3.1",
+    "vuepress-theme-antdocs": "^0.1.2-beta"
   },
   "repository": "https://github.com/front-end-captain/luban.git",
   "author": "front-end-captain <18810940932@163.com>",

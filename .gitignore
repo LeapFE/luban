@@ -17,6 +17,7 @@ pids
 *.pid.lock
 .out
 .docz
+.temp
 build
 _site
 public
