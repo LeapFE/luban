@@ -10,7 +10,7 @@ sidebar: auto
 
 ## luban.config.js
 
-`luban.config.js` 是一个可选的配置文件，如果项目的 (和 `package.json` 同级的) 根目录中存在这个文件，
+*luban.config.js* 是一个可选的配置文件，如果项目的 (和 *package.json* 同级的) 根目录中存在这个文件，
 那么它会被 `@luban-cli/cli--plugin-service` 自动识别加载。
 具体类型见下方 [配置文件](#配置文件)
 
@@ -30,15 +30,12 @@ module.exports = {
 
   部署应用包时的基本 URL。
 
-  用法和 webpack 本身的 `output.publicPath` 一致，但是 Luban 在一些其他地方也需要用到这个值，所
-  以**请始终使用 `publicPath` 而不要直接修改 webpack 的 `output.publicPath`**。
+  用法和 webpack 本身的 `output.publicPath` 一致，但是 Luban 在一些其他地方也需要用到这个值，所以**请始终使用 `publicPath` 而不要直接修改 webpack 的 `output.publicPath`**。
 
-  默认情况下，Luban 会假设你的应用是被部署在一个域名的根路径上，例如 `https://www.example.com/`。如
-  果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在
+  默认情况下，Luban 会假设你的应用是被部署在一个域名的根路径上，例如 `https://www.example.com/`。如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在
   `https://www.example.com/your-app/`，则设置 `publicPath` 为 `/your-app/`。
 
-  这个值也可以被设置为空字符串 (`''`) 或是相对路径 (`'./'`)，这样所有的资源都会被链接为相对路径，这
-  样打出来的包可以被部署在任意路径。
+  这个值也可以被设置为空字符串 (`''`) 或是相对路径 (`'./'`)，这样所有的资源都会被链接为相对路径，这样打出来的包可以被部署在任意路径。
 
   这个值在开发环境下同样生效。如果你想把开发服务器架设在根路径，你可以使用一个条件式的值：
 
@@ -88,11 +85,9 @@ module.exports = {
 
 - Type: `Object | Function`
 
-  如果这个值是一个对象，则会通过 [webpack-merge](https://github.com/survivejs/webpack-merge) 合并到
-  最终的配置中。
+  如果这个值是一个对象，则会通过 [webpack-merge](https://github.com/survivejs/webpack-merge) 合并到最终的配置中。
 
-  如果这个值是一个函数，则会接收被解析的配置作为参数。该函数既可以修改配置并不返回任何东西，也可以返
-  回一个被克隆或合并过的配置版本。
+  如果这个值是一个函数，则会接收被解析的配置作为参数。该函数既可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。
 
   更多细节可查阅：[配合 webpack > 简单的配置方式](../document/webpack.md#简单的配置方式)
 
@@ -152,32 +147,30 @@ module.exports = {
 
   更多细节可查阅：[向预处理器 Loader 传递选项](../document/css.html#向预处理器-loader-传递选项)
 
-::: tip 🙋‍♂️ 
-相比于使用 `chainWebpack` 手动指定 loader 更推荐上面这样做，因为这些选项需要应用在使用
-了相应 loader 的多个地方。
+::: tip 🙋‍♂️
+相比于使用 `chainWebpack` 手动指定 loader 更推荐上面这样做，因为这些选项需要应用在使用了相应 loader 的多个地方。
 :::
 
 ### devServer
 
 - Type: `Object`
 
-  [所有 `webpack-dev-server` 的选项](https://webpack.js.org/configuration/dev-server/)都支持。注意：
+  所有[`webpack-dev-server` 的选项](https://webpack.js.org/configuration/dev-server/)都支持。注意：
 
   - 有些值像 `host`、`port` 和 `https` 可能会被命令行参数覆写。
 
-  - 有些值像 `publicPath` 和 `historyApiFallback` 不应该被修改，因为它们需要和开发服务器的
-    [publicPath](#publicPath) 同步以保障本地开发服务的工作。
+  - 有些值像 `publicPath` 和 `historyApiFallback` 不应该被修改，因为它们需要和开发服务器的[publicPath](#publicPath) 同步以保障本地开发服务的工作。
 
 ### devServer.proxy
 
 - Type: `string | Object`
 
-  如果你的前端应用和服务端 API 服务器没有运行在同一个主机上，你需要在开发环境下将 API 请求代理到 API
-  服务器。这个问题可以通过 `luban.config.js` 中的 `devServer.proxy` 选项来配置。
+  如果你的前端应用和服务端 API 服务器没有运行在同一个主机上，你需要在开发环境下将 API 请求代理到 API服务器。这个问题可以通过 *luban.config.js* 中的 `devServer.proxy` 选项来配置。
 
   `devServer.proxy` 可以是一个指向开发环境 API 服务器的字符串：
 
   ```javascript
+  // luban.config.js
   module.exports = {
     devServer: {
       proxy: "http://localhost:4000",
@@ -187,10 +180,10 @@ module.exports = {
 
   这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到`http://localhost:4000`。
 
-  如果你想要更多的代理控制行为，也可以使用一个 `path: options` 成对的对象。完整的选项可以查阅
-  [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
+  如果你想要更多的代理控制行为，也可以使用一个 `path: options` 成对的对象。完整的选项可以查阅[http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
 
   ```javascript
+  // luban.config.js
   module.exports = {
     devServer: {
       proxy: {
@@ -219,54 +212,46 @@ module.exports = {
 - Type: `Object`
 - Default: `{ "@": "<project_name/src>" }`
 
-  使用 `import` 导入模块时的路径别名。用法和 `webpack` 的
-  (`resolve.alias`)[https://webpack.js.org/configuration/resolve/#resolvealias] 一致。默认只设置
-  _src_ 目录。
+  使用 `import` 导入模块时的路径别名。用法和 `webpack` 的[`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) 一致。默认只有 *src* 目录。
 
-::: tip 🙋‍♂️ 
-当时使用 TypeScript 为开发语言时，在此处配置别名后，还需要在 `tsconfig.json` 文件中进行同步。更多细节可查阅[@luban-cli/cli-plugin-typescript](https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-typescript/README.md)。
+::: tip 🙋‍♂
+当时使用 TypeScript 为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅[这里](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
 :::
 
 ## Babel
 
-Babel 可以通过 `babel.config.js` 进行配置。
+Babel 可以通过 *babel.config.js* 进行配置。
 
-::: tip 🙋‍♂️ 
-Luban 使用了 Babel 7 中的新配置格式 `babel.config.js`。和 `.babelrc` 或 `package.json` 中
-的 `babel` 字段不同，这个配置文件不会使用基于文件位置的方案，而是会一致地运用到项目根目录以下的所有
-文件，包括 `node_modules` 内部的依赖。我们推荐在 Luban CLI 项目中始终使用 `babel.config.js` 取代其它
-格式。具体请查阅
-[Configuration File Types](https://babeljs.io/docs/en/config-files#configuration-file-types) 
+::: tip 🙋‍♂️
+Luban 使用了 Babel 7 中的新配置格式 *babel.config.js*。和 *.babelrc* 或 *package.json* 中的 `babel` 字段不同，这个配置文件不会使用基于文件位置的方案，而是会一致地运用到项目根目录以下的所有
+文件，包括 *node_modules* 内部的依赖。
+我们推荐在 Luban CLI 项目中始终使用 *babel.config.js* 取代其它格式。
+具体请查阅 [Configuration File Types](https://babeljs.io/docs/en/config-files#configuration-file-types) 
 :::
 
 同时查阅文档中的 [Polyfill](../document/browser-compatibility.md#polyfill) 章节。
 
 ## ESLint
 
-ESLint 可以通过 `.eslintrc` 来配置。
+ESLint 可以通过 *.eslintrc* 来配置。
 
-更多细节可查阅
-[@luban-cli/cli-plugin-eslint](https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-eslint/README.md)。
+更多细节可查阅文档中的 [代码Linter 和 Prettier](../document/linter.md) 章节。
 
 ## StyleLint
 
-StyleLint 可以通过 `.stylelintrc` 来配置。
+StyleLint 可以通过 *.stylelintrc* 来配置。
 
-更多细节可查阅
-[@luban-cli/cli-plugin-stylelint](https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-stylelint/README.md)。
+更多细节可查阅文档中 [代码Linter 和 Prettier](../document/linter.md) 章节。
 
 ## TypeScript
 
-TypeScript 可以通过 `tsconfig.json` 来配置。
+TypeScript 可以通过 *tsconfig.json* 来配置。
 
-更多细节可查阅
-[@luban-cli/cli-plugin-typescript](https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-typescript/README.md)。
+更多细节可查阅文档中的 [TypeScript](../document/typescript.md) 章节。
 
 ## 单元测试
 
-### Jest
-
-TODO
+更多细节可查阅文档中的 [UnitTest](../document/unittest.md) 章节。
 
 
 ## 配置文件

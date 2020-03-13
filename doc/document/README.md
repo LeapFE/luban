@@ -4,8 +4,7 @@ sidebarDepth: 0
 
 # 介绍
 
-Luban 是一个基于 [React.js](https://reactjs.org/) 的快速创建 React 应用的完整系统。其主要解决三个核
-心问题：
+Luban 是一个基于 [React.js](https://reactjs.org/) 的快速创建 React 应用的完整系统。其主要解决三个核心问题：
 
 - 🧲 收敛技术栈、屏蔽底层差异、降低开发和维护成本
 - 📏 遵循约定优于配置，提供⼀套规范化的开发模式
@@ -25,8 +24,7 @@ Luban 是一个基于 [React.js](https://reactjs.org/) 的快速创建 React 应
 
 ## 该系统的构成
 
-Luban 有几个独立的部分。在[源代码](https://github.com/front-end-captain/luban)仓库中同时管理了多个单
-独发布的包。
+Luban 有几个独立的部分。在[源代码](https://github.com/front-end-captain/luban)仓库中同时管理了多个单独发布的包。
 
 ### CLI
 

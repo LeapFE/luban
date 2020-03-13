@@ -35,7 +35,7 @@ module.exports = {
 };
 ```
 
-## 链式操作 (高级)
+## 链式操作
 
 Luban 内部使用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 来修改维护 webpack 配置，其允许我们在后期可以细粒度的对 webpack 配置进行修改和审查。在 `luban.config.js` 可以使用 `chainWebpack` 字段来链式的修改 webpack 配置：
 
@@ -65,7 +65,7 @@ module.exports = {
 };
 ```
 
-::: tip 提示
+::: tip 🙋
 对于 CSS 相关 loader 来说，我们推荐使用 [css.loaderOptions](../config/#css-loaderoptions) 而不是直接链式指定 loader。这是因为每种 CSS 文件类型都有多个规则，而 `css.loaderOptions` 可以确保你通过一个地方影响所有的规则。
 :::
 

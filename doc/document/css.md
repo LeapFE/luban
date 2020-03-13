@@ -13,7 +13,7 @@ Luban 默认支持 `.css` 文件，同时默认支持 [PostCSS](https://postcss.
 
 默认使用了 [cssnano](https://cssnano.co/) 来优化压缩样式代码，可以修改 `postcssrc` 文件中的 `cssnano` 字段来配置此特性。
 
-::: tip 关于 CSS 中浏览器前缀规则的注意事项
+::: tip 关于 CSS 中浏览器前缀规则的注意事项 
 在生产环境构建中，Luban 会优化 CSS 并基于目标浏览器抛弃不必要的浏览器前缀规则。因为默认开启了 `autoprefixer`，你只使用无前缀的 CSS 规则即可。
 :::
 
@@ -63,7 +63,7 @@ Loader 可以通过 `loaderOptions` 配置，包括：
 - [less-loader](https://github.com/webpack-contrib/less-loader)
 - [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)
 
-::: tip 提示
+::: tip 🙋
 这样做比使用 `chainWebpack` 手动指定 loader 更推荐，因为这些选项需要应用在使用了相应 loader 的多个地方。
 :::
 

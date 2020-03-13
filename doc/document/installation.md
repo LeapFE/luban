@@ -16,7 +16,7 @@ Luban 目前只在 MacOS 上可以良好运行，在 Window 或者 Linux 上运�
 npm install -g @luban-cli/cli
 ```
 
-::: tip
+::: tip 🙋‍♂️
 可以使用淘宝源来稍微加快创建项目的速度 `luban init <project_name>  -r https://registry.npm.taobao.org`
 
 也可以使用 -g [message] 参数强制将项目初始化为一个 git 仓库 `luban init project_name -g`，默认的 git message 为 ​`:rocket: init project`​

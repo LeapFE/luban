@@ -6,7 +6,7 @@
 
 你可以在 npm scripts 中以 `luban-cli-service`、或者从终端中以 `./node_modules/.bin/luban-cli-service` 访问这个命令。
 
-同时在 `package.json` 文件的 `scripts` 字段会增加以下三个脚本：
+同时在 `package.json` 文件的 `scripts` 字段会增加以下几个脚本：
 
 ```json
 {
@@ -25,7 +25,7 @@
 npm run serve
 ```
 
-#### luban-cli-service serve
+### luban-cli-service serve
 
 ```json
 用法：luban-cli-service serve [options]
@@ -33,7 +33,7 @@ npm run serve
 选项：
 
   --entry   指定入口文件 (默认值: index.jsx/index.tsx)
-  --open    在服务器启动时打开浏览器 (默认值: false)
+  --open    在贝蒂服务启动时打开浏览器 (默认值: false)
   --mode    指定环境模式 (默认值: development)
   --host    指定 host (默认值: 0.0.0.0)
   --port    指定 port (默认值: 8080)
@@ -43,7 +43,7 @@ npm run serve
 
 该脚本命令会启动一个基于 `webpack-dev-server` 的本地开发服务，并且会附加一些默认的配置和功能。
 
-#### luban-cli-service build
+### luban-cli-service build
 
 ```json
 用法：luban-cli-service build [options]
@@ -58,7 +58,7 @@ npm run serve
 
 该命令会以 _dist_ 为默认目录产生一个可以用于生产环境的包，自动的 vendor chunk split。其中 chunk mainfest 会内联在 html 文件中。
 
-#### luban-cli-service inspect
+### luban-cli-service inspect
 
 > 用来审查特定环境下的 webpack 配置
 

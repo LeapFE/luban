@@ -29,9 +29,8 @@
 ]
 ```
 
-同时将 `@babel/runtime` 作为项目的生产依赖，利用插件 `@babel/plugin-transform-runtime` 来最大化的减小生产环境的包体积。
+同时将 `@babel/runtime` 作为项目的开发依赖，构建时利用插件 `@babel/plugin-transform-runtime` 来最大化的减小生产环境的包体积。
 
-::: tip 
-在使用 TypeScript 作为开发语言，此时在开发环境下将使用 `ts-loader` 来编译 ts 代码，在生产环
-境下使用 `babel-loader` 来编译 ts 代码。这个做法意味着只有在生产下才会注入 polyfill 代码。
+::: tip 🙋
+在使用 TypeScript 作为开发语言，此时在开发环境下将使用 `ts-loader` 来编译 ts 代码，在生产环境下使用 `babel-loader` 来编译 ts 代码。这个做法意味着只有在生产环境下才会注入 polyfill 代码。
 :::
