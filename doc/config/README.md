@@ -256,7 +256,35 @@ TypeScript 可以通过 *tsconfig.json* 来配置。
 
 ## 配置文件
 
-根目录下的 `luban.config.js` 应该被下面的 `ProjectConfig` 类型约束。
+默认的 *luban.config.js* 如下：
+```javascript
+// luban.config.js
+module.exports = {
+  publicPath: "/",
+  outputDir: "dist",
+  assetsDir: "",
+  indexPath: "index.html",
+  productionSourceMap: false,
+  css: {
+    // 开发环境为 false，生产环境为 true
+    extract: undefined,
+    // 开发环境为 true，生产环境为 false
+    sourceMap: undefined,
+    loaderOptions: {
+      css: {},
+      less: {},
+      miniCss: {},
+      postcss: {},
+    },
+  },
+  assetsLimit: 4096,
+  alias: {
+    "@": "<project_path>/src",
+  },
+};
+```
+
+同时 *luban.config.js* 应该被下面的 `ProjectConfig` 类型约束。
 
 ```typescript
 type OptionsOfCssLoader = {

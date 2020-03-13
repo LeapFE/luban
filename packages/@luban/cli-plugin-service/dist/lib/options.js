@@ -11,6 +11,9 @@ const schema = cli_shared_utils_1.createSchema((joi) => joi.object({
         sourceMap: joi.boolean(),
         loaderOptions: joi.object({
             less: joi.object(),
+            css: joi.object(),
+            miniCss: joi.object(),
+            postcss: joi.object(),
         }),
     }),
     devServer: joi.object(),

@@ -12,6 +12,9 @@ const schema = createSchema((joi) =>
       sourceMap: joi.boolean(),
       loaderOptions: joi.object({
         less: joi.object(),
+        css: joi.object(),
+        miniCss: joi.object(),
+        postcss: joi.object(),
       }),
     }),
     devServer: joi.object(),

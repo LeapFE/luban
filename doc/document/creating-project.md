@@ -12,7 +12,7 @@ luban init <project_name>
 在终端运行 `luban init <project_namer>` 命令后，将会以默认的 preset 来创建项目。默认的 preset 如下：
 
 + 开发语言：<a-radio-group value='ts'><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
-+ [ESLint](https://eslint.org/) 配置：<a-radio-group value='airbnb'><a-radio checked value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
++ [ESLint](https://eslint.org/) 配置方案：<a-radio-group value='airbnb'><a-radio checked value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
 + 样式处理方案：<a-radio-group value='less'><a-radio checked value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 + 使用 <a-checkbox checked>[Stylelint](https://stylelint.io/)</a-checkbox>
 + 使用 <a-checkbox checked>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
@@ -25,8 +25,8 @@ luban init <project_name>
 手动选择的特性将包括：
 
 - 开发语言 <a-radio-group><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
-- [ESLint](https://eslint.org/) 配置方案选择 <a-radio-group><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
-- 样式处理方案选择 <a-radio-group><a-radio value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
+- [ESLint](https://eslint.org/) 配置方案 <a-radio-group><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
+- 样式处理方案 <a-radio-group><a-radio value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 - 是否使用 <a-checkbox>[Stylelint](https://stylelint.io/)</a-checkbox>
 - 是否使用 <a-checkbox>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
 - 是否使用 <a-checkbox>状态管理 ([rematch](https://rematch.github.io/rematch/#/))</a-checkbox>
@@ -45,8 +45,9 @@ luban init --help
 选项：
 -m, --manual 跳过默认的 preset，手动选择项目需要的特性
 -r, --registry <url> 在安装依赖时使用指定的 npm registry
--n, --no-git 跳过 git 初始化
+-s, --skipGit 跳过 git 初始化
 -f, --force 覆写目标目录可能存在的配置
+-g, --git [message] 强制 git 初始化，并带初始的有提交 message
 -h, --help 输出使用帮助信息
 -i, --info 输出一些环境信息，比如系统，CPU，Node 版本，Npm 版本
 ... 更多选项...

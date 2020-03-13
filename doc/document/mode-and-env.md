@@ -16,7 +16,7 @@ FOO=bar
 APP_URL=https://example.com/
 ```
 
-被载入的环境变量会对 @luban-cli/cli-plugin-service 以及其插件、依赖可用。
+被载入的环境变量会对 `@luban-cli/cli-plugin-service` 以及其插件、依赖可用。
 
 ::: tip 环境加载属性
 
@@ -82,6 +82,6 @@ console.log(process.env.APP_URL);
 
 ## 只在本地有效的变量
 
-有的时候你可能有一些不应该提交到代码仓库中的变量，尤其是当你的项目托管在公共仓库时。这种情况下你应该使用一个 *.env.local* 文件取而代之。本地环境文件默认会被忽略，且出现在 `.gitignore` 中。
+有的时候你可能有一些不应该提交到代码仓库中的变量，尤其是当你的项目托管在公共仓库时。这种情况下你应该使用一个 *.env.local* 文件取而代之。本地环境文件默认会被忽略，且出现在 *.gitignore* 文件中。
 
 *.local* 也可以加在指定模式的环境文件上，比如 *.env.development.local* 将会在 development 模式下被载入，且被 git 忽略。

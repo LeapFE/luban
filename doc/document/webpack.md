@@ -2,7 +2,7 @@
 
 ## 简单的配置方式
 
-修改 webpack 配置最简单的方式是配置 `luban.config.js` 中的 `configureWebpack` 字段，该字段的类型定义如下：
+修改 webpack 配置最简单的方式是配置 *luban.config.js* 中的 `configureWebpack` 字段，该字段的类型定义如下：
 
 ```typescript
 /**
@@ -17,7 +17,7 @@
 ```
 
 ::: warning
-有些 webpack 选项是基于 `luban.config.js` 中的值设置的，所以不能直接修改。例如你应该修改 `luban.config.js` 中的 `outputDir` 选项而不是修改 `output.path`；你应该修改 `luban.config.js` 中的 `publicPath` 选项而不是修改 `output.publicPath`。这样做是因为 `luban.config.js` 中的值会被用在配置里的多个地方，以确保所有的部分都能正常工作在一起。更多配置见 [luban.config.js](../config/#luban-config-js)。
+有些 webpack 选项是基于 *luban.config.js* 中的值设置的，所以不能直接修改。例如你应该修改 *luban.config.js* 中的 `outputDir` 选项而不是修改 `output.path`；你应该修改 *luban.config.js* 中的 `publicPath` 选项而不是修改 `output.publicPath`。这样做是因为 *luban.config.js* 中的值会被用在配置里的多个地方，以确保所有的部分都能正常工作在一起。更多配置见 [luban.config.js](../config/#luban-config-js)。
 :::
 
 如果你想基于一些环境变量来有条件的进行配置，可以对此字段使用一个函数，函数将会在环境变量设置成功后调用并执行，在函数内部可以直接修改配置或者返回一个已经修改好的配置。
@@ -37,7 +37,7 @@ module.exports = {
 
 ## 链式操作
 
-Luban 内部使用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 来修改维护 webpack 配置，其允许我们在后期可以细粒度的对 webpack 配置进行修改和审查。在 `luban.config.js` 可以使用 `chainWebpack` 字段来链式的修改 webpack 配置：
+Luban 内部使用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 来修改维护 webpack 配置，其允许我们在后期可以细粒度的对 webpack 配置进行修改和审查。在 *luban.config.js* 可以使用 `chainWebpack` 字段来链式的修改 webpack 配置：
 
 ```typescript
 /**
@@ -126,7 +126,7 @@ module.exports = {
 
 你需要熟悉 [webpack-chain 的 API](https://github.com/mozilla-neutrino/webpack-chain#getting-started) 并[阅读一些源码](https://github.com/front-end-captain/luban/tree/master/packages/%40luban/cli-plugin-service/src/config)以便了解如何最大程度利用好这个选项，但是比起直接修改 webpack 配置，它的表达能力更强，也更为安全。
 
-比方说你想要将 `index.html` 默认的路径从 */Users/username/proj/public/index.html* 改为 */Users/username/proj/app/templates/index.html*。通过参考 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin#options) 你能看到一个可以传入的选项列表。我们可以在下列配置中传入一个新的模板路径来改变它：
+比方说你想要将 *index.html* 默认的路径从 */Users/username/proj/public/index.html* 改为 */Users/username/proj/app/templates/index.html*。通过参考 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin#options) 你能看到一个可以传入的选项列表。我们可以在下列配置中传入一个新的模板路径来改变它：
 
 ```javascript
 // luban.config.js
