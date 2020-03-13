@@ -18,8 +18,7 @@ import { getVersions } from "../utils/getVersions";
 import { printDefaultPreset } from "../utils/printPreset";
 
 import {
-  logWithSpinner,
-  stopSpinner,
+  Spinner,
   log,
   hasGit,
   hasProjectGit,
@@ -105,13 +104,16 @@ class Creator {
     const packageManager = this._pkgManager || "npm";
     const pkgManager = new PackageManager({ context, forcePackageManager: packageManager });
 
-    logWithSpinner(`✨`, `Creating project in ${chalk.yellow(context)}.`);
+    const spinner = new Spinner();
+
     log();
+    spinner.logWithSpinner(`🏗`, `Creating project in ${chalk.yellow(context)}.`);
 
     const { latestMinor } = await getVersions();
 
     const pkg: BasePkgFields = {
       name,
+      description: "A react application",
       version: "0.1.0",
       private: true,
       devDependencies: {},
@@ -141,13 +143,13 @@ class Creator {
     // so that cli-plugin-service can setup git hooks.
     const shouldInitGitFlag = shouldInitGit(options);
     if (shouldInitGitFlag) {
-      logWithSpinner(`🗃`, `Initializing git repository...`);
+      spinner.logWithSpinner(`🗃`, `Initializing git repository...`);
       await run("git init");
     }
-    log();
 
     // install plugins
-    stopSpinner();
+    spinner.stopSpinner();
+    log();
     log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
     log();
     await pkgManager.install();
@@ -156,50 +158,43 @@ class Creator {
 
     const resolvedPlugins = await this.resolvePlugins(cloneDeep(adaptedPreset.plugins));
 
-    log(`🚀  Invoking plugin's generators...`);
+    log(`🔩  Invoking plugin's generators...`);
     const generator = new Generator(context, { plugins: resolvedPlugins, pkg: pkg });
     await generator.generate();
 
     log();
 
-    stopSpinner();
-
-    log(`📦   Installing additional dependencies...`);
+    log(`📥  Installing additional dependencies...`);
     await pkgManager.install();
 
     log();
-
-    stopSpinner();
-    logWithSpinner("📄   Generating README.md...");
+    spinner.logWithSpinner("📝", "Generating README.md...");
     await writeFileTree(context, {
       "README.md": generateReadme(generator.pkg, packageManager),
     });
 
+    spinner.stopSpinner();
     log();
-    log();
-
-    stopSpinner();
-    log("💄  fix and format some lint errors...");
+    spinner.logWithSpinner("🔧", "fixing and formatting some lint errors...");
     try {
       await fixLintErrors(adaptedPreset);
     } catch (e) {
       warn("fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
     }
 
+    spinner.stopSpinner();
     log();
-    log();
-
-    stopSpinner();
-    log("🎨  formatting some config file...");
+    spinner.logWithSpinner("🎨", "formatting some config file...");
     try {
       await formatConfigFiles(adaptedPreset);
     } catch (e) {
       warn("format file failure, but does not effect to create project");
     }
 
+    spinner.stopSpinner();
     log();
 
-    log(chalk.green("🎉   create project successfully!"));
+    log(chalk.green("🌈  create project successfully!"));
 
     log(`
       ${chalk.bgWhiteBright.black("🚀   Run Application  ")}
@@ -207,13 +202,9 @@ class Creator {
       ${chalk.yellow("npm start")}
     `);
     log();
-    log(
-      `🔗  More documentation to visit ${chalk.underline(
-        `${require("./../../package.json").homepage}`,
-      )}`,
-    );
+    log(`🔗  More documentation to visit ${chalk.underline("https://luban.now.sh")}`);
     log();
-    log(chalk.redBright("💻   Happy coding"));
+    log(chalk.redBright("👩‍💻   Happy coding"));
 
     log();
 

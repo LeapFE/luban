@@ -10,7 +10,8 @@ const path_1 = __importDefault(require("path"));
 const chalk_1 = __importDefault(require("chalk"));
 const formatStats_1 = require("./../utils/formatStats");
 async function build(args, api, options) {
-    cli_shared_utils_1.logWithSpinner("Build bundle... \n");
+    const spinner = new cli_shared_utils_1.Spinner();
+    spinner.logWithSpinner("Build bundle... \n");
     if (args.dest) {
         options.outputDir = args.dest;
     }
@@ -28,7 +29,7 @@ async function build(args, api, options) {
     }
     return new Promise((resolve, reject) => {
         webpack_1.default(webpackConfig, (err, stats) => {
-            cli_shared_utils_1.stopSpinner();
+            spinner.stopSpinner();
             if (err) {
                 return reject(err);
             }

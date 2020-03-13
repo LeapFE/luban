@@ -1,4 +1,4 @@
-import { logWithSpinner, stopSpinner, log, done } from "@luban-cli/cli-shared-utils";
+import { Spinner, log, done } from "@luban-cli/cli-shared-utils";
 import webpack from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import path from "path";
@@ -13,7 +13,8 @@ async function build(
   api: PluginAPI,
   options: Required<ProjectConfig>,
 ): Promise<void> {
-  logWithSpinner("Build bundle... \n");
+  const spinner = new Spinner();
+  spinner.logWithSpinner("Build bundle... \n");
 
   if (args.dest) {
     options.outputDir = args.dest;
@@ -38,7 +39,7 @@ async function build(
 
   return new Promise<void>((resolve, reject) => {
     webpack(webpackConfig, (err, stats) => {
-      stopSpinner();
+      spinner.stopSpinner();
 
       // Fatal webpack errors (wrong configuration, etc)
       if (err) {

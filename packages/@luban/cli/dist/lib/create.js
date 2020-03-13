@@ -79,7 +79,8 @@ async function create(projectName, options) {
 }
 function init(projectName, options) {
     return create(projectName, options).catch((error) => {
-        cli_shared_utils_1.stopSpinner(false);
+        const spinner = new cli_shared_utils_1.Spinner();
+        spinner.stopSpinner(false);
         console.log(chalk_1.default.red(error));
     });
 }

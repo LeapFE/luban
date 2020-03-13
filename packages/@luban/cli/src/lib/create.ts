@@ -3,7 +3,7 @@ import path from "path";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import validateProjectName from "validate-npm-package-name";
-import { clearConsole, stopSpinner } from "@luban-cli/cli-shared-utils";
+import { clearConsole, Spinner } from "@luban-cli/cli-shared-utils";
 import { CliOptions } from "../definitions";
 
 import { Creator } from "./creator";
@@ -81,7 +81,8 @@ async function create(projectName: string, options: CliOptions): Promise<void> {
 
 export function init(projectName: string, options: CliOptions): Promise<void> {
   return create(projectName, options).catch((error) => {
-    stopSpinner(false);
+    const spinner = new Spinner();
+    spinner.stopSpinner(false);
     console.log(chalk.red(error));
   });
 }

@@ -48,11 +48,13 @@ class Creator {
         adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
         const packageManager = this._pkgManager || "npm";
         const pkgManager = new packageManager_1.PackageManager({ context, forcePackageManager: packageManager });
-        cli_shared_utils_1.logWithSpinner(`✨`, `Creating project in ${chalk_1.default.yellow(context)}.`);
+        const spinner = new cli_shared_utils_1.Spinner();
         cli_shared_utils_1.log();
+        spinner.logWithSpinner(`🏗`, `Creating project in ${chalk_1.default.yellow(context)}.`);
         const { latestMinor } = await getVersions_1.getVersions();
         const pkg = {
             name,
+            description: "A react application",
             version: "0.1.0",
             private: true,
             devDependencies: {},
@@ -76,60 +78,57 @@ class Creator {
         });
         const shouldInitGitFlag = shouldInitGit(options);
         if (shouldInitGitFlag) {
-            cli_shared_utils_1.logWithSpinner(`🗃`, `Initializing git repository...`);
+            spinner.logWithSpinner(`🗃`, `Initializing git repository...`);
             await run("git init");
         }
+        spinner.stopSpinner();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.stopSpinner();
         cli_shared_utils_1.log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
         cli_shared_utils_1.log();
         await pkgManager.install();
         cli_shared_utils_1.log();
         const resolvedPlugins = await this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins));
-        cli_shared_utils_1.log(`🚀  Invoking plugin's generators...`);
+        cli_shared_utils_1.log(`🔩  Invoking plugin's generators...`);
         const generator = new generator_1.Generator(context, { plugins: resolvedPlugins, pkg: pkg });
         await generator.generate();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.stopSpinner();
-        cli_shared_utils_1.log(`📦   Installing additional dependencies...`);
+        cli_shared_utils_1.log(`📥  Installing additional dependencies...`);
         await pkgManager.install();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.stopSpinner();
-        cli_shared_utils_1.logWithSpinner("📄   Generating README.md...");
+        spinner.logWithSpinner("📝", "Generating README.md...");
         await cli_shared_utils_1.writeFileTree(context, {
             "README.md": getReadme_1.generateReadme(generator.pkg, packageManager),
         });
+        spinner.stopSpinner();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log();
-        cli_shared_utils_1.stopSpinner();
-        cli_shared_utils_1.log("💄  fix and format some lint errors...");
+        spinner.logWithSpinner("🔧", "fixing and formatting some lint errors...");
         try {
             await fixLintErrors(adaptedPreset);
         }
         catch (e) {
             cli_shared_utils_1.warn("fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
         }
+        spinner.stopSpinner();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log();
-        cli_shared_utils_1.stopSpinner();
-        cli_shared_utils_1.log("🎨  formatting some config file...");
+        spinner.logWithSpinner("🎨", "formatting some config file...");
         try {
             await formatConfigFiles(adaptedPreset);
         }
         catch (e) {
             cli_shared_utils_1.warn("format file failure, but does not effect to create project");
         }
+        spinner.stopSpinner();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log(chalk_1.default.green("🎉   create project successfully!"));
+        cli_shared_utils_1.log(chalk_1.default.green("🌈  create project successfully!"));
         cli_shared_utils_1.log(`
       ${chalk_1.default.bgWhiteBright.black("🚀   Run Application  ")}
       ${chalk_1.default.yellow(`cd ${name}`)}
       ${chalk_1.default.yellow("npm start")}
     `);
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log(`🔗  More documentation to visit ${chalk_1.default.underline(`${require("./../../package.json").homepage}`)}`);
+        cli_shared_utils_1.log(`🔗  More documentation to visit ${chalk_1.default.underline("https://luban.now.sh")}`);
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log(chalk_1.default.redBright("💻   Happy coding"));
+        cli_shared_utils_1.log(chalk_1.default.redBright("👩‍💻   Happy coding"));
         cli_shared_utils_1.log();
         generator.printExitLogs();
         process.exit(1);

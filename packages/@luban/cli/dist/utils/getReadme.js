@@ -4,6 +4,10 @@ const descriptions = {
     start: "alias of serve",
     build: "Compiles and minifies for production",
     serve: "Compiles and hot-reloads for development",
+    eslint: "find problems in you code",
+    "eslint:fix": "fix problems in you code",
+    stylelint: "find problems in you style code",
+    inspect: "inspect webpack config is specify [mode]",
 };
 function printScripts(pkg, packageManager) {
     return Object.keys(pkg.scripts || {})
@@ -17,6 +21,7 @@ function printScripts(pkg, packageManager) {
 exports.generateReadme = function (pkg, packageManager) {
     return [
         `# ${pkg.name}\n`,
+        `> ${pkg.description}`,
         "## Project setup",
         "```",
         `${packageManager} install`,

@@ -28,7 +28,7 @@ export declare type Preset = {
 };
 export declare type BasePkgFields = {
     name: string;
-    description?: "";
+    description?: string;
     version: string;
     main?: string;
     scripts?: Record<string, string>;

@@ -44,7 +44,7 @@ export type Preset = {
  */
 export type BasePkgFields = {
   name: string;
-  description?: "";
+  description?: string;
   version: string;
   main?: string;
   scripts?: Record<string, string>;
