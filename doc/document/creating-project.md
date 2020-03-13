@@ -6,8 +6,12 @@ luban init <project_name>
 
 或者使用 `npx @luban-cli/cli init <project_name>` 免安装的方式来创建项目
 
-### `luban init` 命令
+::: tip 🙋‍♂️
+可以使用淘宝源来稍微加快创建项目的速度 `luban init <project_name>  -r https://registry.npm.taobao.org`
+:::
 
+
+### `luban init` 命令
 
 在终端运行 `luban init <project_namer>` 命令后，将会以默认的 preset 来创建项目。默认的 preset 如下：
 
