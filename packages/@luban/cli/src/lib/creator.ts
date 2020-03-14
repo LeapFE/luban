@@ -107,7 +107,7 @@ class Creator {
     const spinner = new Spinner();
 
     log();
-    spinner.logWithSpinner(`🏗`, `Creating project in ${chalk.yellow(context)}.`);
+    spinner.logWithSpinner(`🏗`, `Creating project in ${chalk.yellow(context)}`);
 
     const { latestMinor } = await getVersions();
 
@@ -151,7 +151,6 @@ class Creator {
     spinner.stopSpinner();
     log();
     log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
-    log();
     await pkgManager.install();
 
     log();

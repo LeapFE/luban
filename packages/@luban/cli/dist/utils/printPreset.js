@@ -30,7 +30,6 @@ function printDefaultPreset(preset) {
         }
         cli_shared_utils_1.log(`  ${chalk_1.default.green(constants_1.defaultPresetNameMap[key])}: ${printValue(preset[key])}`);
     });
-    cli_shared_utils_1.log();
 }
 exports.printDefaultPreset = printDefaultPreset;
 //# sourceMappingURL=printPreset.js.map

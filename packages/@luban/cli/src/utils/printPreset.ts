@@ -30,5 +30,4 @@ export function printDefaultPreset(preset: Required<Preset>): void {
     }
     log(`  ${chalk.green(defaultPresetNameMap[key])}: ${printValue(preset[key])}`);
   });
-  log();
 }

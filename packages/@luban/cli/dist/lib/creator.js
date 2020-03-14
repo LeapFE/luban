@@ -50,7 +50,7 @@ class Creator {
         const pkgManager = new packageManager_1.PackageManager({ context, forcePackageManager: packageManager });
         const spinner = new cli_shared_utils_1.Spinner();
         cli_shared_utils_1.log();
-        spinner.logWithSpinner(`🏗`, `Creating project in ${chalk_1.default.yellow(context)}.`);
+        spinner.logWithSpinner(`🏗`, `Creating project in ${chalk_1.default.yellow(context)}`);
         const { latestMinor } = await getVersions_1.getVersions();
         const pkg = {
             name,
@@ -84,7 +84,6 @@ class Creator {
         spinner.stopSpinner();
         cli_shared_utils_1.log();
         cli_shared_utils_1.log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
-        cli_shared_utils_1.log();
         await pkgManager.install();
         cli_shared_utils_1.log();
         const resolvedPlugins = await this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins));
