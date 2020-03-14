@@ -34,7 +34,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
       </p>
       <a
         className="App-link"
-        href="https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli/README.md"
+        href="https://luban.now.sh"
         target="_blank"
         rel="noopener noreferrer"
       >
