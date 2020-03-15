@@ -222,18 +222,26 @@ class Creator {
   public async formatConfigFiles(preset: Required<Preset>): Promise<void> {
     const { run } = this;
 
-    const formatArgs = ["--parser=json", "--write"];
-    const formatFiles = ["./.babelrc", "./.eslintrc", "./.postcssrc"];
+    const formatConfigJsFile = ["./babel.config.js"];
+    const formatConfigJsonFiles = ["./.eslintrc", "./.postcssrc"];
 
     if (preset.stylelint) {
-      formatFiles.push("./.stylelintrc ");
+      formatConfigJsonFiles.push("./.stylelintrc ");
     }
 
     if (preset.language === "ts") {
-      formatFiles.push("./tsconfig.json");
+      formatConfigJsonFiles.push("./tsconfig.json");
     }
 
-    await run("./node_modules/prettier/bin-prettier.js", formatArgs.concat(formatFiles));
+    if (preset.unitTest) {
+      formatConfigJsFile.push("./jest.config.js");
+    }
+
+    await run("./node_modules/prettier/bin-prettier.js", ["--write"].concat(formatConfigJsFile));
+    await run(
+      "./node_modules/prettier/bin-prettier.js",
+      ["--parser=json", "--write"].concat(formatConfigJsonFiles),
+    );
   }
 
   public async fixLintErrors(preset: Required<Preset>): Promise<void> {

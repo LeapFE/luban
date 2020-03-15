@@ -4,10 +4,10 @@
 /docs/**
 /jsdoc/**
 /template/**
-test.js
 !.eslintrc
 !.babelrc
 **/*.snap
 node_modules
-/webpack/**
 luban.config.js
+jest.config.js
+/tests/**

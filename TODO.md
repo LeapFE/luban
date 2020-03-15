@@ -8,6 +8,11 @@
 [cache-loader](https://www.npmjs.com/package/cache-loader)
 [thread-loader](https://www.npmjs.com/package/thread-loader)
 
+
+### 将 preset.cssPreprocessor 更名为 cssTechnology 或者 cssSolution
+styled-components 并不属于 css 预处理器的分类，而是 css-in-js 的分类
+less 或者 styled-components 只能称之为 css 技术或者 css 解决方案
+
 ### 添加特性 unit test
 
 如何测试 [react hooks?](https://react-hooks-testing-library.com/)
@@ -75,7 +80,6 @@
      // 使用 ts-jest 的 preset 处理 ts
      preset: "ts-jest",
      setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
-     // NOTE dist 文件夹名称应该根据 luban.config.js 中的 outputDir 决定
      transformIgnorePatterns: ["/node_modules/", "/dist/"],
      moduleNameMapper: {
        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
@@ -83,7 +87,6 @@
        "\\.(css|less)$": "<rootDir>/tests/styleMock.js",
      },
      testPathIgnorePatterns: ["**/node_modules/**", "**/dist/**", "/src/router/", "/src/models/"]
-     // NOTE dist 文件夹名称应该根据 luban.config.js 中的 outputDir 决定
      collectCoverageFrom: ["src/**/*.{ts,tsx}", "!**/node_modules/**", "!**/dist/**"],
      coveragePathIgnorePatterns: ["/node_modules/", "/src/router/", "/src/models/"],
    };
@@ -145,7 +148,6 @@
        "^.+\\.jsx?$": "babel-jest"
      },
      setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
-     // dist 文件夹名称应该根据 luban.config.js 中的 outputDir 决定
      transformIgnorePatterns: ["/node_modules/", "/dist/"],
      moduleNameMapper: {
        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
@@ -153,7 +155,6 @@
        "\\.(css|less)$": "<rootDir>/tests/styleMock.js",
      },
       testPathIgnorePatterns: ["**/node_modules/**", "**/dist/**", "/src/router/", "/src/models/"]
-     // dist 文件夹名称应该根据 luban.config.js 中的 outputDir 决定
      collectCoverageFrom: ["src/**/*.{js,jsx}", "!**/node_modules/**", "!**/dist/**"],
      coveragePathIgnorePatterns: ["/node_modules/", "/src/router/", "/src/models/"],
    };

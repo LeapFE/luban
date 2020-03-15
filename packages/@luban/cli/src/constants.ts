@@ -26,8 +26,8 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
   cssPreprocessor: "css pre-processor",
   stylelint: "use stylelint",
   router: "use router(based on React-Router)",
-  store: "use centralized store(based ont rematch)",
-  unitTest: "use unit test(based ont jest + enzyme)",
+  store: "use centralized store(based on rematch)",
+  unitTest: "use unit testing(based on Jest + Enzyme)",
 };
 
 // TODO add prompt module apiRequest
@@ -38,7 +38,7 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "stylelint",
   "router",
   "store",
-  // "unitTest",
+  "unitTest",
 ];
 
 export const defaultRootOptions: Required<RootOptions> = {

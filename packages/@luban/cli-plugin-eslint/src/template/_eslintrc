@@ -4,10 +4,7 @@
   "parserOptions": <%- parserOptions %>,
   "extends": <%- eslintExtends %>,
   "plugins": <%- eslintPlugins %>,
-  "env": {
-    "browser": true,
-    "es2020": true
-  },
+  "env": <%- eslintEnv %>,
   "globals": {
     "process": true
   },

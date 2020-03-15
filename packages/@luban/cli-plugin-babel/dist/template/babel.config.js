@@ -1,5 +1,5 @@
-{
-  "presets": <%- presets %>,
-  "plugins": <%- plugins %>,
-  "env": <%- env %>
-}
+module.exports = {
+  presets: <%- presets %>,
+  plugins: <%- plugins %>,
+  env: <%- env %>,
+};

@@ -7,6 +7,11 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   const eslintParser =
     options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
 
+  const eslintEnv = new SimpleMapPolyfill<string, boolean>([
+    ["browser", true],
+    ["es2020", true],
+  ]);
+
   const parserOptions = new SimpleMapPolyfill<
     string,
     string | number | Record<string, any> | Array<string | Record<string, any>>
@@ -168,8 +173,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  const lintFileSuffix =
-    options.preset.language === "ts" ? "src/**/*.{ts,tsx}" : "src/**/*.{js,jsx}";
+  const lintFileSuffix = options.preset.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
 
   if (api.isGitRepository()) {
     api.extendPackage({
@@ -183,9 +187,20 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         },
       },
       "lint-staged": {
-        [lintFileSuffix]: ["npm run eslint", `npm run format:check:${options.preset.language}`],
+        [`src/**/*.${lintFileSuffix}`]: [
+          "npm run eslint",
+          `npm run format:check:${options.preset.language}`,
+        ],
       },
     });
+  }
+
+  if (options.preset.unitTest) {
+    eslintEnv.set("jest", true);
+    eslintRules.set("import/no-extraneous-dependencies", [
+      "error",
+      { devDependencies: [`**/*.test.${lintFileSuffix}`, `**/*.spec.${lintFileSuffix}`] },
+    ]);
   }
 
   api.render("./template", {
@@ -195,5 +210,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     eslintParser: JSON.stringify(eslintParser),
     eslintRules: JSON.stringify(eslintRules.toPlainObject()),
     settings: JSON.stringify(eslintSettings.toPlainObject()),
+    eslintEnv: JSON.stringify(eslintEnv.toPlainObject()),
   });
 }

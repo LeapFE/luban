@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 function default_1(api, options) {
     const eslintParser = options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
+    const eslintEnv = new cli_shared_utils_1.SimpleMapPolyfill([
+        ["browser", true],
+        ["es2020", true],
+    ]);
     const parserOptions = new cli_shared_utils_1.SimpleMapPolyfill([
         ["ecmaVersion", 11],
         ["sourceType", "module"],
@@ -134,7 +138,7 @@ function default_1(api, options) {
             "eslint-loader": "^3.0.3",
         },
     });
-    const lintFileSuffix = options.preset.language === "ts" ? "src/**/*.{ts,tsx}" : "src/**/*.{js,jsx}";
+    const lintFileSuffix = options.preset.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
     if (api.isGitRepository()) {
         api.extendPackage({
             devDependencies: {
@@ -147,9 +151,19 @@ function default_1(api, options) {
                 },
             },
             "lint-staged": {
-                [lintFileSuffix]: ["npm run eslint", `npm run format:check:${options.preset.language}`],
+                [`src/**/*.${lintFileSuffix}`]: [
+                    "npm run eslint",
+                    `npm run format:check:${options.preset.language}`,
+                ],
             },
         });
+    }
+    if (options.preset.unitTest) {
+        eslintEnv.set("jest", true);
+        eslintRules.set("import/no-extraneous-dependencies", [
+            "error",
+            { devDependencies: [`**/*.test.${lintFileSuffix}`, `**/*.spec.${lintFileSuffix}`] },
+        ]);
     }
     api.render("./template", {
         eslintExtends: JSON.stringify(eslintExtends),
@@ -158,6 +172,7 @@ function default_1(api, options) {
         eslintParser: JSON.stringify(eslintParser),
         eslintRules: JSON.stringify(eslintRules.toPlainObject()),
         settings: JSON.stringify(eslintSettings.toPlainObject()),
+        eslintEnv: JSON.stringify(eslintEnv.toPlainObject()),
     });
 }
 exports.default = default_1;
