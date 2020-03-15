@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/front-end-captain/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
+
+
+### Features
+
+* **service,babel:** supported UI componnet library feature ([91a952f](https://github.com/front-end-captain/luban/commit/91a952fd289ccedc64a33321c7219da17cc29739))
+* **service,babel,cli:** unsupported UI library feature select ([689a91c](https://github.com/front-end-captain/luban/commit/689a91c543653053708a3ed1ad20947a9740d777))
+
+
+
+
+
 ## [0.0.15](https://github.com/front-end-captain/luban/compare/v0.0.14...v0.0.15) (2020-02-27)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-types

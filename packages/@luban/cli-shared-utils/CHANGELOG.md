@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/front-end-captain/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
+
+
+### Bug Fixes
+
+* **utils:** fix spinner error ([6f655d2](https://github.com/front-end-captain/luban/commit/6f655d2e9fd618321502bb8b0831f7ee6fb2cac0))
+
+
+
+
+
 ## [0.0.15](https://github.com/front-end-captain/luban/compare/v0.0.14...v0.0.15) (2020-02-27)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-utils

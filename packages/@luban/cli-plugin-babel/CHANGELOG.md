@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/front-end-captain/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
+
+
+### Bug Fixes
+
+* **babel:** use babel.config.js instead .babelrc to configuration babel ([c12849a](https://github.com/front-end-captain/luban/commit/c12849a621727bbf173374fa80f98639e15006fc))
+
+
+### Features
+
+* **service,babel:** supported UI componnet library feature ([91a952f](https://github.com/front-end-captain/luban/commit/91a952fd289ccedc64a33321c7219da17cc29739))
+* **service,babel,cli:** unsupported UI library feature select ([689a91c](https://github.com/front-end-captain/luban/commit/689a91c543653053708a3ed1ad20947a9740d777))
+* **unittest,babel,eslint,cli:** supported feature unit testing ([57b5452](https://github.com/front-end-captain/luban/commit/57b54529e6ee77fab88f505b9738ac929669897c))
+
+
+
+
+
 ## [0.0.15](https://github.com/front-end-captain/luban/compare/v0.0.14...v0.0.15) (2020-02-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-babel

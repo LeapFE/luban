@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/front-end-captain/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
+
+
+### Features
+
+* **unittest,babel,eslint,cli:** supported feature unit testing ([57b5452](https://github.com/front-end-captain/luban/commit/57b54529e6ee77fab88f505b9738ac929669897c))
+
+
+
+
+
 ## [0.0.15](https://github.com/front-end-captain/luban/compare/v0.0.14...v0.0.15) (2020-02-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
