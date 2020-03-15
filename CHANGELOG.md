@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.17](https://github.com/front-end-captain/luban/compare/v0.0.16...v0.0.17) (2020-03-15)
+
+
+### Bug Fixes
+
+* **eslint:** ignore babel.config.js file by eslint ([81a6fc0](https://github.com/front-end-captain/luban/commit/81a6fc0bd87472c350c098dc7d436249f740830e))
+* **service:** fix 'error is not defined' while run bin/service ([72730df](https://github.com/front-end-captain/luban/commit/72730df641318836fbd8de224502eeb19f840862))
+
+
+
+
+
 ## [0.0.16](https://github.com/front-end-captain/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
 
 
