@@ -12,6 +12,7 @@
     "jsx": "react",
     "sourceMap": true,
     "downlevelIteration": true,
+    "allowJs": false,
 
     "strict": true,
     "noImplicitAny": true,
@@ -41,5 +42,5 @@
     "emitDecoratorMetadata": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules/**", ".plugins/**", "template/**"]
+  "exclude": ["node_modules/**"]
 }
