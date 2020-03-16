@@ -143,6 +143,7 @@ class Creator {
     // so that cli-plugin-service can setup git hooks.
     const shouldInitGitFlag = shouldInitGit(options);
     if (shouldInitGitFlag) {
+      spinner.stopSpinner();
       log();
       spinner.logWithSpinner(`🗄`, `Initializing git repository...`);
       await run("git init");

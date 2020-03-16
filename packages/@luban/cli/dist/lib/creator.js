@@ -78,6 +78,7 @@ class Creator {
         });
         const shouldInitGitFlag = shouldInitGit(options);
         if (shouldInitGitFlag) {
+            spinner.stopSpinner();
             cli_shared_utils_1.log();
             spinner.logWithSpinner(`🗄`, `Initializing git repository...`);
             await run("git init");
