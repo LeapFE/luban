@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.18](https://github.com/front-end-captain/luban/compare/v0.0.17...v0.0.18) (2020-03-16)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-babel
+
+
+
+
+
 ## [0.0.17](https://github.com/front-end-captain/luban/compare/v0.0.16...v0.0.17) (2020-03-15)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-babel
