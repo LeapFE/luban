@@ -78,15 +78,16 @@ class Creator {
         });
         const shouldInitGitFlag = shouldInitGit(options);
         if (shouldInitGitFlag) {
-            spinner.logWithSpinner(`🗃`, `Initializing git repository...`);
+            cli_shared_utils_1.log();
+            spinner.logWithSpinner(`🗄`, `Initializing git repository...`);
             await run("git init");
         }
         spinner.stopSpinner();
         cli_shared_utils_1.log();
         cli_shared_utils_1.log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
         await pkgManager.install();
-        cli_shared_utils_1.log();
         const resolvedPlugins = await this.resolvePlugins(lodash_clonedeep_1.default(adaptedPreset.plugins));
+        cli_shared_utils_1.log();
         cli_shared_utils_1.log(`🔩  Invoking plugin's generators...`);
         const generator = new generator_1.Generator(context, { plugins: resolvedPlugins, pkg: pkg });
         await generator.generate();
@@ -100,25 +101,25 @@ class Creator {
         });
         spinner.stopSpinner();
         cli_shared_utils_1.log();
-        spinner.logWithSpinner("🔧", "fixing and formatting some lint errors...");
+        spinner.logWithSpinner("🔧", "Fixing and formatting some lint errors...");
         try {
             await fixLintErrors(adaptedPreset);
         }
         catch (e) {
-            cli_shared_utils_1.warn("fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
+            cli_shared_utils_1.warn("\n 🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
         }
         spinner.stopSpinner();
         cli_shared_utils_1.log();
-        spinner.logWithSpinner("🎨", "formatting some config file...");
+        spinner.logWithSpinner("🎨", "Formatting some config file...");
         try {
             await formatConfigFiles(adaptedPreset);
         }
         catch (e) {
-            cli_shared_utils_1.warn("format file failure, but does not effect to create project");
+            cli_shared_utils_1.warn("\n format file failure, but does not effect to create project");
         }
         spinner.stopSpinner();
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log(chalk_1.default.green("🌈  create project successfully!"));
+        cli_shared_utils_1.log(chalk_1.default.green("🌈  Create project successfully!"));
         cli_shared_utils_1.log(`
       ${chalk_1.default.bgWhiteBright.black("🚀   Run Application  ")}
       ${chalk_1.default.yellow(`cd ${name}`)}
@@ -127,7 +128,7 @@ class Creator {
         cli_shared_utils_1.log();
         cli_shared_utils_1.log(`🔗  More documentation to visit ${chalk_1.default.underline("https://luban.now.sh")}`);
         cli_shared_utils_1.log();
-        cli_shared_utils_1.log(chalk_1.default.redBright("👩‍💻   Happy coding"));
+        cli_shared_utils_1.log(chalk_1.default.redBright("👩‍💻  Happy coding"));
         cli_shared_utils_1.log();
         generator.printExitLogs();
         process.exit(1);

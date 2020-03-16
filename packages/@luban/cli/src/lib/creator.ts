@@ -143,7 +143,8 @@ class Creator {
     // so that cli-plugin-service can setup git hooks.
     const shouldInitGitFlag = shouldInitGit(options);
     if (shouldInitGitFlag) {
-      spinner.logWithSpinner(`🗃`, `Initializing git repository...`);
+      log();
+      spinner.logWithSpinner(`🗄`, `Initializing git repository...`);
       await run("git init");
     }
 
@@ -153,16 +154,14 @@ class Creator {
     log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
     await pkgManager.install();
 
-    log();
-
     const resolvedPlugins = await this.resolvePlugins(cloneDeep(adaptedPreset.plugins));
 
+    log();
     log(`🔩  Invoking plugin's generators...`);
     const generator = new Generator(context, { plugins: resolvedPlugins, pkg: pkg });
     await generator.generate();
 
     log();
-
     log(`📥  Installing additional dependencies...`);
     await pkgManager.install();
 
@@ -174,26 +173,25 @@ class Creator {
 
     spinner.stopSpinner();
     log();
-    spinner.logWithSpinner("🔧", "fixing and formatting some lint errors...");
+    spinner.logWithSpinner("🔧", "Fixing and formatting some lint errors...");
     try {
       await fixLintErrors(adaptedPreset);
     } catch (e) {
-      warn("fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
+      warn("\n 🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
     }
 
     spinner.stopSpinner();
     log();
-    spinner.logWithSpinner("🎨", "formatting some config file...");
+    spinner.logWithSpinner("🎨", "Formatting some config file...");
     try {
       await formatConfigFiles(adaptedPreset);
     } catch (e) {
-      warn("format file failure, but does not effect to create project");
+      warn("\n format file failure, but does not effect to create project");
     }
 
     spinner.stopSpinner();
     log();
-
-    log(chalk.green("🌈  create project successfully!"));
+    log(chalk.green("🌈  Create project successfully!"));
 
     log(`
       ${chalk.bgWhiteBright.black("🚀   Run Application  ")}
@@ -203,7 +201,7 @@ class Creator {
     log();
     log(`🔗  More documentation to visit ${chalk.underline("https://luban.now.sh")}`);
     log();
-    log(chalk.redBright("👩‍💻   Happy coding"));
+    log(chalk.redBright("👩‍💻  Happy coding"));
 
     log();
 
