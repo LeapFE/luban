@@ -4,9 +4,9 @@ import { Provider } from "react-redux";
 
 <%_ if (useRouter) { _%>
 import { LubanRouter } from "luban-router";
-import { config } from "./router/config";
+import { config } from "@/route/config";
 <%_ } else { _%>
-import { Welcome } from "./components/welcome";
+import { Welcome } from "@/components/welcome";
 <%_ } _%>
 
 
