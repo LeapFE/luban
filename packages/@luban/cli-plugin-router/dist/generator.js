@@ -4,7 +4,7 @@ function default_1(api, options) {
     if (options.preset.router) {
         api.extendPackage({
             dependencies: {
-                "luban-router": "0.0.6",
+                "luban-router": "1.0.0",
             },
         });
         if (options.preset.language === "js") {
