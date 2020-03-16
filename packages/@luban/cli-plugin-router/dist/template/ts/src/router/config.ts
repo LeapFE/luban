@@ -1,7 +1,7 @@
 import { RouteConfig } from "luban-router/lib/definitions";
 
-import { Home } from "../home";
-import { User } from "../user";
+import { Home } from "@/views/Home";
+import { User } from "@/views/User";
 
 export const config: RouteConfig = {
   routes: [

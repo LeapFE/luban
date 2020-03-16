@@ -1,9 +1,7 @@
-import { RouteConfig } from "luban-router/lib/definitions";
+import { Home } from "@/views/Home";
+import { User } from "@/views/User";
 
-import { Home } from "../home";
-import { User } from "../user";
-
-export const config: RouteConfig = {
+export const config = {
   routes: [
     {
       name: "首页",

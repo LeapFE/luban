@@ -1,5 +1,5 @@
-import { Home } from "../home";
-import { User } from "../user";
+import { Home } from "@/views/Home";
+import { User } from "@/views/User";
 
 export const config = {
   routes: [
