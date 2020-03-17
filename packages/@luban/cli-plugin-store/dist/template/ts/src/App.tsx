@@ -10,7 +10,7 @@ import { Welcome } from "@/components/welcome";
 <%_ } _%>
 
 
-import { store } from "./models/store";
+import { store } from "@/models/store";
 
 
 <%_ if (useRouter) { _%>
