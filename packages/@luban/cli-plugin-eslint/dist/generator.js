@@ -31,7 +31,7 @@ function default_1(api, options) {
             [
                 "error",
                 {
-                    ObjectExpression: "always",
+                    ObjectExpression: { multiline: true, minProperties: 4 },
                     ObjectPattern: { multiline: true },
                     ImportDeclaration: "never",
                     ExportDeclaration: { multiline: true, minProperties: 3 },

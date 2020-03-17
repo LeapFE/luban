@@ -40,7 +40,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       [
         "error",
         {
-          ObjectExpression: "always",
+          ObjectExpression: { multiline: true, minProperties: 4 },
           ObjectPattern: { multiline: true },
           ImportDeclaration: "never",
           ExportDeclaration: { multiline: true, minProperties: 3 },
