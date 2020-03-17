@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-shared-types",
-  "version": "0.0.19",
+  "version": "1.0.0",
   "description": "some shared definition types for luban-cli",
   "keywords": [
     "types",
