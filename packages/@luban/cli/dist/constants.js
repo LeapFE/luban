@@ -8,6 +8,7 @@ exports.defaultPreset = {
     router: true,
     store: true,
     unitTest: true,
+    fetch: true,
     plugins: {
         "@luban-cli/cli-plugin-service": {},
         "@luban-cli/cli-plugin-babel": {},
@@ -17,6 +18,7 @@ exports.defaultPreset = {
         "@luban-cli/cli-plugin-stylelint": {},
         "@luban-cli/cli-plugin-typescript": {},
         "@luban-cli/cli-plugin-unit-test": {},
+        "@luban-cli/cli-plugin-fetch": {},
     },
 };
 exports.defaultPresetNameMap = {
@@ -27,6 +29,7 @@ exports.defaultPresetNameMap = {
     router: "use router(based on React-Router)",
     store: "use centralized store(based on rematch)",
     unitTest: "use unit testing(based on Jest + Enzyme)",
+    fetch: "built-in data fetching(based on Axios)",
 };
 exports.defaultPromptModule = [
     "language",
@@ -36,6 +39,7 @@ exports.defaultPromptModule = [
     "router",
     "store",
     "unitTest",
+    "fetch",
 ];
 exports.defaultRootOptions = {
     projectName: "",

@@ -45,7 +45,7 @@ export declare type FinalAnswers = {
     router: boolean;
     store: boolean;
     unitTest: boolean;
-    uiLibrary: UILibrary[];
+    fetch: boolean;
 };
 export declare type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;
 export declare type InquirerQuestionType = keyof QuestionMap;

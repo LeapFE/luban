@@ -1,0 +1,15 @@
+{
+  "extends": "./../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "allowJs": false,
+    "baseUrl": "./",
+    "sourceMap": true
+  },
+  "include": [
+    "./src",
+  ],
+  "files": [
+    "./types.d.ts"
+  ]
+}

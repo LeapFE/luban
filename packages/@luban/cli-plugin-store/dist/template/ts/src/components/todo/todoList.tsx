@@ -36,7 +36,11 @@ const ToDoList: FunctionComponent = () => {
             >
               {todo.text}
             </span>
-            <button style={{ marginLeft: "16px" }} onClick={() => dispatch.todo.delTodo(todo.id)} type="button">
+            <button
+              style={{ marginLeft: "16px" }}
+              onClick={() => dispatch.todo.delTodo(todo.id)}
+              type="button"
+            >
               Delete
             </button>
           </li>

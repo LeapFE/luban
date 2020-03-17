@@ -8,6 +8,7 @@ export const defaultPreset: Required<Preset> = {
   router: true,
   store: true,
   unitTest: true,
+  fetch: true,
   plugins: {
     "@luban-cli/cli-plugin-service": {},
     "@luban-cli/cli-plugin-babel": {},
@@ -17,6 +18,7 @@ export const defaultPreset: Required<Preset> = {
     "@luban-cli/cli-plugin-stylelint": {},
     "@luban-cli/cli-plugin-typescript": {},
     "@luban-cli/cli-plugin-unit-test": {},
+    "@luban-cli/cli-plugin-fetch": {},
   },
 };
 
@@ -28,9 +30,10 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
   router: "use router(based on React-Router)",
   store: "use centralized store(based on rematch)",
   unitTest: "use unit testing(based on Jest + Enzyme)",
+  fetch: "built-in data fetching(based on Axios)",
 };
 
-// TODO add prompt module apiRequest
+// TODO add prompt module apiRequest, named fetch
 export const defaultPromptModule: Array<keyof Preset> = [
   "language",
   "eslint",
@@ -39,6 +42,7 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "router",
   "store",
   "unitTest",
+  "fetch",
 ];
 
 export const defaultRootOptions: Required<RootOptions> = {

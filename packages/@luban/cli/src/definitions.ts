@@ -88,6 +88,7 @@ export type ResolvedPlugin = {
   options: RawPlugin[keyof RawPlugin] & Record<string, any>;
 };
 
+// TYPE REVIEW
 export type FinalAnswers = {
   language: DevLanguage;
   eslint: ESLinterConfig;
@@ -96,7 +97,7 @@ export type FinalAnswers = {
   router: boolean;
   store: boolean;
   unitTest: boolean;
-  uiLibrary: UILibrary[];
+  fetch: boolean;
 };
 
 export type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;

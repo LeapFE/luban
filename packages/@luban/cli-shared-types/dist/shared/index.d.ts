@@ -10,6 +10,7 @@ export declare type RawPlugin = {
     "@luban-cli/cli-plugin-router"?: Record<string, any>;
     "@luban-cli/cli-plugin-store"?: Record<string, any>;
     "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
+    "@luban-cli/cli-plugin-fetch"?: Record<string, any>;
     "@luban-cli/cli-plugin-service": RootOptions;
 };
 export declare type ESLinterConfig = "airbnb" | "standard";
@@ -24,6 +25,7 @@ export declare type Preset = {
     router?: boolean;
     store?: boolean;
     unitTest?: boolean;
+    fetch?: boolean;
     plugins: RawPlugin;
 };
 export declare type BasePkgFields = {

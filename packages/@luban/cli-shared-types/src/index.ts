@@ -8,6 +8,7 @@ export type RawPlugin = {
   "@luban-cli/cli-plugin-router"?: Record<string, any>;
   "@luban-cli/cli-plugin-store"?: Record<string, any>;
   "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
+  "@luban-cli/cli-plugin-fetch"?: Record<string, any>;
   "@luban-cli/cli-plugin-service": RootOptions;
 };
 
@@ -33,7 +34,7 @@ export type Preset = {
   router?: boolean;
   store?: boolean;
   unitTest?: boolean;
-  // uiLibrary?: UILibrary[];
+  fetch?: boolean;
   plugins: RawPlugin;
 };
 

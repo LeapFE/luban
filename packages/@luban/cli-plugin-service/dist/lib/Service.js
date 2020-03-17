@@ -43,6 +43,7 @@ const defaultPreset = {
     router: true,
     store: true,
     unitTest: true,
+    fetch: true,
     plugins: {
         "@luban-cli/cli-plugin-service": {},
         "@luban-cli/cli-plugin-babel": {},
