@@ -19,7 +19,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   if (options.preset.language === "js") {
     api.render("./template/js");
   }
-
   if (options.preset.language === "ts") {
     api.render("./template/ts");
   }
