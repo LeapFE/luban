@@ -10,7 +10,7 @@ function showSuccessMessage() {
 }
 
 try {
-  // check if it's a global installation of luban-cli
+  // check if it's a global installation of @luban-cli/cli
   const npmArgs = JSON.parse(process.env[`npm_config_argv`]);
   if (npmArgs.cooked && npmArgs.cooked.includes(`--global`)) {
     showSuccessMessage();
