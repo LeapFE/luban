@@ -56,7 +56,7 @@
     "vuepress": "^1.3.1",
     "vuepress-theme-antdocs": "^0.1.2-beta"
   },
-  "repository": "https://github.com/front-end-captain/luban.git",
+  "repository": "https://github.com/LeapFE/luban.git",
   "author": "front-end-captain <18810940932@163.com>",
   "husky": {
     "hooks": {

@@ -21,7 +21,7 @@ pids
 build
 _site
 public
-doc/.vuepress/**
+doc/.vuepress/dist
 packages/**/project_name/**
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)

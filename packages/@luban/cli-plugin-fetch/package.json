@@ -7,7 +7,7 @@
     "plugin"
   ],
   "author": "front-end-captain <18810940932@163.com>",
-  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-fetch/README.md",
+  "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-fetch/README.md",
   "license": "MIT",
   "main": "dist/index.js",
   "directories": {
@@ -22,14 +22,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/front-end-captain/luban.git"
+    "url": "git+https://github.com/leapFE/luban.git"
   },
   "scripts": {
     "build": "rimraf dist && tsc --pretty && cp -ri src/template dist/template",
     "check:type": "tsc --noEmit"
   },
   "bugs": {
-    "url": "https://github.com/front-end-captain/luban/issues"
+    "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
     "@luban-cli/cli-shared-types": "^1.0.1"

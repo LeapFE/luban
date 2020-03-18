@@ -13,7 +13,7 @@ Luban 是一个基于 [React.js](https://reactjs.org/) 的快速创建 React 应
 同时提供了以下特性：
 
 - 🐒 工程：开箱即用的工程方案，支持 [ES6](http://www.ecma-international.org/ecma-262/6.0/index.html)+、[TypeScript](http://www.typescriptlang.org)、样式方案（[Styled-Component](https://styled-components.com/)/[Less](http://lesscss.org)/[CSS Modules](https://github.com/css-modules/css-modules)）等
-- 🦊 路由：默认使用配置式路由([Luban-Router](https://github.com/front-end-captain/luban-router#readme))，同时提供权限和导航菜单的解决方案
+- 🦊 路由：默认使用配置式路由([Luban-Router](https://github.com/leapFE/luban-router#readme))，同时提供权限和导航菜单的解决方案
 - 🐯 状态管理：内置集成 [rematch](https://rematch.github.io/rematch/), 基于[redux](https://redux.js.org/) 的数据流方案，对 [TypeScript](http://www.typescriptlang.org) 友好
 - 🐦 环境变量配置：通过 [dotenv](https://github.com/motdotla/dotenv)，支持多环境变量的配置
 - 🦁 工程配置：零配置，同时提供强大的和可扩展的应用程序配置
@@ -24,7 +24,7 @@ Luban 是一个基于 [React.js](https://reactjs.org/) 的快速创建 React 应
 
 ## 该系统的构成
 
-Luban 包括了几个独立的部分。在[源代码](https://github.com/front-end-captain/luban)仓库中同时管理了多个单独发布的包。
+Luban 包括了几个独立的部分。在[源代码](https://github.com/leapFE/luban)仓库中同时管理了多个单独发布的包。
 
 ### CLI
 

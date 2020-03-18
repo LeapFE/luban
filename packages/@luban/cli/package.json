@@ -23,7 +23,7 @@
     "watch": "yarn run build -- --watch --diagnostics"
   },
   "author": "front-end-captain <18810940932@163.com>",
-  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli/README.md",
+  "homepage": "https://github.com/LeapFE/luban/blob/master/packages/%40luban/cli/README.md",
   "license": "MIT",
   "directories": {
     "src": "src",
@@ -34,10 +34,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/front-end-captain/luban.git"
+    "url": "git+https://github.com/leapFE/luban.git"
   },
   "bugs": {
-    "url": "https://github.com/front-end-captain/luban/issues"
+    "url": "https://github.com/leapFE/luban/issues"
   },
   "dependencies": {
     "@luban-cli/cli-shared-utils": "^1.0.1",

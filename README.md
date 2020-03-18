@@ -7,4 +7,4 @@
 
 ## License
 
-[MIT](https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli/LICENSE)
+[MIT](https://github.com/LeapFE/luban/blob/master/packages/%40luban/cli/LICENSE)

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.1](https://github.com/front-end-captain/luban/compare/v1.0.0...v1.0.1) (2020-03-17)
+## [1.0.1](https://github.com/leapFE/luban/compare/v1.0.0...v1.0.1) (2020-03-17)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.0.0](https://github.com/front-end-captain/luban/compare/v0.0.19...v1.0.0) (2020-03-17)
+# [1.0.0](https://github.com/leapFE/luban/compare/v0.0.19...v1.0.0) (2020-03-17)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.19](https://github.com/front-end-captain/luban/compare/v0.0.18...v0.0.19) (2020-03-17)
+## [0.0.19](https://github.com/leapFE/luban/compare/v0.0.18...v0.0.19) (2020-03-17)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.18](https://github.com/front-end-captain/luban/compare/v0.0.17...v0.0.18) (2020-03-16)
+## [0.0.18](https://github.com/leapFE/luban/compare/v0.0.17...v0.0.18) (2020-03-16)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -35,48 +35,40 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.17](https://github.com/front-end-captain/luban/compare/v0.0.16...v0.0.17) (2020-03-15)
+## [0.0.17](https://github.com/leapFE/luban/compare/v0.0.16...v0.0.17) (2020-03-15)
 
 
 ### Bug Fixes
 
-* **eslint:** ignore babel.config.js file by eslint ([81a6fc0](https://github.com/front-end-captain/luban/commit/81a6fc0bd87472c350c098dc7d436249f740830e))
+* **eslint:** ignore babel.config.js file by eslint ([81a6fc0](https://github.com/leapFE/luban/commit/81a6fc0bd87472c350c098dc7d436249f740830e))
 
 
 
 
 
-## [0.0.16](https://github.com/front-end-captain/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
+## [0.0.16](https://github.com/leapFE/luban/compare/v0.0.15...v0.0.16) (2020-03-15)
 
 
 ### Features
 
-* **unittest,babel,eslint,cli:** supported feature unit testing ([57b5452](https://github.com/front-end-captain/luban/commit/57b54529e6ee77fab88f505b9738ac929669897c))
+* **unittest,babel,eslint,cli:** supported feature unit testing ([57b5452](https://github.com/leapFE/luban/commit/57b54529e6ee77fab88f505b9738ac929669897c))
 
 
 
 
 
-## [0.0.15](https://github.com/front-end-captain/luban/compare/v0.0.14...v0.0.15) (2020-02-27)
+## [0.0.15](https://github.com/leapFE/luban/compare/v0.0.14...v0.0.15) (2020-02-27)
 
 
 ### Features
 
-* **service,router,store:** supported feature of store ([fe59d86](https://github.com/front-end-captain/luban/commit/fe59d86efb15a9ec0402811a489fef43b0ef29d2))
+* **service,router,store:** supported feature of store ([fe59d86](https://github.com/leapFE/luban/commit/fe59d86efb15a9ec0402811a489fef43b0ef29d2))
 
 
 
 
 
-## [0.0.14](https://github.com/front-end-captain/luban/compare/v0.0.13...v0.0.14) (2020-02-27)
-
-**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
-
-
-
-
-
-## [0.0.13](https://github.com/front-end-captain/luban/compare/v0.0.12...v0.0.13) (2020-02-27)
+## [0.0.14](https://github.com/leapFE/luban/compare/v0.0.13...v0.0.14) (2020-02-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -84,7 +76,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.12](https://github.com/front-end-captain/luban/compare/v0.0.11...v0.0.12) (2020-02-25)
+## [0.0.13](https://github.com/leapFE/luban/compare/v0.0.12...v0.0.13) (2020-02-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -92,26 +84,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.11](https://github.com/front-end-captain/luban/compare/v0.0.10...v0.0.11) (2020-02-25)
+## [0.0.12](https://github.com/leapFE/luban/compare/v0.0.11...v0.0.12) (2020-02-25)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
+
+
+
+
+
+## [0.0.11](https://github.com/leapFE/luban/compare/v0.0.10...v0.0.11) (2020-02-25)
 
 
 ### Bug Fixes
 
-* **router,service,utils:** fix some bugs ([4d20904](https://github.com/front-end-captain/luban/commit/4d209046513689f1ed2f92d5e04b71f6a8eb8e17))
+* **router,service,utils:** fix some bugs ([4d20904](https://github.com/leapFE/luban/commit/4d209046513689f1ed2f92d5e04b71f6a8eb8e17))
 
 
 
 
 
-## [0.0.10](https://github.com/front-end-captain/luban/compare/v0.0.9...v0.0.10) (2020-02-25)
-
-**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
-
-
-
-
-
-## [0.0.9](https://github.com/front-end-captain/luban/compare/v0.0.8...v0.0.9) (2020-02-25)
+## [0.0.10](https://github.com/leapFE/luban/compare/v0.0.9...v0.0.10) (2020-02-25)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -119,27 +111,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.8](https://github.com/front-end-captain/luban/compare/v0.0.7...v0.0.8) (2020-02-25)
+## [0.0.9](https://github.com/leapFE/luban/compare/v0.0.8...v0.0.9) (2020-02-25)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
+
+
+
+
+
+## [0.0.8](https://github.com/leapFE/luban/compare/v0.0.7...v0.0.8) (2020-02-25)
 
 
 ### Bug Fixes
 
-* **eslint:** correction generate eslint rules ([b61a370](https://github.com/front-end-captain/luban/commit/b61a37064af9a7fbcae1d09403559f0b6e326369))
-* **eslint:** fix settings of eslint config ([0733507](https://github.com/front-end-captain/luban/commit/0733507de79fe34df1f76154dbf4dcfdaafe7a34))
+* **eslint:** correction generate eslint rules ([b61a370](https://github.com/leapFE/luban/commit/b61a37064af9a7fbcae1d09403559f0b6e326369))
+* **eslint:** fix settings of eslint config ([0733507](https://github.com/leapFE/luban/commit/0733507de79fe34df1f76154dbf4dcfdaafe7a34))
 
 
 
 
 
-## [0.0.7](https://github.com/front-end-captain/luban/compare/v0.0.6...v0.0.7) (2020-02-22)
-
-**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
-
-
-
-
-
-## [0.0.6](https://github.com/front-end-captain/luban/compare/v0.0.5...v0.0.6) (2020-02-22)
+## [0.0.7](https://github.com/leapFE/luban/compare/v0.0.6...v0.0.7) (2020-02-22)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -147,7 +139,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.5](https://github.com/front-end-captain/luban/compare/v0.0.4...v0.0.5) (2020-02-22)
+## [0.0.6](https://github.com/leapFE/luban/compare/v0.0.5...v0.0.6) (2020-02-22)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -155,7 +147,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.4](https://github.com/front-end-captain/luban/compare/v0.0.3...v0.0.4) (2020-02-21)
+## [0.0.5](https://github.com/leapFE/luban/compare/v0.0.4...v0.0.5) (2020-02-22)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
 
@@ -163,13 +155,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.0.3](https://github.com/front-end-captain/luban/compare/v0.0.2...v0.0.3) (2020-02-21)
+## [0.0.4](https://github.com/leapFE/luban/compare/v0.0.3...v0.0.4) (2020-02-21)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
+
+
+
+
+
+## [0.0.3](https://github.com/leapFE/luban/compare/v0.0.2...v0.0.3) (2020-02-21)
 
 
 ### Bug Fixes
 
-* **all:** fix some bugs ([7afcf92](https://github.com/front-end-captain/luban/commit/7afcf92b036d48130bdf271542e5e632068d0a6d))
-* **plguin(eslint,stylelint):** fix stylelint generator rule ([adfe711](https://github.com/front-end-captain/luban/commit/adfe711308dd4b8c7934ec264602be946b1f818c))
+* **all:** fix some bugs ([7afcf92](https://github.com/leapFE/luban/commit/7afcf92b036d48130bdf271542e5e632068d0a6d))
+* **plguin(eslint,stylelint):** fix stylelint generator rule ([adfe711](https://github.com/leapFE/luban/commit/adfe711308dd4b8c7934ec264602be946b1f818c))
 
 
 
@@ -180,4 +180,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **all:** :rocket: init project ([61147c6](https://github.com/front-end-captain/luban/commit/61147c64b1e2bb608b73e921910077692a71df49))
+* **all:** :rocket: init project ([61147c6](https://github.com/leapFE/luban/commit/61147c64b1e2bb608b73e921910077692a71df49))

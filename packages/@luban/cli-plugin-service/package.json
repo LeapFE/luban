@@ -15,7 +15,7 @@
     "luban-cli-service": "bin/service"
   },
   "author": "front-end-captain <18810940932@163.com>",
-  "homepage": "https://github.com/front-end-captain/luban/blob/master/packages/%40luban/cli-plugin-service/README.md",
+  "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-service/README.md",
   "license": "MIT",
   "main": "dist/index.js",
   "directories": {
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/front-end-captain/luban.git"
+    "url": "git+https://github.com/leapFE/luban.git"
   },
   "scripts": {
     "build:types": "tsc --pretty --project tsconfig.type.json",
@@ -36,7 +36,7 @@
     "watch": "yarn run build -- --watch --diagnostics"
   },
   "bugs": {
-    "url": "https://github.com/front-end-captain/luban/issues"
+    "url": "https://github.com/leapFE/luban/issues"
   },
   "dependencies": {
     "@luban-cli/cli-shared-utils": "^1.0.1",
