@@ -63,6 +63,8 @@ module.exports = {
 
   放置生成的静态资源 (js、css、img、fonts) 的 (相对于 `outputDir` 的) 目录。
 
+  默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
+
 ::: tip 🙋‍♂️
 从生成的资源覆写 filename 或 chunkFilename 时，`assetsDir` 会被忽略。
 :::

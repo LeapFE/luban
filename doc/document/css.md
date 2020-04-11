@@ -19,11 +19,7 @@ Luban 默认支持 *.css* 文件，同时默认支持 [PostCSS](https://postcss.
 
 ## CSS Modules
 
-仅对 *.less* 文件支持 CSS Module，默认的模块类名为 `[local]-[hash:base64:5]`，可以通过配置 *luban.config.js* 中的 `css.loaderOptions.css` 向 [css-loader](https://github.com/webpack-contrib/css-loader) 传递选项来更改默认的类名以及更改更多的配置选项。
-
-**TODO** ✏️ 如何开启为 css 文件支持 CSS Module?
-
-**TODO** ✏️ 如何关闭为 less 文件默认支持的 CSS Module?
+仅对 *.less* 文件支持 [CSS Module](https://github.com/css-modules/css-modules)，默认的模块类名为 `[name]__[local]__[hash:base64:5]`，可以通过配置 *luban.config.js* 中的 `css.loaderOptions.css` 向 [css-loader](https://github.com/webpack-contrib/css-loader) 传递选项来更改默认的类名以及更改更多的配置选项。
 
 ## 向预处理器 Loader 传递选项
 
