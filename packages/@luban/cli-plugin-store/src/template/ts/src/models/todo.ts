@@ -1,4 +1,4 @@
-import { Dispatch } from "./store";
+import { Dispatch } from "./index";
 
 export type TodoItem = { id: number; text: string; completed: boolean };
 export type TodoState = Array<TodoItem>;

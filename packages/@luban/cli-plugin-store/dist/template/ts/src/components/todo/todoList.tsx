@@ -3,7 +3,7 @@
 import React, { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dispatch, RootState } from "@/models/store";
+import { Dispatch, RootState } from "@/models";
 
 import { TodoItem } from "@/models/todo";
 

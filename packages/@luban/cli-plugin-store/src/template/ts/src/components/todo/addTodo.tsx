@@ -1,7 +1,7 @@
 import React, { FunctionComponent, FormEvent, useState, ChangeEvent, MouseEvent, CSSProperties } from "react";
 import { useDispatch } from "react-redux";
 
-import { Dispatch } from "@/models/store";
+import { Dispatch } from "@/models";
 
 const AddTodo: FunctionComponent = () => {
   const dispatch = useDispatch<Dispatch>();
