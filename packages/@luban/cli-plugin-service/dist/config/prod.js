@@ -1,6 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const terser_webpack_plugin_1 = __importDefault(require("terser-webpack-plugin"));
+const optimize_css_assets_webpack_plugin_1 = __importDefault(require("optimize-css-assets-webpack-plugin"));
+const cssnano_1 = __importDefault(require("cssnano"));
 const getAssetsPath_1 = require("./../utils/getAssetsPath");
+const terserOptions_1 = require("./../utils/terserOptions");
 function default_1(api, options) {
     api.chainWebpack((webpackConfig) => {
         const isProduction = process.env.NODE_ENV === "production";
@@ -48,7 +55,27 @@ function default_1(api, options) {
             })
                 .runtimeChunk({
                 name: "manifest",
-            });
+            })
+                .minimizer("terser")
+                .use(terser_webpack_plugin_1.default, [terserOptions_1.terserOptions(options)])
+                .end()
+                .minimizer("optimizeCss")
+                .use(optimize_css_assets_webpack_plugin_1.default, [
+                {
+                    cssProcessor: cssnano_1.default,
+                    cssProcessorPluginOptions: {
+                        preset: [
+                            "default",
+                            {
+                                discardComments: { removeAll: false },
+                                discardEmpty: { removeAll: true },
+                                discardUnused: { removeAll: true },
+                            },
+                        ],
+                    },
+                },
+            ])
+                .end();
         }
     });
 }

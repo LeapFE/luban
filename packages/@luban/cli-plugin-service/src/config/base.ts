@@ -1,12 +1,10 @@
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig, UrlLoaderOptions } from "./../definitions";
 import Config from "webpack-chain";
-import TerserWebpackPlugin from "terser-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
 import { getAssetsPath } from "./../utils/getAssetsPath";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
-import { terserOptions } from "./../utils/terserOptions";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
   const genAssetSubPath: (dir: string) => string = function(dir) {
@@ -148,10 +146,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
     webpackConfig
       .plugin("define")
       .use(require("webpack").DefinePlugin, [resolveClientEnv(options)]);
-    webpackConfig.plugin("clean").use(CleanWebpackPlugin, [{ verbose: true }]);
 
-    webpackConfig.optimization
-      .minimizer("terser")
-      .use(TerserWebpackPlugin, [terserOptions(options)]);
+    webpackConfig.plugin("clean").use(CleanWebpackPlugin, [{ verbose: true }]);
   });
 }

@@ -113,7 +113,5 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     if (extract) {
       webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]);
     }
-
-    // TODO optimize css assets use `optimize-css-assets-webpack-plugin`
   });
 }

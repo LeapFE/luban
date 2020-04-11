@@ -1,6 +1,12 @@
+import TerserWebpackPlugin from "terser-webpack-plugin";
+import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import CssNano from "cssnano";
+
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../definitions";
 import { getAssetsPath } from "./../utils/getAssetsPath";
+
+import { terserOptions } from "./../utils/terserOptions";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
   api.chainWebpack((webpackConfig) => {
@@ -57,7 +63,27 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         })
         .runtimeChunk({
           name: "manifest",
-        });
+        })
+        .minimizer("terser")
+        .use(TerserWebpackPlugin, [terserOptions(options)])
+        .end()
+        .minimizer("optimizeCss")
+        .use(OptimizeCssAssetsPlugin, [
+          {
+            cssProcessor: CssNano,
+            cssProcessorPluginOptions: {
+              preset: [
+                "default",
+                {
+                  discardComments: { removeAll: false },
+                  discardEmpty: { removeAll: true },
+                  discardUnused: { removeAll: true },
+                },
+              ],
+            },
+          },
+        ])
+        .end();
     }
   });
 }

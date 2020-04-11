@@ -1,13 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const terser_webpack_plugin_1 = __importDefault(require("terser-webpack-plugin"));
 const clean_webpack_plugin_1 = require("clean-webpack-plugin");
 const getAssetsPath_1 = require("./../utils/getAssetsPath");
 const resolveClientEnv_1 = require("./../utils/resolveClientEnv");
-const terserOptions_1 = require("./../utils/terserOptions");
 function default_1(api, options) {
     const genAssetSubPath = function (dir) {
         return getAssetsPath_1.getAssetsPath(options, `${dir}/[name].[hash:8].[ext]`);
@@ -123,9 +118,6 @@ function default_1(api, options) {
             .plugin("define")
             .use(require("webpack").DefinePlugin, [resolveClientEnv_1.resolveClientEnv(options)]);
         webpackConfig.plugin("clean").use(clean_webpack_plugin_1.CleanWebpackPlugin, [{ verbose: true }]);
-        webpackConfig.optimization
-            .minimizer("terser")
-            .use(terser_webpack_plugin_1.default, [terserOptions_1.terserOptions(options)]);
     });
 }
 exports.default = default_1;
