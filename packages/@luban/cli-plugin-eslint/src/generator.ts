@@ -34,20 +34,11 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     ["space-before-function-paren", ["error", "never"]],
     ["comma-dangle", ["error", "always-multiline"]],
     ["max-len", ["error", { code: 120, ignoreUrls: true, ignoreComments: true }]],
-    ["arrow-body-style", ["error", "always"]],
-    [
-      "object-curly-newline",
-      [
-        "error",
-        {
-          ObjectExpression: { multiline: true, minProperties: 4 },
-          ObjectPattern: { multiline: true },
-          ImportDeclaration: "never",
-          ExportDeclaration: { multiline: true, minProperties: 3 },
-        },
-      ],
-    ],
+    ["arrow-body-style", ["off"]],
+    ["object-curly-newline", ["off"]],
     ["indent", ["off"]],
+    ["camelcase", ["off"]],
+    ["operator-linebreak", ["off"]],
   ]);
   const eslintPlugins = ["react-hooks"];
 
@@ -125,6 +116,9 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     eslintSettings.set("import/extensions", [".ts", ".tsx"]);
 
     eslintRules.set("react/prop-types", ["off"]);
+    eslintRules.set("@typescript-eslint/explicit-function-return-type", ["off"]);
+    eslintRules.set("@typescript-eslint/no-explicit-any", ["warn"]);
+    eslintRules.set("@typescript-eslint/camelcase", ["off"]);
   }
 
   if (options.preset.eslint === "standard") {
