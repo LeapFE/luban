@@ -18,6 +18,7 @@ function default_1(api, options) {
             fallback: {
                 loader: "file-loader",
                 options: {
+                    publicPath: "../",
                     name: genAssetSubPath(dir),
                 },
             },
@@ -97,7 +98,7 @@ function default_1(api, options) {
             .test(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/)
             .use("url-loader")
             .loader("url-loader")
-            .options(genUrlLoaderOptions("img"));
+            .options(genUrlLoaderOptions("images"));
         webpackConfig.module
             .rule("media")
             .test(/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/)

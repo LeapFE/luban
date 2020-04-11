@@ -8,18 +8,6 @@ import { getAssetsPath } from "./../utils/getAssetsPath";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
 import { terserOptions } from "./../utils/terserOptions";
 
-/**
- * 设置 mode, entry, output, 其中 entry.app 的文件后缀区分 js 和 ts (读取 src/index.jsx 或者 src/index.tsx)
- *
- * 设置别名 文件扩展解析后缀集合
- *
- * 设置诸如 .jpg资源
- *
- * 通过 DefinePlugin 设置 全局环境变量并向客户端册注入 /^APP-/ 变量
- *
- * 使用 TerserPlugin 来 minify javascript 代码
- */
-
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
   const genAssetSubPath: (dir: string) => string = function(dir) {
     return getAssetsPath(options, `${dir}/[name].[hash:8].[ext]`);
@@ -31,6 +19,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       fallback: {
         loader: "file-loader",
         options: {
+          publicPath: "../",
           name: genAssetSubPath(dir),
         },
       },
@@ -130,7 +119,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       .test(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/)
       .use("url-loader")
       .loader("url-loader")
-      .options(genUrlLoaderOptions("img"));
+      .options(genUrlLoaderOptions("images"));
 
     webpackConfig.module
       .rule("media")

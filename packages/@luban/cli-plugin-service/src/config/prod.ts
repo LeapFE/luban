@@ -1,5 +1,6 @@
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../definitions";
+import { getAssetsPath } from "./../utils/getAssetsPath";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
   api.chainWebpack((webpackConfig) => {
@@ -7,10 +8,13 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     const outputDir = api.resolve(options.outputDir);
 
+    const filename = getAssetsPath(options, "scripts/[name]-[hash:8].js");
+    const chunkFilename = getAssetsPath(options, "scripts/[name]-[chunkhash:8].js");
+
     webpackConfig.output
       .path(outputDir)
-      .filename("[name]-[hash:8].js")
-      .chunkFilename("[name]-[chunkhash:8].js")
+      .filename(filename)
+      .chunkFilename(chunkFilename)
       .end();
 
     if (options.productionSourceMap) {
