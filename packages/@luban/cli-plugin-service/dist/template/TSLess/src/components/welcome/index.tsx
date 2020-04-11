@@ -14,7 +14,7 @@ interface WelcomeProps {
 
 const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
   <div className={styles.App}>
-    <header className={styles["App-header"]}>
+    <header className="App-header">
       <%_ if (useRouter) { _%>
       <Todo />
       <%_ } _%>
@@ -23,7 +23,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
         {pageName}
         &nbsp;page
       </h2>
-      <img src={logo} className={styles["App-logo"]} alt="logo" />
+      <img src={logo} className="App-logo" alt="logo" />
       <p>
         <span role="img" aria-label="keyboard">
           ⌨️&nbsp;
@@ -33,7 +33,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
         &nbsp;and save to reload.
       </p>
       <a
-        className={styles["App-link"]}
+        className="App-link"
         href="https://luban.now.sh"
         target="_blank"
         rel="noopener noreferrer"

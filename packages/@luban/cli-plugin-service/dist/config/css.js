@@ -70,9 +70,12 @@ function default_1(api, options) {
                 .loader("css-loader")
                 .options({
                 sourceMap,
-                importLoaders: 2,
+                importLoaders: 1,
                 modules: {
-                    localIdentName: "[local]-[hash:base64:5]",
+                    mode: "global",
+                    exportGlobals: true,
+                    localIdentName: "[name]__[local]__[hash:base64:5]",
+                    context: api.service.context,
                 },
                 ...cssLoaderOptions,
             })
