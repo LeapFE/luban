@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultPreset = {
     language: "ts",
     eslint: "airbnb",
-    cssPreprocessor: "less",
+    cssSolution: "less",
     stylelint: true,
     router: true,
     store: true,
@@ -24,7 +24,7 @@ exports.defaultPreset = {
 exports.defaultPresetNameMap = {
     language: "development language",
     eslint: "eslint config",
-    cssPreprocessor: "css pre-processor",
+    cssSolution: "css solution",
     stylelint: "use stylelint",
     router: "use router(based on React-Router)",
     store: "use centralized store(based on rematch)",
@@ -34,7 +34,7 @@ exports.defaultPresetNameMap = {
 exports.defaultPromptModule = [
     "language",
     "eslint",
-    "cssPreprocessor",
+    "cssSolution",
     "stylelint",
     "router",
     "store",

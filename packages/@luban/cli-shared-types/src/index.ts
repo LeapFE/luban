@@ -16,7 +16,7 @@ export type ESLinterConfig = "airbnb" | "standard";
 
 export type DevLanguage = "js" | "ts";
 
-export type CssPreprocessor = "less" | "styled-components";
+export type CssSolution = "less" | "styled-components";
 
 /**
  * @deprecated
@@ -29,7 +29,7 @@ export type UILibrary = "ant-design" | "ant-design-mobile";
 export type Preset = {
   language?: DevLanguage;
   eslint?: ESLinterConfig;
-  cssPreprocessor?: CssPreprocessor;
+  cssSolution?: CssSolution;
   stylelint?: boolean;
   router?: boolean;
   store?: boolean;

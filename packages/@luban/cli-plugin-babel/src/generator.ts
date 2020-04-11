@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 // 生产 babel 配置并写入 .babelrc
@@ -54,7 +54,7 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     });
   }
 
-  if (rootOptions.preset.cssPreprocessor === "styled-components") {
+  if (rootOptions.preset.cssSolution === "styled-components") {
     babelConfigPlugins.push([
       "babel-plugin-styled-components",
       {

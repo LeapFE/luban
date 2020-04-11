@@ -38,7 +38,7 @@ const builtinServiceCommandNameList = new Set([
 const defaultPreset = {
     language: "ts",
     eslint: "standard",
-    cssPreprocessor: "less",
+    cssSolution: "less",
     stylelint: true,
     router: true,
     store: true,

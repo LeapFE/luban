@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function default_1(cli) {
     cli.injectPrompt({
-        name: "cssPreprocessor",
+        name: "cssSolution",
         type: "list",
-        message: "Pick a CSS pre-processor, and PostCSS, Autoprefixer and CSS Modules(for less) are supported by default",
+        message: "Pick a CSS Solution, and PostCSS, Autoprefixer and CSS Modules(for less) are supported by default",
         default: "less",
         choices: [
             {
@@ -18,8 +18,8 @@ function default_1(cli) {
         ],
     });
     cli.onPromptComplete((answers, preset) => {
-        preset.cssPreprocessor = answers.cssPreprocessor;
+        preset.cssSolution = answers.cssSolution;
     });
 }
 exports.default = default_1;
-//# sourceMappingURL=cssPreprocessor.js.map
+//# sourceMappingURL=cssSolution.js.map

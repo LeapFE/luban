@@ -3,7 +3,7 @@ import { RootOptions, Preset } from "./definitions";
 export const defaultPreset: Required<Preset> = {
   language: "ts",
   eslint: "airbnb",
-  cssPreprocessor: "less",
+  cssSolution: "less",
   stylelint: true,
   router: true,
   store: true,
@@ -25,7 +25,7 @@ export const defaultPreset: Required<Preset> = {
 export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string> = {
   language: "development language",
   eslint: "eslint config",
-  cssPreprocessor: "css pre-processor",
+  cssSolution: "css solution",
   stylelint: "use stylelint",
   router: "use router(based on React-Router)",
   store: "use centralized store(based on rematch)",
@@ -37,7 +37,7 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
 export const defaultPromptModule: Array<keyof Preset> = [
   "language",
   "eslint",
-  "cssPreprocessor",
+  "cssSolution",
   "stylelint",
   "router",
   "store",

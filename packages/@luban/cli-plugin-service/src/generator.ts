@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
@@ -34,8 +34,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.preset.cssPreprocessor) {
-    if (options.preset.cssPreprocessor === "less") {
+  if (options.preset.cssSolution) {
+    if (options.preset.cssSolution === "less") {
       api.extendPackage({
         devDependencies: {
           less: "^3.10.0",
@@ -44,7 +44,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       });
     }
 
-    if (options.preset.cssPreprocessor === "styled-components") {
+    if (options.preset.cssSolution === "styled-components") {
       api.extendPackage({
         dependencies: {
           "styled-components": "^4.4.0",
@@ -54,25 +54,19 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
     const useRouter = options.preset.router;
 
-    if (options.preset.cssPreprocessor === "less" && options.preset.language === "js") {
+    if (options.preset.cssSolution === "less" && options.preset.language === "js") {
       api.render("./template/JSLess", { modifyFile, useRouter });
     }
 
-    if (options.preset.cssPreprocessor === "less" && options.preset.language === "ts") {
+    if (options.preset.cssSolution === "less" && options.preset.language === "ts") {
       api.render("./template/TSLess", { modifyFile, useRouter });
     }
 
-    if (
-      options.preset.cssPreprocessor === "styled-components" &&
-      options.preset.language === "js"
-    ) {
+    if (options.preset.cssSolution === "styled-components" && options.preset.language === "js") {
       api.render("./template/JSstyledComponents", { modifyFile, useRouter });
     }
 
-    if (
-      options.preset.cssPreprocessor === "styled-components" &&
-      options.preset.language === "ts"
-    ) {
+    if (options.preset.cssSolution === "styled-components" && options.preset.language === "ts") {
       api.render("./template/TSstyledComponents", { modifyFile, useRouter });
     }
   }

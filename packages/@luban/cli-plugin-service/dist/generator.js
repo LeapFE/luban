@@ -29,8 +29,8 @@ function default_1(api, options) {
             "style-loader": "^1.1.3",
         },
     });
-    if (options.preset.cssPreprocessor) {
-        if (options.preset.cssPreprocessor === "less") {
+    if (options.preset.cssSolution) {
+        if (options.preset.cssSolution === "less") {
             api.extendPackage({
                 devDependencies: {
                     less: "^3.10.0",
@@ -38,7 +38,7 @@ function default_1(api, options) {
                 },
             });
         }
-        if (options.preset.cssPreprocessor === "styled-components") {
+        if (options.preset.cssSolution === "styled-components") {
             api.extendPackage({
                 dependencies: {
                     "styled-components": "^4.4.0",
@@ -46,18 +46,16 @@ function default_1(api, options) {
             });
         }
         const useRouter = options.preset.router;
-        if (options.preset.cssPreprocessor === "less" && options.preset.language === "js") {
+        if (options.preset.cssSolution === "less" && options.preset.language === "js") {
             api.render("./template/JSLess", { modifyFile, useRouter });
         }
-        if (options.preset.cssPreprocessor === "less" && options.preset.language === "ts") {
+        if (options.preset.cssSolution === "less" && options.preset.language === "ts") {
             api.render("./template/TSLess", { modifyFile, useRouter });
         }
-        if (options.preset.cssPreprocessor === "styled-components" &&
-            options.preset.language === "js") {
+        if (options.preset.cssSolution === "styled-components" && options.preset.language === "js") {
             api.render("./template/JSstyledComponents", { modifyFile, useRouter });
         }
-        if (options.preset.cssPreprocessor === "styled-components" &&
-            options.preset.language === "ts") {
+        if (options.preset.cssSolution === "styled-components" && options.preset.language === "ts") {
             api.render("./template/TSstyledComponents", { modifyFile, useRouter });
         }
     }

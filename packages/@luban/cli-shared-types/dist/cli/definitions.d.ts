@@ -1,5 +1,5 @@
 import { QuestionMap } from "inquirer";
-import { RootOptions as rootOptions, RawPlugin as rawPlugin, Preset as preset, ESLinterConfig as esLinterConfig, DevLanguage as devLanguage, CssPreprocessor as cssPreprocessor, UILibrary as uiLibrary, BasePkgFields as basePkgFields } from "@luban-cli/cli-shared-types/dist/shared";
+import { RootOptions as rootOptions, RawPlugin as rawPlugin, Preset as preset, ESLinterConfig as esLinterConfig, DevLanguage as devLanguage, CssSolution as cssSolution, UILibrary as uiLibrary, BasePkgFields as basePkgFields } from "@luban-cli/cli-shared-types/dist/shared";
 import { GeneratorAPI } from "./lib/generatorAPI";
 export declare type CliOptions = Partial<{
     registry: string;
@@ -22,7 +22,7 @@ export declare type PACKAGE_MANAGER_CONFIG = {
 export declare type CONFIG_FILE_TYPE = "js" | "json" | "yaml" | "lines";
 export declare type ESLinterConfig = esLinterConfig;
 export declare type DevLanguage = devLanguage;
-export declare type CssPreprocessor = cssPreprocessor;
+export declare type CssSolution = cssSolution;
 export declare type UILibrary = uiLibrary;
 export declare type RootOptions = rootOptions;
 export declare type RawPlugin = rawPlugin;
@@ -40,7 +40,7 @@ export declare type ResolvedPlugin = {
 export declare type FinalAnswers = {
     language: DevLanguage;
     eslint: ESLinterConfig;
-    cssPreprocessor: CssPreprocessor;
+    cssSolution: CssSolution;
     stylelint: boolean;
     router: boolean;
     store: boolean;

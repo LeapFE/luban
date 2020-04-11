@@ -2,10 +2,10 @@ import { PromptModuleAPI } from "../promptModuleAPI";
 
 export default function(cli: PromptModuleAPI): void {
   cli.injectPrompt({
-    name: "cssPreprocessor",
+    name: "cssSolution",
     type: "list",
     message:
-      "Pick a CSS pre-processor, and PostCSS, Autoprefixer and CSS Modules(for less) are supported by default",
+      "Pick a CSS Solution, and PostCSS, Autoprefixer and CSS Modules(for less) are supported by default",
     default: "less",
     choices: [
       {
@@ -20,6 +20,6 @@ export default function(cli: PromptModuleAPI): void {
   });
 
   cli.onPromptComplete((answers, preset) => {
-    preset.cssPreprocessor = answers.cssPreprocessor;
+    preset.cssSolution = answers.cssSolution;
   });
 }

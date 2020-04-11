@@ -39,7 +39,7 @@ function default_1(api, rootOptions) {
             },
         });
     }
-    if (rootOptions.preset.cssPreprocessor === "styled-components") {
+    if (rootOptions.preset.cssSolution === "styled-components") {
         babelConfigPlugins.push([
             "babel-plugin-styled-components",
             {

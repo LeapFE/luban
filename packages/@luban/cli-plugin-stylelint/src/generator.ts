@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/src/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
@@ -27,7 +27,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   ]);
   let lintScript = "stylelint src/**/*.css";
 
-  if (options.preset.cssPreprocessor === "styled-components") {
+  if (options.preset.cssSolution === "styled-components") {
     processors.push([
       "stylelint-processor-styled-components",
       {
@@ -53,7 +53,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     lintScript = `stylelint src/**/*.{css,css.${options.preset.language}}`;
   }
 
-  if (options.preset.cssPreprocessor === "less") {
+  if (options.preset.cssSolution === "less") {
     lintScript = "stylelint src/**/*.{css,less}";
     stylelintRules.set("selector-pseudo-class-no-unknown", [
       true,
@@ -72,7 +72,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
   let lintStyleFileSuffix = "src/**/*.{css,less}";
 
-  if (options.preset.cssPreprocessor === "styled-components") {
+  if (options.preset.cssSolution === "styled-components") {
     if (options.preset.language === "js") {
       lintStyleFileSuffix = "src/**/*.{css,css.js}";
     }

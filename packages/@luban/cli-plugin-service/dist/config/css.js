@@ -49,7 +49,7 @@ function default_1(api, options) {
             .loader("postcss-loader")
             .options({ sourceMap, ident: "postcss", ...loaderOptions.postcss })
             .end();
-        if (createConfig.cssPreprocessor === "less") {
+        if (createConfig.cssSolution === "less") {
             const lessRule = webpackConfig.module.rule("less");
             lessRule.test(/\.less$/).end();
             if (extract) {

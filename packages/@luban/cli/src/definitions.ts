@@ -5,7 +5,7 @@ import {
   Preset as preset,
   ESLinterConfig as esLinterConfig,
   DevLanguage as devLanguage,
-  CssPreprocessor as cssPreprocessor,
+  CssSolution as cssSolution,
   UILibrary as uiLibrary,
   BasePkgFields as basePkgFields,
 } from "@luban-cli/cli-shared-types/dist/shared";
@@ -59,7 +59,7 @@ export type ESLinterConfig = esLinterConfig;
 
 export type DevLanguage = devLanguage;
 
-export type CssPreprocessor = cssPreprocessor;
+export type CssSolution = cssSolution;
 
 export type UILibrary = uiLibrary;
 
@@ -92,7 +92,7 @@ export type ResolvedPlugin = {
 export type FinalAnswers = {
   language: DevLanguage;
   eslint: ESLinterConfig;
-  cssPreprocessor: CssPreprocessor;
+  cssSolution: CssSolution;
   stylelint: boolean;
   router: boolean;
   store: boolean;

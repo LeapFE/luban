@@ -67,7 +67,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       .options({ sourceMap, ident: "postcss", ...loaderOptions.postcss })
       .end();
 
-    if (createConfig.cssPreprocessor === "less") {
+    if (createConfig.cssSolution === "less") {
       const lessRule = webpackConfig.module.rule("less");
 
       lessRule.test(/\.less$/).end();

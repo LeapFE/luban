@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function default_1(api, options) {
     api.render("./template");
-    if (options.preset.cssPreprocessor === "styled-components") {
+    if (options.preset.cssSolution === "styled-components") {
         api.extendPackage({
             devDependencies: {
                 "@types/styled-components": "^4.4.0",

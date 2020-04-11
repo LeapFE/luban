@@ -15,12 +15,12 @@ export declare type RawPlugin = {
 };
 export declare type ESLinterConfig = "airbnb" | "standard";
 export declare type DevLanguage = "js" | "ts";
-export declare type CssPreprocessor = "less" | "styled-components";
+export declare type CssSolution = "less" | "styled-components";
 export declare type UILibrary = "ant-design" | "ant-design-mobile";
 export declare type Preset = {
     language?: DevLanguage;
     eslint?: ESLinterConfig;
-    cssPreprocessor?: CssPreprocessor;
+    cssSolution?: CssSolution;
     stylelint?: boolean;
     router?: boolean;
     store?: boolean;

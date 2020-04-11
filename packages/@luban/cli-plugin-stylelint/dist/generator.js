@@ -20,7 +20,7 @@ function default_1(api, options) {
         ],
     ]);
     let lintScript = "stylelint src/**/*.css";
-    if (options.preset.cssPreprocessor === "styled-components") {
+    if (options.preset.cssSolution === "styled-components") {
         processors.push([
             "stylelint-processor-styled-components",
             {
@@ -42,7 +42,7 @@ function default_1(api, options) {
         });
         lintScript = `stylelint src/**/*.{css,css.${options.preset.language}}`;
     }
-    if (options.preset.cssPreprocessor === "less") {
+    if (options.preset.cssSolution === "less") {
         lintScript = "stylelint src/**/*.{css,less}";
         stylelintRules.set("selector-pseudo-class-no-unknown", [
             true,
@@ -58,7 +58,7 @@ function default_1(api, options) {
         });
     }
     let lintStyleFileSuffix = "src/**/*.{css,less}";
-    if (options.preset.cssPreprocessor === "styled-components") {
+    if (options.preset.cssSolution === "styled-components") {
         if (options.preset.language === "js") {
             lintStyleFileSuffix = "src/**/*.{css,css.js}";
         }

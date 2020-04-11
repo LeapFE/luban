@@ -62,7 +62,7 @@ const builtinServiceCommandNameList = new Set<builtinServiceCommandName>([
 const defaultPreset: Required<Preset> = {
   language: "ts",
   eslint: "standard",
-  cssPreprocessor: "less",
+  cssSolution: "less",
   stylelint: true,
   router: true,
   store: true,
