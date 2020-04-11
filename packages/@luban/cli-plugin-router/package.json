@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-router",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "cli-plugin-router",
   "keywords": [
     "router",
@@ -33,7 +33,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "1.0.4"
+    "@luban-cli/cli-shared-types": "1.0.5"
   },
   "engines": {
     "node": ">=10"
