@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/LeapFE/luban/compare/v1.0.5...v1.1.0) (2020-04-12)
+
+
+### Features
+
+* **service:** deprecated assets field in luban.config.js ([007bb6a](https://github.com/LeapFE/luban/commit/007bb6abf64b7e7eb0b4491a35858830b0b60bc0))
+
+
+
+
+
 ## [1.0.5](https://github.com/LeapFE/luban/compare/v1.0.4...v1.0.5) (2020-04-11)
 
 
