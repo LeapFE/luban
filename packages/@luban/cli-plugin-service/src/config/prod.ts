@@ -4,7 +4,6 @@ import CssNano from "cssnano";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../definitions";
-import { getAssetsPath } from "./../utils/getAssetsPath";
 
 import { terserOptions } from "./../utils/terserOptions";
 
@@ -14,8 +13,8 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     const outputDir = api.resolve(options.outputDir);
 
-    const filename = getAssetsPath(options, "scripts/[name]-[hash:8].js");
-    const chunkFilename = getAssetsPath(options, "scripts/[name]-[chunkhash:8].js");
+    const filename = "scripts/[name]-[hash:8].js";
+    const chunkFilename = "scripts/[name]-[chunkhash:8].js";
 
     webpackConfig.output
       .path(outputDir)

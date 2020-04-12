@@ -1,12 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const clean_webpack_plugin_1 = require("clean-webpack-plugin");
-const getAssetsPath_1 = require("./../utils/getAssetsPath");
 const resolveClientEnv_1 = require("./../utils/resolveClientEnv");
 function default_1(api, options) {
-    const genAssetSubPath = function (dir) {
-        return getAssetsPath_1.getAssetsPath(options, `${dir}/[name].[hash:8].[ext]`);
-    };
     const genUrlLoaderOptions = function (dir) {
         return {
             limit: options.assetsLimit,
@@ -14,7 +10,8 @@ function default_1(api, options) {
                 loader: "file-loader",
                 options: {
                     publicPath: "../",
-                    name: genAssetSubPath(dir),
+                    name: `${dir}/[name].[hash:8].[ext]`,
+                    context: api.service.context,
                 },
             },
         };

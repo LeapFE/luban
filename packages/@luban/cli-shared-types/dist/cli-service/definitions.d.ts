@@ -41,7 +41,6 @@ declare type CssConfig = {
 export declare type ProjectConfig = {
     publicPath: string;
     outputDir?: string;
-    assetsDir: string;
     indexPath: string;
     productionSourceMap: boolean;
     configureWebpack?: WebpackConfiguration | ((config: WebpackConfiguration) => WebpackConfiguration);

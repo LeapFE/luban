@@ -4,14 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mini_css_extract_plugin_1 = __importDefault(require("mini-css-extract-plugin"));
-const getAssetsPath_1 = require("./../utils/getAssetsPath");
 function default_1(api, options) {
     api.chainWebpack((webpackConfig) => {
         const isProduction = process.env.NODE_ENV === "production";
         const createConfig = api.resolveInitConfig();
         const { css: { extract = isProduction, sourceMap = !isProduction, loaderOptions }, } = options;
-        const filename = getAssetsPath_1.getAssetsPath(options, `styles/[name]${isProduction ? ".[hash:8]" : ""}.css`);
-        const chunkFilename = getAssetsPath_1.getAssetsPath(options, `styles/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`);
+        const filename = `styles/[name]${isProduction ? ".[hash:8]" : ""}.css`;
+        const chunkFilename = `styles/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`;
         const extractOptions = {
             filename,
             chunkFilename,

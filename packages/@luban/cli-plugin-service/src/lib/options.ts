@@ -29,7 +29,6 @@ export function validateProjectConfig(options: any): void {
 export const defaultsProjectConfig: ProjectConfig = {
   publicPath: "/",
   outputDir: "dist",
-  assetsDir: "",
   indexPath: "index.html",
   productionSourceMap: false,
   css: {

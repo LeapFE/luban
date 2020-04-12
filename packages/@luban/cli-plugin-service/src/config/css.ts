@@ -1,11 +1,8 @@
-import { PluginAPI } from "./../lib/PluginAPI";
-import { ProjectConfig } from "./../definitions";
-
 import Config from "webpack-chain";
-
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-import { getAssetsPath } from "./../utils/getAssetsPath";
+import { PluginAPI } from "./../lib/PluginAPI";
+import { ProjectConfig } from "./../definitions";
 
 export default function(api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig: Config) => {
@@ -17,12 +14,9 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       css: { extract = isProduction, sourceMap = !isProduction, loaderOptions },
     } = options;
 
-    const filename = getAssetsPath(options, `styles/[name]${isProduction ? ".[hash:8]" : ""}.css`);
+    const filename = `styles/[name]${isProduction ? ".[hash:8]" : ""}.css`;
 
-    const chunkFilename = getAssetsPath(
-      options,
-      `styles/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`,
-    );
+    const chunkFilename = `styles/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`;
 
     const extractOptions = {
       filename,

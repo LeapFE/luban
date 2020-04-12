@@ -26,7 +26,6 @@ exports.validateProjectConfig = validateProjectConfig;
 exports.defaultsProjectConfig = {
     publicPath: "/",
     outputDir: "dist",
-    assetsDir: "",
     indexPath: "index.html",
     productionSourceMap: false,
     css: {

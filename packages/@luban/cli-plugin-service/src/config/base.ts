@@ -1,16 +1,11 @@
-import { PluginAPI } from "./../lib/PluginAPI";
-import { ProjectConfig, UrlLoaderOptions } from "./../definitions";
 import Config from "webpack-chain";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
-import { getAssetsPath } from "./../utils/getAssetsPath";
+import { PluginAPI } from "./../lib/PluginAPI";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
+import { ProjectConfig, UrlLoaderOptions } from "./../definitions";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
-  const genAssetSubPath: (dir: string) => string = function(dir) {
-    return getAssetsPath(options, `${dir}/[name].[hash:8].[ext]`);
-  };
-
   const genUrlLoaderOptions: (dir: string) => UrlLoaderOptions = function(dir) {
     return {
       limit: options.assetsLimit,
@@ -18,7 +13,8 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         loader: "file-loader",
         options: {
           publicPath: "../",
-          name: genAssetSubPath(dir),
+          name: `${dir}/[name].[hash:8].[ext]`,
+          context: api.service.context,
         },
       },
     };
