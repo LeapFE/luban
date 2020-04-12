@@ -52,22 +52,14 @@ module.exports = {
 
   当运行 `luban-cli-service build` 时生成的生产环境构建文件的目录。注意目标目录在构建之前会被清除。
 
+  默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
+
 ::: tip 🙋‍♂️
 请始终使用 `outputDir` 而不要修改 webpack 的 `output.path`。
 :::
 
 ### assetsDir
-
-- Type: `string`
-- Default: `''`
-
-  放置生成的静态资源 (js、css、img、fonts) 的 (相对于 `outputDir` 的) 目录。
-
-  默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
-
-::: tip 🙋‍♂️
-从生成的资源覆写 filename 或 chunkFilename 时，`assetsDir` 会被忽略。
-:::
+  从 Luban 1.1.0 起已经弃用。
 
 ### indexPath
 
@@ -264,7 +256,6 @@ TypeScript 可以通过 *tsconfig.json* 来配置。
 module.exports = {
   publicPath: "/",
   outputDir: "dist",
-  assetsDir: "",
   indexPath: "index.html",
   productionSourceMap: false,
   css: {
@@ -331,10 +322,12 @@ export type ProjectConfig = {
   outputDir?: string;
 
   /**
+   * @deprecated since 1.1.0
+   *
    * @description 放置生成的静态资源(js、css、img、fonts)的目录
    * @default ""
    */
-  assetsDir: string;
+  // assetsDir: string;
 
   /**
    * @description 指定生成的 index.html 文件名或者相对路径
