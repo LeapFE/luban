@@ -2,7 +2,7 @@
 
 ## 简单的配置方式
 
-修改 webpack 配置最简单的方式是配置 *luban.config.js* 中的 `configureWebpack` 字段，该字段的类型定义如下：
+修改 ==webpack== 配置最简单的方式是配置 *luban.config.js* 中的 `configureWebpack` 字段，该字段的类型定义如下：
 
 ```typescript
 /**
@@ -16,8 +16,8 @@
   configureWebpack?: webpack.Configuration | ((config: webpack.Configuration) => webpack.Configuration | void);
 ```
 
-::: warning
-有些 webpack 选项是基于 *luban.config.js* 中的值设置的，所以不能直接修改。例如你应该修改 *luban.config.js* 中的 `outputDir` 选项而不是修改 `output.path`；你应该修改 *luban.config.js* 中的 `publicPath` 选项而不是修改 `output.publicPath`。这样做是因为 *luban.config.js* 中的值会被用在配置里的多个地方，以确保所有的部分都能正常工作在一起。更多配置见 [luban.config.js](../config/#luban-config-js)。
+::: warning ⚠️
+有些 ==webpack== 选项是基于 *luban.config.js* 中的值设置的，所以不能直接修改。例如你应该修改 *luban.config.js* 中的 `outputDir` 选项而不是修改 `output.path`；你应该修改 *luban.config.js* 中的 `publicPath` 选项而不是修改 `output.publicPath`。这样做是因为 *luban.config.js* 中的值会被用在配置里的多个地方，以确保所有的部分都能正常工作在一起。更多配置见 [luban.config.js](../config/#luban-config-js)。
 :::
 
 如果你想基于一些环境变量来有条件的进行配置，可以对此字段使用一个函数，函数将会在环境变量设置成功后调用并执行，在函数内部可以直接修改配置或者返回一个已经修改好的配置。
@@ -37,7 +37,7 @@ module.exports = {
 
 ## 链式操作
 
-Luban 内部使用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 来修改维护 webpack 配置，其允许我们在后期可以细粒度的对 webpack 配置进行修改和审查。在 *luban.config.js* 可以使用 `chainWebpack` 字段来链式的修改 webpack 配置：
+Luban 内部使用了 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 来修改维护 ==webpack== 配置，其允许我们在后期可以细粒度的对 ==webpack== 配置进行修改和审查。在 *luban.config.js* 可以使用 `chainWebpack` 字段来链式的修改 ==webpack== 配置：
 
 ```typescript
 /**
@@ -66,7 +66,7 @@ module.exports = {
 ```
 
 ::: tip 🙋
-对于 CSS 相关 loader 来说，我们推荐使用 [css.loaderOptions](../config/#css-loaderoptions) 而不是直接链式指定 loader。这是因为每种 CSS 文件类型都有多个规则，而 `css.loaderOptions` 可以确保你通过一个地方影响所有的规则。
+对于 CSS 相关 loader 来说，我们推荐使用 [`css.loaderOptions`](../config/#css-loaderoptions) 而不是直接链式指定 loader。这是因为每种 CSS 文件类型都有多个规则，而 `css.loaderOptions` 可以确保你通过一个地方影响所有的规则。
 :::
 
 ### 添加一个新的 plugin
@@ -78,7 +78,7 @@ const PrepackWebpackPlugin = require("prepack-webpack-plugin").default;
 module.exports = {
   chainWebpack: config => {
     // https://github.com/gajus/prepack-webpack-plugin
-    webpackConfig.plugin("prepack").use(PrepackWebpackPlugin);
+    config.plugin("prepack").use(PrepackWebpackPlugin);
   },
 };
 ```
@@ -124,7 +124,7 @@ module.exports = {
 };
 ```
 
-你需要熟悉 [webpack-chain 的 API](https://github.com/mozilla-neutrino/webpack-chain#getting-started) 并[阅读一些源码](https://github.com/leapFE/luban/tree/master/packages/%40luban/cli-plugin-service/src/config)以便了解如何最大程度利用好这个选项，但是比起直接修改 webpack 配置，它的表达能力更强，也更为安全。
+你需要熟悉 [webpack-chain 的 API](https://github.com/mozilla-neutrino/webpack-chain#getting-started) 并[阅读一些源码](https://github.com/leapFE/luban/tree/master/packages/%40luban/cli-plugin-service/src/config)以便了解如何最大程度利用好这个选项，但是比起直接修改 ==webpack== 配置，它的表达能力更强，也更为安全。
 
 比方说你想要将 *index.html* 默认的路径从 */Users/username/proj/public/index.html* 改为 */Users/username/proj/app/templates/index.html*。通过参考 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin#options) 你能看到一个可以传入的选项列表。我们可以在下列配置中传入一个新的模板路径来改变它：
 
@@ -142,15 +142,15 @@ module.exports = {
 };
 ```
 
-你可以通过接下来要讨论的命令 **`luban-cli-service inspect`** 来确认 webpack 配置变更。
+你可以通过接下来的命令 **`luban-cli-service inspect`** 来确认 ==webpack== 配置变更是否符合预期。
 
 ## 审查项目的 webpack 配置
 
-因为 `@luban-cli/cli-plugin-service` 对 webpack 配置进行了抽象，所以理解配置中包含的东西会比较困难，尤其是当你打算自行对其调整的时候。
+因为 <mark>@luban-cli/cli-plugin-service</mark> 对 ==webpack== 配置进行了抽象，所以理解配置中包含的东西会比较困难，尤其是当你打算自行对其调整的时候。
 
-`cli-plugin-service` 暴露了 `inspect` 命令用于审查解析好的 webpack 配置。
+==cli-plugin-service== 暴露了 `inspect` 命令用于审查解析好的 ==webpack== 配置。
 
-该命令会将解析出来的 webpack 配置、包括链式访问规则和插件的提示打印到 stdout。
+该命令会将解析出来的 ==webpack== 配置、包括链式访问规则和插件的提示打印到 stdout。
 
 你可以将其输出重定向到一个文件以便进行查阅：
 
@@ -158,7 +158,7 @@ module.exports = {
 luban-cli-service inspect > output.js
 ```
 
-注意它输出的并不是一个有效的 webpack 配置文件，而是一个用于审查的被序列化的格式。
+注意它输出的并不是一个有效的 ==webpack== 配置文件，而是一个用于审查的被序列化的格式。
 
 你也可以通过指定一个路径来审查配置的一小部分：
 

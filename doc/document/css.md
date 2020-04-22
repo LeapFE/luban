@@ -1,11 +1,15 @@
 # CSS 相关
 
-Luban 默认支持 *.css* 文件，同时默认支持 [PostCSS](https://postcss.org/)。仅支持一种 CSS 预处理器，即 [Less](http://lesscss.org/)，同时对 *.less* 文件开启 [CSSModule](https://github.com/css-modules/css-modules) 支持(*.css* 文件默认不支持此特性)，支持一种 [css-in-js](https://github.com/MicheleBertoli/css-in-js) 方案 [Styled-components](https://www.styled-components.com/)。具体配置见[luban.config.js](../config/#luban-config-js)。
+Luban 默认支持 *.css* 文件，同时默认支持 [PostCSS](https://postcss.org/)。仅支持一种 CSS 预处理器，即 [Less](http://lesscss.org/)，同时对 *.less* 文件开启 [CSSModule](https://github.com/css-modules/css-modules) 支持(*.css* 文件默认不支持此特性)，支持一种 [css-in-js](https://github.com/MicheleBertoli/css-in-js) 方案 [Styled-Components](https://www.styled-components.com/)。具体配置见[luban.config.js](../config/#luban-config-js)。
+
+::: tip 🙋
+基于 React 的样式方案社区存在着很多的技术方案，上面提到的 CSS Modules 也是 css-in-js 的一种。更多查阅 [StateOfCSS](https://2019.stateofcss.com/technologies/tools-overview/)
+:::
 
 
 ## PostCSS
 
-无论是否选择 [Less](http://lesscss.org/) 还是 [Styled-components](https://www.styled-components.com/)，Luban 都默认支持 [PostCSS](https://postcss.org/)。可以通过修改 *.postcssrc* 文件或者 *luban.config.js* 文件中的 `css.loaderOptions.postcss` 的选项来配置 PostCSS 的行为。
+无论是 [Less](http://lesscss.org/) 还是 [Styled-Components](https://www.styled-components.com/)，Luban 都默认支持 [PostCSS](https://postcss.org/)。可以通过修改 *.postcssrc* 文件或者 *luban.config.js* 文件中的 `css.loaderOptions.postcss` 的选项来配置 PostCSS 的行为。
 
 同时 PostCSS 默认使用了 [autoprefixer](https://github.com/postcss/autoprefixer) 来为样式表规则添加特定浏览器厂商前缀。如果要配置目标浏览器，可修改 *.browserslistrc* 文件，更多可查阅 [browserslist](../guide/browser-compatibility.html#browserslist) 。
 
@@ -14,16 +18,60 @@ Luban 默认支持 *.css* 文件，同时默认支持 [PostCSS](https://postcss.
 默认使用了 [cssnano](https://cssnano.co/) 来优化压缩样式代码，可以修改 *.postcssrc* 文件中的 `cssnano` 字段来配置此特性。
 
 ::: tip 关于 CSS 中浏览器前缀规则的注意事项 
-在生产环境构建中，Luban 会优化 CSS 并基于目标浏览器抛弃不必要的浏览器前缀规则。因为默认开启了 `autoprefixer`，你只使用无前缀的 CSS 规则即可。
+在生产环境构建中，Luban 会优化 CSS 并基于目标浏览器抛弃不必要的浏览器前缀规则。因为默认开启了 ==autoprefixer==，你只使用无前缀的 CSS 规则即可。
 :::
 
 ## CSS Modules
 
-仅对 *.less* 文件支持 [CSS Module](https://github.com/css-modules/css-modules)，默认的模块类名为 `[name]__[local]__[hash:base64:5]`，可以通过配置 *luban.config.js* 中的 `css.loaderOptions.css` 向 [css-loader](https://github.com/webpack-contrib/css-loader) 传递选项来更改默认的类名以及更改更多的配置选项。
+仅对 *.less* 文件支持 [CSS Module](https://github.com/css-modules/css-modules)，==css-loader== 的 `modules` 默认的配置为：
+```js
+{
+  mode: "global",
+  exportGlobals: true,
+  localIdentName: "[name]__[local]__[hash:base64:5]",
+}
+```
+
+这个配置意味着可以像这样书写和使用样式：
+``` less
+// index.less
+:local(.wrapper) {
+  display: inline-flex;
+
+  .container {
+    font-size: 16px;
+  }
+}
+
+:global {
+  .global-style {
+    font-size: 12px;
+  }
+}
+```
+
+然后：
+
+```js
+import styles from "./index.less";
+
+const SomeComponent = () => {
+  return (
+    <div className={styles.wrapper}>
+      <div className="container">some text</div>
+    </div>
+  );
+};
+
+```
+
+这样就可以创建一个 scope 的样式作用域，而不必所有类名都通过 `styles` 来访问。
+
+可以通过配置 *luban.config.js* 中的 `css.loaderOptions.css` 向 [css-loader](https://github.com/webpack-contrib/css-loader) 传递选项来更改默认的类名以及更改更多的配置选项。
 
 ## 向预处理器 Loader 传递选项
 
-有的时候你想要向 webpack 的预处理器 loader 传递选项。你可以使用 *luban.config.js* 中的 `css.loaderOptions` 选项。比如你可以这样向所有 Less 样式传入共享的全局变量：
+有的时候你想要向 ==webpack== 的预处理器 loader 传递选项。你可以使用 *luban.config.js* 中的 `css.loaderOptions` 选项。比如你可以这样向所有 Less 样式传入共享的全局变量：
 
 ```javascript
 // luban.config.js
@@ -60,11 +108,11 @@ Loader 可以通过 `loaderOptions` 配置，包括：
 - [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)
 
 ::: tip 🙋
-这样做比使用 `chainWebpack` 手动指定 loader 更推荐，因为这些选项需要应用在使用了相应 loader 的多个地方。
+这样做比使用 [`chainWebpack`](webpack.md#链式操作) 手动指定 loader 更推荐，因为这些选项需要应用在使用了相应 loader 的多个地方。
 :::
 
 ## 提取 CSS
 
-Luban 对 *.css* 文件还是 *.less* 文件，在开发环境下使用 [style-loader](https://github.com/webpack-contrib/style-loader) 将输出的样式表代码通过 `<style>` 标签内联到文档的头部。
+Luban 对 *.css* 文件还是 *.less* 文件，在开发环境下使用 [style-loader](https://github.com/webpack-contrib/style-loader) 将输出的样式表代码通过 `<style />` 标签内联到文档的头部。
 
 在生产环境下使用 [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) 的 loader 以及 plugin 将样式表代码抽取到一个或几个单独的 CSS 文件中。

@@ -4,14 +4,10 @@ sidebar: auto
 
 # ⚙ 配置参考
 
-## 目标浏览器
-
-请查阅文档中的[浏览器兼容性](../document/browser-compatibility.md#browserslist)章节。
-
 ## luban.config.js
 
 *luban.config.js* 是一个可选的配置文件，如果项目的 (和 *package.json* 同级的) 根目录中存在这个文件，
-那么它会被 `@luban-cli/cli--plugin-service` 自动识别加载。
+那么它会被 <mark>@luban-cli/cli--plugin-service</mark> 自动识别加载。
 具体类型见下方 [配置文件](#配置文件)
 
 这个文件应该导出一个包含了选项的对象：
@@ -28,7 +24,7 @@ module.exports = {
 - Type: `string`
 - Default: `'/'`
 
-  部署应用包时的基本 URL。
+  部署应用时的基本 URL。
 
   用法和 webpack 本身的 `output.publicPath` 一致，但是 Luban 在一些其他地方也需要用到这个值，所以**请始终使用 `publicPath` 而不要直接修改 webpack 的 `output.publicPath`**。
 
@@ -54,7 +50,7 @@ module.exports = {
 
   默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
 
-::: tip 🙋‍♂️
+::: warning ⚠️
 请始终使用 `outputDir` 而不要修改 webpack 的 `output.path`。
 :::
 
@@ -92,7 +88,7 @@ module.exports = {
   是一个函数，会接收一个基于 [webpack-chain](https://github.com/mozilla-neutrino/webpack-chain) 的
   `ChainableConfig` 实例。允许对内部的 webpack 配置进行更细粒度的修改。
 
-  更多细节可查阅：[配合 webpack > 链式操作](../document/webpack.md#链式操作-高级)
+  更多细节可查阅：[配合 webpack > 链式操作](../document/webpack.md#链式操作)
 
 ### css.extract
 
@@ -118,6 +114,7 @@ module.exports = {
   向 CSS 相关的 loader 传递选项。例如：
 
   ```javascript
+  // luban.config.js
   module.exports = {
     css: {
       loaderOptions: {
@@ -149,11 +146,11 @@ module.exports = {
 
 - Type: `Object`
 
-  所有[`webpack-dev-server` 的选项](https://webpack.js.org/configuration/dev-server/)都支持。注意：
+  所有 [==webpack-dev-server== 的选项](https://webpack.js.org/configuration/dev-server/) 都支持。注意：
 
   - 有些值像 `host`、`port` 和 `https` 可能会被命令行参数覆写。
 
-  - 有些值像 `publicPath` 和 `historyApiFallback` 不应该被修改，因为它们需要和开发服务器的[publicPath](#publicPath) 同步以保障本地开发服务的工作。
+  - 有些值像 `publicPath` 和 `historyApiFallback` 不应该被修改，因为它们需要和开发服务器的 [publicPath](#publicPath) 同步以保障本地开发服务的工作。
 
 ### devServer.proxy
 
@@ -174,7 +171,7 @@ module.exports = {
 
   这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到`http://localhost:4000`。
 
-  如果你想要更多的代理控制行为，也可以使用一个 `path: options` 成对的对象。完整的选项可以查阅[http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
+  如果你想要更多的代理控制行为，也可以使用一个 `path: options` 成对的对象。完整的选项可以查阅 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
 
   ```javascript
   // luban.config.js
@@ -206,10 +203,10 @@ module.exports = {
 - Type: `Object`
 - Default: `{ "@": "<project_name/src>" }`
 
-  使用 `import` 导入模块时的路径别名。用法和 `webpack` 的[`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) 一致。默认只有 *src* 目录。
+  使用 `import` 导入模块时的路径别名。用法和 `webpack` 的 [`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) 一致。默认只有 *src* 目录。
 
 ::: tip 🙋‍♂
-当时使用 TypeScript 为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅[这里](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
+当时使用 TypeScript 为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅 [path-mapping](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
 :::
 
 ## Babel
@@ -219,7 +216,7 @@ Babel 可以通过 *babel.config.js* 进行配置。
 ::: tip 🙋‍♂️
 Luban 使用了 Babel 7 中的新配置格式 *babel.config.js*。和 *.babelrc* 或 *package.json* 中的 `babel` 字段不同，这个配置文件不会使用基于文件位置的方案，而是会一致地运用到项目根目录以下的所有
 文件，包括 *node_modules* 内部的依赖。
-我们推荐在 Luban CLI 项目中始终使用 *babel.config.js* 取代其它格式。
+我们推荐在 Luban 创建的项目中始终使用 *babel.config.js* 取代其它格式。
 具体请查阅 [Configuration File Types](https://babeljs.io/docs/en/config-files#configuration-file-types) 
 :::
 
@@ -229,13 +226,13 @@ Luban 使用了 Babel 7 中的新配置格式 *babel.config.js*。和 *.babelrc*
 
 ESLint 可以通过 *.eslintrc* 来配置。
 
-更多细节可查阅文档中的 [代码Linter 和 Prettier](../document/linter.md) 章节。
+更多细节可查阅文档中的 [代码Linter 和 Prettier](../document/linter.md#eslinter) 章节。
 
 ## StyleLint
 
 StyleLint 可以通过 *.stylelintrc* 来配置。
 
-更多细节可查阅文档中 [代码Linter 和 Prettier](../document/linter.md) 章节。
+更多细节可查阅文档中 [代码Linter 和 Prettier](../document/linter.md#stylelinter) 章节。
 
 ## TypeScript
 

@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: 开始 →
-actionLink: /document/
+actionLink: /document/creating-project
 footer: MIT Licensed | Copyright © 2020-present front-end-captain
 ---
 
@@ -29,7 +29,3 @@ npm i @luban-cli/cli -g
 # 创建一个项目
 luban init <project_name>
 ```
-
-::: warning 注意
-⚠️ 开始使用 Luban 前，请确保您机器上的 [Node.js](https://nodejs.org/) 版本 >= 10.0
-:::

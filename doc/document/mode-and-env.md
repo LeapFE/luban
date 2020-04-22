@@ -16,7 +16,7 @@ FOO=bar
 APP_URL=https://example.com/
 ```
 
-被载入的环境变量会对 `@luban-cli/cli-plugin-service` 以及其插件、依赖可用。
+被载入的环境变量会对 <mark>@luban-cli/cli-plugin-service</mark> 以及其插件、依赖可用。
 
 ::: tip 环境加载属性
 

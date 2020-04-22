@@ -4,7 +4,7 @@ function getCliVersion() {
 
 module.exports = {
   title: "Luban",
-  description: "🛠一个快速创建 React 应用的脚手架",
+  description: "🛠 插件化的 React 应用开发框架",
   markdown: {
     lineNumbers: true,
   },
@@ -12,15 +12,15 @@ module.exports = {
   themeConfig: {
     nav: [
       {
-        text: "📃文档",
+        text: "文档",
         link: "/document/",
       },
       {
-        text: "⚙配置",
+        text: "配置",
         link: "/config/",
       },
       {
-        text: "📢更新记录",
+        text: "更新记录",
         link: "https://github.com/leapFE/luban/blob/master/CHANGELOG.md",
       },
       {
@@ -42,9 +42,10 @@ module.exports = {
           children: ["/document/creating-project", "/document/cli-service"],
         },
         {
-          title: "开发",
+          title: "开发指南",
           collapsable: false,
           children: [
+            "/document/structure",
             "/document/browser-compatibility",
             "/document/html-and-static-assets",
             "/document/css",
@@ -57,7 +58,7 @@ module.exports = {
             "/document/typescript",
             "/document/unittest",
             "/document/data-fetch",
-            "/document/technology-selection-and-restraint",
+            "/document/store",
           ],
         },
       ],
@@ -74,4 +75,7 @@ module.exports = {
     ["@vuepress/medium-zoom", true],
     "@vuepress/active-header-links",
   ],
+  extendMarkdown: (md) => {
+    md.use(require("markdown-it-mark"));
+  },
 };

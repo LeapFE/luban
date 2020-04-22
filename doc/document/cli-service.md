@@ -2,9 +2,9 @@
 
 ## 使用命令
 
-使用 Luban 创建的项目中，`@luban-cli/luban-cli-service` 会提供 `luban-cli-service` 命令。
+使用 Luban 创建的项目中，<mark>@luban-cli/luban-cli-service</mark> 会提供 `luban-cli-service` 命令。
 
-你可以在 npm scripts 中以 `luban-cli-service`、或者从终端中以 `./node_modules/.bin/luban-cli-service` 访问这个命令。
+你可以在 npm scripts 中以 `luban-cli-service` 或者从终端中以 `./node_modules/.bin/luban-cli-service` 访问这个命令。
 
 同时在 *package.json* 文件的 `scripts` 字段会增加以下几个脚本：
 
@@ -41,7 +41,7 @@ npm run serve
   --public  指定本地开发服务的 publicPath (默认值: "/")
 ```
 
-该脚本命令会启动一个基于 `webpack-dev-server` 的本地开发服务，并且会附加一些默认的配置和功能。
+该脚本命令会启动一个基于 ==webpack-dev-server== 的本地开发服务，并且会附加一些默认的配置和功能。
 
 ### luban-cli-service build
 
@@ -56,7 +56,7 @@ npm run serve
   --report   生成 report.html 以帮助分析包内容
 ```
 
-该命令会以 _dist_ 为默认目录产生一个可以用于生产环境的包，自动的 vendor chunk split。其中 chunk mainfest 会内联在 html 文件中。
+该命令会以 _dist_ 为默认目录产生一个可以用于生产环境的包，自动的 vendor chunk split。
 
 ### luban-cli-service inspect
 
@@ -96,10 +96,3 @@ luban-cli-service inspect --plugin=html
   }
 }
 ```
-
-## 缓存和并行处理
-
-- ~~`cache-loader` 会默认为 JavaScript/TypeScript 编译开启。文件会缓存在 `node_modules/.cache` 中——如
-  果你遇到了编译方面的问题，记得先删掉缓存目录之后再试试看。(UNSUPPORTED TODO)~~
-
-- ~~`thread-loader` 会在多核 CPU 的机器上为 JavaScript/TypeScript 转译开启。(UNSUPPORTED TODO)~~

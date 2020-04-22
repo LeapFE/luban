@@ -6,7 +6,7 @@ luban init <project_name>
 
 或者使用 `npx @luban-cli/cli init <project_name>` 免安装的方式来创建项目
 
-::: tip 🙋‍♂️
+::: tip 🙋
 可以使用淘宝源来稍微加快创建项目的速度 `luban init <project_name>  -r https://registry.npm.taobao.org`
 :::
 
@@ -54,5 +54,4 @@ luban init --help
 -g, --git [message] 强制 git 初始化，并带初始的有提交 message
 -h, --help 输出使用帮助信息
 -i, --info 输出一些环境信息，比如系统，CPU，Node 版本，Npm 版本
-... 更多选项...
 ```
