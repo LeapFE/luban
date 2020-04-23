@@ -32,7 +32,7 @@ ESLint 的规则会与 Prettier 的规则产生冲突，具体可以查阅 [esli
 其中，使用 TypeScript 作为开发语言时，ESLint 解析器使用 [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint#readme)，使用 JavaScript 时，解析器为 [babel-eslint](https://github.com/babel/babel-eslint)。同时也对 [React hooks 相关的 lint 规则](https://reactjs.org/docs/hooks-rules.html) 做了支持。
 
 
-你可以查阅以下资料获取更多信息:
+可以查阅以下资料获取更多信息:
 + [React specific linting rules for ESLint](https://github.com/yannickcr/eslint-plugin-react)
 + [Linting of  ES2015+ (ES6+) import/export syntax](https://github.com/benmosher/eslint-plugin-import)
 + [Additional ESLint's rules for Node.js](https://github.com/mysticatea/eslint-plugin-node#readme)

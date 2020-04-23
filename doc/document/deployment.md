@@ -16,7 +16,7 @@
 
 在终端运行这条命令 `npm run build`，将会读取 *.env.production*，构建一个可用于生产环境的包。
 
-同样的，也可以指定一个用于构建测试环境的包，只需要新建一个 `.env.test` 的文件，然后在 *package.json* 文件的 `scripts` 字段添加命令：
+同样的，也可以指定一个用于构建测试环境的包，只需要新建一个 `.env.test` 的文件，然后在 *package.json* 文件的 `scripts` 字段添加脚本：
 
 ```json {4}
 {
@@ -39,11 +39,11 @@
 
 运行 `npm run build` 后，会产生一个 *dist* 目录，包含了所有的构建产物：JavaScript 文件、CSS 文件、图片和媒体资源等。具体对应目录如下：
 
-+ 脚本文件放在 *scripts* 目录下
-+ 样式文件放在 *styles* 目录下
-+ 图片放在 *images* 目录下
-+ 字体文件放在 *fonts* 目录下
-+ 媒体文件放在 *media* 目录下
++ 脚本文件放在 ***scripts*** 目录下
++ 样式文件放在 ***styles*** 目录下
++ 图片放在 ***images*** 目录下
++ 字体文件放在 ***fonts*** 目录下
++ 媒体文件放在 ***media*** 目录下
 
 可以 *luban.config.js* 中配置这些文件输出行为，具体查阅 [配置](../config/#luban-config-js)。
 

@@ -4,7 +4,7 @@
 
 ### 模板文件
 
-根目录 *template/index.html* 是默认的被 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 使用的模板文件，在构建时，会将资源自动注入该文件中。
+根目录 *template/index.html* 是默认的被 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 使用的模板文件，在构建时，会将资源路径自动注入该文件中。
 
 ### 使用插值
 
@@ -34,7 +34,7 @@
 + 放置在 *public* 目录下的或者通过绝对路径被引用，比如 cdn。这类资源会被直接拷贝，不会被 ==webpack== 处理。
 
 ### 从相对路径导入
-在 *js/ts/jsx/tsx* 或者 *css/less/sass* 文件中使用相对路径(以 `.` 开头)引用一个静态资源时，改资源会被 ==webpack== 接管处理，包含进 ==webpack== 的依赖图中，在其编译过程中，所有诸如 `import Image from "..."`、`background: url(...)` 和 CSS `@import` 的资源 URL 都会被解析为一个模块依赖。例如：
+在 *js/ts/jsx/tsx* 或者 *css/less/sass* 文件中使用相对路径(以 `.` 开头)引用一个静态资源时，该资源会被 ==webpack== 接管处理，包含进 ==webpack== 的依赖图中，在其编译过程中，所有诸如 `import Image from "..."`、`background: url(...)` 和 CSS `@import` 的资源 URL 都会被解析为一个模块依赖。例如：
 
 在 *js/ts/jsx/tsx* 使用图片:
 ``` ts
@@ -55,20 +55,20 @@ import SomeImage from "./../../assets/some-image.png";
 
 + 如果 URL 是一个绝对路径(以 `/` 开头)，例如 */images/foo.png*，URL 将会被保留不变。
 
-+ 如果 URL 以 `.` 开头，它会作为一个相对模块请求被解析且基于你的文件系统中的上下文目录进行解析，最后产生模块的绝对路径。
++ 如果 URL 以 `.` 开头，它会作为一个相对模块请求被解析且基于项目的文件系统中的上下文目录进行解析，最后产生模块的绝对路径。
 
-+ 如果 URL 以 `~` 开头，其后的任何内容都会作为一个模块请求被解析。这意味着你甚至可以引用 Node 模块中的资源：
++ 如果 URL 以 `~` 开头，其后的任何内容都会作为一个模块请求被解析。这意味着甚至可以引用 Node 模块中的资源：
 ```typescript
 import SomeImage from "~some-package/some-image.png";
 ```
 
-+ 如果 URL 以 `@` 开头，它也会作为一个模块请求被解析。它的用处在于默认会设置一个指向 *projectRoot/src* 的别名 `@`。(路径别名)
++ 如果 URL 以 `@` 开头，它也会作为一个模块请求被解析。它的用处在于默认会设置一个指向 *projectRoot/src* 的别名 `@`(路径别名)。
 
-更多信心请查阅 [module-resolution](https://webpack.js.org/concepts/module-resolution/#resolving-rules-in-webpack)。
+更多信息查阅 [module-resolution](https://webpack.js.org/concepts/module-resolution/#resolving-rules-in-webpack)。
 
 ### Base64 编译
 
-在 ==cli-plugin-service== 中，通过 ==file-loader== 用版本哈希值和正确的公共基础路径来决定最终的文件路径，再用 ==url-loader== 将小于 4kb 的资源内联，以减少 HTTP 请求的数量。可以在 *luban.config.js* 中配置 `assetsLimit` 来修改默认的内联文件大小限制。
+在 ==cli-plugin-service== 中，通过 ==file-loader== 用版本哈希值和正确的公共基础路径来决定最终的文件路径，再用 ==url-loader== 将小于 4kb 的资源内联，以减少 HTTP 请求的数量。可以在 *luban.config.js* 中配置 `assetsLimit` 来修改默认的内联文件大小限制：
 
 ``` javascript
 // luban.config.js

@@ -68,7 +68,7 @@ APP_URL=https://example.mock.com
 
 这两种情况下，由于运行的是 build 命令，所以都是构建用于生产环境的应用，但是在 mock 模式下，`process.env.APP_URL` 将会被覆写为另外一个值。
 
-同时，只有以 `/^APP_/` 开头的变量才会被 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root) 注入客户端测的代码中，可以在你的应用代码中这样使用环境变量：
+同时，只有以 `/^APP_/` 开头的变量才会被 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root) 注入客户端测的代码中，可以在项目代码中这样使用环境变量：
 
 ```javascript
 // 注意 APP_URL 对应的值将会变成 "https://example.mock.com"
@@ -82,6 +82,6 @@ console.log(process.env.APP_URL);
 
 ## 只在本地有效的变量
 
-有的时候你可能有一些不应该提交到代码仓库中的变量，尤其是当你的项目托管在公共仓库时。这种情况下你应该使用一个 *.env.local* 文件取而代之。本地环境文件默认会被忽略，且出现在 *.gitignore* 文件中。
+有的时候可能有一些不应该提交到代码仓库中的变量，尤其是多人协作开发同一项目时。这种情况下应该使用一个 *.env.local* 文件取而代之。本地环境文件默认会被忽略，且出现在 *.gitignore* 文件中。
 
 *.local* 也可以加在指定模式的环境文件上，比如 *.env.development.local* 将会在 development 模式下被载入，且被 git 忽略。

@@ -2,11 +2,9 @@
 
 ## browserslist
 
-使用 Luban 创建的项目根目录下 *.browserlistrc* 文件，指定了目标浏览器的范围，
-这个值会被[@babel/preset-env](https://new.babeljs.io/docs/en/next/babel-preset-env.html) 和
-[autoprefixer](https://github.com/postcss/autoprefixer) 以及
+使用 Luban 创建的项目根目录下 *.browserlistrc* 文件，指定了目标浏览器的范围，这个值会被[@babel/preset-env](https://new.babeljs.io/docs/en/next/babel-preset-env.html) 和 [autoprefixer](https://github.com/postcss/autoprefixer) 以及
 [postcss-preset-env](https://github.com/csstools/postcss-preset-env) 用来确定需要转译的 JavaScript
-特性和需要添加的 CSS 浏览器厂商前缀以及用于支持现代 CSS 特性的 polyfill。
+特性和需要添加的 CSS 浏览器厂商前缀以及用于支持 [Next CSS](https://cssnext.github.io/) 特性的 polyfill。
 
 查阅 [browserslist](https://github.com/ai/browserslist)了解如何指定浏览器范围。
 

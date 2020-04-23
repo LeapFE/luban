@@ -4,9 +4,9 @@
 
 使用 Luban 创建的项目中，<mark>@luban-cli/luban-cli-service</mark> 会提供 `luban-cli-service` 命令。
 
-你可以在 npm scripts 中以 `luban-cli-service` 或者从终端中以 `./node_modules/.bin/luban-cli-service` 访问这个命令。
+可以在 npm scripts 中以 `luban-cli-service` 或者从终端中以 `./node_modules/.bin/luban-cli-service` 访问这个命令。
 
-同时在 *package.json* 文件的 `scripts` 字段会增加以下几个脚本：
+同时在 *package.json* 文件的 `scripts` 字段会添加以下几个脚本：
 
 ```json
 {
@@ -19,7 +19,7 @@
 }
 ```
 
-可以通过 npm 来执行这些 scripts:
+可以通过 npm 来执行这些 `scripts`:
 
 ```shell
 npm run serve
@@ -60,9 +60,9 @@ npm run serve
 
 ### luban-cli-service inspect
 
-> 用来审查特定环境下的 webpack 配置
+> 用来审查特定环境下的 ==webpack== 配置
 
-比如审查 development 环境下的 webpack 配置:
+比如审查 development 环境下的 ==webpack== 配置:
 
 ```shell
 // 审查 development 环境下的 webpack 配置并输出到 config.txt 文件中
@@ -80,8 +80,8 @@ luban-cli-service inspect --plugin=html
 ```
 
 ## Git Hooks
-在创建项目的尾声，Luban 会安装 [husky](https://github.com/typicode/husky) 和 [lint-staged](https://github.com/okonet/lint-staged)
-它会让你在 *package.json* 的 `hooks` 字段中方便地指定 [Git Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)：
+在创建项目的尾声，Luban 会安装 [husky](https://github.com/typicode/husky) 和 [lint-staged](https://github.com/okonet/lint-staged)，
+方便在 *package.json* 的 `hooks` 字段中指定 [Git Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)：
 
 ```json
 {

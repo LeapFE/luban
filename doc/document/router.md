@@ -55,7 +55,7 @@ export const config: RouteConfig = {
 };
 ```
 
-#### 3. 在你的应用中使用 ` <LubanRouter /> `
+#### 3. 在应用中使用 ` <LubanRouter /> `
 ```tsx
 import React from "react";
 import ReactDOM from "react-dom";
@@ -93,11 +93,11 @@ export const config: RouteConfig = {
 
 这个 `meta` 字段会在创建路由的时候将会作为 `props` 原模原样的传递给对应的组件。
 
-同样这个字段在你创建应用导航菜单是也很有用。详细见下面 [导航菜单](#导航菜单)。
+同样这个字段在创建应用导航菜单是也很有用。详细见下面 [导航菜单](#导航菜单)。
 
 
 ## 路由鉴权
-当你给 `<LubanRouter />` 设置了 `role` 参数，在创建路由的时候就会检查每一个路由项是否能被当前 `role` 访问；
+当给 `<LubanRouter />` 设置了 `role` 参数，在创建路由的时候就会检查每一个路由项是否能被当前 `role` 访问；
 ```typescript
 <LubanRouter config={config} role={66} />
 ```
@@ -114,7 +114,7 @@ export const config: RouteConfig = {
 
 ## 导航菜单
 
-==luban-router== 默认不带有任何的布局方案，你可以通过下面这种方式来实现自定义布局：
+==luban-router== 默认不带有任何的布局方案，可以通过下面这种方式来实现自定义布局：
 ```typescript
  <LubanRouter config={config} role={66}>
   {({ renderedTable, matchedRouteList, permissionRouteList }) => {
@@ -129,7 +129,7 @@ export const config: RouteConfig = {
 </LubanRouter>
 ```
 
-`<LubanRouter />` 除了接收 `config` 和 `role` 参数外，你也可以提供 `children` 参数，该回调函数接收三个参数。
+`<LubanRouter />` 除了接收 `config` 和 `role` 参数外，也可以提供 `children` 参数，该回调函数接收三个参数。
 
 其中，第一个参数是已经渲染好的路由表，可以直接使用，第二个参数是与当前路径匹配的路由列表，第三个参数是当前角色可有权访问的路由表（这个路由表是嵌套结构的）。其中第二个参数的路由列表的路由项会追加一个 `active` 字段，表示当前活跃的路由项，可以很方便的实现面包屑导航。更多路由项定义请查阅 [这里](https://github.com/leapFE/luban-router/blob/master/src/definitions.ts)。
 
@@ -163,7 +163,7 @@ export const config: RouteConfig = {
 };
 ```
 
-同时，你也可以对路由进行分组，指定一个 [chunk name](https://webpack.js.org/api/module-methods/#magic-comments)，将一组路由组件打包到一个 chunk 中：
+同时，也可以对路由进行分组，指定一个 [chunk name](https://webpack.js.org/api/module-methods/#magic-comments)，将一组路由组件打包到一个 chunk 中：
 ```typescript
 const Index = React.lazy(() => import(/* webpackChunkName: "group-index" */  "./Index"));
 const User = React.lazy(() => import(/* webpackChunkName: "group-user" */  "./User"));

@@ -24,7 +24,7 @@ luban init <project_name>
 + 使用 <a-checkbox checked>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
 + 使用 <a-checkbox checked>数据获取([Axios](https://github.com/axios/axios))</a-checkbox>
 
-可以加上 `-m` 或 `--manual` 参数，即 `luban init <project_namer> -m` 来手动的选择特性决定项目将会有哪些特性。
+可以加上 `-m` 或 `--manual` 参数，即 `luban init <project_namer> -m` 来手动的选择决定项目将会有哪些特性。
 
 手动选择的特性将包括：
 
@@ -51,7 +51,7 @@ luban init --help
 -r, --registry <url> 在安装依赖时使用指定的 npm registry
 -s, --skipGit 跳过 git 初始化
 -f, --force 覆写目标目录可能存在的配置
--g, --git [message] 强制 git 初始化，并带初始的有提交 message
+-g, --git [message] 强制 git 初始化，并带初始的 commit message
 -h, --help 输出使用帮助信息
--i, --info 输出一些环境信息，比如系统，CPU，Node 版本，Npm 版本
+-i, --info 输出一些环境信息，比如系统，CPU，Node 版本，NPM 版本
 ```
