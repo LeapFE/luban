@@ -9,7 +9,7 @@ function default_1(api, options) {
             fallback: {
                 loader: "file-loader",
                 options: {
-                    publicPath: "../",
+                    publicPath: options.publicPath,
                     name: `${dir}/[name].[hash:8].[ext]`,
                     context: api.service.context,
                 },

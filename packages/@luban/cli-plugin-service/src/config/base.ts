@@ -12,7 +12,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       fallback: {
         loader: "file-loader",
         options: {
-          publicPath: "../",
+          publicPath: options.publicPath,
           name: `${dir}/[name].[hash:8].[ext]`,
           context: api.service.context,
         },
