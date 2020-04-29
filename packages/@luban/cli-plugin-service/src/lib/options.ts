@@ -5,6 +5,14 @@ const schema = createSchema((joi) =>
   joi.object<ProjectConfig>({
     publicPath: joi.string(),
     outputDir: joi.string(),
+    indexPath: joi.string(),
+    assetsDir: joi.object({
+      scripts: joi.string(),
+      styles: joi.string(),
+      images: joi.string(),
+      media: joi.string(),
+      fonts: joi.string(),
+    }),
     productionSourceMap: joi.boolean(),
     css: joi.object({
       modules: joi.boolean(),
@@ -19,6 +27,7 @@ const schema = createSchema((joi) =>
     }),
     devServer: joi.object(),
     alias: joi.object(),
+    assetsLimit: joi.number(),
   }),
 );
 

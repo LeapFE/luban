@@ -4,6 +4,14 @@ const cli_shared_utils_1 = require("@luban-cli/cli-shared-utils");
 const schema = cli_shared_utils_1.createSchema((joi) => joi.object({
     publicPath: joi.string(),
     outputDir: joi.string(),
+    indexPath: joi.string(),
+    assetsDir: joi.object({
+        scripts: joi.string(),
+        styles: joi.string(),
+        images: joi.string(),
+        media: joi.string(),
+        fonts: joi.string(),
+    }),
     productionSourceMap: joi.boolean(),
     css: joi.object({
         modules: joi.boolean(),
@@ -18,6 +26,7 @@ const schema = cli_shared_utils_1.createSchema((joi) => joi.object({
     }),
     devServer: joi.object(),
     alias: joi.object(),
+    assetsLimit: joi.number(),
 }));
 function validateProjectConfig(options) {
     cli_shared_utils_1.validate(options, schema, { allowUnknown: true });
