@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/leapFE/luban/compare/v1.1.1...v1.1.2) (2020-04-29)
+
+
+### Bug Fixes
+
+* **service:** generate correct scriptsDir while assetsDir.scripts empty ([6cd80d0](https://github.com/leapFE/luban/commit/6cd80d0b312074b4a6e7e52ba529af9463aefa6d))
+
+
+
+
+
 ## [1.1.1](https://github.com/leapFE/luban/compare/v1.1.0...v1.1.1) (2020-04-29)
 
 
