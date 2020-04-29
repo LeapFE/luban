@@ -28,18 +28,15 @@ module.exports = {
 
   用法和 webpack 本身的 `output.publicPath` 一致，但是 Luban 在一些其他地方也需要用到这个值，所以**请始终使用 `publicPath` 而不要直接修改 webpack 的 `output.publicPath`**。
 
-  默认情况下，Luban 会假设你的应用是被部署在一个域名的根路径上，例如 `https://www.example.com/`。如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在
-  `https://www.example.com/your-app/`，则设置 `publicPath` 为 `/your-app/`。
-
-  这个值也可以被设置为空字符串 (`''`) 或是相对路径 (`'./'`)，这样所有的资源都会被链接为相对路径，这样打出来的包可以被部署在任意路径。
-
-  这个值在开发环境下同样生效。如果你想把开发服务器架设在根路径，你可以使用一个条件式的值：
+  由于 Luban 将构建后的资源进行了分类，输出到了不同的目录，查阅 [构建产物](../document/deployment.md#构建产物)，所以默认情况下在生产环境应该将 `publicPath` 指定为一个绝对路径，像下面这样：
 
   ```javascript
   module.exports = {
-    publicPath: process.env.NODE_ENV === "production" ? "/your-app-production-sub-path/" : "/",
+    publicPath: process.env.NODE_ENV === "production" ? "https://www.example.com/" : "/",
   };
   ```
+
+  对 `publicPath` 使用相对路径 `./` 时，部署到线上可能造成图片无法访问的情况，此时需要配置各个资源类型的输出目录，已确保资源可以被正确的访问。详细配置见下方 [assetsDir](#assetsdir)。
 
 ### outputDir
 
@@ -48,14 +45,31 @@ module.exports = {
 
   当运行 `luban-cli-service build` 时生成的生产环境构建文件的目录。注意目标目录在构建之前会被清除。
 
-  默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
-
 ::: warning ⚠️
 请始终使用 `outputDir` 而不要修改 webpack 的 `output.path`。
 :::
 
 ### assetsDir
-  从 Luban 1.1.0 起已经弃用。
+- Type: `Object`
+- Default: `{ scripts: "scripts",  styles: "styles",  images: "images", fonts: "fonts", media: "media" }`
+
+  当运行 `luban-cli-service build` 时生除了 *.html* 的其他资源的目录。
+
+  默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
+
+  如果不需要对资源进行分类输出，可以进行如下配置：
+  ```javascript
+  // luban.config.js
+  module.exports = {
+    assetsDir: {
+      scripts: "",
+      styles: "",
+      images: "",
+      fonts: "",
+      media: "",
+    },
+  };
+  ```
 
 ### indexPath
 

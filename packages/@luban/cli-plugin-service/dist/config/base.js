@@ -90,19 +90,19 @@ function default_1(api, options) {
             .test(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/)
             .use("url-loader")
             .loader("url-loader")
-            .options(genUrlLoaderOptions("images"));
+            .options(genUrlLoaderOptions(options.assetsDir.images));
         webpackConfig.module
             .rule("media")
             .test(/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/)
             .use("url-loader")
             .loader("url-loader")
-            .options(genUrlLoaderOptions("media"));
+            .options(genUrlLoaderOptions(options.assetsDir.media));
         webpackConfig.module
             .rule("fonts")
             .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
             .use("url-loader")
             .loader("url-loader")
-            .options(genUrlLoaderOptions("fonts"));
+            .options(genUrlLoaderOptions(options.assetsDir.fonts));
         webpackConfig.node.merge({
             process: "mock",
             dgram: "empty",

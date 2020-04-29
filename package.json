@@ -23,7 +23,7 @@
     "doc:dev": "vuepress dev doc --open --temp .temp",
     "doc:build": "vuepress build doc --temp .temp",
     "doc:info": "vuepress view-info docs --temp .temp",
-    "pub:doc": "now --prod"
+    "doc:pub": "now --prod"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

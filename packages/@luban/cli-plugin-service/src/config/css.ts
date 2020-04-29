@@ -14,9 +14,11 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       css: { extract = isProduction, sourceMap = !isProduction, loaderOptions },
     } = options;
 
-    const filename = `styles/[name]${isProduction ? ".[hash:8]" : ""}.css`;
+    const filename = `${options.assetsDir.styles}/[name]${isProduction ? ".[hash:8]" : ""}.css`;
 
-    const chunkFilename = `styles/[name]${isProduction ? ".[chunkhash:8]" : ""}.css`;
+    const chunkFilename = `${options.assetsDir.styles}/[name]${
+      isProduction ? ".[chunkhash:8]" : ""
+    }.css`;
 
     const extractOptions = {
       filename,

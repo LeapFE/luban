@@ -26,6 +26,13 @@ exports.validateProjectConfig = validateProjectConfig;
 exports.defaultsProjectConfig = {
     publicPath: "/",
     outputDir: "dist",
+    assetsDir: {
+        scripts: "scripts",
+        styles: "styles",
+        images: "images",
+        fonts: "fonts",
+        media: "media",
+    },
     indexPath: "index.html",
     productionSourceMap: false,
     css: {

@@ -100,11 +100,16 @@ export type ProjectConfig = {
   outputDir?: string;
 
   /**
-   * @deprecated since 1.1.0
    * @description 放置生成的静态资源(js、css、img、fonts)的目录
    * @default ""
    */
-  // assetsDir: string;
+  assetsDir: {
+    scripts: string;
+    styles: string;
+    images: string;
+    fonts: string;
+    media: string;
+  };
 
   /**
    * @description 指定生成的 index.html 文件名或者相对路径

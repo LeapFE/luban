@@ -13,8 +13,8 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     const outputDir = api.resolve(options.outputDir);
 
-    const filename = "scripts/[name]-[hash:8].js";
-    const chunkFilename = "scripts/[name]-[chunkhash:8].js";
+    const filename = `${options.assetsDir.scripts}/scripts/[name]-[hash:8].js`;
+    const chunkFilename = `${options.assetsDir.scripts}/scripts/[name]-[chunkhash:8].js`;
 
     webpackConfig.output
       .path(outputDir)
