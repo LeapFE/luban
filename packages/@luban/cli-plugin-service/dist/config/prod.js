@@ -7,12 +7,20 @@ const terser_webpack_plugin_1 = __importDefault(require("terser-webpack-plugin")
 const optimize_css_assets_webpack_plugin_1 = __importDefault(require("optimize-css-assets-webpack-plugin"));
 const cssnano_1 = __importDefault(require("cssnano"));
 const terserOptions_1 = require("./../utils/terserOptions");
+function getScriptsDir(dir) {
+    const adaptedDir = dir.replace(/^\/|\/$|\s+/g, "");
+    if (adaptedDir === "") {
+        return "";
+    }
+    return `${adaptedDir}/`;
+}
 function default_1(api, options) {
     api.chainWebpack((webpackConfig) => {
         const isProduction = process.env.NODE_ENV === "production";
         const outputDir = api.resolve(options.outputDir);
-        const filename = `${options.assetsDir.scripts}/scripts/[name]-[hash:8].js`;
-        const chunkFilename = `${options.assetsDir.scripts}/scripts/[name]-[chunkhash:8].js`;
+        const scriptsDir = getScriptsDir(options.assetsDir.scripts);
+        const filename = `${scriptsDir}[name]-[hash:8].js`;
+        const chunkFilename = `${scriptsDir}[name]-[chunkhash:8].js`;
         webpackConfig.output
             .path(outputDir)
             .filename(filename)

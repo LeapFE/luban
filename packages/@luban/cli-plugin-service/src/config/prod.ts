@@ -7,14 +7,25 @@ import { ProjectConfig } from "./../definitions";
 
 import { terserOptions } from "./../utils/terserOptions";
 
+function getScriptsDir(dir: string): string {
+  const adaptedDir = dir.replace(/^\/|\/$|\s+/g, "");
+  if (adaptedDir === "") {
+    return "";
+  }
+
+  return `${adaptedDir}/`;
+}
+
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
   api.chainWebpack((webpackConfig) => {
     const isProduction = process.env.NODE_ENV === "production";
 
     const outputDir = api.resolve(options.outputDir);
 
-    const filename = `${options.assetsDir.scripts}/scripts/[name]-[hash:8].js`;
-    const chunkFilename = `${options.assetsDir.scripts}/scripts/[name]-[chunkhash:8].js`;
+    const scriptsDir = getScriptsDir(options.assetsDir.scripts);
+
+    const filename = `${scriptsDir}[name]-[hash:8].js`;
+    const chunkFilename = `${scriptsDir}[name]-[chunkhash:8].js`;
 
     webpackConfig.output
       .path(outputDir)
