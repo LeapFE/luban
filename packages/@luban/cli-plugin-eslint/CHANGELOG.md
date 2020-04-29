@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/leapFE/luban/compare/v1.1.2...v1.2.0) (2020-04-29)
+
+
+### Features
+
+* **eslint,service:** support eslint config [leap] ([a1f2e01](https://github.com/leapFE/luban/commit/a1f2e0190f72364f3aa3d02fae96530457292d17))
+
+
+
+
+
 ## [1.1.1](https://github.com/leapFE/luban/compare/v1.1.0...v1.1.1) (2020-04-29)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint

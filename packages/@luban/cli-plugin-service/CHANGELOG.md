@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/leapFE/luban/compare/v1.1.2...v1.2.0) (2020-04-29)
+
+
+### Bug Fixes
+
+* **service:** check projectConfig schema by joi ([58deaab](https://github.com/leapFE/luban/commit/58deaabc4dcbf3eae2d468809adbe9eb78d11bcd))
+
+
+### Features
+
+* **eslint,service:** support eslint config [leap] ([a1f2e01](https://github.com/leapFE/luban/commit/a1f2e0190f72364f3aa3d02fae96530457292d17))
+
+
+
+
+
 ## [1.1.2](https://github.com/leapFE/luban/compare/v1.1.1...v1.1.2) (2020-04-29)
 
 
