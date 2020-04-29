@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/leapFE/luban/compare/v1.1.0...v1.1.1) (2020-04-29)
+
+
+### Features
+
+* **service:** support specify assetsDir, include scripts,styles,images ([d53b1d7](https://github.com/leapFE/luban/commit/d53b1d7b79a24aee5bb8e5677484b2699ecb416e))
+
+
+
+
+
 # [1.1.0](https://github.com/leapFE/luban/compare/v1.0.5...v1.1.0) (2020-04-12)
 
 

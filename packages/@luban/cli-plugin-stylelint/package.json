@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-stylelint",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "cli-plugin-stylelint",
   "keywords": [
     "stylelint",
@@ -37,7 +37,7 @@
     "stylelint-webpack-plugin": "^1.2.3"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^1.1.0",
+    "@luban-cli/cli-shared-types": "1.1.1",
     "@types/stylelint-webpack-plugin": "^0.1.5",
     "@types/webpack-chain": "^5.2.0"
   },
