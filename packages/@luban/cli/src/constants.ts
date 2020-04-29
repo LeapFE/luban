@@ -2,7 +2,7 @@ import { RootOptions, Preset } from "./definitions";
 
 export const defaultPreset: Required<Preset> = {
   language: "ts",
-  eslint: "airbnb",
+  eslint: "leap",
   cssSolution: "less",
   stylelint: true,
   router: true,

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultPreset = {
     language: "ts",
-    eslint: "airbnb",
+    eslint: "leap",
     cssSolution: "less",
     stylelint: true,
     router: true,

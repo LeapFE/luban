@@ -13,7 +13,7 @@ export declare type RawPlugin = {
     "@luban-cli/cli-plugin-fetch"?: Record<string, any>;
     "@luban-cli/cli-plugin-service": RootOptions;
 };
-export declare type ESLinterConfig = "airbnb" | "standard";
+export declare type ESLinterConfig = "leap" | "airbnb" | "standard";
 export declare type DevLanguage = "js" | "ts";
 export declare type CssSolution = "less" | "styled-components";
 export declare type UILibrary = "ant-design" | "ant-design-mobile";

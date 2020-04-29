@@ -3,7 +3,6 @@
   "parser": <%- eslintParser %>,
   "parserOptions": <%- parserOptions %>,
   "extends": <%- eslintExtends %>,
-  "plugins": <%- eslintPlugins %>,
   "env": <%- eslintEnv %>,
   "globals": {
     "process": true

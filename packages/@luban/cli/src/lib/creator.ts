@@ -178,7 +178,8 @@ class Creator {
     try {
       await fixLintErrors(adaptedPreset);
     } catch (e) {
-      warn("\n 🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
+      log("\n");
+      warn("🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
     }
 
     spinner.stopSpinner();
@@ -187,7 +188,8 @@ class Creator {
     try {
       await formatConfigFiles(adaptedPreset);
     } catch (e) {
-      warn("\n format file failure, but does not effect to create project");
+      log("\n");
+      warn("🚨format file failure, but does not effect to create project");
     }
 
     spinner.stopSpinner();

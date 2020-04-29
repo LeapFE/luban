@@ -107,7 +107,8 @@ class Creator {
             await fixLintErrors(adaptedPreset);
         }
         catch (e) {
-            cli_shared_utils_1.warn("\n 🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
+            cli_shared_utils_1.log("\n");
+            cli_shared_utils_1.warn("🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
         }
         spinner.stopSpinner();
         cli_shared_utils_1.log();
@@ -116,7 +117,8 @@ class Creator {
             await formatConfigFiles(adaptedPreset);
         }
         catch (e) {
-            cli_shared_utils_1.warn("\n format file failure, but does not effect to create project");
+            cli_shared_utils_1.log("\n");
+            cli_shared_utils_1.warn("🚨format file failure, but does not effect to create project");
         }
         spinner.stopSpinner();
         cli_shared_utils_1.log();

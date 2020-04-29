@@ -12,7 +12,7 @@ export type RawPlugin = {
   "@luban-cli/cli-plugin-service": RootOptions;
 };
 
-export type ESLinterConfig = "airbnb" | "standard";
+export type ESLinterConfig = "leap" | "airbnb" | "standard";
 
 export type DevLanguage = "js" | "ts";
 
