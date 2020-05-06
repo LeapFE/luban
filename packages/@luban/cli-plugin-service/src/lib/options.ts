@@ -46,6 +46,7 @@ export const defaultsProjectConfig: ProjectConfig = {
     media: "media",
   },
   indexPath: "index.html",
+  templatePath: "index.html",
   productionSourceMap: false,
   css: {
     extract: undefined,

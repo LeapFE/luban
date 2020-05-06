@@ -49,6 +49,7 @@ export declare type ProjectConfig = {
         media: string;
     };
     indexPath: string;
+    templatePath: string;
     productionSourceMap: boolean;
     configureWebpack?: WebpackConfiguration | ((config: WebpackConfiguration) => WebpackConfiguration);
     chainWebpack?: (config: Config) => void;

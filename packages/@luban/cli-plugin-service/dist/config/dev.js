@@ -15,9 +15,11 @@ function default_1(api, options) {
             .path(outputDir)
             .filename("[name]-[hash:8].js")
             .end();
-        const htmlPath = api.resolve("template/index.html");
+        const htmlPath = options.templatePath === "index.html"
+            ? api.resolve("template/index.html")
+            : api.resolve(`template/${options.templatePath}`);
         if (!fs_1.existsSync(htmlPath)) {
-            cli_shared_utils_1.error("The template html file not exit, please check it");
+            cli_shared_utils_1.error(`The template html file ${htmlPath} not exit, please check it`);
             process.exit();
         }
         const htmlPluginOptions = {

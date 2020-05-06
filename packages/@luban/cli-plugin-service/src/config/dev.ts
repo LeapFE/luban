@@ -17,10 +17,13 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       .filename("[name]-[hash:8].js")
       .end();
 
-    const htmlPath = api.resolve("template/index.html");
+    const htmlPath =
+      options.templatePath === "index.html"
+        ? api.resolve("template/index.html")
+        : api.resolve(`template/${options.templatePath}`);
 
     if (!existsSync(htmlPath)) {
-      error("The template html file not exit, please check it");
+      error(`The template html file ${htmlPath} not exit, please check it`);
       process.exit();
     }
 

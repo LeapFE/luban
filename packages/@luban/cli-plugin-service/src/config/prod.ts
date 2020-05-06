@@ -1,11 +1,13 @@
 import TerserWebpackPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import CssNano from "cssnano";
+import path from "path";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../definitions";
 
 import { terserOptions } from "./../utils/terserOptions";
+import { MovePlugin } from "./../utils/movePlugin";
 
 function getScriptsDir(dir: string): string {
   const adaptedDir = dir.replace(/^\/|\/$|\s+/g, "");
@@ -35,6 +37,18 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     if (options.productionSourceMap) {
       webpackConfig.output.sourceMapFilename("[name].[hash:8]-map.js").end();
+    }
+
+    // handle options.indexPath
+    if (isProduction) {
+      if (options.indexPath !== "index.html") {
+        webpackConfig
+          .plugin("move")
+          .use(MovePlugin, [
+            path.resolve(`${outputDir}/index.html`),
+            path.resolve(`${outputDir}/${options.indexPath}`),
+          ]);
+      }
     }
 
     if (isProduction) {

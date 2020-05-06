@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const terser_webpack_plugin_1 = __importDefault(require("terser-webpack-plugin"));
 const optimize_css_assets_webpack_plugin_1 = __importDefault(require("optimize-css-assets-webpack-plugin"));
 const cssnano_1 = __importDefault(require("cssnano"));
+const path_1 = __importDefault(require("path"));
 const terserOptions_1 = require("./../utils/terserOptions");
+const movePlugin_1 = require("./../utils/movePlugin");
 function getScriptsDir(dir) {
     const adaptedDir = dir.replace(/^\/|\/$|\s+/g, "");
     if (adaptedDir === "") {
@@ -28,6 +30,16 @@ function default_1(api, options) {
             .end();
         if (options.productionSourceMap) {
             webpackConfig.output.sourceMapFilename("[name].[hash:8]-map.js").end();
+        }
+        if (isProduction) {
+            if (options.indexPath !== "index.html") {
+                webpackConfig
+                    .plugin("move")
+                    .use(movePlugin_1.MovePlugin, [
+                    path_1.default.resolve(`${outputDir}/index.html`),
+                    path_1.default.resolve(`${outputDir}/${options.indexPath}`),
+                ]);
+            }
         }
         if (isProduction) {
             webpackConfig.mode("production").devtool(options.productionSourceMap ? "source-map" : false);

@@ -88,6 +88,13 @@ export type ProjectConfig = {
   /**
    * @description 生产环境下应用打包的目录
    *
+   * @default "dist"
+   */
+  outputDir?: string;
+
+  /**
+   * @description 放置生成的静态资源(js、css、img、fonts)的目录
+   *
    * 默认脚本文件放在 `scripts` 目录下
    * 样式文件放在 `styles` 目录下
    * 图片放在 `images` 目录下
@@ -95,12 +102,6 @@ export type ProjectConfig = {
    * 媒体文件放在 `media` 目录下
    * 以上目录都是相对于 `outputDir`
    *
-   * @default "dist"
-   */
-  outputDir?: string;
-
-  /**
-   * @description 放置生成的静态资源(js、css、img、fonts)的目录
    * @default ""
    */
   assetsDir: {
@@ -112,10 +113,20 @@ export type ProjectConfig = {
   };
 
   /**
-   * @description 指定生成的 index.html 文件名或者相对路径
+   * @description 指定生成的 index.html 文件名或者相对路径（路径是相对于 `outputDir` 的）
+   * 默认路径为 `${outputDir}/index.html`
+   *
    * @default "index.html"
    */
   indexPath: string;
+
+  /**
+   * @description 指定模板文件名称或者相对路径（路径是相对于 `template` 的）
+   * 默认路径为 `template/index.html`
+   *
+   * @default "index.html"
+   */
+  templatePath: string;
 
   /**
    * @description 是否在生成环境下开启 sourceMap

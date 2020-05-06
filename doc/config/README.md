@@ -76,7 +76,14 @@ module.exports = {
 - Type: `string`
 - Default: `'index.html'`
 
-  指定生成的 `index.html` 的输出路径 (相对于 `outputDir`)。也可以是一个绝对路径。
+  指定生成的 `index.html` 的输出路径 (相对于 `outputDir`)。
+
+### templatePath
+
+- Type: `string`
+- Default: `'index.html'`
+
+  指定模板文件名称或者相对路径（相对于 `template` ）。
 
 ### productionSourceMap
 
