@@ -56,6 +56,12 @@ function default_1(api, options) {
         },
     }, async (args) => {
         const isProduction = process.env.NODE_ENV === "production";
+        const defaultEntryFile = api.getEntryFile();
+        const entryFile = args.entry || `src/${defaultEntryFile}`;
+        if (!fs_1.existsSync(api.resolve(entryFile))) {
+            cli_shared_utils_1.error(`The entry file ${entryFile} not exit, please check it`);
+            process.exit();
+        }
         api.chainWebpack((webpackConfig) => {
             if (!isProduction) {
                 webpackConfig.mode("development").devtool("cheap-module-eval-source-map");
@@ -65,13 +71,8 @@ function default_1(api, options) {
         });
         const webpackConfig = api.resolveWebpackConfig();
         const projectDevServerOptions = Object.assign(webpackConfig.devServer || {}, options.devServer);
-        const entryFileOfApp = api.getEntryFile();
-        if (!fs_1.existsSync(api.resolve(args.entry || `src/${entryFileOfApp}`))) {
-            cli_shared_utils_1.error(`The entry file ${args.entry || `src/${entryFileOfApp}`} not exit, please check it`);
-            process.exit();
-        }
         webpackConfig.entry = {
-            app: ["react-hot-loader/patch", api.resolve(args.entry || `src/${entryFileOfApp}`)],
+            app: ["react-hot-loader/patch", api.resolve(entryFile)],
         };
         const useHttps = args.https || projectDevServerOptions.https || defaultServerConfig.https;
         const protocol = useHttps ? "https" : "http";

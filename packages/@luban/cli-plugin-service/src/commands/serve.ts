@@ -61,6 +61,14 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
     async (args: ParsedArgs<ServeCliArgs>) => {
       const isProduction = process.env.NODE_ENV === "production";
 
+      const defaultEntryFile = api.getEntryFile();
+      const entryFile = args.entry || `src/${defaultEntryFile}`;
+
+      if (!existsSync(api.resolve(entryFile))) {
+        error(`The entry file ${entryFile} not exit, please check it`);
+        process.exit();
+      }
+
       api.chainWebpack((webpackConfig: Config) => {
         if (!isProduction) {
           webpackConfig.mode("development").devtool("cheap-module-eval-source-map");
@@ -76,15 +84,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         webpackConfig.devServer || {},
         options.devServer,
       );
-      const entryFileOfApp = api.getEntryFile();
-
-      if (!existsSync(api.resolve(args.entry || `src/${entryFileOfApp}`))) {
-        error(`The entry file ${args.entry || `src/${entryFileOfApp}`} not exit, please check it`);
-        process.exit();
-      }
 
       webpackConfig.entry = {
-        app: ["react-hot-loader/patch", api.resolve(args.entry || `src/${entryFileOfApp}`)],
+        app: ["react-hot-loader/patch", api.resolve(entryFile)],
       };
 
       const useHttps = args.https || projectDevServerOptions.https || defaultServerConfig.https;

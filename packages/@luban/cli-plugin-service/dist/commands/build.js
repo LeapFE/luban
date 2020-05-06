@@ -9,14 +9,24 @@ const webpack_bundle_analyzer_1 = require("webpack-bundle-analyzer");
 const path_1 = __importDefault(require("path"));
 const chalk_1 = __importDefault(require("chalk"));
 const formatStats_1 = require("./../utils/formatStats");
+const fs_1 = require("fs");
 async function build(args, api, options) {
     const spinner = new cli_shared_utils_1.Spinner();
     spinner.logWithSpinner("Build bundle... \n");
+    const defaultEntryFile = api.getEntryFile();
+    const entryFile = args.entry || `src/${defaultEntryFile}`;
+    if (!fs_1.existsSync(api.resolve(entryFile))) {
+        cli_shared_utils_1.error(`The entry file ${entryFile} not exit, please check it`);
+        process.exit();
+    }
     if (args.dest) {
         options.outputDir = args.dest;
     }
     const targetDir = api.resolve(options.outputDir);
     const webpackConfig = api.resolveWebpackConfig(api.resolveChainableWebpackConfig());
+    webpackConfig.entry = {
+        app: api.resolve(entryFile),
+    };
     if (args.report) {
         if (Array.isArray(webpackConfig.plugins)) {
             webpackConfig.plugins.push(new webpack_bundle_analyzer_1.BundleAnalyzerPlugin({
@@ -55,8 +65,6 @@ function default_1(api, options) {
             "--report": "generate report.html to help analyze bundle content",
         },
     }, async (args) => {
-        const entryFileOfApp = api.getEntryFile();
-        args.entry = args.entry || `src/${entryFileOfApp}`;
         await build(args, api, options);
     });
 }

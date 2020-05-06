@@ -1,9 +1,10 @@
-import { Spinner, log, done } from "@luban-cli/cli-shared-utils";
+import { Spinner, log, done, error } from "@luban-cli/cli-shared-utils";
 import webpack from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import path from "path";
 import chalk from "chalk";
 import { formatStats, logStatsErrorsAndWarnings } from "./../utils/formatStats";
+import { existsSync } from "fs";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig, BuildCliArgs, ParsedArgs } from "./../definitions";
@@ -16,6 +17,14 @@ async function build(
   const spinner = new Spinner();
   spinner.logWithSpinner("Build bundle... \n");
 
+  const defaultEntryFile = api.getEntryFile();
+  const entryFile = args.entry || `src/${defaultEntryFile}`;
+
+  if (!existsSync(api.resolve(entryFile))) {
+    error(`The entry file ${entryFile} not exit, please check it`);
+    process.exit();
+  }
+
   if (args.dest) {
     options.outputDir = args.dest;
   }
@@ -23,6 +32,10 @@ async function build(
   const targetDir = api.resolve(options.outputDir);
 
   const webpackConfig = api.resolveWebpackConfig(api.resolveChainableWebpackConfig());
+
+  webpackConfig.entry = {
+    app: api.resolve(entryFile),
+  };
 
   if (args.report) {
     if (Array.isArray(webpackConfig.plugins)) {
@@ -76,9 +89,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       },
     },
     async (args: ParsedArgs<BuildCliArgs>) => {
-      const entryFileOfApp = api.getEntryFile();
-      args.entry = args.entry || `src/${entryFileOfApp}`;
-
       await build(args, api, options);
     },
   );
