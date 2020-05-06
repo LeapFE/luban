@@ -217,6 +217,10 @@ class Service {
         let fileConfig;
         let resolved;
         const configPath = path_1.default.resolve(this.context, this.configFilename);
+        if (!fs_1.default.existsSync(configPath)) {
+            cli_shared_utils_1.error(`specified config file ${chalk_1.default.bold(`${configPath}`)} nonexistent, please check it.`);
+            process.exit();
+        }
         try {
             fileConfig = require(configPath);
             if (!fileConfig || typeof fileConfig !== "object") {

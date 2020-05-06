@@ -303,6 +303,11 @@ class Service {
 
     const configPath = path.resolve(this.context, this.configFilename);
 
+    if (!fs.existsSync(configPath)) {
+      error(`specified config file ${chalk.bold(`${configPath}`)} nonexistent, please check it.`);
+      process.exit();
+    }
+
     try {
       fileConfig = require(configPath);
       if (!fileConfig || typeof fileConfig !== "object") {
