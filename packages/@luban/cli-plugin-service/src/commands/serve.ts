@@ -50,6 +50,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       usage: "luban-cli-service serve [options]",
       options: {
         "--entry": "specify entry file",
+        "--config": "specify config file",
         "--open": `open browser on server start`,
         "--mode": `specify env mode (default: development)`,
         "--host": `specify host (default: ${defaultServerConfig.host})`,

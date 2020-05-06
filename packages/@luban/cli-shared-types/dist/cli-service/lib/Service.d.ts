@@ -18,6 +18,7 @@ declare class Service {
     plugins: ServicePlugin[];
     mode: string;
     private inlineProjectOptions?;
+    private configFilename;
     constructor(context: string, { plugins, pkg, projectOptions, useBuiltIn }: ResetParams);
     private init;
     run(name?: builtinServiceCommandName, args?: ParsedArgs, rawArgv?: string[]): Promise<void>;
@@ -26,7 +27,7 @@ declare class Service {
     resolveWebpackConfig(chainableConfig?: Config): WebpackConfiguration;
     resolvePkg(inlinePkg?: BasePkgFields): BasePkgFields;
     loadAndSetEnv(mode: string, commandName: builtinServiceCommandName): void;
-    loadProjectOptions(inlineOptions: ProjectConfig): ProjectConfig;
+    loadProjectOptions(inlineOptions?: ProjectConfig): ProjectConfig;
     resolveLubanConfig(): Required<Preset>;
 }
 export { Service };

@@ -60,6 +60,7 @@ export declare type ProjectConfig = {
 };
 export declare type ServeCliArgs = Partial<{
     entry: string;
+    config: string;
     open: boolean;
     mode: string;
     host: string;
@@ -70,6 +71,7 @@ export declare type ServeCliArgs = Partial<{
 }>;
 export declare type BuildCliArgs = Partial<{
     entry: string;
+    config: string;
     mode: string;
     dest: string;
     report: boolean;
@@ -77,6 +79,7 @@ export declare type BuildCliArgs = Partial<{
 }>;
 export declare type InspectCliArgs = Partial<{
     mode: string;
+    config: string;
     rule: string;
     plugin: string;
     rules: string[];

@@ -14,6 +14,7 @@ export default function(api: PluginAPI): void {
       usage: "luban-cli-service inspect [options] [...paths]",
       options: {
         "--mode": "specify env mode (default: development)",
+        "--config": "specify config file",
         "--rule <ruleName>": "inspect a specific module rule",
         "--plugin <pluginName>": "inspect a specific plugin",
         "--rules": "list all module rule names",

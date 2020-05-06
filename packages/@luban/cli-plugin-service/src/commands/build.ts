@@ -83,6 +83,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       usage: "luban-cli-service build [options]",
       options: {
         "--entry": "specify entry file",
+        "--config": "specify config file",
         "--mode": "specify env mode (default: production)",
         "--dest": "specify output directory (default: ${options.outputDir})",
         "--report": "generate report.html to help analyze bundle content",

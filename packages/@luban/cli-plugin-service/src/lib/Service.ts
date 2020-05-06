@@ -104,6 +104,7 @@ class Service {
   public plugins: ServicePlugin[];
   public mode: string;
   private inlineProjectOptions?: ProjectConfig;
+  private configFilename: string;
 
   constructor(context: string, { plugins, pkg, projectOptions, useBuiltIn }: ResetParams) {
     Object.defineProperties(process, {
@@ -116,6 +117,7 @@ class Service {
     });
 
     this.context = context;
+    this.configFilename = "luban.config.js";
     this.webpackConfig = new Config();
     this.webpackChainCallback = [];
     this.webpackDevServerConfigCallback = [];
@@ -135,7 +137,7 @@ class Service {
 
     this.projectConfig = deepmerge(
       defaultsProjectConfig,
-      this.loadProjectOptions(this.inlineProjectOptions || defaultsProjectConfig),
+      this.loadProjectOptions(this.inlineProjectOptions),
     );
 
     this.plugins.forEach(({ id, apply }) => {
@@ -163,6 +165,10 @@ class Service {
     }
 
     const mode: string = args.mode || (name === "build" ? "production" : "development");
+
+    if (typeof args.config === "string") {
+      this.configFilename = args.config;
+    }
 
     this.init(mode, name);
 
@@ -291,46 +297,32 @@ class Service {
     }
   }
 
-  public loadProjectOptions(inlineOptions: ProjectConfig): ProjectConfig {
-    let fileConfig, pkgConfig, resolved;
+  public loadProjectOptions(inlineOptions?: ProjectConfig): ProjectConfig {
+    let fileConfig;
+    let resolved;
 
-    const configPath = path.resolve(this.context, "luban.config.js");
+    const configPath = path.resolve(this.context, this.configFilename);
+
     try {
       fileConfig = require(configPath);
       if (!fileConfig || typeof fileConfig !== "object") {
-        error(`Error loading ${chalk.bold("luban.config.js")}: should export an object.`);
+        error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object.`);
         fileConfig = null;
       }
     } catch (e) {}
 
-    // [package.json].luban
-    pkgConfig = this.pkg.luban;
-    if (pkgConfig && typeof pkgConfig !== "object") {
-      error(
-        `Error loading luban-cli config in ${chalk.bold(`package.json`)}: ` +
-          `the "luban" field should be an object.`,
-      );
-      pkgConfig = null;
-    }
-
     if (fileConfig) {
-      if (pkgConfig) {
-        warn(
-          `"luban" field in ${chalk.bold(`package.json`)} ignored ` +
-            `due to presence of ${chalk.bold("luban.config.js")}.`,
-        );
-      }
       resolved = fileConfig;
-    } else if (pkgConfig) {
-      resolved = pkgConfig;
     } else {
       resolved = inlineOptions || {};
     }
 
-    ensureSlash(resolved, "base");
+    ensureSlash(resolved, "publicPath");
     removeSlash(resolved, "outputDir");
 
-    validateProjectConfig(resolved);
+    validateProjectConfig(resolved, (msg) => {
+      error(`Invalid options in ${chalk.bold(this.configFilename)}: ${msg}`);
+    });
 
     return resolved;
   }

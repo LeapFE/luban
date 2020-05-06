@@ -28,8 +28,8 @@ const schema = cli_shared_utils_1.createSchema((joi) => joi.object({
     alias: joi.object(),
     assetsLimit: joi.number(),
 }));
-function validateProjectConfig(options) {
-    cli_shared_utils_1.validate(options, schema, { allowUnknown: true });
+function validateProjectConfig(options, cb) {
+    cli_shared_utils_1.validate(options, schema, { allowUnknown: true }, cb);
 }
 exports.validateProjectConfig = validateProjectConfig;
 exports.defaultsProjectConfig = {

@@ -175,6 +175,7 @@ export type ProjectConfig = {
 
 export type ServeCliArgs = Partial<{
   entry: string;
+  config: string;
   open: boolean;
   mode: string;
   host: string;
@@ -186,6 +187,7 @@ export type ServeCliArgs = Partial<{
 
 export type BuildCliArgs = Partial<{
   entry: string;
+  config: string;
   mode: string;
   dest: string;
   report: boolean;
@@ -194,6 +196,7 @@ export type BuildCliArgs = Partial<{
 
 export type InspectCliArgs = Partial<{
   mode: string;
+  config: string;
   rule: string;
   plugin: string;
   rules: string[];
