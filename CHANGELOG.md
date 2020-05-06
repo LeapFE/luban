@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/LeapFE/luban/compare/v1.2.0...v1.2.1) (2020-05-06)
+
+
+### Bug Fixes
+
+* **service:** can't find entry file after run build and specify --entry ([7263ea0](https://github.com/LeapFE/luban/commit/7263ea03ba58ff45c4fb94abb4d8bccf658d1e8e))
+
+
+### Features
+
+* **service:** support specify config file while run serve/build/inspect ([229918e](https://github.com/LeapFE/luban/commit/229918eace7b3381712a54cf9c8434bc202469b7))
+* **service:** support specify template path ([6123bd0](https://github.com/LeapFE/luban/commit/6123bd0a7cec6f6ece7ce24e07c1fe89b3d16baa))
+
+
+
+
+
 # [1.2.0](https://github.com/LeapFE/luban/compare/v1.1.2...v1.2.0) (2020-04-29)
 
 
