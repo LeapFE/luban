@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/LeapFE/luban/compare/v1.2.1...v1.2.2) (2020-05-06)
+
+
+### Bug Fixes
+
+* **service:** uncaught error during load specified config file ([b9e65b4](https://github.com/LeapFE/luban/commit/b9e65b4aa5ff3c92471c2bb954ffba0a617b3f2c))
+
+
+
+
+
 ## [1.2.1](https://github.com/LeapFE/luban/compare/v1.2.0...v1.2.1) (2020-05-06)
 
 
