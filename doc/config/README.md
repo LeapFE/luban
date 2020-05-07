@@ -83,7 +83,7 @@ module.exports = {
 - Type: `string`
 - Default: `'index.html'`
 
-  指定模板文件名称或者相对路径（相对于 `template` ）。
+  指定模板文件名称或者相对路径（相对于 *template* 目录 ）。
 
 ### productionSourceMap
 
@@ -275,6 +275,14 @@ module.exports = {
   publicPath: "/",
   outputDir: "dist",
   indexPath: "index.html",
+  templatePath: "index.html",
+  assetsDir: {
+    scripts: "scripts",
+    styles: "styles",
+    images: "images",
+    fonts: "fonts",
+    media: "media",
+  },
   productionSourceMap: false,
   css: {
     // 开发环境为 false，生产环境为 true
@@ -311,14 +319,14 @@ type CssConfig = {
    *
    * @default process.env.NODE_ENV === "production"
    */
-  extract?: boolean;
+  extract: boolean;
 
   /**
    * @description 是否为 CSS 开启 source map
    *
    * @default process.env.NODE_ENV === "development"
    */
-  sourceMap?: boolean;
+  sourceMap: boolean;
 
   /**
    * @description 一些处理 css 的 loader 的配置项
@@ -337,21 +345,41 @@ export type ProjectConfig = {
    * @description 生产环境下应用打包的目录
    * @default "dist"
    */
-  outputDir?: string;
+  outputDir: string;
 
   /**
-   * @deprecated since 1.1.0
-   *
    * @description 放置生成的静态资源(js、css、img、fonts)的目录
+   *
+   * 默认脚本文件放在 `scripts` 目录下
+   * 样式文件放在 `styles` 目录下
+   * 图片放在 `images` 目录下
+   * 字体文件放在 `fonts` 目录下
+   * 媒体文件放在 `media` 目录下
+   * 以上目录都是相对于 `outputDir`
+   *
    * @default ""
    */
-  // assetsDir: string;
+  assetsDir: {
+    scripts: string;
+    styles: string;
+    images: string;
+    fonts: string;
+    media: string;
+  };
 
   /**
-   * @description 指定生成的 index.html 文件名或者相对路径
+   * @description 指定生成的 index.html 文件名或者相对路径（路径是相对于 `outputDir` 的）
    * @default "index.html"
    */
   indexPath: string;
+
+  /**
+   * @description 指定模板文件名称或者相对路径（路径是相对于 template 目录的）
+   * 默认路径为 `template/index.html`
+   *
+   * @default "index.html"
+   */
+  templatePath: string;
 
   /**
    * @description 是否在生成环境下开启 sourceMap
@@ -366,7 +394,7 @@ export type ProjectConfig = {
    *
    * @type {Object | Function | undefined}
    */
-  configureWebpack?:
+  configureWebpack:
     | WebpackConfiguration
     | ((config: WebpackConfiguration) => WebpackConfiguration);
 
@@ -374,7 +402,7 @@ export type ProjectConfig = {
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
    * 允许对内部的 webpack 配置进行更细粒度的修改
    */
-  chainWebpack?: (config: Config) => void;
+  chainWebpack: (config: Config) => void;
 
   /**
    * @description 一些解析 css 的配置选项

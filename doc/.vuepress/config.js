@@ -1,5 +1,5 @@
 function getCliVersion() {
-  return require("./../../lerna.json").version;
+  return require("./../../packages/@luban/cli/package.json").version;
 }
 
 module.exports = {
