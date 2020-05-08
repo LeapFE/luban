@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/LeapFE/luban/compare/v1.2.2...v1.2.3) (2020-05-08)
+
+
+### Bug Fixes
+
+* **eslint,stylelint:** correct npm scripts about format(prettier) ([38b09b0](https://github.com/LeapFE/luban/commit/38b09b06049ac940679cb8dbc305049d463942d1))
+
+
+
+
+
 ## [1.2.2](https://github.com/LeapFE/luban/compare/v1.2.1...v1.2.2) (2020-05-06)
 
 

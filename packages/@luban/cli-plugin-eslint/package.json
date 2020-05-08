@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-eslint",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "cli-plugin-eslint",
   "author": "front-end-captain <18810940932@163.com>",
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-eslint/README.md",
