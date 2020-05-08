@@ -11,8 +11,8 @@ Luban 默认会将代码的 lint error 通过 ==webpack-dev-server== 的 [overla
   "scripts": {
     "eslint": "eslint --config .eslintrc --ext .tsx,.ts src/",
     "eslint:fix": "eslint --fix --config .eslintrc --ext .tsx,.ts src/",
-    "format:ts": "prettier --write src/**/*.{ts,tsx}",
-    "format:check:ts": "prettier --check src/**/*.{ts,tsx}"
+    "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
+    "format:check:ts": "prettier --check 'src/**/*.{ts,tsx}'"
   }
 }
 ```
@@ -46,8 +46,8 @@ ESLint 的规则会与 Prettier 的规则产生冲突，具体可以查阅 [esli
 ```json
 {
   "scripts": {
-    "format:style": "prettier --write src/**/*.{css,less}",
-    "format:check:style": "prettier --check src/**/*.{css,less}",
+    "format:style": "prettier --write 'src/**/*.{css,less}'",
+    "format:check:style": "prettier --check 'src/**/*.{css,less}'",
     "stylelint": "stylelint src/**/*.{css,less}",
   }
 }

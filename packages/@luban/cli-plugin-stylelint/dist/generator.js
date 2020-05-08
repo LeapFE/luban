@@ -36,8 +36,8 @@ function default_1(api, options) {
                 "stylelint-processor-styled-components": "^1.10.0",
             },
             scripts: {
-                "format:style": `prettier --write src/**/*.{css,css.${options.preset.language}}`,
-                "format:check:style": `prettier --check src/**/*.{css,css.${options.preset.language}}`,
+                "format:style": `prettier --write 'src/**/*.{css,css.${options.preset.language}}'`,
+                "format:check:style": `prettier --check 'src/**/*.{css,css.${options.preset.language}}'`,
             },
         });
         lintScript = `stylelint src/**/*.{css,css.${options.preset.language}}`;
@@ -52,8 +52,8 @@ function default_1(api, options) {
         ]);
         api.extendPackage({
             scripts: {
-                "format:style": "prettier --write src/**/*.{css,less}",
-                "format:check:style": "prettier --check src/**/*.{css,less}",
+                "format:style": "prettier --write 'src/**/*.{css,less}'",
+                "format:check:style": "prettier --check 'src/**/*.{css,less}'",
             },
         });
     }

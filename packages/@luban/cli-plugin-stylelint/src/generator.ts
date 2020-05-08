@@ -45,8 +45,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         "stylelint-processor-styled-components": "^1.10.0",
       },
       scripts: {
-        "format:style": `prettier --write src/**/*.{css,css.${options.preset.language}}`,
-        "format:check:style": `prettier --check src/**/*.{css,css.${options.preset.language}}`,
+        "format:style": `prettier --write 'src/**/*.{css,css.${options.preset.language}}'`,
+        "format:check:style": `prettier --check 'src/**/*.{css,css.${options.preset.language}}'`,
       },
     });
 
@@ -64,8 +64,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
     api.extendPackage({
       scripts: {
-        "format:style": "prettier --write src/**/*.{css,less}",
-        "format:check:style": "prettier --check src/**/*.{css,less}",
+        "format:style": "prettier --write 'src/**/*.{css,less}'",
+        "format:check:style": "prettier --check 'src/**/*.{css,less}'",
       },
     });
   }
