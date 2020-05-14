@@ -82,7 +82,7 @@ const defaultPreset: Required<Preset> = {
 
 function ensureSlash(config: Record<string, any>, key: string): void {
   if (typeof config[key] === "string") {
-    config[key] = config[key].replace(/^([^/])/, "/$1").replace(/([^/])$/, "$1/");
+    config[key] = config[key].replace(/([^/])$/, "$1/");
   }
 }
 

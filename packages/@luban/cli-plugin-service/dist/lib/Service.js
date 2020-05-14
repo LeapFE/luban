@@ -57,7 +57,7 @@ const defaultPreset = {
 };
 function ensureSlash(config, key) {
     if (typeof config[key] === "string") {
-        config[key] = config[key].replace(/^([^/])/, "/$1").replace(/([^/])$/, "$1/");
+        config[key] = config[key].replace(/([^/])$/, "$1/");
     }
 }
 function removeSlash(config, key) {
