@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/leapFE/luban/compare/v1.2.3...v1.2.4) (2020-05-14)
+
+
+### Bug Fixes
+
+* **service:** confused publicPath while ensuer slash option.publicPath ([a0c0a09](https://github.com/leapFE/luban/commit/a0c0a09218fea52cdab645e0a185b22692c4e7e9))
+
+
+
+
+
 ## [1.2.2](https://github.com/leapFE/luban/compare/v1.2.1...v1.2.2) (2020-05-06)
 
 
