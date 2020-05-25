@@ -6,7 +6,7 @@ Luban 需要 [Node.js](https://nodejs.org/) 10.0 或更高版本。你可以使�
 :::
 
 ::: warning ⚠️ 操作系统要求 
-Luban 目前只在 MacOS 上可以良好运行，在 Window 或者 Linux 上运行 Luban 可能会发生未知异常。
+Luban 目前只在 MacOS 和 Linux 等类 Unix 操作系统上可以良好运行，在 Windows 操作系统运行 Luban 可能会发生未知异常。
 :::
 
 ::: warning ⚠️ 包管理工具要求

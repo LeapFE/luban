@@ -20,9 +20,8 @@ luban init <project_name>
 + 样式处理方案：<a-radio-group value='less'><a-radio checked value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 + 使用 <a-checkbox checked>[Stylelint](https://stylelint.io/)</a-checkbox>
 + 使用 <a-checkbox checked>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
-+ 使用 <a-checkbox checked>状态管理 ([rematch](https://rematch.github.io/rematch/#/))</a-checkbox>
 + 使用 <a-checkbox checked>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
-+ 使用 <a-checkbox checked>数据获取([Axios](https://github.com/axios/axios))</a-checkbox>
++ 使用 <a-checkbox checked>数据获取([Axios](https://github.com/axios/axios) + [use-request](https://www.npmjs.com/package/@luban-hooks/use-request))</a-checkbox>
 
 可以加上 `-m` 或 `--manual` 参数，即 `luban init <project_namer> -m` 来手动的选择决定项目将会有哪些特性。
 
@@ -35,7 +34,7 @@ luban init <project_name>
 - 是否使用 <a-checkbox>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
 - 是否使用 <a-checkbox>状态管理 ([rematch](https://rematch.github.io/rematch/#/))</a-checkbox>
 - 是否使用 <a-checkbox>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
-- 是否使用 <a-checkbox>数据获取([Axios](https://github.com/axios/axios))</a-checkbox>
+- 是否使用 <a-checkbox>数据获取([Axios](https://github.com/axios/axios) + [use-request](https://www.npmjs.com/package/@luban-hooks/use-request))</a-checkbox>
 
 `luban init` 命令将提供一些可选选项，可以运行下面的命令来获取这些选项
 
