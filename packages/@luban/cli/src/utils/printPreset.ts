@@ -6,11 +6,20 @@ import { defaultPresetNameMap } from "./../constants";
 
 function printValue(value: unknown): string {
   if (typeof value === "string") {
-    return chalk.yellowBright(value);
+    if (value.length > 0) {
+      return chalk.yellowBright(value);
+    }
+
+    return chalk.redBright("UNKNOWN");
   }
+
   if (typeof value === "boolean") {
-    return chalk.yellowBright("✔");
+    if (value) {
+      return chalk.yellowBright("✔");
+    }
+    return chalk.yellowBright("x");
   }
+
   if (Array.isArray(value)) {
     return chalk.yellowBright(value.join(", "));
   }
@@ -21,13 +30,24 @@ function printValue(value: unknown): string {
 export function printDefaultPreset(preset: Required<Preset>): void {
   log();
   log("List default preset");
+
   Object.keys(preset).forEach((key: string) => {
     if (key === "plugins" || key === "configs") {
       return;
     }
+
     if (key === "uiLibrary" && preset["uiLibrary"].length === 0) {
       return;
     }
+
+    if (typeof preset[key] === "boolean" && !preset[key]) {
+      return;
+    }
+
+    if (typeof preset[key] === "string" && preset[key].length === 0) {
+      return;
+    }
+
     log(`  ${chalk.green(defaultPresetNameMap[key])}: ${printValue(preset[key])}`);
   });
 }

@@ -65,7 +65,7 @@ const defaultPreset: Required<Preset> = {
   cssSolution: "less",
   stylelint: true,
   router: true,
-  store: true,
+  store: false,
   unitTest: true,
   fetch: true,
   plugins: {
