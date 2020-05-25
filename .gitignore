@@ -18,7 +18,9 @@ pids
 .out
 .docz
 .temp
+.now
 build
+dist
 _site
 public
 doc/.vuepress/dist
@@ -31,6 +33,7 @@ build/Release
 /node_modules
 /mock/node_modules
 packages/**/node_modules
+packages/**/dist
 
 # Optional npm cache directory
 .npm
@@ -50,5 +53,3 @@ packages/**/node_modules
 # IDE
 .vscode
 .idea
-
-.now
