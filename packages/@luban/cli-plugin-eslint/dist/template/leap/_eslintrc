@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "parser": <%- eslintParser %>,
-  "parserOptions": <%- parserOptions %>,
-  "extends": <%- eslintExtends %>,
-  "env": <%- eslintEnv %>
-}

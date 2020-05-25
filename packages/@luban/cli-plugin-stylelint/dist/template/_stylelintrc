@@ -1,5 +1,0 @@
-{
-  "processors": <%- processors %>,
-  "extends": <%- extendsConfig %>,
-  "rules": <%- rules %>
-}
