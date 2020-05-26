@@ -8,14 +8,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.preset.language === "ts") {
-    api.extendPackage({
-      devDependencies: {
-        "@types/axios": "^0.14.0",
-      },
-    });
-  }
-
   if (options.preset.language === "js") {
     api.render("./template/js");
   }

@@ -2,8 +2,8 @@
 {
   "compilerOptions": {
     "resolveJsonModule": true,
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES5",
+    "module": "ESNext",
     "lib": [
       "dom",
       "es5",
@@ -41,6 +41,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "./luban.config.ts"],
   "exclude": ["node_modules/**"]
 }

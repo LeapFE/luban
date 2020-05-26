@@ -14,10 +14,10 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
   api.extendPackage({
     devDependencies: {
-      "@types/react": "^16.9.11",
-      "@types/react-dom": "^16.9.4",
-      typescript: "^3.7.2",
-      "ts-loader": "^6.2.1",
+      "@types/react": "^16.9.35",
+      "@types/react-dom": "^16.9.8",
+      typescript: "^3.9.3",
+      "ts-loader": "^7.0.0",
     },
   });
 }

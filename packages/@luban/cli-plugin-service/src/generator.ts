@@ -17,8 +17,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
   api.extendPackage({
     dependencies: {
-      react: "^16.12.0",
-      "react-dom": "^16.12.0",
+      react: "^16.13.1",
+      "react-dom": "^16.13.1",
       "react-hot-loader": "^4.12.19",
     },
     devDependencies: {
