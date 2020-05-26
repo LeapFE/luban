@@ -26,6 +26,7 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc --pretty && cp -ri src/template dist/template",
+    "prepublishOnly": "yarn run build",
     "check:type": "tsc --noEmit"
   },
   "bugs": {

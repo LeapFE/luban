@@ -27,6 +27,7 @@
   },
   "scripts": {
     "build": "tsc --pretty",
+    "prepublishOnly": "yarn run build",
     "check:type": "tsc --noEmit --project tsconfig.checktype.json"
   },
   "bugs": {

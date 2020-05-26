@@ -6,7 +6,7 @@
     "baseUrl": "./",
     "sourceMap": true,
     "declaration": true,
-    "declarationDir": "dist/types"
+    "declarationDir": "definition"
   },
   "include": [
     "./src",

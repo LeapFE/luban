@@ -7,7 +7,6 @@
     "service",
     "luban"
   ],
-  "typings": "dist/types/lib/index.d.ts",
   "files": [
     "dist"
   ],
@@ -18,6 +17,8 @@
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-service/README.md",
   "license": "MIT",
   "main": "dist/lib/index.js",
+  "types": "definition/lib/index.d.ts",
+  "module": "dist/lib/index.js",
   "directories": {
     "src": "src",
     "test": "__tests__"
@@ -32,6 +33,7 @@
   "scripts": {
     "build:types": "tsc --pretty --project tsconfig.type.json",
     "build": "rimraf dist && tsc --pretty && yarn run build:types && cp -ri src/template dist/template",
+    "prepublishOnly": "yarn run build",
     "check:type": "tsc --noEmit",
     "watch": "yarn run build -- --watch --diagnostics"
   },

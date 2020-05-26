@@ -18,6 +18,7 @@
   "scripts": {
     "build:types": "tsc --pretty --project tsconfig.type.json",
     "build": "rimraf dist && tsc --pretty && yarn run build:types",
+    "prepublishOnly": "yarn run build",
     "postinstall": "node postInstall.js",
     "check:type": "tsc --noEmit",
     "watch": "yarn run build -- --watch --diagnostics"

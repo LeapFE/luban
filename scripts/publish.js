@@ -18,12 +18,6 @@ if (updatedRepos.length === 0) {
   process.exit(0);
 }
 
-const { code: buildCode } = shell.exec("yarn run build");
-if (buildCode === 1) {
-  console.error("Failed: yarn run build");
-  process.exit(1);
-}
-
 const { code: versionCode } = shell.exec("lerna version --exact --yes --conventional-commits");
 if (versionCode === 1) {
   console.error("Failed: lerna version --exact --yes --conventional-commits");
