@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6](https://github.com/leapFE/luban/compare/v1.2.5...v1.2.6) (2020-05-26)
+
+
+### Bug Fixes
+
+* **service,fetch,router,typescript:** adjust some dependent version ([df17bcd](https://github.com/leapFE/luban/commit/df17bcd7f044492048574ca70e01766af0d350bd))
+
+
+
+
+
 ## [1.2.5](https://github.com/leapFE/luban/compare/v1.2.4...v1.2.5) (2020-05-26)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-typescript
