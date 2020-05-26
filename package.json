@@ -20,7 +20,7 @@
     "commit": "yarn run test:changed && yarn run format:packages && yarn run build:changed && git-cz",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "clear": "rimraf packages/**/dist/ && rimraf packages/**/definition/",
+    "clear": "rimraf packages/**/dist/",
     "doc:dev": "vuepress dev doc --open --temp .temp",
     "doc:build": "vuepress build doc --temp .temp",
     "doc:info": "vuepress view-info docs --temp .temp",

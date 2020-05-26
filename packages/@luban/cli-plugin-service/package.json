@@ -17,7 +17,7 @@
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-service/README.md",
   "license": "MIT",
   "main": "dist/lib/index.js",
-  "types": "definition/lib/index.d.ts",
+  "types": "dist/lib/index.d.ts",
   "module": "dist/lib/index.js",
   "directories": {
     "src": "src",

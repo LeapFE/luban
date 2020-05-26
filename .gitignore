@@ -34,7 +34,6 @@ build/Release
 /mock/node_modules
 packages/**/node_modules
 packages/**/dist
-packages/**/definition
 
 # Optional npm cache directory
 .npm
