@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.9](https://github.com/leapFE/luban/compare/v1.2.8...v1.2.9) (2020-05-26)
+
+
+### Bug Fixes
+
+* **service:** can't find types of webpack while compile luban.config.ts ([6b87b64](https://github.com/leapFE/luban/commit/6b87b640186a506fa2c03876e46dffd6d7744017))
+
+
+
+
+
 ## [1.2.8](https://github.com/leapFE/luban/compare/v1.2.7...v1.2.8) (2020-05-26)
 
 
