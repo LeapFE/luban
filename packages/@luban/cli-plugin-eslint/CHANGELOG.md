@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.10](https://github.com/leapFE/luban/compare/v1.2.9...v1.2.10) (2020-05-26)
+
+
+### Bug Fixes
+
+* **service:** change import style when import webpack/webpack-chain ([066e357](https://github.com/leapFE/luban/commit/066e3577a0dedea8f0f24b6d7333b9fccd2c4ec8))
+
+
+
+
+
 ## [1.2.7](https://github.com/leapFE/luban/compare/v1.2.6...v1.2.7) (2020-05-26)
 
 
