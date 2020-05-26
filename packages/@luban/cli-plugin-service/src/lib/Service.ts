@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import Config from "webpack-chain";
 import merge from "webpack-merge";
 import readPkg from "read-pkg";
-import fs from "fs";
+import fs from "fs-extra";
 import path from "path";
 import deepmerge from "deepmerge";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { error, warn, loadModule, log, info } from "@luban-cli/cli-shared-utils";
+import shell from "shelljs";
 
 import { PluginAPI } from "./PluginAPI";
 import { defaultsProjectConfig, validateProjectConfig } from "./options";
@@ -117,7 +119,7 @@ class Service {
     });
 
     this.context = context;
-    this.configFilename = "luban.config.js";
+    this.configFilename = "luban.config.ts";
     this.webpackConfig = new Config();
     this.webpackChainCallback = [];
     this.webpackDevServerConfigCallback = [];
@@ -149,7 +151,7 @@ class Service {
       this.webpackChainCallback.push(this.projectConfig.chainWebpack);
     }
 
-    if (this.projectConfig.configureWebpack) {
+    if (typeof this.projectConfig.configureWebpack === "function") {
       this.webpackRawConfigCallback.push(this.projectConfig.configureWebpack);
     }
   }
@@ -237,21 +239,22 @@ class Service {
 
     this.webpackRawConfigCallback.forEach((fn) => {
       if (typeof fn === "function") {
+        // @ts-ignore
         config = fn(config) || config;
       } else if (fn) {
         // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         config = merge(config, fn);
       }
     });
+    // @ts-ignore
     return config;
   }
 
   public resolvePkg(inlinePkg?: BasePkgFields): BasePkgFields {
     if (inlinePkg) {
       return inlinePkg;
-    } else if (fs.existsSync(path.join(this.context, "package.json"))) {
+    } else if (fs.pathExistsSync(path.join(this.context, "package.json"))) {
       return readPkg.sync({ cwd: this.context }) as BasePkgFields;
     } else {
       return defaultPackageFields;
@@ -307,17 +310,37 @@ class Service {
 
     const configPath = path.resolve(this.context, this.configFilename);
 
-    if (!fs.existsSync(configPath)) {
+    if (!fs.pathExistsSync(configPath)) {
       error(`specified config file ${chalk.bold(`${configPath}`)} nonexistent, please check it.`);
       process.exit();
     }
 
+    const configTempDir = path.resolve(this.context, ".config");
+    const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
+
+    const { code } = shell.exec(
+      `${this.context}/node_modules/typescript/bin/tsc ${configPath} --module commonjs --allowJs true --outDir ${configTempDir}`,
+    );
+
+    if (code !== 0) {
+      error(`execute ${this.configFilename} file failure`);
+      process.exit();
+    }
+
     try {
-      fileConfig = require(configPath);
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const configModule = require(`${configTempDirPath}/${this.configFilename.replace(
+        "ts",
+        "js",
+      )}`);
+      fileConfig = configModule.__esModule ? configModule.__esModule : configModule;
+
       if (!fileConfig || typeof fileConfig !== "object") {
         error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object.`);
         fileConfig = null;
       }
+
+      fs.removeSync(configTempDir);
     } catch (e) {}
 
     if (fileConfig) {
