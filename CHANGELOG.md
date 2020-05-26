@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/LeapFE/luban/compare/v1.2.4...v1.2.5) (2020-05-26)
+
+
+### Features
+
+* **cli,service:** cancel `store` feature in defaultPreset ([058c28c](https://github.com/LeapFE/luban/commit/058c28c41125e839258ce1793aea40d46d8693d9))
+* **service:** luban.config file support ts file ([a870207](https://github.com/LeapFE/luban/commit/a870207e2009d751cd8c18e188a369c1831c7ac1))
+
+
+
+
+
 ## [1.2.4](https://github.com/LeapFE/luban/compare/v1.2.3...v1.2.4) (2020-05-14)
 
 

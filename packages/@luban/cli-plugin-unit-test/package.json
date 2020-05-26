@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-unit-test",
-  "version": "1.2.1",
+  "version": "1.2.5",
   "description": "cli-plugin-unit-test",
   "keywords": [
     "unit-test",
@@ -33,7 +33,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "1.2.1"
+    "@luban-cli/cli-shared-types": "1.2.5"
   },
   "engines": {
     "node": ">=10"
