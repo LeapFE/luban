@@ -13,7 +13,6 @@
     "check:type": "node scripts/build.js --check",
     "build:changed": "node scripts/build.js --onlyChanged",
     "build": "node scripts/build.js",
-    "prepublishOnly": "yarn run build",
     "publish": "node scripts/publish.js",
     "test:changed": "node scripts/test.js --onlyChanged",
     "test": "node scripts/test.js",
