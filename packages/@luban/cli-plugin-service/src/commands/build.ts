@@ -1,5 +1,5 @@
 import { Spinner, log, done, error } from "@luban-cli/cli-shared-utils";
-import webpack from "webpack";
+import webpack = require("webpack");
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import path from "path";
 import chalk from "chalk";

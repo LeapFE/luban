@@ -8,7 +8,7 @@
 !.babelrc
 **/*.snap
 node_modules
-luban.config.js
+luban.config.ts
 jest.config.js
 babel.config.js
 /tests/**

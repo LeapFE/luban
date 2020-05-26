@@ -1,4 +1,4 @@
-import Config from "webpack-chain";
+import Config = require("webpack-chain");
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 import { PluginAPI } from "./../lib/PluginAPI";

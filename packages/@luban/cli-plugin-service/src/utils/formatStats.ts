@@ -1,4 +1,4 @@
-import { Stats } from "webpack";
+import webpack = require("webpack");
 import { log, error, warn } from "@luban-cli/cli-shared-utils";
 import fs from "fs";
 import path from "path";
@@ -20,7 +20,7 @@ type Asset = {
   size: number;
 };
 
-export function formatStats(stats: Stats, dir: string, api: PluginAPI): string {
+export function formatStats(stats: webpack.Stats, dir: string, api: PluginAPI): string {
   const json = stats.toJson({
     hash: false,
     modules: false,
@@ -95,7 +95,7 @@ export function formatStats(stats: Stats, dir: string, api: PluginAPI): string {
   return `${ui.toString()}\n\n  ${chalk.gray(`Images and other types of assets omitted.`)}\n`;
 }
 
-export function logStatsErrorsAndWarnings(stats: Stats): void {
+export function logStatsErrorsAndWarnings(stats: webpack.Stats): void {
   if (stats.hasWarnings()) {
     log("Some warnings occurred while compiling");
     log();

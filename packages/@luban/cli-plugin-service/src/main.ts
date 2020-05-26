@@ -1,8 +1,8 @@
-import { Configuration } from "webpack";
-import Config from "webpack-chain";
-import { Configuration as WebpackDevServerConfig } from "webpack-dev-server";
+import webpack = require("webpack");
+import Config = require("webpack-chain");
+import webpackDevServer = require("webpack-dev-server");
 
-type WebpackConfiguration = Configuration & { devServer?: WebpackDevServerConfig };
+type WebpackConfiguration = webpack.Configuration & { devServer?: webpackDevServer.Configuration };
 
 type OptionsOfCssLoader = {
   css: Record<string, any>;
@@ -113,7 +113,7 @@ export type ProjectConfig = {
   /**
    * @description webpack-dev-server 的配置项
    */
-  devServer: WebpackDevServerConfig;
+  devServer: webpackDevServer.Configuration;
 
   /**
    * @description 图片等文件的最大 size

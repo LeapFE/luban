@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import Config from "webpack-chain";
+import Config = require("webpack-chain");
 import merge from "webpack-merge";
 import readPkg from "read-pkg";
 import fs from "fs-extra";
@@ -323,17 +323,15 @@ class Service {
     );
 
     if (code !== 0) {
-      error(`execute ${this.configFilename} file failure`);
-      process.exit();
+      // ignore compile error, just print warn
+      // because we use 'esModuleInterop' flag in tsconfig.json, but webpack-chain not default-imported
+      warn(`compile ${this.configFilename} file failure`);
     }
 
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const configModule = require(`${configTempDirPath}/${this.configFilename.replace(
-        "ts",
-        "js",
-      )}`);
-      fileConfig = configModule.__esModule ? configModule.__esModule : configModule;
+      const configModule = require(`${configTempDirPath.replace("ts", "js")}`);
+      fileConfig = configModule.__esModule ? configModule.default : configModule;
 
       if (!fileConfig || typeof fileConfig !== "object") {
         error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object.`);

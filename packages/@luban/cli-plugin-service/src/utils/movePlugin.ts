@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-import { Compiler } from "webpack";
+import webpack = require("webpack");
 
 class MovePlugin {
   private from: string;
@@ -10,7 +10,7 @@ class MovePlugin {
     this.to = to;
   }
 
-  public apply(compiler: Compiler): void {
+  public apply(compiler: webpack.Compiler): void {
     compiler.hooks.done.tap("move-plugin", () => {
       if (fs.existsSync(this.from)) {
         fs.moveSync(this.from, this.to, { overwrite: true });

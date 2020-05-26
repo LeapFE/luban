@@ -1,5 +1,5 @@
 import StylelintPlugin from "stylelint-webpack-plugin";
-import Config from "webpack-chain";
+import Config = require("webpack-chain");
 import { join } from "path";
 
 import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";

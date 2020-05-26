@@ -1,4 +1,4 @@
-import Config from "webpack-chain";
+import Config = require("webpack-chain");
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
 import { PluginAPI } from "./../lib/PluginAPI";

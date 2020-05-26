@@ -1,5 +1,5 @@
 import path from "path";
-import Config from "webpack-chain";
+import Config = require("webpack-chain");
 
 import { Service } from "./Service";
 import {

@@ -1,12 +1,10 @@
 import url from "url";
 import path from "path";
-import { Configuration as WebpackConfig } from "webpack";
-import Config from "webpack-chain";
-import webpack, { HotModuleReplacementPlugin, ProgressPlugin } from "webpack";
+import webpack = require("webpack");
+import Config = require("webpack-chain");
+import { HotModuleReplacementPlugin, ProgressPlugin } from "webpack";
 import portfinder from "portfinder";
-import WebpackDevServer, {
-  Configuration as WebpackDevServerConfiguration,
-} from "webpack-dev-server";
+import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import chalk from "chalk";
 import { openBrowser, IpcMessenger, log, error } from "@luban-cli/cli-shared-utils";
@@ -28,7 +26,7 @@ function isAbsoluteUrl(url: string): boolean {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 }
 
-function addDevClientToEntry(config: WebpackConfig | Config, devClient: any): void {
+function addDevClientToEntry(config: webpack.Configuration | Config, devClient: any): void {
   const { entry } = config;
   if (typeof entry === "object" && !Array.isArray(entry)) {
     Object.keys(entry).forEach((key) => {
@@ -149,7 +147,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
       const compiler = webpack(webpackConfig);
 
-      const webpackDevServerOptions: WebpackDevServerConfiguration = {
+      const webpackDevServerOptions: WebpackDevServer.Configuration = {
         clientLogLevel: "info",
         historyApiFallback: {
           disableDotRule: true,

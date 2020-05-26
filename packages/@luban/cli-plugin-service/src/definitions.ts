@@ -1,6 +1,6 @@
-import Config from "webpack-chain";
-import webpack from "webpack";
-import webpackDevServer, { Configuration as WebpackDevServerConfig } from "webpack-dev-server";
+import Config = require("webpack-chain");
+import webpack = require("webpack");
+import webpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 
 import {
@@ -27,7 +27,9 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type WebpackConfiguration = webpack.Configuration & { devServer?: WebpackDevServerConfig };
+export type WebpackConfiguration = webpack.Configuration & {
+  devServer?: webpackDevServer.Configuration;
+};
 
 export type PluginApplyCallback = (api: PluginAPI, options: Record<string, any>) => void;
 export type InlinePlugin = {

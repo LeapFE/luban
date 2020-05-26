@@ -1,7 +1,7 @@
 import { PluginAPI } from "./../lib/PluginAPI";
 import { InspectCliArgs, ParsedArgs } from "./../definitions";
 
-import Config from "webpack-chain";
+import Config = require("webpack-chain");
 import { highlight } from "cli-highlight";
 import chalk from "chalk";
 import { get } from "@luban-cli/cli-shared-utils";
