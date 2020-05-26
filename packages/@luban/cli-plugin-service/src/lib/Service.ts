@@ -234,10 +234,14 @@ class Service {
     chainableConfig = this.resolveChainableWebpackConfig(),
   ): WebpackConfiguration {
     let config = chainableConfig.toConfig();
+
     this.webpackRawConfigCallback.forEach((fn) => {
       if (typeof fn === "function") {
         config = fn(config) || config;
       } else if (fn) {
+        // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         config = merge(config, fn);
       }
     });

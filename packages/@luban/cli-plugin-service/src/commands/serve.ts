@@ -163,6 +163,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         https: useHttps,
         before: (app: Application, server: WebpackDevServer) => {
           api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
+          // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           projectDevServerOptions.before && projectDevServerOptions.before(app, server, compiler);
         },
         open: false,
@@ -177,6 +180,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       };
 
       // create server
+      // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       const server = new WebpackDevServer(compiler, webpackDevServerOptions);
       (["SIGINT", "SIGTERM"] as Array<NodeJS.Signals>).forEach((signal: NodeJS.Signals) => {
         process.on(signal, () => {

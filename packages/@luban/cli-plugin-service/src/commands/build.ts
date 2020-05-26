@@ -40,6 +40,9 @@ async function build(
   if (args.report) {
     if (Array.isArray(webpackConfig.plugins)) {
       webpackConfig.plugins.push(
+        // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         new BundleAnalyzerPlugin({
           logLevel: "error",
           openAnalyzer: false,

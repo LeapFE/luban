@@ -27,6 +27,8 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
+export type WebpackConfiguration = webpack.Configuration & { devServer?: WebpackDevServerConfig };
+
 export type PluginApplyCallback = (api: PluginAPI, options: Record<string, any>) => void;
 export type InlinePlugin = {
   id: string;
@@ -35,8 +37,8 @@ export type InlinePlugin = {
 export type ServicePlugin = InlinePlugin;
 export type WebpackChainCallback = (config: Config) => void;
 export type WebpackRawConfigCallback =
-  | ((config: webpack.Configuration) => webpack.Configuration | undefined)
-  | webpack.Configuration;
+  | ((config: WebpackConfiguration) => WebpackConfiguration | undefined)
+  | WebpackConfiguration;
 export type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
 export type CommandCallback<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
 export type CommandList<P> = Record<
@@ -47,8 +49,6 @@ export type CommandList<P> = Record<
   }
 >;
 export type DefaultProjectConfig = Partial<typeof defaultsProjectConfig>;
-
-export type WebpackConfiguration = webpack.Configuration & { devServer?: WebpackDevServerConfig };
 
 type OptionsOfCssLoader = {
   css: Record<string, any>;
