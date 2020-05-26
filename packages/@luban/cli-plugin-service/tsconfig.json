@@ -4,7 +4,9 @@
     "outDir": "dist",
     "allowJs": false,
     "baseUrl": "./",
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true,
+    "declarationDir": "dist/types"
   },
   "include": [
     "./src",

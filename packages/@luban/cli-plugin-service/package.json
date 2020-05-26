@@ -7,7 +7,7 @@
     "service",
     "luban"
   ],
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/types/lib/index.d.ts",
   "files": [
     "dist"
   ],
