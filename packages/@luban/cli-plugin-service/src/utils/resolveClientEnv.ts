@@ -1,4 +1,4 @@
-import { ProjectConfig } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 const prefixRE = /^APP_/;
 

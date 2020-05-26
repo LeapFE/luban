@@ -1,5 +1,5 @@
 import { createSchema, validate } from "@luban-cli/cli-shared-utils";
-import { ProjectConfig } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 const schema = createSchema((joi) =>
   joi.object<ProjectConfig>({

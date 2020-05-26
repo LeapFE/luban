@@ -13,7 +13,8 @@ import { openBrowser, IpcMessenger, log, error } from "@luban-cli/cli-shared-uti
 import { existsSync } from "fs";
 
 import { PluginAPI } from "./../lib/PluginAPI";
-import { ServeCliArgs, ProjectConfig, ParsedArgs } from "./../definitions";
+import { ServeCliArgs, ParsedArgs } from "./../definitions";
+import { ProjectConfig } from "./../main";
 import { prepareUrls } from "./../utils/prepareURLs";
 
 const defaultServerConfig = {

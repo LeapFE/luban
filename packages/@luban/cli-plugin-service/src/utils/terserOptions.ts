@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { TerserPluginOptions } from "terser-webpack-plugin";
-import { ProjectConfig } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 export const terserOptions = function(options: Required<ProjectConfig>): TerserPluginOptions {
   return {

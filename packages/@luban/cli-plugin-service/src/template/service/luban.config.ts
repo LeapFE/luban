@@ -1,3 +1,3 @@
-import { generateConfig } from "@luban-cli/cli-shared-service";
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
 
-export default generateConfig({});
+export default createProjectConfig({});

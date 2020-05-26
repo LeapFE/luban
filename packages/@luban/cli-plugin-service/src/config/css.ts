@@ -2,7 +2,7 @@ import Config from "webpack-chain";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 import { PluginAPI } from "./../lib/PluginAPI";
-import { ProjectConfig } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 export default function(api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig: Config) => {

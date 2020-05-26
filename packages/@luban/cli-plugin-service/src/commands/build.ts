@@ -7,7 +7,8 @@ import { formatStats, logStatsErrorsAndWarnings } from "./../utils/formatStats";
 import { existsSync } from "fs";
 
 import { PluginAPI } from "./../lib/PluginAPI";
-import { ProjectConfig, BuildCliArgs, ParsedArgs } from "./../definitions";
+import { BuildCliArgs, ParsedArgs } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 async function build(
   args: ParsedArgs<BuildCliArgs>,

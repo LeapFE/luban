@@ -16,9 +16,9 @@
   "author": "front-end-captain <18810940932@163.com>",
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-service/README.md",
   "license": "MIT",
-  "main": "dist/lib/index.js",
-  "types": "dist/lib/index.d.ts",
-  "module": "dist/lib/index.js",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "module": "dist/main.js",
   "directories": {
     "src": "src",
     "test": "__tests__"
@@ -42,6 +42,8 @@
   },
   "dependencies": {
     "@luban-cli/cli-shared-utils": "1.2.7",
+    "@types/webpack": "4.41.13",
+    "@types/webpack-dev-server": "3.11.0",
     "address": "^1.1.2",
     "chalk": "^2.4.2",
     "clean-webpack-plugin": "^3.0.0",
@@ -83,9 +85,7 @@
     "@types/rimraf": "^2.0.2",
     "@types/shelljs": "^0.8.8",
     "@types/terser-webpack-plugin": "^1.2.1",
-    "@types/webpack": "4.41.13",
     "@types/webpack-bundle-analyzer": "^3.8.0",
-    "@types/webpack-dev-server": "^3.11.0",
     "@types/webpack-merge": "^4.1.5"
   },
   "engines": {

@@ -3,7 +3,7 @@ import { existsSync } from "fs";
 import { error } from "@luban-cli/cli-shared-utils";
 
 import { PluginAPI } from "./../lib/PluginAPI";
-import { ProjectConfig } from "./../definitions";
+import { ProjectConfig } from "./../main";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {

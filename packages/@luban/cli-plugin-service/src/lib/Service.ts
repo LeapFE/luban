@@ -17,7 +17,6 @@ import { defaultsProjectConfig, validateProjectConfig } from "./options";
 import {
   BasePkgFields,
   InlinePlugin,
-  ProjectConfig,
   WebpackChainCallback,
   WebpackDevServerConfigCallback,
   WebpackRawConfigCallback,
@@ -30,6 +29,7 @@ import {
   PluginApplyCallback,
   builtinServiceCommandName,
 } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 type ResetParams = Partial<{
   plugins: InlinePlugin[];

@@ -3,7 +3,8 @@ import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
-import { ProjectConfig, UrlLoaderOptions } from "./../definitions";
+import { UrlLoaderOptions } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
   const genUrlLoaderOptions: (dir: string) => UrlLoaderOptions = function(dir) {

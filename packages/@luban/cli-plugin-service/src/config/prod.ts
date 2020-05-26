@@ -4,7 +4,7 @@ import CssNano from "cssnano";
 import path from "path";
 
 import { PluginAPI } from "./../lib/PluginAPI";
-import { ProjectConfig } from "./../definitions";
+import { ProjectConfig } from "./../main";
 
 import { terserOptions } from "./../utils/terserOptions";
 import { MovePlugin } from "./../utils/movePlugin";

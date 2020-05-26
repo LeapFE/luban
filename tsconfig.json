@@ -5,6 +5,7 @@
     "allowJs": true,
     "moduleResolution": "node",
     "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "sourceMap": false,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
@@ -44,6 +45,7 @@
     "packages/**/**/dist",
     "packages/**/**/bin",
     "packages/**/**/src/template/**",
-    "./*.js"
+    "./*.js",
+    "packages/**/*.js"
   ]
 }
