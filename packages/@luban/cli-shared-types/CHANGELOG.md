@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.7](https://github.com/leapFE/luban/compare/v1.2.6...v1.2.7) (2020-05-26)
+
+
+### Bug Fixes
+
+* **service:** correct export types about cli-plugin-service ([ef5f08e](https://github.com/leapFE/luban/commit/ef5f08e59d653c955b19c7d381e618c8f39e39b7))
+
+
+
+
+
 ## [1.2.5](https://github.com/leapFE/luban/compare/v1.2.4...v1.2.5) (2020-05-26)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-types
