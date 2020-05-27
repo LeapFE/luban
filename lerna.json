@@ -4,7 +4,7 @@
   ],
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "useWorkspaces": true,
   "command": {
     "create": {

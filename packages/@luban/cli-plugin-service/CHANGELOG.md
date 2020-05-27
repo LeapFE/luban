@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.11](https://github.com/leapFE/luban/compare/v1.2.10...v1.2.11) (2020-05-27)
+
+
+### Bug Fixes
+
+* **service:** fix some errors about cli-plugin-service ([19640a5](https://github.com/leapFE/luban/commit/19640a5b1ed71ad8955d4d7ed25af53f48316142))
+* **service,typescript:** load projectConfig file when use .js file ([322ea4e](https://github.com/leapFE/luban/commit/322ea4e2aaf5810ff12b61ee5ab1a8447a44f702))
+
+
+### Features
+
+* **service:** use webpackbar replace webpack.ProgressPlugin ([f097e32](https://github.com/leapFE/luban/commit/f097e321ed8931707c953ddf64d664db8d53dede))
+
+
+
+
+
 ## [1.2.10](https://github.com/leapFE/luban/compare/v1.2.9...v1.2.10) (2020-05-26)
 
 

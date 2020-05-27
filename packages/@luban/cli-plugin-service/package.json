@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-service",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "A development runtime environment dependency",
   "keywords": [
     "webpack",
@@ -41,7 +41,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "1.2.7",
+    "@luban-cli/cli-shared-utils": "1.2.11",
     "address": "^1.1.2",
     "chalk": "^2.4.2",
     "clean-webpack-plugin": "^3.0.0",

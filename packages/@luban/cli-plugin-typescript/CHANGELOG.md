@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.11](https://github.com/leapFE/luban/compare/v1.2.10...v1.2.11) (2020-05-27)
+
+
+### Bug Fixes
+
+* **service,typescript:** load projectConfig file when use .js file ([322ea4e](https://github.com/leapFE/luban/commit/322ea4e2aaf5810ff12b61ee5ab1a8447a44f702))
+
+
+
+
+
 ## [1.2.7](https://github.com/leapFE/luban/compare/v1.2.6...v1.2.7) (2020-05-26)
 
 
