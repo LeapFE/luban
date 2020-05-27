@@ -299,6 +299,36 @@ class Service {
     }
   }
 
+  private requireProjectConfigFile(filePath: string): any {
+    if (/\w+\.js$/.test(this.configFilename)) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const configModule = require(filePath);
+
+      return configModule.__esModule ? configModule.default : configModule;
+    }
+
+    const configTempDir = path.resolve(this.context, ".config");
+    const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
+
+    const { code } = shell.exec(
+      `${this.context}/node_modules/typescript/bin/tsc ${filePath} --module commonjs --allowJs true --outDir ${configTempDir}`,
+    );
+
+    if (code !== 0) {
+      // ignore compile error, just print warn
+      warn(`compile ${chalk.bold(this.configFilename)} file failure \n`);
+    } else {
+      info(`compiled ${chalk.green(this.configFilename)} file successfully \n`);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const configModule = require(`${configTempDirPath.replace("ts", "js")}`);
+
+    fs.removeSync(configTempDir);
+
+    return configModule.__esModule ? configModule.default : configModule;
+  }
+
   public loadProjectOptions(inlineOptions?: ProjectConfig): ProjectConfig {
     let fileConfig;
     let resolved;
@@ -310,31 +340,13 @@ class Service {
       process.exit();
     }
 
-    const configTempDir = path.resolve(this.context, ".config");
-    const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
-
-    const { code } = shell.exec(
-      `${this.context}/node_modules/typescript/bin/tsc ${configPath} --module commonjs --allowJs true --outDir ${configTempDir}`,
-    );
-
-    if (code !== 0) {
-      // ignore compile error, just print warn
-      warn(`compile ${chalk.bold(this.configFilename)} file failure \n`);
-    } else {
-      info(`compiled ${chalk.green(this.configFilename)} file successfully \n`);
-    }
-
     try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const configModule = require(`${configTempDirPath.replace("ts", "js")}`);
-      fileConfig = configModule.__esModule ? configModule.default : configModule;
+      fileConfig = this.requireProjectConfigFile(configPath);
 
       if (!fileConfig || typeof fileConfig !== "object") {
         error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object. \n`);
         fileConfig = null;
       }
-
-      fs.removeSync(configTempDir);
     } catch (e) {}
 
     if (fileConfig) {

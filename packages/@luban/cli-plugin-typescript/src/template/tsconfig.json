@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "resolveJsonModule": true,
@@ -41,6 +40,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*", "./luban.config.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules/**"]
 }
