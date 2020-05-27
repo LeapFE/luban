@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import Config = require("webpack-chain");
 import merge from "webpack-merge";
 import readPkg from "read-pkg";
 import fs from "fs-extra";
 import path from "path";
-import deepmerge from "deepmerge";
+import defaultsDeep from "lodash.defaultsdeep";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { error, warn, loadModule, log, info } from "@luban-cli/cli-shared-utils";
 import shell from "shelljs";
+import webpack = require("webpack");
 
 import { PluginAPI } from "./PluginAPI";
 import { defaultsProjectConfig, validateProjectConfig } from "./options";
@@ -18,14 +18,12 @@ import {
   BasePkgFields,
   InlinePlugin,
   WebpackChainCallback,
-  WebpackDevServerConfigCallback,
   WebpackRawConfigCallback,
   CommandList,
   ServicePlugin,
   Preset,
   ParsedArgs,
   CliArgs,
-  WebpackConfiguration,
   PluginApplyCallback,
   builtinServiceCommandName,
 } from "./../definitions";
@@ -100,7 +98,6 @@ class Service {
   public webpackConfig: Config;
   public webpackChainCallback: WebpackChainCallback[];
   public webpackRawConfigCallback: WebpackRawConfigCallback[];
-  public webpackDevServerConfigCallback: WebpackDevServerConfigCallback[];
   public commands: Partial<CommandList<CliArgs>>;
   public projectConfig: ProjectConfig;
   public plugins: ServicePlugin[];
@@ -122,7 +119,6 @@ class Service {
     this.configFilename = "luban.config.ts";
     this.webpackConfig = new Config();
     this.webpackChainCallback = [];
-    this.webpackDevServerConfigCallback = [];
     this.webpackRawConfigCallback = [];
     this.commands = {};
     this.pkg = this.resolvePkg(pkg);
@@ -137,10 +133,9 @@ class Service {
 
     this.loadAndSetEnv(mode, commandName);
 
-    this.projectConfig = deepmerge(
-      defaultsProjectConfig,
-      this.loadProjectOptions(this.inlineProjectOptions),
-    );
+    const loadedProjectConfig = this.loadProjectOptions(this.inlineProjectOptions);
+
+    this.projectConfig = defaultsDeep(loadedProjectConfig, defaultsProjectConfig);
 
     this.plugins.forEach(({ id, apply }) => {
       const api = new PluginAPI(id, this);
@@ -151,7 +146,7 @@ class Service {
       this.webpackChainCallback.push(this.projectConfig.chainWebpack);
     }
 
-    if (typeof this.projectConfig.configureWebpack === "function") {
+    if (this.projectConfig.configureWebpack) {
       this.webpackRawConfigCallback.push(this.projectConfig.configureWebpack);
     }
   }
@@ -234,12 +229,15 @@ class Service {
 
   public resolveWebpackConfig(
     chainableConfig = this.resolveChainableWebpackConfig(),
-  ): WebpackConfiguration {
+  ): webpack.Configuration {
     let config = chainableConfig.toConfig();
 
     this.webpackRawConfigCallback.forEach((fn) => {
       if (typeof fn === "function") {
-        config = fn(config) || config;
+        const result = fn(config);
+        if (result) {
+          config = merge(config, result);
+        }
       } else if (fn) {
         config = merge(config, fn);
       }

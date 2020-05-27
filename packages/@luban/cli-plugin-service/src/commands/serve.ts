@@ -163,7 +163,8 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         overlay: { warnings: false, errors: true },
         https: useHttps,
         before: (app: Application, server: WebpackDevServer) => {
-          api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
+          // TODO supported use function to config devServer
+          // api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
           projectDevServerOptions.before && projectDevServerOptions.before(app, server, compiler);
         },
         open: false,

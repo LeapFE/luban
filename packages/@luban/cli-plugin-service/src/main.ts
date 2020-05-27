@@ -2,13 +2,11 @@ import webpack = require("webpack");
 import Config = require("webpack-chain");
 import webpackDevServer = require("webpack-dev-server");
 
-type WebpackConfiguration = webpack.Configuration & { devServer?: webpackDevServer.Configuration };
-
 type OptionsOfCssLoader = {
-  css: Record<string, any>;
-  less: Record<string, any>;
-  postcss: Record<string, any>;
-  miniCss: Record<string, any>;
+  css?: Record<string, any>;
+  less?: Record<string, any>;
+  postcss?: Record<string, any>;
+  miniCss?: Record<string, any>;
 };
 
 type CssConfig = {
@@ -29,7 +27,7 @@ type CssConfig = {
   /**
    * @description 一些处理 css 的 loader 的配置项
    */
-  loaderOptions: OptionsOfCssLoader;
+  loaderOptions?: OptionsOfCssLoader;
 };
 
 export type ProjectConfig = {
@@ -59,11 +57,11 @@ export type ProjectConfig = {
    * @default ""
    */
   assetsDir: {
-    scripts: string;
-    styles: string;
-    images: string;
-    fonts: string;
-    media: string;
+    scripts?: string;
+    styles?: string;
+    images?: string;
+    fonts?: string;
+    media?: string;
   };
 
   /**
@@ -96,8 +94,8 @@ export type ProjectConfig = {
    * @type {Object | Function | undefined}
    */
   configureWebpack?:
-    | WebpackConfiguration
-    | ((config: WebpackConfiguration) => WebpackConfiguration);
+    | webpack.Configuration
+    | ((config: webpack.Configuration) => webpack.Configuration | void);
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例

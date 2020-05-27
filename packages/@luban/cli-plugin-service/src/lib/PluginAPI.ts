@@ -1,13 +1,12 @@
 import path from "path";
 import Config = require("webpack-chain");
+import webpack = require("webpack");
 
 import { Service } from "./Service";
 import {
   WebpackChainCallback,
   WebpackRawConfigCallback,
-  WebpackDevServerConfigCallback,
   CommandCallback,
-  WebpackConfiguration,
   Preset,
   PLUGIN_IDS,
   CliArgs,
@@ -83,13 +82,14 @@ class PluginAPI {
     return this.service.resolveChainableWebpackConfig();
   }
 
-  public resolveWebpackConfig(config?: Config): WebpackConfiguration {
+  public resolveWebpackConfig(config?: Config): webpack.Configuration {
     return this.service.resolveWebpackConfig(config);
   }
 
-  public configureDevServer(fn: WebpackDevServerConfigCallback): void {
-    this.service.webpackDevServerConfigCallback.push(fn);
-  }
+  // TODO supported use function to config devServer
+  // public configureDevServer(fn: WebpackDevServerConfigCallback): void {
+  //   this.service.webpackDevServerConfigCallback.push(fn);
+  // }
 }
 
 export { PluginAPI };

@@ -11,7 +11,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     const createConfig = api.resolveInitConfig();
 
     const {
-      css: { extract = isProduction, sourceMap = !isProduction, loaderOptions },
+      css: { extract = isProduction, sourceMap = !isProduction, loaderOptions = {} },
     } = options;
 
     const filename = `${options.assetsDir.styles}/[name]${isProduction ? ".[hash:8]" : ""}.css`;

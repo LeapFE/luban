@@ -7,7 +7,7 @@ import { UrlLoaderOptions } from "./../definitions";
 import { ProjectConfig } from "./../main";
 
 export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
-  const genUrlLoaderOptions: (dir: string) => UrlLoaderOptions = function(dir) {
+  const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
     return {
       limit: options.assetsLimit,
       fallback: {

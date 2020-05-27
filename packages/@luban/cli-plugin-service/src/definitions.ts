@@ -27,22 +27,29 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type WebpackConfiguration = webpack.Configuration & {
-  devServer?: webpackDevServer.Configuration;
-};
-
 export type PluginApplyCallback = (api: PluginAPI, options: Record<string, any>) => void;
+
 export type InlinePlugin = {
   id: string;
   apply: PluginApplyCallback;
 };
+
 export type ServicePlugin = InlinePlugin;
+
 export type WebpackChainCallback = (config: Config) => void;
+
 export type WebpackRawConfigCallback =
-  | ((config: WebpackConfiguration) => WebpackConfiguration | undefined)
-  | WebpackConfiguration;
+  | ((config: webpack.Configuration) => webpack.Configuration | void)
+  | webpack.Configuration;
+
+/**
+ * @deprecated
+ */
+// TODO supported use function to config devServer
 export type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
+
 export type CommandCallback<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
+
 export type CommandList<P> = Record<
   builtinServiceCommandName,
   {
@@ -50,6 +57,7 @@ export type CommandList<P> = Record<
     opts: Record<string, any> | null | PluginApplyCallback;
   }
 >;
+
 export type DefaultProjectConfig = Partial<typeof defaultsProjectConfig>;
 
 export type ServeCliArgs = Partial<{

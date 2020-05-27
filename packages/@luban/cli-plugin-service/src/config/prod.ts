@@ -9,7 +9,7 @@ import { ProjectConfig } from "./../main";
 import { terserOptions } from "./../utils/terserOptions";
 import { MovePlugin } from "./../utils/movePlugin";
 
-function getScriptsDir(dir: string): string {
+function getScriptsDir(dir: string = ""): string {
   const adaptedDir = dir.replace(/^\/|\/$|\s+/g, "");
   if (adaptedDir === "") {
     return "";

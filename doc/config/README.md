@@ -395,8 +395,8 @@ export type ProjectConfig = {
    * @type {Object | Function | undefined}
    */
   configureWebpack:
-    | WebpackConfiguration
-    | ((config: WebpackConfiguration) => WebpackConfiguration);
+    | webpack.Configuration
+    | ((config: webpack.Configuration) => webpack.Configuration | void);
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
@@ -412,7 +412,7 @@ export type ProjectConfig = {
   /**
    * @description webpack-dev-server 的配置项
    */
-  devServer: WebpackDevServerConfig;
+  devServer: webpackDevServer.Configuration;
 
   /**
    * @description 图片等文件的最大 size
