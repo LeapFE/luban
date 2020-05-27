@@ -26,18 +26,20 @@ function isAbsoluteUrl(url: string): boolean {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 }
 
-function addDevClientToEntry(config: webpack.Configuration | Config, devClient: any): void {
+function addDevClientToEntry(config: webpack.Configuration, devClient: string[]): void {
   const { entry } = config;
+
+  // add devClient for every entry(entry is a map)
   if (typeof entry === "object" && !Array.isArray(entry)) {
     Object.keys(entry).forEach((key) => {
       entry[key] = devClient.concat(entry[key]);
     });
-  } else if (typeof entry === "function") {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    config.entry = entry(devClient);
-  } else {
+  } else if (Array.isArray(entry)) {
     config.entry = devClient.concat(entry);
+  } else if (typeof entry === "string" || typeof entry === "function") {
+    // entry maybe a function that return a Promise
+    // see https://webpack.js.org/configuration/entry-context/#dynamic-entry
+    config.entry = entry;
   }
 }
 
@@ -162,9 +164,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         https: useHttps,
         before: (app: Application, server: WebpackDevServer) => {
           api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
-          // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
           projectDevServerOptions.before && projectDevServerOptions.before(app, server, compiler);
         },
         open: false,
@@ -178,10 +177,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         ...projectDevServerOptions,
       };
 
-      // create server
-      // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
       const server = new WebpackDevServer(compiler, webpackDevServerOptions);
       (["SIGINT", "SIGTERM"] as Array<NodeJS.Signals>).forEach((signal: NodeJS.Signals) => {
         process.on(signal, () => {

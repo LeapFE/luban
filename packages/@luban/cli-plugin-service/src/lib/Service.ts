@@ -239,15 +239,12 @@ class Service {
 
     this.webpackRawConfigCallback.forEach((fn) => {
       if (typeof fn === "function") {
-        // @ts-ignore
         config = fn(config) || config;
       } else if (fn) {
-        // because webpack-dev-serve dependent @types/webpack version is not latest, so some type will not assignable
-        // @ts-ignore
         config = merge(config, fn);
       }
     });
-    // @ts-ignore
+
     return config;
   }
 
@@ -324,8 +321,9 @@ class Service {
 
     if (code !== 0) {
       // ignore compile error, just print warn
-      // because we use 'esModuleInterop' flag in tsconfig.json, but webpack-chain not default-imported
-      warn(`compile ${this.configFilename} file failure`);
+      warn(`compile ${chalk.bold(this.configFilename)} file failure \n`);
+    } else {
+      info(`compiled ${chalk.green(this.configFilename)} file successfully \n`);
     }
 
     try {
@@ -334,7 +332,7 @@ class Service {
       fileConfig = configModule.__esModule ? configModule.default : configModule;
 
       if (!fileConfig || typeof fileConfig !== "object") {
-        error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object.`);
+        error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object. \n`);
         fileConfig = null;
       }
 

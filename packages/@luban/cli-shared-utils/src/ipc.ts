@@ -40,6 +40,7 @@ class IpcMessenger {
     this.disconnectTimeout = 15000;
     this.idleTimer = null;
 
+    // override process.exit
     // Prevent forced process exit
     // (or else ipc messages may not be sent before kill)
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

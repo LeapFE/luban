@@ -62,6 +62,8 @@ export default function(api: PluginAPI): void {
         res = webpackConfig;
       }
 
+      // class `Config` override `Function.toString`
+      // see https://github.com/neutrinojs/webpack-chain/blob/master/src/Config.js#L47
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       const output = Config.toString(res, { verbose: args.verbose });
