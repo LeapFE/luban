@@ -2,7 +2,8 @@ import url from "url";
 import path from "path";
 import webpack = require("webpack");
 import Config = require("webpack-chain");
-import { HotModuleReplacementPlugin, ProgressPlugin } from "webpack";
+import { HotModuleReplacementPlugin } from "webpack";
+import WebpackBar = require("webpackbar");
 import portfinder from "portfinder";
 import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
@@ -76,7 +77,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           webpackConfig.mode("development").devtool("cheap-module-eval-source-map");
 
           webpackConfig.plugin("hmr").use(HotModuleReplacementPlugin);
-          webpackConfig.plugin("progress").use(ProgressPlugin);
+          webpackConfig
+            .plugin("webpack-bar")
+            .use(WebpackBar, [{ name: "Client", color: "#41b883" }]);
         }
       });
 
