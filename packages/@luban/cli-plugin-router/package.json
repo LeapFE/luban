@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-router",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "cli-plugin-router",
   "keywords": [
     "router",

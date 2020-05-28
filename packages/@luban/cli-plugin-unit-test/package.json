@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-unit-test",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "cli-plugin-unit-test",
   "keywords": [
     "unit-test",

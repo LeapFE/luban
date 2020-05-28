@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "a scaffold to create a react app",
   "bin": {
     "luban": "bin/index.js"
