@@ -1,21 +1,9 @@
 {
-  "include": ["./luban.config.ts"],
+  "extends": "./tsconfig.json",
+  "include": ["luban.config.ts"],
   "exclude": ["src/**/*"],
   "compilerOptions": {
     "module": "CommonJS",
     "target": "ES5",
-
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "typeRoots": ["src/typings", "./node_modules/@types"]
   }
 }

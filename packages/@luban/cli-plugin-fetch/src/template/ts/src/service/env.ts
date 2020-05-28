@@ -1,3 +1,3 @@
-const { APP_URL } = process.env;
+const { APP_SERVER } = process.env;
 
-export { APP_URL };
+export { APP_SERVER };
