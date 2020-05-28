@@ -116,7 +116,10 @@ class Service {
     });
 
     this.context = context;
-    this.configFilename = "luban.config.ts";
+
+    this.configFilename =
+      this.resolveLubanConfig().language === "js" ? "luban.config.js" : "luban.config.ts";
+
     this.webpackConfig = new Config();
     this.webpackChainCallback = [];
     this.webpackRawConfigCallback = [];

@@ -6,9 +6,9 @@
 ``` ts
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
 
-import { APP_URL } from "./env";
+import { APP_SERVER } from "./env";
 
-const request = axios.create({ baseURL: `${APP_URL}/api/` });
+const request = axios.create({ baseURL: `${APP_SERVER}/api/` });
 
 request.interceptors.request.use(
   (config: AxiosRequestConfig) => {
@@ -29,4 +29,4 @@ request.interceptors.response.use(
 );
 ```
 
-其中 `APP_URL` 是 dotenv 文件中指定的环境变量，此处为请求接口服务地址，推荐通过 *src/service/env.ts* 来统一导出被注入的环境变量。关于如何配置请求拦截、取消、超时等，查阅 [axios](https://github.com/axios/axios) 获取更多信息。
+其中 `APP_SERVER` 是 dotenv 文件中指定的环境变量，此处为请求接口服务地址，推荐通过 *src/service/env.ts* 来统一导出被注入的环境变量。关于如何配置请求拦截、取消、超时等，查阅 [axios](https://github.com/axios/axios) 获取更多信息。

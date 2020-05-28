@@ -13,7 +13,7 @@
 
 ```
 FOO=bar
-APP_URL=https://example.com/
+APP_SERVER=https://server.cn
 ```
 
 被载入的环境变量会对 <mark>@luban-cli/cli-plugin-service</mark> 以及其插件、依赖可用。
@@ -53,26 +53,26 @@ cli-plugin-service serve --mode development
 假设项目根目录下存在一个 *.env* 文件:
 
 ```
-APP_URL=https://example.com
+APP_SERVER=https://server.cn
 ```
 
 和 *.env.mock* 文件
 
 ```
 MOCK=true
-APP_URL=https://example.mock.com
+APP_SERVER=https://mock.server.cn
 ```
 
 1. 运行 `cli-plugin-service build` 将会加载可能存在的 *.env*, *.env.production*, *.env.production.local* 文件，然后根据这些文件中的环境变量来构建可用于生产环境应用。
 2. 运行 `cli-plugin-service build --mode=mock` 将会加载可能存在的 *.env.mock*, *.env.mock.local* 文件，然后根据这些环境变量来构建可用于生产环境的应用。
 
-这两种情况下，由于运行的是 build 命令，所以都是构建用于生产环境的应用，但是在 mock 模式下，`process.env.APP_URL` 将会被覆写为另外一个值。
+这两种情况下，由于运行的是 build 命令，所以都是构建用于生产环境的应用，但是在 mock 模式下，`process.env.APP_SERVER` 将会被覆写为另外一个值。
 
 同时，只有以 `/^APP_/` 开头的变量才会被 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root) 注入客户端测的代码中，可以在项目代码中这样使用环境变量：
 
 ```javascript
-// 注意 APP_URL 对应的值将会变成 "https://example.mock.com"
-console.log(process.env.APP_URL);
+// 注意 APP_SERVER 对应的值将会变成 "https://example.mock.com"
+console.log(process.env.APP_SERVER);
 ```
 
 除了以 `/^APP_/` 开头的环境变量外，还有一些特殊的环境变量也可以在应用中访问到：

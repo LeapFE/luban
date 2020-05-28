@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { APP_URL } from "./env";
+import { APP_SERVER } from "./env";
 
-const request = axios.create({ baseURL: `${APP_URL}/api/` });
+const request = axios.create({ baseURL: `${APP_SERVER}/api/` });
 
 request.interceptors.request.use(
   (config) => {
