@@ -189,7 +189,7 @@ class Creator {
       await formatConfigFiles(adaptedPreset);
     } catch (e) {
       log("\n");
-      warn("🚨format file failure, but does not effect to create project");
+      warn("🚨format file failure, but does not affect creating project");
     }
 
     spinner.stopSpinner();

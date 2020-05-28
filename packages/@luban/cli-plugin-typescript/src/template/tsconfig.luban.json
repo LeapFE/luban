@@ -16,6 +16,6 @@
 
     "moduleResolution": "node",
     "baseUrl": "./",
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["src/typings", "./node_modules/@types"]
   }
 }
