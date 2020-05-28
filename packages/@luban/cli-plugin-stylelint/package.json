@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-stylelint",
-  "version": "1.2.11",
+  "version": "1.2.13",
   "description": "cli-plugin-stylelint",
   "keywords": [
     "stylelint",
