@@ -22,7 +22,7 @@
 
 
 #### 如何发布 package
-> 发布前需要确认所有包的版本都是一致的，且以 lerna.json 中的版本为准
+> 发布前需要确认所有包的版本都是一致的，且以 lerna.json 中的版本为准，且在仓库中有对应的版本 tag
 
 `npm run publish` 或者 `lerna publish from-git --yes`
 
@@ -43,6 +43,11 @@
 `lerna version --conventional-commits --force-publish='*' prepatch --preid beta`
 例如  @luban-cli/cli: 1.3.0 => 1.3.1-beta.0
 
+强制为所有 package 推送新的 beta 或 alpha 或 next 版本
+`lerna version --conventional-commits --force-publish='*' prerelease --preid beta`
+例如 @luban-cli/cli: 1.3.1-beta.0 => 1.3.1-beta.1
+
 prepatch 表示修改修订号，preminor 表示修改次版本号，premajor 表示修改主版本号
+prerelease 表示推送新的 beta/alpha/next 版本 
 
 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)
