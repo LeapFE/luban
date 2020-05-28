@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-service",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "A development runtime environment dependency",
   "keywords": [
     "webpack",

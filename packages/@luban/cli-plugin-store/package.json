@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-store",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "cli-plugin-store",
   "keywords": [
     "store",
