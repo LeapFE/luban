@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.0](https://github.com/LeapFE/luban/compare/v1.3.0...v1.3.1-beta.0) (2020-05-28)
+
+
+### Bug Fixes
+
+* **service:** adjust template content and typescript version ([cb164ea](https://github.com/LeapFE/luban/commit/cb164ea36a71eb0cd622e7fc36f773f64a034260))
+* **service,fetch,eslint:** adjust template content ([917bdd4](https://github.com/LeapFE/luban/commit/917bdd496d99391c252ce9a87b99228b582ff200))
+
+
+
+
+
 ## [1.2.13](https://github.com/LeapFE/luban/compare/v1.2.11...v1.2.13) (2020-05-28)
 
 **Note:** Version bump only for package luban

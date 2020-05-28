@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.0](https://github.com/leapFE/luban/compare/v1.3.0...v1.3.1-beta.0) (2020-05-28)
+
+
+### Bug Fixes
+
+* **service:** adjust template content and typescript version ([cb164ea](https://github.com/leapFE/luban/commit/cb164ea36a71eb0cd622e7fc36f773f64a034260))
+
+
+
+
+
 ## [1.2.13](https://github.com/leapFE/luban/compare/v1.2.11...v1.2.13) (2020-05-28)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-typescript

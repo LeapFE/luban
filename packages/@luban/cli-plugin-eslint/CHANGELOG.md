@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.0](https://github.com/leapFE/luban/compare/v1.3.0...v1.3.1-beta.0) (2020-05-28)
+
+
+### Bug Fixes
+
+* **service,fetch,eslint:** adjust template content ([917bdd4](https://github.com/leapFE/luban/commit/917bdd496d99391c252ce9a87b99228b582ff200))
+
+
+
+
+
 ## [1.2.11](https://github.com/leapFE/luban/compare/v1.2.10...v1.2.11) (2020-05-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
