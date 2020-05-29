@@ -4,7 +4,7 @@ export default function(cli: PromptModuleAPI): void {
   cli.injectPrompt({
     name: "store",
     type: "confirm",
-    default: true,
+    default: false,
     message: "Manage the app state with a centralized store",
   });
 
