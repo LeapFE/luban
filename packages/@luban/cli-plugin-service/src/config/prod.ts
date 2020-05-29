@@ -36,7 +36,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       .end();
 
     if (options.productionSourceMap) {
-      webpackConfig.output.sourceMapFilename("[name].[hash:8]-map.js").end();
+      webpackConfig.output.sourceMapFilename(`${scriptsDir}[name].[hash:8]-map.js`).end();
     }
 
     // handle options.indexPath
