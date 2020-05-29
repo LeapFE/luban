@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.1](https://github.com/LeapFE/luban/compare/v1.3.1-beta.0...v1.3.1-beta.1) (2020-05-29)
+
+
+### Bug Fixes
+
+* **service:** generated sourcemap file path ([c83aa1a](https://github.com/LeapFE/luban/commit/c83aa1aa2d494758e3d4b7b4a3c48ed35c185459))
+
+
+
+
+
 ## [1.3.1-beta.0](https://github.com/LeapFE/luban/compare/v1.3.0...v1.3.1-beta.0) (2020-05-28)
 
 
