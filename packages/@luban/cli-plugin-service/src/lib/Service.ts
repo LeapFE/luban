@@ -7,7 +7,7 @@ import defaultsDeep from "lodash.defaultsdeep";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { error, warn, loadModule, log, info } from "@luban-cli/cli-shared-utils";
+import { error, warn, loadModule, log, info, Spinner } from "@luban-cli/cli-shared-utils";
 import shell from "shelljs";
 import webpack = require("webpack");
 
@@ -313,6 +313,9 @@ class Service {
       return configModule.__esModule ? configModule.default : configModule;
     }
 
+    const spinner = new Spinner();
+    spinner.logWithSpinner(`compiling ${this.configFilename} ... \n`);
+
     const configTempDir = path.resolve(this.context, ".config");
     const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
 
@@ -323,14 +326,14 @@ class Service {
     if (code !== 0) {
       // ignore compile error, just print warn
       warn(`compiled ${chalk.bold(this.configFilename)} file failure \n`);
-    } else {
-      info(`compiled ${chalk.green(this.configFilename)} file successfully \n`);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const configModule = require(`${configTempDirPath.replace("ts", "js")}`);
 
     fs.removeSync(configTempDir);
+
+    spinner.stopSpinner();
 
     return configModule.__esModule ? configModule.default : configModule;
   }
