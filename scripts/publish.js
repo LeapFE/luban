@@ -11,7 +11,7 @@ if (!shell.exec("npm config get registry").stdout.includes("https://registry.npm
   process.exit(1);
 }
 
-const publishCommand = `lerna publish from-git --yes --dist-tag=${args.tag}`;
+const publishCommand = `lerna publish from-git --yes --dist-tag ${args.tag}`;
 
 const { code: publishCode } = shell.exec(publishCommand);
 if (publishCode === 1) {
