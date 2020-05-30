@@ -8,10 +8,10 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.preset.language === "js") {
+  if (options.language === "js") {
     api.render("./template/js");
   }
-  if (options.preset.language === "ts") {
+  if (options.language === "ts") {
     api.render("./template/ts");
   }
 }

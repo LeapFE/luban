@@ -7,10 +7,10 @@ import {
   WebpackChainCallback,
   WebpackRawConfigCallback,
   CommandCallback,
-  Preset,
   PLUGIN_IDS,
   CliArgs,
   builtinServiceCommandName,
+  RootOptions,
 } from "../definitions";
 
 class PluginAPI {
@@ -37,7 +37,7 @@ class PluginAPI {
     });
   }
 
-  public resolveInitConfig(): Required<Preset> {
+  public resolveInitConfig(): Required<RootOptions> {
     return this.service.resolveLubanConfig();
   }
 

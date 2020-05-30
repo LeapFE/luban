@@ -27,7 +27,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   ]);
   let lintScript = "stylelint src/**/*.css";
 
-  if (options.preset.cssSolution === "styled-components") {
+  if (options.cssSolution === "styled-components") {
     processors.push([
       "stylelint-processor-styled-components",
       {
@@ -45,15 +45,15 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         "stylelint-processor-styled-components": "^1.10.0",
       },
       scripts: {
-        "format:style": `prettier --write 'src/**/*.{css,css.${options.preset.language}}'`,
-        "format:check:style": `prettier --check 'src/**/*.{css,css.${options.preset.language}}'`,
+        "format:style": `prettier --write 'src/**/*.{css,css.${options.language}}'`,
+        "format:check:style": `prettier --check 'src/**/*.{css,css.${options.language}}'`,
       },
     });
 
-    lintScript = `stylelint src/**/*.{css,css.${options.preset.language}}`;
+    lintScript = `stylelint src/**/*.{css,css.${options.language}}`;
   }
 
-  if (options.preset.cssSolution === "less") {
+  if (options.cssSolution === "less") {
     lintScript = "stylelint src/**/*.{css,less}";
     stylelintRules.set("selector-pseudo-class-no-unknown", [
       true,
@@ -72,12 +72,12 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
   let lintStyleFileSuffix = "src/**/*.{css,less}";
 
-  if (options.preset.cssSolution === "styled-components") {
-    if (options.preset.language === "js") {
+  if (options.cssSolution === "styled-components") {
+    if (options.language === "js") {
       lintStyleFileSuffix = "src/**/*.{css,css.js}";
     }
 
-    if (options.preset.language === "ts") {
+    if (options.language === "ts") {
       lintStyleFileSuffix = "src/**/*.{css,css.ts}";
     }
   }

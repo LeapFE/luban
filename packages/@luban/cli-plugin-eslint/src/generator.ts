@@ -6,7 +6,7 @@ import { eslintConfigAirbnb } from "./airbnb";
 import { eslintConfigStandard } from "./standard";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const lintFileSuffix = options.preset.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
+  const lintFileSuffix = options.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
 
   if (api.isGitRepository()) {
     api.extendPackage({
@@ -22,23 +22,23 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       "lint-staged": {
         [`src/**/*.${lintFileSuffix}`]: [
           "npm run eslint",
-          `npm run format:check:${options.preset.language}`,
+          `npm run format:check:${options.language}`,
         ],
       },
     });
   }
 
-  if (options.preset.eslint === "leap") {
+  if (options.eslint === "leap") {
     eslintConfigLeap(api);
     return;
   }
 
-  if (options.preset.eslint === "airbnb") {
+  if (options.eslint === "airbnb") {
     eslintConfigAirbnb(api, options);
     return;
   }
 
-  if (options.preset.eslint === "standard") {
+  if (options.eslint === "standard") {
     eslintConfigStandard(api, options);
     return;
   }

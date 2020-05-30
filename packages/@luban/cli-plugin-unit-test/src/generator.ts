@@ -16,7 +16,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.preset.language === "ts") {
+  if (options.language === "ts") {
     api.extendPackage({
       devDependencies: {
         "@types/enzyme": "^3.10.5",
@@ -28,7 +28,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     });
   }
 
-  if (options.preset.language === "js") {
+  if (options.language === "js") {
     api.extendPackage({
       devDependencies: {
         "babel-jest": "^25.1.0",
@@ -37,18 +37,18 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   }
 
   const coveragePathIgnorePatterns: string[] = ["/node_modules/"];
-  const testFileSuffix = options.preset.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
+  const testFileSuffix = options.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
 
-  if (options.preset.router) {
+  if (options.router) {
     coveragePathIgnorePatterns.push("/src/router/");
   }
 
-  if (options.preset.store) {
+  if (options.store) {
     coveragePathIgnorePatterns.push("/src/models/");
   }
 
   api.render("./template", {
-    isTsProject: options.preset.language === "ts",
+    isTsProject: options.language === "ts",
     coveragePathIgnorePatterns: JSON.stringify(coveragePathIgnorePatterns),
     testFileSuffix,
   });

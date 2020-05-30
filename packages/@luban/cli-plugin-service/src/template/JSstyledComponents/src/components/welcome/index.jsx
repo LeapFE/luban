@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-<%_ if (useRouter) { _%>
+<%_ if (useStore) { _%>
 import { Todo } from "../todo";
 <%_ } _%>
 
@@ -12,7 +12,7 @@ import { AppWrapper, GlobalStyle } from "./index.css";
 const Welcome = ({ pageName }) => (
   <AppWrapper>
     <header className="App-header">
-      <%_ if (useRouter) { _%>
+      <%_ if (useStore) { _%>
       <Todo />
       <%_ } _%>
       <h2>

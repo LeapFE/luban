@@ -21,11 +21,11 @@ import {
   WebpackRawConfigCallback,
   CommandList,
   ServicePlugin,
-  Preset,
   ParsedArgs,
   CliArgs,
   PluginApplyCallback,
   builtinServiceCommandName,
+  RootOptions,
 } from "./../definitions";
 import { ProjectConfig } from "./../main";
 
@@ -59,7 +59,8 @@ const builtinServiceCommandNameList = new Set<builtinServiceCommandName>([
   "help",
 ]);
 
-const defaultPreset: Required<Preset> = {
+const defaultRootOptions: Required<RootOptions> = {
+  projectName: "",
   language: "ts",
   eslint: "standard",
   cssSolution: "less",
@@ -69,7 +70,9 @@ const defaultPreset: Required<Preset> = {
   unitTest: true,
   fetch: true,
   plugins: {
-    "@luban-cli/cli-plugin-service": {},
+    "@luban-cli/cli-plugin-service": {
+      projectName: "",
+    },
     "@luban-cli/cli-plugin-babel": {},
     "@luban-cli/cli-plugin-eslint": {},
     "@luban-cli/cli-plugin-router": {},
@@ -368,8 +371,8 @@ class Service {
     return resolved;
   }
 
-  public resolveLubanConfig(): Required<Preset> {
-    let initConfig: Required<Preset> = defaultPreset;
+  public resolveLubanConfig(): Required<RootOptions> {
+    let initConfig: Required<RootOptions> = defaultRootOptions;
 
     const pkg = this.resolvePkg();
     if (pkg.__luban_config__) {

@@ -10,7 +10,9 @@ export const defaultPreset: Required<Preset> = {
   unitTest: true,
   fetch: true,
   plugins: {
-    "@luban-cli/cli-plugin-service": {},
+    "@luban-cli/cli-plugin-service": {
+      projectName: "",
+    },
     "@luban-cli/cli-plugin-babel": {},
     "@luban-cli/cli-plugin-eslint": {},
     "@luban-cli/cli-plugin-router": {},
@@ -46,7 +48,19 @@ export const defaultPromptModule: Array<keyof Preset> = [
 
 export const defaultRootOptions: Required<RootOptions> = {
   projectName: "",
-  preset: defaultPreset,
+  language: "ts",
+  eslint: "leap",
+  cssSolution: "less",
+  stylelint: true,
+  router: true,
+  store: false,
+  unitTest: true,
+  fetch: true,
+  plugins: {
+    "@luban-cli/cli-plugin-service": {
+      projectName: "",
+    },
+  },
 };
 
 export const confirmUseDefaultPresetMsg =

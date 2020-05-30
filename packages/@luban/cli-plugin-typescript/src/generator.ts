@@ -4,7 +4,7 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
   api.render("./template");
 
-  if (options.preset.cssSolution === "styled-components") {
+  if (options.cssSolution === "styled-components") {
     api.extendPackage({
       devDependencies: {
         "@types/styled-components": "^4.4.0",

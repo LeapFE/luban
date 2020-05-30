@@ -1,5 +1,3 @@
-export type RootOptions = { projectName?: string; preset?: Required<Preset> };
-
 export type RawPlugin = {
   "@luban-cli/cli-plugin-babel"?: Record<string, any>;
   "@luban-cli/cli-plugin-typescript"?: Record<string, any>;
@@ -9,7 +7,7 @@ export type RawPlugin = {
   "@luban-cli/cli-plugin-store"?: Record<string, any>;
   "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
   "@luban-cli/cli-plugin-fetch"?: Record<string, any>;
-  "@luban-cli/cli-plugin-service": RootOptions;
+  "@luban-cli/cli-plugin-service": { projectName: string } & Record<string, any>;
 };
 
 export type ESLinterConfig = "leap" | "airbnb" | "standard";
@@ -24,7 +22,7 @@ export type CssSolution = "less" | "styled-components";
 export type UILibrary = "ant-design" | "ant-design-mobile";
 
 /**
- * @description 创建项目时的预设选项和插件的配置选项
+ * @description preset config and plugin options after created project
  */
 export type Preset = {
   language?: DevLanguage;
@@ -37,6 +35,8 @@ export type Preset = {
   fetch?: boolean;
   plugins: RawPlugin;
 };
+
+export type RootOptions = Preset & { projectName: string };
 
 /**
  * @description package.json fields, name and version must required
@@ -56,7 +56,7 @@ export type BasePkgFields = {
   author?: string;
   browserslist?: string[];
   homepage?: string;
-  ["__luban_config__"]?: Required<Preset>;
+  ["__luban_config__"]?: Required<RootOptions>;
   /**
    * @deprecated
    */

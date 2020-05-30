@@ -11,7 +11,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  const modifyFile = options.preset.language === "ts" ? "src/App.tsx" : "src/App.jsx";
+  const modifyFile = options.language === "ts" ? "src/App.tsx" : "src/App.jsx";
 
   api.render("./template/service");
 
@@ -34,8 +34,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.preset.cssSolution) {
-    if (options.preset.cssSolution === "less") {
+  if (options.cssSolution) {
+    if (options.cssSolution === "less") {
       api.extendPackage({
         devDependencies: {
           less: "^3.10.0",
@@ -44,7 +44,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       });
     }
 
-    if (options.preset.cssSolution === "styled-components") {
+    if (options.cssSolution === "styled-components") {
       api.extendPackage({
         dependencies: {
           "styled-components": "^4.4.0",
@@ -52,22 +52,20 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       });
     }
 
-    const useRouter = options.preset.router;
-
-    if (options.preset.cssSolution === "less" && options.preset.language === "js") {
-      api.render("./template/JSLess", { modifyFile, useRouter });
+    if (options.cssSolution === "less" && options.language === "js") {
+      api.render("./template/JSLess", { modifyFile, useStore: options.store });
     }
 
-    if (options.preset.cssSolution === "less" && options.preset.language === "ts") {
-      api.render("./template/TSLess", { modifyFile, useRouter });
+    if (options.cssSolution === "less" && options.language === "ts") {
+      api.render("./template/TSLess", { modifyFile, useStore: options.store });
     }
 
-    if (options.preset.cssSolution === "styled-components" && options.preset.language === "js") {
-      api.render("./template/JSstyledComponents", { modifyFile, useRouter });
+    if (options.cssSolution === "styled-components" && options.language === "js") {
+      api.render("./template/JSstyledComponents", { modifyFile, useStore: options.store });
     }
 
-    if (options.preset.cssSolution === "styled-components" && options.preset.language === "ts") {
-      api.render("./template/TSstyledComponents", { modifyFile, useRouter });
+    if (options.cssSolution === "styled-components" && options.language === "ts") {
+      api.render("./template/TSstyledComponents", { modifyFile, useStore: options.store });
     }
   }
 }

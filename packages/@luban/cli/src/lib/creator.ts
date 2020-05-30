@@ -96,9 +96,7 @@ class Creator {
 
     const adaptedPreset = cloneDeep(preset);
 
-    const rootOptions = { projectName: name, preset };
-
-    adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = rootOptions;
+    adaptedPreset.plugins["@luban-cli/cli-plugin-service"] = { projectName: name };
 
     // NOTE unsupported the npm client `yarn`. `this._pkgManager` is always undefined
     const packageManager = this._pkgManager || "npm";
@@ -117,7 +115,7 @@ class Creator {
       version: "0.1.0",
       private: true,
       devDependencies: {},
-      ["__luban_config__"]: adaptedPreset,
+      ["__luban_config__"]: { projectName: name, ...adaptedPreset },
     };
 
     const deps = Object.keys(adaptedPreset.plugins);
@@ -276,7 +274,7 @@ class Creator {
     const answers = await inquirer.prompt(this.resolveFinalPrompts());
 
     const preset: Preset = {
-      plugins: { "@luban-cli/cli-plugin-service": {} },
+      plugins: { "@luban-cli/cli-plugin-service": { projectName: "" } },
     };
 
     this.promptCompletedCallbacks.forEach((cb) => cb(answers as FinalAnswers, preset));

@@ -9,17 +9,17 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.preset.language === "ts") {
+  if (options.language === "ts") {
     api.extendPackage({
       devDependencies: {
         "@types/react-redux": "^7.1.7",
       },
     });
 
-    api.render("./template/ts", { useRouter: options.preset.router });
+    api.render("./template/ts", { useRouter: options.router });
   }
 
-  if (options.preset.language === "js") {
-    api.render("./template/js", { useRouter: options.preset.router });
+  if (options.language === "js") {
+    api.render("./template/js", { useRouter: options.router });
   }
 }

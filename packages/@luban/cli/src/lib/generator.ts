@@ -61,10 +61,7 @@ export class Generator {
       Object.keys(this.pkg.devDependencies || {}),
     );
 
-    const cliService = plugins.find((p) => p.id === "@luban-cli/cli-plugin-service");
-    this.rootOptions = cliService
-      ? (cliService.options as Required<RootOptions>)
-      : defaultRootOptions;
+    this.rootOptions = pkg.__luban_config__ || defaultRootOptions;
   }
 
   public async initPlugins(): Promise<void> {

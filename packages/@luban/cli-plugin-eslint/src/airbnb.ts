@@ -4,10 +4,9 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const eslintParser =
-    options.preset.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
+  const eslintParser = options.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
 
-  const lintFileSuffix = options.preset.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
+  const lintFileSuffix = options.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
 
   const parserOptions = new SimpleMapPolyfill<
     string,
@@ -82,7 +81,7 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
     },
   });
 
-  if (options.preset.language === "js") {
+  if (options.language === "js") {
     api.extendPackage({
       scripts: {
         eslint: "eslint --config .eslintrc --ext .jsx,.js src/",
@@ -103,7 +102,7 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
     eslintExtends.push("prettier", "prettier/react");
   }
 
-  if (options.preset.language === "ts") {
+  if (options.language === "ts") {
     api.extendPackage({
       scripts: {
         eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
@@ -141,7 +140,7 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
     eslintRules.set("import/extensions", "off");
   }
 
-  if (options.preset.unitTest) {
+  if (options.unitTest) {
     eslintEnv.set("jest", true);
     eslintRules.set("import/no-extraneous-dependencies", [
       "error",

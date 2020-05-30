@@ -30,7 +30,7 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     },
   });
 
-  if (rootOptions.preset.language === "ts") {
+  if (rootOptions.language === "ts") {
     babelConfigPreset.push("@babel/preset-typescript");
 
     api.extendPackage({
@@ -40,7 +40,7 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     });
   }
 
-  if (rootOptions.preset.language === "js") {
+  if (rootOptions.language === "js") {
     babelConfigPlugins.push(
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-proposal-class-properties",
@@ -54,7 +54,7 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     });
   }
 
-  if (rootOptions.preset.cssSolution === "styled-components") {
+  if (rootOptions.cssSolution === "styled-components") {
     babelConfigPlugins.push([
       "babel-plugin-styled-components",
       {
@@ -72,7 +72,7 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     });
   }
 
-  if (rootOptions.preset.eslint && rootOptions.preset.language === "js") {
+  if (rootOptions.eslint && rootOptions.language === "js") {
     api.extendPackage({
       devDependencies: {
         "babel-plugin-transform-react-remove-prop-types": "^0.4.24",

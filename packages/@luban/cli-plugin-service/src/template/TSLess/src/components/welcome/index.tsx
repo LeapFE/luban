@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-<%_ if (useRouter) { _%>
+<%_ if (useStore) { _%>
 import { Todo } from "../todo";
 <%_ } _%>
 
@@ -15,7 +15,7 @@ interface WelcomeProps {
 const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
   <div className={styles.App}>
     <header className="App-header">
-      <%_ if (useRouter) { _%>
+      <%_ if (useStore) { _%>
       <Todo />
       <%_ } _%>
       <h2>
