@@ -24,7 +24,8 @@
 #### 如何发布 package
 > 发布前需要确认所有包的版本都是一致的，且以 lerna.json 中的版本为准，且在仓库中有对应的版本 tag
 
-`npm run publish` 或者 `lerna publish from-git --yes`
+发布内测版本: `npm run publish:next`
+发布生产版本: `npm run publish`
 
 #### 强制为所有 package 推送新版本 force all packages to be versioned
 
