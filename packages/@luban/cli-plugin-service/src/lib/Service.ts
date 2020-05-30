@@ -314,7 +314,7 @@ class Service {
     }
 
     const spinner = new Spinner();
-    spinner.logWithSpinner(`compiling ${this.configFilename} ... \n`);
+    spinner.logWithSpinner(`compiling ${chalk.green(this.configFilename)} ... \n`);
 
     const configTempDir = path.resolve(this.context, ".config");
     const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
