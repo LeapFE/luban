@@ -317,12 +317,12 @@ class Service {
     const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
 
     const { code } = shell.exec(
-      `${this.context}/node_modules/typescript/bin/tsc ${filePath} --module commonjs --allowJs true --outDir ${configTempDir}`,
+      `${this.context}/node_modules/typescript/bin/tsc ${filePath} --module commonjs --outDir ${configTempDir}`,
     );
 
     if (code !== 0) {
       // ignore compile error, just print warn
-      warn(`compile ${chalk.bold(this.configFilename)} file failure \n`);
+      warn(`compiled ${chalk.bold(this.configFilename)} file failure \n`);
     } else {
       info(`compiled ${chalk.green(this.configFilename)} file successfully \n`);
     }
