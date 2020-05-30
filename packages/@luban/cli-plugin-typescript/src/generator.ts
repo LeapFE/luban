@@ -16,7 +16,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     devDependencies: {
       "@types/react": "^16.9.35",
       "@types/react-dom": "^16.9.8",
-      typescript: "^3.8.3",
+      typescript: "~3.8.3",
       "ts-loader": "^7.0.0",
     },
   });
