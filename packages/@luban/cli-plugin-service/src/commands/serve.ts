@@ -79,7 +79,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           webpackConfig.plugin("hmr").use(HotModuleReplacementPlugin);
           webpackConfig
             .plugin("webpack-bar")
-            .use(WebpackBar, [{ name: "Client", color: "#41b883" }]);
+            .use(WebpackBar, [
+              { name: api.resolveInitConfig().projectName || "Client", color: "#41b883" },
+            ]);
         }
       });
 
