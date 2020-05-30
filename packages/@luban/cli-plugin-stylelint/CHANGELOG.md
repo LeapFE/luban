@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.7](https://github.com/leapFE/luban/compare/v1.3.1-beta.6...v1.3.1-beta.7) (2020-05-30)
+
+
+### Features
+
+* **stylelint:** add .stylelintignore file ([4f9234c](https://github.com/leapFE/luban/commit/4f9234c556bfbf431d030cf2ecbfc9962969adcc))
+
+
+
+
+
 ## [1.3.1-beta.6](https://github.com/leapFE/luban/compare/v1.3.1-beta.5...v1.3.1-beta.6) (2020-05-30)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
