@@ -4,12 +4,11 @@
 /docs/**
 /jsdoc/**
 /template/**
-!.eslintrc
-!.babelrc
+/public/**
+/tests/**
+/node_modules/**
 **/*.snap
-node_modules
 luban.config.ts
 luban.config.js
 jest.config.js
 babel.config.js
-/tests/**
