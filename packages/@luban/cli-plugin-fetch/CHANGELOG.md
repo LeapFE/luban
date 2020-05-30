@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.5](https://github.com/leapFE/luban/compare/v1.3.1-beta.4...v1.3.1-beta.5) (2020-05-30)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-fetch
+
+
+
+
+
 ## [1.3.1-beta.4](https://github.com/leapFE/luban/compare/v1.3.1-beta.3...v1.3.1-beta.4) (2020-05-30)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-fetch
