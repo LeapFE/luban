@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.8](https://github.com/leapFE/luban/compare/v1.3.1-beta.7...v1.3.1-beta.8) (2020-05-30)
+
+
+### Features
+
+* **service:** chalk tip for compiling luban.config.ts ([a5fb8a1](https://github.com/leapFE/luban/commit/a5fb8a13d94c3af6c8b708e1b08f38ec9436f07e))
+
+
+
+
+
 ## [1.3.1-beta.7](https://github.com/leapFE/luban/compare/v1.3.1-beta.6...v1.3.1-beta.7) (2020-05-30)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-service
