@@ -1,9 +1,7 @@
 {
-  "extends": "./tsconfig.json",
-  "include": ["luban.config.ts"],
-  "exclude": ["src/**/*"],
+  "files": ["luban.config.ts"],
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES5",
+    "target": "ES5"
   }
 }

@@ -1,45 +1,50 @@
 {
+  // More tsconfig info see https://www.typescriptlang.org/tsconfig/
+  "include": ["src/**/*"],
+  "files": ["luban.config.ts"],
+  "exclude": ["public", "node_modules", "dist", "build"],
+
   "compilerOptions": {
-    "resolveJsonModule": true,
-    "target": "ES5",
-    "module": "ESNext",
-    "lib": [
-      "dom",
-      "es5",
-      "es2015.promise"
-    ],
+    /* Project Options */
+    "declaration": false,
     "jsx": "react",
+    "target": "ESNext",
+    "module": "ESNext",
+    "removeComments": true,
+    "rootDir": "./",
     "sourceMap": true,
-    "downlevelIteration": true,
-    "allowJs": false,
 
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
+    /* Strict Checks */
     "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
 
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-
-    "moduleResolution": "node",
+    /* Module Resolution */
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "paths": {
       "*": ["./node_modules/*/index"],
       "@/*": ["src/*"]
     },
     "typeRoots": ["src/typings", "node_modules/@types"],
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
 
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/**"]
+    /* Linter Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Advanced Options */
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
 }
