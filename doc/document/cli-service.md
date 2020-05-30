@@ -33,8 +33,8 @@ npm run serve
 选项：
 
   --entry   指定入口文件 (默认值: index.jsx/index.tsx)
-  --config  指定配置文件 (默认值: luban.config.js)
-  --open    在贝蒂服务启动时打开浏览器 (默认值: false)
+  --config  指定配置文件 (默认值: luban.config.js/luban.config.ts)
+  --open    在本地服务启动时打开浏览器 (默认值: false)
   --mode    指定环境模式 (默认值: development)
   --host    指定 host (默认值: 0.0.0.0)
   --port    指定 port (默认值: 8080)
@@ -52,7 +52,7 @@ npm run serve
 选项：
 
   --entry    指定入口文件 (默认值: index.jsx/index.tsx)
-  --config   指定配置文件 (默认值: luban.config.js)
+  --config   指定配置文件 (默认值: luban.config.js/luban.config.ts)
   --mode     指定环境模式 (默认值: production)
   --dest     指定输出目录 (默认值: dist)
   --report   生成 report.html 以帮助分析包内容
@@ -69,7 +69,7 @@ npm run serve
 
 选项：
 
-  --config   指定配置文件 (默认值: luban.config.js)
+  --config   指定配置文件 (默认值: luban.config.js/luban.config.ts)
   --mode     指定环境模式 (默认值: production)
   --rule <ruleName>     审查指定的模块规则
   --plugin <pluginName> 审查指定的插件
