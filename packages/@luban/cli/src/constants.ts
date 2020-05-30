@@ -14,7 +14,6 @@ export const defaultPreset: Required<Preset> = {
     "@luban-cli/cli-plugin-babel": {},
     "@luban-cli/cli-plugin-eslint": {},
     "@luban-cli/cli-plugin-router": {},
-    "@luban-cli/cli-plugin-store": {},
     "@luban-cli/cli-plugin-stylelint": {},
     "@luban-cli/cli-plugin-typescript": {},
     "@luban-cli/cli-plugin-unit-test": {},
