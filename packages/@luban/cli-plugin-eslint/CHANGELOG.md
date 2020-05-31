@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.9](https://github.com/leapFE/luban/compare/v1.3.1-beta.8...v1.3.1-beta.9) (2020-05-31)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
+
+
+
+
+
 ## [1.3.1-beta.8](https://github.com/leapFE/luban/compare/v1.3.1-beta.7...v1.3.1-beta.8) (2020-05-30)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
