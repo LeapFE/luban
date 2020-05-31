@@ -112,9 +112,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         .end();
     }
 
-    // FIXME TypeError: cb is not a function
-    // index.js:160 compilation.plugin
-    // [cli-plugin-service]/[preload-webpack-plugin]/index.js:160:9
     if (isProduction) {
       webpackConfig.plugin("preload").use(PreloadWebpackPlugin, [
         {
