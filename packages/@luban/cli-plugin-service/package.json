@@ -59,6 +59,7 @@
     "minimist": "^1.2.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "portfinder": "^1.0.25",
+    "preload-webpack-plugin": "^2.3.0",
     "read-pkg": "^5.2.0",
     "semver": "7.1.2",
     "shelljs": "^0.8.4",

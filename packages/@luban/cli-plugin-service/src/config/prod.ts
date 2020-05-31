@@ -2,6 +2,7 @@ import TerserWebpackPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import CssNano from "cssnano";
 import path from "path";
+import PreloadWebpackPlugin = require("preload-webpack-plugin");
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
@@ -67,6 +68,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
             common: {
               chunks: "initial",
               name: "common",
+              priority: -20,
               minChunks: 2,
               maxInitialRequests: 5,
               minSize: 0,
@@ -75,7 +77,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
               test: /[\\/]node_modules[\\/]/,
               chunks: "initial",
               name: "vendors",
-              priority: 10,
+              priority: -10,
               enforce: true,
             },
             style: {
@@ -108,6 +110,26 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           },
         ])
         .end();
+    }
+
+    // FIXME TypeError: cb is not a function
+    // index.js:160 compilation.plugin
+    // [cli-plugin-service]/[preload-webpack-plugin]/index.js:160:9
+    if (isProduction) {
+      webpackConfig.plugin("preload").use(PreloadWebpackPlugin, [
+        {
+          rel: "preload",
+          include: "initial",
+          fileBlacklist: [/map.js$/],
+        },
+      ]);
+
+      webpackConfig.plugin("prefetch").use(PreloadWebpackPlugin, [
+        {
+          rel: "prefetch",
+          include: "asyncChunks",
+        },
+      ]);
     }
   });
 }
