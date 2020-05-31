@@ -1,6 +1,8 @@
 import HtmlWebpackPlugin, { Options as HtmlPluginOptions } from "html-webpack-plugin";
 import { existsSync } from "fs";
 import { error } from "@luban-cli/cli-shared-utils";
+import CopyWebpackPlugin = require("copy-webpack-plugin");
+import { pathExistsSync } from "fs-extra";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
@@ -47,5 +49,25 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
     };
 
     webpackConfig.plugin("html").use(HtmlWebpackPlugin, [htmlPluginOptions]);
+
+    const publicDir = api.resolve("public");
+    if (pathExistsSync(publicDir)) {
+      webpackConfig.plugin("copy").use(CopyWebpackPlugin, [
+        {
+          patterns: [
+            {
+              from: publicDir,
+              to: outputDir,
+              toType: "dir",
+              globOptions: {
+                dot: true,
+                gitignore: true,
+                ignore: [".DS_Store", options.templatePath],
+              },
+            },
+          ],
+        },
+      ]);
+    }
   });
 }
