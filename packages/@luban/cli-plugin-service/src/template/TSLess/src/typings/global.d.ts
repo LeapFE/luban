@@ -9,5 +9,6 @@ declare namespace NodeJS {
     AFFECT_FOR_ALL_ENV: string;
     APP_SERVER: string;
     APP_PUBLIC_PATH: string;
+    NODE_ENV: "development" | "production";
   }
 }
