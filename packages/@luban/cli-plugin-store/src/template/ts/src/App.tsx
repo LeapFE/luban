@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { LubanRouter } from "luban-router";
 import { config } from "@/route/config";
 <%_ } else { _%>
-import { Welcome } from "@/components/welcome";
+import { Welcome } from "@/components/Welcome";
 <%_ } _%>
 
 
