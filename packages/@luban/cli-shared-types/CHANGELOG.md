@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.12](https://github.com/leapFE/luban/compare/v1.3.1-beta.11...v1.3.1-beta.12) (2020-06-02)
+
+**Note:** Version bump only for package @luban-cli/cli-shared-types
+
+
+
+
+
 ## [1.3.1-beta.11](https://github.com/leapFE/luban/compare/v1.3.1-beta.10...v1.3.1-beta.11) (2020-06-02)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-types

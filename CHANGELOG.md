@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.12](https://github.com/LeapFE/luban/compare/v1.3.1-beta.11...v1.3.1-beta.12) (2020-06-02)
+
+
+### Features
+
+* **service,typescript,fetch:** mock config file unsupported .ts file ([17f9bda](https://github.com/LeapFE/luban/commit/17f9bda32425855d1a81bcde514e367c321db049))
+
+
+
+
+
 ## [1.3.1-beta.11](https://github.com/LeapFE/luban/compare/v1.3.1-beta.10...v1.3.1-beta.11) (2020-06-02)
 
 
