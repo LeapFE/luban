@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-import { Welcome } from "@/components/welcome";
+import { Welcome } from "@/components/Welcome";
 
 const Home: FunctionComponent = () => {
   return <Welcome pageName="Home" />;

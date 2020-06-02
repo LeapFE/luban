@@ -8,7 +8,7 @@ import portfinder from "portfinder";
 import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import chalk from "chalk";
-import { openBrowser, IpcMessenger, log, error } from "@luban-cli/cli-shared-utils";
+import { openBrowser, IpcMessenger, log, error, info } from "@luban-cli/cli-shared-utils";
 import { existsSync } from "fs";
 
 import { PluginAPI } from "./../lib/PluginAPI";
@@ -181,7 +181,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
 
         before: (app: Application, server: WebpackDevServer) => {
           if (options.mock && api.service.mockConfig !== null) {
-            log("setup development mock server...\n");
+            info("setup development mock server...\n");
             setupMockServer(app, api.service.mockConfig);
           }
 

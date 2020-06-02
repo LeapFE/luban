@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Welcome } from "@/components/welcome";
+import { Welcome } from "@/components/Welcome";
 
 const User = () => (<Welcome pageName="User" />)
 
