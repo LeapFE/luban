@@ -127,7 +127,7 @@ class Service {
     this.configFilename =
       this.rootOptions.language === "js" ? "luban.config.js" : "luban.config.ts";
 
-    this.mockConfigFile = this.rootOptions.language === "js" ? "mock/index.js" : "mock/index.ts";
+    this.mockConfigFile = "mock/index.js";
 
     this.webpackConfig = new Config();
     this.webpackChainCallback = [];
@@ -399,7 +399,7 @@ class Service {
     }
 
     try {
-      _mockConfig = this.requireSpecifiedConfigFile(mockConfigFilePath, this.mockConfigFile);
+      _mockConfig = require(mockConfigFilePath);
 
       if (!_mockConfig || typeof _mockConfig !== "object") {
         error(`Error load ${chalk.bold(`${this.mockConfigFile}`)}: should export an object. \n`);

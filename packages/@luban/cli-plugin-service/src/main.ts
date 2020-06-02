@@ -146,7 +146,3 @@ export type MockFunction = (req: Request, res: Response, next?: NextFunction) =>
 export type MockValue = string | { [key: string]: any } | MockFunction;
 
 export type MockConfig = { [key: string]: MockValue };
-
-export function createMockConfig(config: MockConfig): MockConfig {
-  return config;
-}

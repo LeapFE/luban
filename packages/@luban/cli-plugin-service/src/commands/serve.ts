@@ -181,6 +181,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
 
         before: (app: Application, server: WebpackDevServer) => {
           if (options.mock && api.service.mockConfig !== null) {
+            log("setup development mock server...\n");
             setupMockServer(app, api.service.mockConfig);
           }
 
@@ -218,6 +219,13 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
           console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`);
           console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
           console.log();
+
+          if (options.mock && api.service.mockConfig !== null) {
+            console.log("  Development mock server running at:");
+            console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`);
+            console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
+            console.log();
+          }
 
           if (isFirstCompile) {
             isFirstCompile = false;

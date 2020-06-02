@@ -1,9 +1,5 @@
 {
-  <%_ if (mock) { _%>
-  "files": ["luban.config.ts", "mock/index.ts"],
-  <%_ } else { _%>
   "files": ["luban.config.ts"],
-  <%_ } _%>
   "compilerOptions": {
     "module": "CommonJS",
     "target": "ES5"
