@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.11](https://github.com/leapFE/luban/compare/v1.3.1-beta.10...v1.3.1-beta.11) (2020-06-02)
+
+
+### Features
+
+* **service,fetch,eslint,typescript:** built-in mock server ([8c0e99b](https://github.com/leapFE/luban/commit/8c0e99ba1cc612332877daab56b28e6de8d25c06))
+
+
+
+
+
 ## [1.3.1-beta.10](https://github.com/leapFE/luban/compare/v1.3.1-beta.9...v1.3.1-beta.10) (2020-05-31)
 
 
