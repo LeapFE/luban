@@ -6,7 +6,7 @@ import { resolveClientEnv } from "./../utils/resolveClientEnv";
 import { UrlLoaderOptions } from "./../definitions";
 import { ProjectConfig } from "./../main";
 
-export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
+export default function(api: PluginAPI, options: ProjectConfig): void {
   const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
     return {
       limit: options.assetsLimit,
@@ -47,8 +47,9 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
       .alias.set("@", api.resolve("src"))
       .end();
 
-    if (options.alias) {
-      Object.keys(options.alias).forEach((key) => {
+    const aliasKeys = Object.keys(options.alias);
+    if (aliasKeys.length > 0) {
+      aliasKeys.forEach((key) => {
         webpackConfig.resolve.alias.set(key, options.alias[key]);
       });
     }
@@ -142,7 +143,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     webpackConfig
       .plugin("define")
-      .use(require("webpack").DefinePlugin, [resolveClientEnv(options)]);
+      .use(require("webpack").DefinePlugin, [resolveClientEnv(options.publicPath)]);
 
     webpackConfig.plugin("clean").use(CleanWebpackPlugin, [{ verbose: true }]);
   });

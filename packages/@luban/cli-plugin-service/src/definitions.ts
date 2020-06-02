@@ -12,8 +12,6 @@ import {
 
 import { PluginAPI } from "./lib/PluginAPI";
 
-import { defaultsProjectConfig } from "./lib/options";
-
 export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
 
 export type RootOptions = rootOptions;
@@ -57,8 +55,6 @@ export type CommandList<P> = Record<
     opts: Record<string, any> | null | PluginApplyCallback;
   }
 >;
-
-export type DefaultProjectConfig = Partial<typeof defaultsProjectConfig>;
 
 export type ServeCliArgs = Partial<{
   entry: string;

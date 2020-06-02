@@ -15,6 +15,7 @@ import { PluginAPI } from "./../lib/PluginAPI";
 import { ServeCliArgs, ParsedArgs } from "./../definitions";
 import { ProjectConfig } from "./../main";
 import { prepareUrls } from "./../utils/prepareURLs";
+import { setupMockServer } from "../utils/setupMockServer";
 
 const defaultServerConfig = {
   host: "0.0.0.0",
@@ -44,7 +45,7 @@ function addDevClientToEntry(config: webpack.Configuration, devClient: string[])
   }
 }
 
-export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
+export default function(api: PluginAPI, options: ProjectConfig): void {
   api.registerCommand(
     "serve",
     {
@@ -167,11 +168,6 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
         publicPath: options.publicPath,
         overlay: { warnings: false, errors: true },
         https: useHttps,
-        before: (app: Application, server: WebpackDevServer) => {
-          // TODO supported use function to config devServer
-          // api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
-          projectDevServerOptions.before && projectDevServerOptions.before(app, server, compiler);
-        },
         open: false,
         stats: {
           version: true,
@@ -180,7 +176,18 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           modules: false,
           children: false,
         },
+
         ...projectDevServerOptions,
+
+        before: (app: Application, server: WebpackDevServer) => {
+          if (options.mock && api.service.mockConfig !== null) {
+            setupMockServer(app, api.service.mockConfig);
+          }
+
+          // TODO supported use function to config devServer
+          // api.service.webpackDevServerConfigCallback.forEach((callback) => callback(app, server));
+          projectDevServerOptions.before && projectDevServerOptions.before(app, server, compiler);
+        },
       };
 
       const server = new WebpackDevServer(compiler, webpackDevServerOptions);

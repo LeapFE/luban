@@ -5,6 +5,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   api.extendPackage({
     dependencies: {
       axios: "^0.19.2",
+      "@luban-hooks/use-request": "^0.0.8",
     },
   });
 

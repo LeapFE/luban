@@ -19,7 +19,7 @@ function getScriptsDir(dir: string = ""): string {
   return `${adaptedDir}/`;
 }
 
-export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
+export default function(api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig) => {
     const isProduction = process.env.NODE_ENV === "production";
 
@@ -91,7 +91,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
           name: "manifest",
         })
         .minimizer("terser")
-        .use(TerserWebpackPlugin, [terserOptions(options)])
+        .use(TerserWebpackPlugin, [terserOptions(options.productionSourceMap)])
         .end()
         .minimizer("optimizeCss")
         .use(OptimizeCssAssetsPlugin, [

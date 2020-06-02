@@ -3,7 +3,6 @@ import merge from "webpack-merge";
 import readPkg from "read-pkg";
 import fs from "fs-extra";
 import path from "path";
-import defaultsDeep from "lodash.defaultsdeep";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
@@ -12,7 +11,7 @@ import shell from "shelljs";
 import webpack = require("webpack");
 
 import { PluginAPI } from "./PluginAPI";
-import { defaultsProjectConfig, validateProjectConfig } from "./options";
+import { validateProjectConfig, mergeProjectOptions } from "./options";
 
 import {
   BasePkgFields,
@@ -27,7 +26,7 @@ import {
   builtinServiceCommandName,
   RootOptions,
 } from "./../definitions";
-import { ProjectConfig } from "./../main";
+import { ProjectConfig, MockConfig } from "./../main";
 
 type ResetParams = Partial<{
   plugins: InlinePlugin[];
@@ -107,6 +106,9 @@ class Service {
   public mode: string;
   private inlineProjectOptions?: ProjectConfig;
   private configFilename: string;
+  public mockConfig: MockConfig | null;
+  private rootOptions: RootOptions;
+  private mockConfigFile: string;
 
   constructor(context: string, { plugins, pkg, projectOptions, useBuiltIn }: ResetParams) {
     Object.defineProperties(process, {
@@ -120,8 +122,12 @@ class Service {
 
     this.context = context;
 
+    this.rootOptions = this.resolveLubanConfig();
+
     this.configFilename =
-      this.resolveLubanConfig().language === "js" ? "luban.config.js" : "luban.config.ts";
+      this.rootOptions.language === "js" ? "luban.config.js" : "luban.config.ts";
+
+    this.mockConfigFile = this.rootOptions.language === "js" ? "mock/index.js" : "mock/index.ts";
 
     this.webpackConfig = new Config();
     this.webpackChainCallback = [];
@@ -130,6 +136,8 @@ class Service {
     this.pkg = this.resolvePkg(pkg);
 
     this.inlineProjectOptions = projectOptions;
+
+    this.mockConfig = null;
 
     this.plugins = this.resolvePlugins(plugins || [], useBuiltIn || false);
   }
@@ -141,7 +149,9 @@ class Service {
 
     const loadedProjectConfig = this.loadProjectOptions(this.inlineProjectOptions);
 
-    this.projectConfig = defaultsDeep(loadedProjectConfig, defaultsProjectConfig);
+    this.projectConfig = mergeProjectOptions(loadedProjectConfig, this.rootOptions);
+
+    this.mockConfig = this.loadMockConfig();
 
     this.plugins.forEach(({ id, apply }) => {
       const api = new PluginAPI(id, this);
@@ -305,8 +315,8 @@ class Service {
     }
   }
 
-  private requireProjectConfigFile(filePath: string): any {
-    if (/\w+\.js$/.test(this.configFilename)) {
+  private requireSpecifiedConfigFile(filePath: string, configFilename: string): any {
+    if (/\w+\.js$/.test(configFilename)) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const configModule = require(filePath);
 
@@ -314,10 +324,10 @@ class Service {
     }
 
     const spinner = new Spinner();
-    spinner.logWithSpinner(`compiling ${chalk.green(this.configFilename)} ... \n`);
+    spinner.logWithSpinner(`compiling ${chalk.green(configFilename)} ... \n`);
 
     const configTempDir = path.resolve(this.context, ".config");
-    const configTempDirPath = path.resolve(`${configTempDir}/${this.configFilename}`);
+    const configTempDirPath = path.resolve(`${configTempDir}/${configFilename}`);
 
     const { code } = shell.exec(
       `${this.context}/node_modules/typescript/bin/tsc ${filePath} --module commonjs --outDir ${configTempDir}`,
@@ -325,7 +335,7 @@ class Service {
 
     if (code !== 0) {
       // ignore compile error, just print warn
-      warn(`compiled ${chalk.bold(this.configFilename)} file failure \n`);
+      warn(`compiled ${chalk.bold(configFilename)} file failure \n`);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -338,9 +348,9 @@ class Service {
     return configModule.__esModule ? configModule.default : configModule;
   }
 
-  public loadProjectOptions(inlineOptions?: ProjectConfig): ProjectConfig {
-    let fileConfig;
-    let resolved;
+  public loadProjectOptions(inlineOptions?: ProjectConfig): Partial<ProjectConfig> {
+    let fileConfig: Partial<ProjectConfig> | null = null;
+    let resolved: Partial<ProjectConfig> = {};
 
     const configPath = path.resolve(this.context, this.configFilename);
 
@@ -350,10 +360,10 @@ class Service {
     }
 
     try {
-      fileConfig = this.requireProjectConfigFile(configPath);
+      fileConfig = this.requireSpecifiedConfigFile(configPath, this.configFilename);
 
       if (!fileConfig || typeof fileConfig !== "object") {
-        error(`Error loading ${chalk.bold(`${this.configFilename}`)}: should export an object. \n`);
+        error(`Error load ${chalk.bold(`${this.configFilename}`)}: should export an object. \n`);
         fileConfig = null;
       }
     } catch (e) {}
@@ -372,6 +382,32 @@ class Service {
     });
 
     return resolved;
+  }
+
+  private loadMockConfig(): MockConfig | null {
+    let _mockConfig: MockConfig | null = null;
+
+    const mockConfigFilePath = path.resolve(this.context, this.mockConfigFile);
+
+    if (!fs.pathExistsSync(mockConfigFilePath)) {
+      error(
+        `specified mock config file ${chalk.bold(
+          `${mockConfigFilePath}`,
+        )} nonexistent, please check it.`,
+      );
+      process.exit();
+    }
+
+    try {
+      _mockConfig = this.requireSpecifiedConfigFile(mockConfigFilePath, this.mockConfigFile);
+
+      if (!_mockConfig || typeof _mockConfig !== "object") {
+        error(`Error load ${chalk.bold(`${this.mockConfigFile}`)}: should export an object. \n`);
+        _mockConfig = null;
+      }
+    } catch (e) {}
+
+    return _mockConfig;
   }
 
   public resolveLubanConfig(): Required<RootOptions> {

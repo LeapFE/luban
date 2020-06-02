@@ -1,4 +1,7 @@
 import { createSchema, validate } from "@luban-cli/cli-shared-utils";
+import defaultsDeep from "lodash.defaultsdeep";
+
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { ProjectConfig } from "./../main";
 
 const schema = createSchema((joi) =>
@@ -15,7 +18,6 @@ const schema = createSchema((joi) =>
     }),
     productionSourceMap: joi.boolean(),
     css: joi.object({
-      modules: joi.boolean(),
       extract: joi.boolean(),
       sourceMap: joi.boolean(),
       loaderOptions: joi.object({
@@ -28,6 +30,8 @@ const schema = createSchema((joi) =>
     devServer: joi.object(),
     alias: joi.object(),
     assetsLimit: joi.number(),
+    mock: joi.boolean(),
+    chainWebpack: joi.function(),
   }),
 );
 
@@ -35,7 +39,7 @@ export function validateProjectConfig(options: any, cb?: (msg?: string) => void)
   validate(options, schema, { allowUnknown: true }, cb);
 }
 
-export const defaultsProjectConfig: ProjectConfig = {
+const defaultsProjectConfig: Partial<ProjectConfig> = {
   publicPath: "/",
   outputDir: "dist",
   assetsDir: {
@@ -48,16 +52,6 @@ export const defaultsProjectConfig: ProjectConfig = {
   indexPath: "index.html",
   templatePath: "index.html",
   productionSourceMap: false,
-  css: {
-    extract: undefined,
-    sourceMap: undefined,
-    loaderOptions: {
-      css: {},
-      less: {},
-      miniCss: {},
-      postcss: {},
-    },
-  },
   assetsLimit: 4096,
   alias: {},
   devServer: {
@@ -72,3 +66,27 @@ export const defaultsProjectConfig: ProjectConfig = {
   */
   },
 };
+
+export function mergeProjectOptions(
+  projectOptions: Partial<ProjectConfig>,
+  rootOptions: RootOptions,
+): ProjectConfig {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  return defaultsDeep(projectOptions, {
+    ...defaultsProjectConfig,
+    css: {
+      extract: isProduction,
+      sourceMap: !isProduction,
+      loaderOptions: {
+        css: {},
+        less: {},
+        miniCss: {},
+        postcss: {},
+      },
+    },
+    mock: rootOptions.fetch || false,
+    chainWebpack: () => undefined,
+    configureWebpack: () => undefined,
+  });
+}

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { TerserPluginOptions } from "terser-webpack-plugin";
-import { ProjectConfig } from "./../main";
 
-export const terserOptions = function(options: Required<ProjectConfig>): TerserPluginOptions {
+export const terserOptions = function(productionSourceMap: boolean): TerserPluginOptions {
   return {
     terserOptions: {
       compress: {
@@ -39,7 +38,7 @@ export const terserOptions = function(options: Required<ProjectConfig>): TerserP
         safari10: true,
       },
     },
-    sourceMap: options.productionSourceMap,
+    sourceMap: productionSourceMap,
     cache: true,
     extractComments: false,
   };

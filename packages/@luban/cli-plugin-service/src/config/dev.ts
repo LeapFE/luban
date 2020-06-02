@@ -8,7 +8,7 @@ import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
 
-export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
+export default function(api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig) => {
     const isProduction = process.env.NODE_ENV === "production";
 
@@ -31,7 +31,7 @@ export default function(api: PluginAPI, options: Required<ProjectConfig>): void 
 
     const htmlPluginOptions: HtmlPluginOptions = {
       template: htmlPath,
-      templateParameters: resolveClientEnv(options, true),
+      templateParameters: resolveClientEnv(options.publicPath, true),
       minify: isProduction
         ? {
             removeComments: true,

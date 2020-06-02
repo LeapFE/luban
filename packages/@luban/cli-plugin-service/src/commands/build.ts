@@ -13,7 +13,7 @@ import { ProjectConfig } from "./../main";
 async function build(
   args: ParsedArgs<BuildCliArgs>,
   api: PluginAPI,
-  options: Required<ProjectConfig>,
+  options: ProjectConfig,
 ): Promise<void> {
   const spinner = new Spinner();
   spinner.logWithSpinner("Build bundle... \n");
@@ -76,7 +76,7 @@ async function build(
   });
 }
 
-export default function(api: PluginAPI, options: Required<ProjectConfig>): void {
+export default function(api: PluginAPI, options: ProjectConfig): void {
   api.registerCommand(
     "build",
     {
