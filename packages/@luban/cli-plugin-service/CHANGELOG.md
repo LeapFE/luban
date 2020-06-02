@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.13](https://github.com/leapFE/luban/compare/v1.3.1-beta.12...v1.3.1-beta.13) (2020-06-02)
+
+
+### Bug Fixes
+
+* **router:** import <Welcome /> error in view component ([148e372](https://github.com/leapFE/luban/commit/148e3721ac2d549199569034f5cfa184c6159010))
+
+
+
+
+
 ## [1.3.1-beta.12](https://github.com/leapFE/luban/compare/v1.3.1-beta.11...v1.3.1-beta.12) (2020-06-02)
 
 

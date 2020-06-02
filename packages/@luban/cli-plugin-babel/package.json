@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-babel",
-  "version": "1.3.1-beta.12",
+  "version": "1.3.1-beta.13",
   "description": "cli-plugin-babel",
   "author": "front-end-captain <18810940932@163.com>",
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-babel/README.md",
