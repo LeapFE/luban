@@ -34,7 +34,6 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
   fetch: "built-in data fetching(based on Axios)",
 };
 
-// TODO add prompt module apiRequest, named fetch
 export const defaultPromptModule: Array<keyof Preset> = [
   "language",
   "eslint",

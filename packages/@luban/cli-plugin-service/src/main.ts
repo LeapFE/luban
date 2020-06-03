@@ -133,7 +133,7 @@ export type ProjectConfig = {
 
   /**
    * @description 是否开启本地 mock 服务
-   * 约定根目录下 `mock/index.ts` 或者 `mock/index.js` 为默认 mock 配置文件
+   * 约定根目录下`mock/index.js` 为默认 mock 配置文件
    */
   mock: boolean;
 };

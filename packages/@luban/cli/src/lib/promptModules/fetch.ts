@@ -5,11 +5,11 @@ export default function(cli: PromptModuleAPI): void {
     type: "confirm",
     name: "fetch",
     default: true,
-    message: "Built-in data fetching function with Axios",
+    message: "Built-in data fetching function with Axios + useRequest",
   });
 
   cli.onPromptComplete((answers, preset) => {
-    preset.stylelint = answers.fetch;
+    preset.fetch = answers.fetch;
     if (answers.fetch) {
       preset.plugins["@luban-cli/cli-plugin-fetch"] = {};
     }
