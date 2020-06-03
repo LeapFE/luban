@@ -329,9 +329,9 @@ class Service {
     const configTempDir = path.resolve(this.context, ".config");
     const configTempDirPath = path.resolve(`${configTempDir}/${configFilename}`);
 
-    const { code } = shell.exec(
-      `${this.context}/node_modules/typescript/bin/tsc ${filePath} --module commonjs --outDir ${configTempDir}`,
-    );
+    const tscBinPath = `${this.context}/node_modules/typescript/bin/tsc`;
+    const compileArgs = `--module commonjs --skipLibCheck --outDir ${configTempDir}`;
+    const { code } = shell.exec(`${tscBinPath} ${filePath} ${compileArgs}`);
 
     if (code !== 0) {
       // ignore compile error, just print warn
