@@ -64,14 +64,14 @@ const UserList: FunctionComponent = () => {
   };
 
   return (
-    <div style={{ marginTop: "12px", width: "400px" }}>
+    <div style={{ marginTop: "12px", width: "500px" }}>
       <div>
         <input
           type="text"
           value={value}
           onChange={handleChange}
-          style={{ ...style, textIndent: "12px", width: "200px" }}
-          placeholder="try input(just 20 chars)"
+          style={{ ...style, textIndent: "12px", width: "320px" }}
+          placeholder="try input(just 20 chars) and check Network"
         />
         <button type="button" onClick={handleSearch} style={{ ...style, cursor: "pointer" }}>
           search
@@ -89,17 +89,20 @@ const UserList: FunctionComponent = () => {
             >
               <span style={{ fontSize: "32px" }}>·</span>
               <span>{user.name}</span>
-              <i
+              <button
+                type="button"
                 style={{
                   fontSize: "12px",
                   cursor: "pointer",
                   fontStyle: "normal",
                   color: "#ccc",
+                  border: "none",
+                  outline: "none",
                 }}
                 onClick={() => putDelUser({ id: user.id })}
               >
                 delete
-              </i>
+              </button>
             </li>
           );
         })}

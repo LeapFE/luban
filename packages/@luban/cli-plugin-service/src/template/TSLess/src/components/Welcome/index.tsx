@@ -5,7 +5,7 @@ import { Todo } from "../Todo";
 <%_ } _%>
 
 <%_ if (useFetch) { _%>
-import { UserList } from "./../UserList";
+import { UserList } from "../UserList";
 <%_ } _%>
 
 import logo from "./../../assets/logo.svg";
@@ -19,11 +19,7 @@ interface WelcomeProps {
 const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
   <div className={styles.App}>
     <header className="App-header">
-      <%_ if (useStore) { _%>
-      <Todo />
-      <%_ } _%>
       <h2>
-        This is&nbsp;
         {pageName}
         &nbsp;page
       </h2>
@@ -47,6 +43,10 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
         </span>
         Visit more about Luban documentation.
       </a>
+
+      <%_ if (useStore) { _%>
+      <Todo />
+      <%_ } _%>
 
       <%_ if (useFetch) { _%>
       <UserList />

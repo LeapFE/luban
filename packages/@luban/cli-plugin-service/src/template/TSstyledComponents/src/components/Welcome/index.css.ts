@@ -23,8 +23,12 @@ export const AppWrapper = styled.div`
     font-size: calc(10px + 2vmin);
     color: white;
 
+    h2 {
+      margin-top: 0;
+    }
+
     .App-logo {
-      height: 40vmin;
+      height: 20vmin;
     }
 
     .App-link {

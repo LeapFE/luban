@@ -11,7 +11,10 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  const modifyFile = options.language === "ts" ? "src/App.tsx" : "src/App.jsx";
+  const modifyFile =
+    options.language === "ts"
+      ? "src/components/Welcome/index.tsx"
+      : "src/components/Welcome/index.jsx";
 
   api.render("./template/service");
 
