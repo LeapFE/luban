@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.15](https://github.com/leapFE/luban/compare/v1.3.1-beta.14...v1.3.1-beta.15) (2020-06-03)
+
+
+### Bug Fixes
+
+* **cli:** set correct preset when manual pick `fetch` feature ([055ce82](https://github.com/leapFE/luban/commit/055ce82ec97e9a8bb89f36f510b7ec20fc27340b))
+
+
+
+
+
 ## [1.3.1-beta.14](https://github.com/leapFE/luban/compare/v1.3.1-beta.13...v1.3.1-beta.14) (2020-06-03)
 
 
