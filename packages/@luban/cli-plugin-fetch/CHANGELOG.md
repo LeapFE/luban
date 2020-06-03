@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.14](https://github.com/leapFE/luban/compare/v1.3.1-beta.13...v1.3.1-beta.14) (2020-06-03)
+
+
+### Features
+
+* **service,fetch:** add use `useRequest` sample code in template ([6f7bc9e](https://github.com/leapFE/luban/commit/6f7bc9ead690b838521f4dad6f8c608e2d86accf))
+
+
+
+
+
 ## [1.3.1-beta.13](https://github.com/leapFE/luban/compare/v1.3.1-beta.12...v1.3.1-beta.13) (2020-06-02)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-fetch
