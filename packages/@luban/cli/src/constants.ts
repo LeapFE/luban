@@ -31,7 +31,7 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
   router: "use router(based on React-Router)",
   store: "use centralized store(based on rematch)",
   unitTest: "use unit testing(based on Jest + Enzyme)",
-  fetch: "built-in data fetching(based on Axios)",
+  fetch: "built-in data fetching(based on Axios + useRequest)",
 };
 
 export const defaultPromptModule: Array<keyof Preset> = [
