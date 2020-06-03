@@ -45,12 +45,12 @@ const UserList: FunctionComponent = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { value },
+      target: { value: searchKeyword },
     } = event;
-    if (value.length > 20) {
+    if (searchKeyword.length > 20) {
       return;
     }
-    setValue(value);
+    setValue(searchKeyword);
   };
 
   const handleSearch = () => {
