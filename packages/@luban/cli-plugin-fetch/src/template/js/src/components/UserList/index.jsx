@@ -1,0 +1,107 @@
+import React, { useState } from "react";
+import { useRequest } from "@luban-hooks/use-request";
+
+import { getUserList, addUser, delUser } from "@/service/api/user";
+
+const style = {
+  height: "30px",
+  outline: "none",
+  border: "none",
+  borderRadius: "4px",
+  marginRight: "12px",
+  fontSize: "16px",
+};
+
+const UserList = () => {
+  const [value, setValue] = useState("");
+
+  const { data: userList, run: fetchUserList } = useRequest(getUserList, {
+    initialData: [],
+    defaultParams: {},
+    formatter: (res) => res.data.data,
+  });
+
+  const { run: putAddUser } = useRequest(addUser, {
+    onSuccess: (res) => {
+      if (res.code === 1) {
+        fetchUserList({});
+        setValue("");
+      }
+    },
+  });
+
+  const { run: putDelUser } = useRequest(delUser, {
+    onSuccess: (res) => {
+      if (res.code === 1) {
+        fetchUserList({});
+        setValue("");
+      }
+    },
+  });
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (value.length > 20) {
+      return;
+    }
+    setValue(value);
+  };
+
+  const handleSearch = () => {
+    fetchUserList({ name: value });
+  };
+
+  const handleAddUser = () => {
+    if (value) {
+      putAddUser({ name: value });
+    }
+  };
+
+  return (
+    <div style={{ marginTop: "12px", width: "400px" }}>
+      <div>
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          style={{ ...style, textIndent: "12px", width: "200px" }}
+          placeholder="try input(just 20 chars)"
+        />
+        <button type="button" onClick={handleSearch} style={{ ...style, cursor: "pointer" }}>
+          search
+        </button>
+        <button type="button" onClick={handleAddUser} style={{ ...style, cursor: "pointer" }}>
+          add
+        </button>
+      </div>
+      <ul style={{ padding: "0" }}>
+        {userList.map((user) => {
+          return (
+            <li
+              key={user.id}
+              style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+            >
+              <span style={{ fontSize: "32px" }}>·</span>
+              <span>{user.name}</span>
+              <i
+                style={{
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  fontStyle: "normal",
+                  color: "#ccc",
+                }}
+                onClick={() => putDelUser({ id: user.id })}
+              >
+                delete
+              </i>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+export { UserList };

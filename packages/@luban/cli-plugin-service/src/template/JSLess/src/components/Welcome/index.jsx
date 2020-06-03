@@ -5,6 +5,10 @@ import PropTypes from "prop-types";
 import { Todo } from "../Todo";
 <%_ } _%>
 
+<%_ if (useFetch) { _%>
+import { UserList } from "./../UserList";
+<%_ } _%>
+
 import logo from "../../assets/logo.svg";
 
 import styles from "./index.less";
@@ -40,6 +44,10 @@ const Welcome = ({ pageName }) => (
         </span>
         Visit more about Luban documentation.
       </a>
+
+      <%_ if (useFetch) { _%>
+      <UserList />
+      <%_ } _%>
     </header>
   </div>
 );
