@@ -13,13 +13,6 @@
 
 使用 -D 参数添加开发依赖 `yarn workspace <package> add <package_name>@version -D`
 
-#### 如何提交代码到远端仓库
-1. `git add -- .`
-2. `yarn run commit`
-3. `git push`
-
-⚠️ `yarn run commit` 之前运行单元测试(`yarn run test:changed`)和对 TypeScript 代码进行类型检查(`yarn run check:type:changed`)
-
 
 #### 如何发布 package
 > 发布前需要确认所有包的版本都是一致的，且以 lerna.json 中的版本为准，且在仓库中有对应的版本 tag
