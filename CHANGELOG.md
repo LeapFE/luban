@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.17](https://github.com/LeapFE/luban/compare/v1.3.1-beta.16...v1.3.1-beta.17) (2020-06-04)
+
+
+### Bug Fixes
+
+* **stylelint:** exclude .css.js/.css.ts in stylelint ignore file ([d59e54a](https://github.com/LeapFE/luban/commit/d59e54a14631c7049c4aaa0ebfd44e5fc09dcd82))
+
+
+
+
+
 ## [1.3.1-beta.16](https://github.com/LeapFE/luban/compare/v1.3.1-beta.15...v1.3.1-beta.16) (2020-06-04)
 
 
