@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.16](https://github.com/LeapFE/luban/compare/v1.3.1-beta.15...v1.3.1-beta.16) (2020-06-04)
+
+
+### Bug Fixes
+
+* **service:** not require mock/index.js when close mock option ([8eeacfa](https://github.com/LeapFE/luban/commit/8eeacfa5004b1838c7cdc8cdeb11f76ef5d82e6b))
+* **service:** skip lib check on compiling luban.config.ts ([8aa16b3](https://github.com/LeapFE/luban/commit/8aa16b3f7931c1fd06f743c87169408a6af24b4e))
+
+
+
+
+
 ## [1.3.1-beta.15](https://github.com/LeapFE/luban/compare/v1.3.1-beta.14...v1.3.1-beta.15) (2020-06-03)
 
 
