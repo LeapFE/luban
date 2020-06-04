@@ -214,14 +214,14 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
             ? publicUrl.replace(/([^/])$/, "$1/")
             : urls.lanUrlForTerminal;
 
-          console.log();
-          console.log(`  App running at:`);
-          console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`);
-          console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
-          console.log();
-
           if (isFirstCompile) {
             isFirstCompile = false;
+
+            console.log();
+            console.log(`  App running at:`);
+            console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`);
+            console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
+            console.log();
 
             if (options.mock && api.service.mockConfig !== null) {
               console.log("  Development mock server running at:");
