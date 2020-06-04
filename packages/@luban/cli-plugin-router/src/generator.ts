@@ -5,7 +5,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   if (options.router) {
     api.extendPackage({
       dependencies: {
-        "luban-router": "1.0.4",
+        "luban-router": "1.1.0",
       },
     });
 
