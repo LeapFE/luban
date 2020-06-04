@@ -52,8 +52,9 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
       <UserList />
       <%_ } _%>
 
-      <GlobalStyle />
     </header>
+
+    <GlobalStyle />
   </AppWrapper>
 );
 

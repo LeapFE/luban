@@ -40,15 +40,15 @@ const Welcome = ({ pageName }) => (
         </span>
         Visit more about Luban documentation.
       </a>
+
+      <%_ if (useStore) { _%>
+      <Todo />
+      <%_ } _%>
+
+      <%_ if (useFetch) { _%>
+      <UserList />
+      <%_ } _%>
     </header>
-
-    <%_ if (useStore) { _%>
-    <Todo />
-    <%_ } _%>
-
-    <%_ if (useFetch) { _%>
-    <UserList />
-    <%_ } _%>
 
     <GlobalStyle />
   </AppWrapper>
