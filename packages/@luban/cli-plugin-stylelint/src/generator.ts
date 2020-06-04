@@ -84,8 +84,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
   api.extendPackage({
     devDependencies: {
-      stylelint: "^13.0.0",
-      "stylelint-config-standard": "^19.0.0",
+      stylelint: "^13.5.0",
+      "stylelint-config-standard": "^20.0.0",
       "stylelint-config-prettier": "^8.0.1",
     },
     scripts: {
