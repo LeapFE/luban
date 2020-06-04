@@ -3,6 +3,6 @@ import React, { FunctionComponent } from "react";
 
 import { Welcome } from "@/components/Welcome";
 
-const App: FunctionComponent = () => (<Welcome pageName="index" />);
+const App: FunctionComponent = () => (<Welcome pageName="Index" />);
 
 export default hot(App);
