@@ -387,6 +387,10 @@ class Service {
   private loadMockConfig(): MockConfig | null {
     let _mockConfig: MockConfig | null = null;
 
+    if (!this.projectConfig.mock) {
+      return _mockConfig;
+    }
+
     const mockConfigFilePath = path.resolve(this.context, this.mockConfigFile);
 
     if (!fs.pathExistsSync(mockConfigFilePath)) {
