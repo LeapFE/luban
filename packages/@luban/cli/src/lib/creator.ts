@@ -116,6 +116,9 @@ class Creator {
       private: true,
       devDependencies: {},
       ["__luban_config__"]: { projectName: name, ...adaptedPreset },
+      engines: {
+        node: ">=10",
+      },
     };
 
     const deps = Object.keys(adaptedPreset.plugins);
