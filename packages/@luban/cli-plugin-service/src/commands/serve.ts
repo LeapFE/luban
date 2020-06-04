@@ -220,20 +220,20 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
           console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
           console.log();
 
-          if (options.mock && api.service.mockConfig !== null) {
-            console.log("  Development mock server running at:");
-            console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`);
-            console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
-            console.log();
-          }
-
           if (isFirstCompile) {
             isFirstCompile = false;
+
+            if (options.mock && api.service.mockConfig !== null) {
+              console.log("  Development mock server running at:");
+              console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`);
+              console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
+              console.log();
+            }
 
             const buildCommand = "npm run build";
             console.log(`  Note that the development build is not optimized.`);
             console.log(`  To create a production build, run ${chalk.cyan(buildCommand)}.`);
-            console.log(`  To exit the server, use ${chalk.red("control + z")}`);
+            console.log(`  To exit the server, use ${chalk.red("control + c")}`);
 
             console.log();
 
