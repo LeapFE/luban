@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.19](https://github.com/leapFE/luban/compare/v1.3.1-beta.18...v1.3.1-beta.19) (2020-06-05)
+
+
+### Features
+
+* **commit,cli,eslint:** add feature `commit` ([795a9a1](https://github.com/leapFE/luban/commit/795a9a13e4b7e494dce9b5af3c0ae0159fb168a6))
+
+
+
+
+
 ## [1.3.1-beta.18](https://github.com/leapFE/luban/compare/v1.3.1-beta.17...v1.3.1-beta.18) (2020-06-04)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-types
