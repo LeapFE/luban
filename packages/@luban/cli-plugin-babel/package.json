@@ -30,7 +30,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "1.3.0"
+    "@luban-cli/cli-shared-types": "^1.3.1-beta.18"
   },
   "engines": {
     "node": ">=10"
