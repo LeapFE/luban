@@ -68,6 +68,7 @@ const defaultRootOptions: Required<RootOptions> = {
   store: false,
   unitTest: true,
   fetch: true,
+  commit: true,
   plugins: {
     "@luban-cli/cli-plugin-service": {
       projectName: "",
@@ -79,6 +80,7 @@ const defaultRootOptions: Required<RootOptions> = {
     "@luban-cli/cli-plugin-stylelint": {},
     "@luban-cli/cli-plugin-typescript": {},
     "@luban-cli/cli-plugin-unit-test": {},
+    "@luban-cli/cli-plugin-commit": {},
   },
 };
 
