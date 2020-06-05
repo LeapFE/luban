@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.20](https://github.com/LeapFE/luban/compare/v1.3.1-beta.19...v1.3.1-beta.20) (2020-06-05)
+
+
+### Bug Fixes
+
+* **service:** fix compile error ([8408ca3](https://github.com/LeapFE/luban/commit/8408ca351c338c42f170546076b18e5bbabc2164))
+
+
+
+
+
 ## [1.3.1-beta.19](https://github.com/LeapFE/luban/compare/v1.3.1-beta.18...v1.3.1-beta.19) (2020-06-05)
 
 
