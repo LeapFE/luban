@@ -98,6 +98,7 @@ export type FinalAnswers = {
   store: boolean;
   unitTest: boolean;
   fetch: boolean;
+  commit: boolean;
 };
 
 export type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;

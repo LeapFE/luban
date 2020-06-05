@@ -7,6 +7,7 @@ export type RawPlugin = {
   "@luban-cli/cli-plugin-store"?: Record<string, any>;
   "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
   "@luban-cli/cli-plugin-fetch"?: Record<string, any>;
+  "@luban-cli/cli-plugin-commit"?: Record<string, any>;
   "@luban-cli/cli-plugin-service": { projectName: string } & Record<string, any>;
 };
 
@@ -33,6 +34,7 @@ export type Preset = {
   store?: boolean;
   unitTest?: boolean;
   fetch?: boolean;
+  commit?: boolean;
   plugins: RawPlugin;
 };
 

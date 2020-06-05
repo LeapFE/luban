@@ -9,6 +9,7 @@ export const defaultPreset: Required<Preset> = {
   store: false,
   unitTest: true,
   fetch: true,
+  commit: true,
   plugins: {
     "@luban-cli/cli-plugin-service": {
       projectName: "",
@@ -20,6 +21,7 @@ export const defaultPreset: Required<Preset> = {
     "@luban-cli/cli-plugin-typescript": {},
     "@luban-cli/cli-plugin-unit-test": {},
     "@luban-cli/cli-plugin-fetch": {},
+    "@luban-cli/cli-plugin-commit": {},
   },
 };
 
@@ -31,7 +33,8 @@ export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string>
   router: "use router(based on React-Router)",
   store: "use centralized store(based on rematch)",
   unitTest: "use unit testing(based on Jest + Enzyme)",
-  fetch: "built-in data fetching(based on Axios + useRequest)",
+  fetch: "built-in async data fetching(based on Axios + useRequest)",
+  commit: "commit with commitizen and lint commit messages by commitlint",
 };
 
 export const defaultPromptModule: Array<keyof Preset> = [
@@ -43,6 +46,7 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "store",
   "unitTest",
   "fetch",
+  "commit",
 ];
 
 export const defaultRootOptions: Required<RootOptions> = {
@@ -55,6 +59,7 @@ export const defaultRootOptions: Required<RootOptions> = {
   store: false,
   unitTest: true,
   fetch: true,
+  commit: true,
   plugins: {
     "@luban-cli/cli-plugin-service": {
       projectName: "",

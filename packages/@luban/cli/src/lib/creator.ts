@@ -239,6 +239,10 @@ class Creator {
       formatConfigJsFile.push("./jest.config.js");
     }
 
+    if (preset.commit) {
+      formatConfigJsFile.push("./commitlint.config.js");
+    }
+
     await run("./node_modules/prettier/bin-prettier.js", ["--write"].concat(formatConfigJsFile));
     await run(
       "./node_modules/prettier/bin-prettier.js",

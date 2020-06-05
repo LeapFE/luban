@@ -1,0 +1,41 @@
+{
+  "name": "@luban-cli/cli-plugin-commit",
+  "version": "1.3.1-beta.18",
+  "description": "cli-plugin-commit",
+  "keywords": [
+    "fetch",
+    "plugin"
+  ],
+  "author": "front-end-captain <18810940932@163.com>",
+  "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-commit/README.md",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leapFE/luban.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc --pretty && cp -ri src/template dist/template",
+    "prepublishOnly": "yarn run build",
+    "check:type": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/leapFE/luban/issues"
+  },
+  "devDependencies": {
+    "@luban-cli/cli-shared-types": "^1.3.1-beta.18"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}
