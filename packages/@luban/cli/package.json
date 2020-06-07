@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@luban-cli/cli-shared-utils": "^1.3.1-beta.20",
-    "ast-types": "^0.13.2",
     "chalk": "^3.0.0",
     "commander": "^4.1.0",
     "deepmerge": "^4.2.2",
@@ -55,7 +54,6 @@
     "inquirer": "^7.0.4",
     "isbinaryfile": "^4.0.4",
     "javascript-stringify": "^2.0.1",
-    "js-yaml": "^3.13.1",
     "lodash.clonedeep": "^4.5.0",
     "lru-cache": "^5.1.1",
     "minimist": "^1.2.0",
@@ -70,7 +68,6 @@
     "@types/didyoumean": "^1.2.0",
     "@types/ejs": "^3.0.0",
     "@types/inquirer": "^6.5.0",
-    "@types/js-yaml": "^3.12.2",
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/minimist": "^1.2.0",
     "@types/resolve": "^1.14.0",

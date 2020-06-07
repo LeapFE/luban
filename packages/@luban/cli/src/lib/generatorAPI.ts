@@ -9,11 +9,12 @@ import execa, { ExecaChildProcess } from "execa";
 import yaml = require("yaml-front-matter");
 
 import { resolveDeps } from "../utils/mergeDeps";
-import { mergeArrayWithDedupe } from "../utils/configTransforms";
 import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
 
 const isObject = (val: unknown): boolean => val !== null && typeof val === "object";
+
+const mergeArrayWithDedupe = (a: any, b: any): any[] => Array.from(new Set([...a, ...b]));
 
 function extractCallDir(): string {
   const errorStack: { stack: string } = { stack: "" };
