@@ -13,31 +13,43 @@ import {
 import { GeneratorAPI } from "./lib/generatorAPI";
 
 export type CliOptions = Partial<{
-  // 指定安装依赖时的 npm 源，仅限于 npm
+  /**
+   * @description specified npm registry when installing dependencies (only for npm)
+   */
   registry: string;
 
-  // 跳过 git init，当指定 git 选项时，此项无效
+  /**
+   * @description Skip git initialization, invalid when specified `git` option
+   */
   skipGit: boolean;
 
-  // 指定生成项目时首次的 git commit message
+  /**
+   * @description Force git initialization with initial commit message
+   */
   git: string;
 
-  // 当指定首次的 git commit message 时，此项为 TRUE
+  /**
+   * @description value will be TRUE when specified init git commit message
+   */
   forceGit: boolean;
 
-  // 如果指定项目名称与磁盘上的目录相同，force 为 TRUE 时将重写目标目录
+  /**
+   * @description if specified project name are same as dir name on disk, it will override target dir when this option be TRUE
+   */
   force: boolean;
 
   // 创建项目时安装插件时下载本地插件，仅仅是为了测试
+  /**
+   * @description will install local plugins while create project for test or debug
+   */
   localPlugin: boolean;
 
-  // 创建项目时手动选择特性
+  /**
+   * @description Manual select features while create project
+   */
   manual?: boolean;
 }>;
 
-/**
- * @type 支持的 npm 客户端
- */
 export type SUPPORTED_PACKAGE_MANAGER = "npm";
 
 export type PACKAGE_MANAGER_CONFIG = {
@@ -49,10 +61,6 @@ export type PACKAGE_MANAGER_CONFIG = {
   };
 };
 
-/**
- * @type 工具配置文件的文件名后缀
- * @example babel.config.js .babel.yaml .babelrc
- */
 export type CONFIG_FILE_TYPE = "js" | "json" | "yaml" | "lines";
 
 export type ESLinterConfig = esLinterConfig;
@@ -67,9 +75,6 @@ export type RootOptions = rootOptions;
 
 export type RawPlugin = rawPlugin;
 
-/**
- * @description 创建项目时的预设选项和插件的配置选项
- */
 export type Preset = preset;
 
 export type PLUGIN_ID = keyof RawPlugin;
@@ -105,9 +110,4 @@ export type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => 
 
 export type InquirerQuestionType = keyof QuestionMap;
 
-/**
- * @description package.json fields, name and version must required
- *
- * @see https://docs.npmjs.com/creating-a-package-json-file
- */
 export type BasePkgFields = basePkgFields;

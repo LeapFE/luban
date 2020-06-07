@@ -1,20 +1,22 @@
 import fs from "fs";
-import ejs, { Options as EJSOptions, Data as EJSRenderInputData } from "ejs";
+import { Options as EJSOptions } from "ejs";
 import path from "path";
 import merge from "deepmerge";
-import resolve from "resolve";
-import { isBinaryFileSync } from "isbinaryfile";
 import globby from "globby";
 import execa, { ExecaChildProcess } from "execa";
-import yaml = require("yaml-front-matter");
 
 import { resolveDeps } from "../utils/mergeDeps";
+import { renderFile } from "./../utils/renderFile";
 import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
 
-const isObject = (val: unknown): boolean => val !== null && typeof val === "object";
+function isObject(value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
 
-const mergeArrayWithDedupe = (a: any, b: any): any[] => Array.from(new Set([...a, ...b]));
+function mergeArrayWithDeduplicate(a: any[], b: any[]): any[] {
+  return Array.from(new Set([...a, ...b]));
+}
 
 function extractCallDir(): string {
   const errorStack: { stack: string } = { stack: "" };
@@ -30,64 +32,6 @@ function extractCallDir(): string {
   }
 
   return "";
-}
-
-const replaceBlockRE = /<%# REPLACE %>([^]*?)<%# END_REPLACE %>/g;
-
-function renderFile(name: string, data: EJSRenderInputData, ejsOptions: EJSOptions): string {
-  if (isBinaryFileSync(name)) {
-    return fs.readFileSync(name).toString();
-  }
-  const template = fs.readFileSync(name, "utf-8");
-
-  // custom template inheritance via yaml front matter.
-  // ---
-  // extend: 'source-file'
-  // replace: !!js/regexp /some-regex/
-  // OR
-  // replace:
-  //   - !!js/regexp /foo/
-  //   - !!js/regexp /bar/
-  // ---
-
-  const parsed = yaml.loadFront(template);
-  const content = parsed.__content;
-  let finalTemplate = content.trim() + `\n`;
-
-  if (parsed.when) {
-    finalTemplate = `<%_ if (${parsed.when}) { _%>` + finalTemplate + `<%_ } _%>`;
-
-    // use ejs.render to test the conditional expression
-    // if evaluated to falsy value, return early to avoid extra cost for extend expression
-    const result = ejs.render(finalTemplate, data, ejsOptions);
-    if (!result) {
-      return "";
-    }
-  }
-
-  if (parsed.extend) {
-    const extendPath = path.isAbsolute(parsed.extend)
-      ? parsed.extend
-      : resolve.sync(parsed.extend, { basedir: path.dirname(name) });
-    finalTemplate = fs.readFileSync(extendPath, "utf-8");
-    if (parsed.replace) {
-      if (Array.isArray(parsed.replace)) {
-        const replaceMatch = content.match(replaceBlockRE);
-        if (replaceMatch) {
-          const replaces = replaceMatch.map((m: string) => {
-            return m.replace(replaceBlockRE, "$1").trim();
-          });
-          parsed.replace.forEach((r: string, i: number) => {
-            finalTemplate = finalTemplate.replace(r, replaces[i]);
-          });
-        }
-      } else {
-        finalTemplate = finalTemplate.replace(parsed.replace, content.trim());
-      }
-    }
-  }
-
-  return ejs.render(finalTemplate, data, { ...ejsOptions, async: false });
 }
 
 class GeneratorAPI {
@@ -200,9 +144,9 @@ class GeneratorAPI {
       } else if (!(key in pkg)) {
         pkg[key] = value;
       } else if (Array.isArray(value) && Array.isArray(existing)) {
-        pkg[key] = mergeArrayWithDedupe(existing, value);
+        pkg[key] = mergeArrayWithDeduplicate(existing, value);
       } else if (isObject(value) && isObject(existing)) {
-        pkg[key] = merge(existing, value, { arrayMerge: mergeArrayWithDedupe });
+        pkg[key] = merge(existing, value, { arrayMerge: mergeArrayWithDeduplicate });
       } else {
         pkg[key] = value;
       }
@@ -293,16 +237,6 @@ class GeneratorAPI {
    */
   public addExitLog(msg: string, type = "log"): void {
     this.generator.exitLogs.push({ id: this.id, msg, type });
-  }
-
-  /**
-   * Turns a string expression into executable JS for JS configs.
-   * @param {*} str JS expression as a string
-   */
-  public static makeJSOnlyValue(str: string): () => void {
-    const fn = (): undefined => undefined;
-    fn.__expression = str;
-    return fn;
   }
 
   /**

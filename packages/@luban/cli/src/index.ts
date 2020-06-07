@@ -32,7 +32,7 @@ function camelize(str: string): string {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ""));
 }
 
-function cleanInitCommandArgs(cmd: Command): CliOptions {
+function prepareInitOptions(cmd: Command): CliOptions {
   const args = {};
   cmd.options.forEach((o: any) => {
     const key = camelize(o.long.replace(/^--/, ""));
@@ -73,7 +73,7 @@ program
       process.exit(1);
     }
 
-    const options = cleanInitCommandArgs(cmd);
+    const options = prepareInitOptions(cmd);
 
     if (minimist(process.argv.slice(3))._.length > 1) {
       console.log(

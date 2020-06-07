@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "./../cli-shared-types/dist/cli"
+    "declarationDir": "./../cli-shared-types/dist/cli",
+    "removeComments": false
   },
   "include": [
     "./src",

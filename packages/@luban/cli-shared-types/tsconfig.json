@@ -6,7 +6,8 @@
     "baseUrl": "./",
     "declarationDir": "dist/shared",
     "declaration": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "removeComments": false
   },
   "include": [
     "./src",
