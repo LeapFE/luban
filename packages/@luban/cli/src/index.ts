@@ -1,6 +1,6 @@
 process.env.NODE_PATH = __dirname + "../node_modules";
 
-import program from "commander";
+import { Command } from "commander";
 import chalk from "chalk";
 import envinfo from "envinfo";
 import didYouMean from "didyoumean";
@@ -11,6 +11,8 @@ didYouMean.threshold = 0.6;
 import { enhanceErrorMessages } from "./utils/enhanceErrorMessages";
 import { CliOptions } from "./definitions";
 import { init } from "./lib/create";
+
+const program = new Command();
 
 function suggestCommands(unknownCommand: string): void {
   const availableCommands = program.commands.map((cmd: any) => {
@@ -30,7 +32,7 @@ function camelize(str: string): string {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ""));
 }
 
-function cleanArgs(cmd: any): CliOptions {
+function cleanInitCommandArgs(cmd: Command): CliOptions {
   const args = {};
   cmd.options.forEach((o: any) => {
     const key = camelize(o.long.replace(/^--/, ""));
@@ -41,12 +43,12 @@ function cleanArgs(cmd: any): CliOptions {
   return args;
 }
 
-const programName = "luban init";
-
-program.version(require("../package.json").version).usage("<command> [options]");
+program
+  .version(`@luban-cli/cli ${require("../package.json").version}`)
+  .usage("<command> [options]");
 
 program
-  .command("init <project-directory>")
+  .command("init <project>")
   .description("init a new project")
   .option(
     "-r, --registry <url>",
@@ -57,10 +59,12 @@ program
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("-l, --localPlugin", "Install local plugins while create project for test or debug")
   .option("-m, --manual", "Manual select features while create project")
-  .action((name, cmd) => {
-    if (name === "") {
+  .action((project, cmd) => {
+    if (project.replace(/^\s+|\s+$/g, "") === "") {
+      const programName = `${cmd.parent._name} ${cmd._name}`;
+
       console.error("Please specify the project directory:");
-      console.log(`  ${chalk.cyan(programName)} ${chalk.green("<project-directory>")}`);
+      console.log(`  ${chalk.cyan(programName)} ${chalk.green("<project>")}`);
       console.log();
       console.log("For example:");
       console.log(`  ${chalk.cyan(programName)} ${chalk.green("my-react-app")}`);
@@ -69,7 +73,7 @@ program
       process.exit(1);
     }
 
-    const options = cleanArgs(cmd);
+    const options = cleanInitCommandArgs(cmd);
 
     if (minimist(process.argv.slice(3))._.length > 1) {
       console.log(
@@ -79,16 +83,17 @@ program
       );
     }
 
-    // 指定 --git [message] 时将强制为项目执行 git init
+    // should force invoke `git init` when specified `--git [message]` option
     if (process.argv.includes("-g") || process.argv.includes("--git")) {
       options.forceGit = true;
     }
 
+    // will install and invoke local plugin when specified `--localPlugin` option
     if (process.argv.includes("-l") || process.argv.includes("--localPlugin")) {
       process.env.USE_LOCAL_PLUGIN = "true";
     }
 
-    init(name, options);
+    init(project, options);
   });
 
 program
