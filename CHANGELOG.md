@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1-beta.21](https://github.com/LeapFE/luban/compare/v1.3.1-beta.20...v1.3.1-beta.21) (2020-06-07)
+
+
+### Bug Fixes
+
+* **cli:** strict judge project name' that created not empty ([ac120f8](https://github.com/LeapFE/luban/commit/ac120f823b4294409ead4091c3938a03dc24dfe3))
+
+
+
+
+
 ## [1.3.1-beta.20](https://github.com/LeapFE/luban/compare/v1.3.1-beta.19...v1.3.1-beta.20) (2020-06-05)
 
 
