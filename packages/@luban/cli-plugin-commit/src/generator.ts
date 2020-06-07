@@ -3,9 +3,6 @@ import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator
 
 export default function(api: GeneratorAPI): void {
   api.extendPackage({
-    scripts: {
-      commit: "git-cz",
-    },
     devDependencies: {
       "@commitlint/cli": "^8.3.5",
       "@commitlint/config-conventional": "^8.3.4",
