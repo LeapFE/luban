@@ -68,7 +68,7 @@ module.exports = {
         },
       ],
     },
-    lastUpdated: "Last Updated",
+    lastUpdated: "上次编辑于",
   },
   plugins: [
     "@vuepress/back-to-top",

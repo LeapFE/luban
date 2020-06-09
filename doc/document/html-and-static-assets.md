@@ -23,9 +23,31 @@
 
 关于 `BASE_URL` 查阅 [publicPath](../config/README.md#publicpath)
 
-### Preload[TODO]
+### Preload/Prefetch
 
-### Prefetch[TODO]
+默认情况下，在构建生产环境的应用时，`luban-cli-service` 会对所有应用初始加载时需要的 JavaScript/CSS 文件生成 [preload](https://www.w3.org/TR/preload/) [resource hint](https://www.w3.org/TR/resource-hints/)，对 async chunk 生成的 JavaScript/CSS 文件(通过动态 [import() 以及 code splitting](https://webpack.js.org/guides/code-splitting/#dynamic-imports) 生成的代码块)生成 [prefetch](https://www.w3.org/TR/resource-hints/#prefetch) [resource hint](https://www.w3.org/TR/resource-hints/)，
+同时这些 hint 会被 [preload-webpack-plugin](https://github.com/googlechromelabs/preload-webpack-plugin) 注入到生成的 `index.html` 文件中。
+
+可以通过 `chainWebpack` 的 `webpackConfig.plugin("preload")` 或者 `webpackConfig.plugin("prefetch")` 进行修改和删除:
+
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
+  chainWebpack: config => {
+    // 移除 prefetch 插件
+    config.plugins.delete("prefetch");
+
+    // 或者修改它的选项：
+    config.plugin("prefetch").tap(options => {
+      options[0].fileBlacklist = options[0].fileBlacklist || [];
+      options[0].fileBlacklist.push(/my_async_component(.)+?\.js$/);
+      return options
+    })
+  },
+});
+```
 
 ## 处理静态资源
 
@@ -70,10 +92,12 @@ import SomeImage from "~some-package/some-image.png";
 
 在 ==cli-plugin-service== 中，通过 ==file-loader== 用版本哈希值和正确的公共基础路径来决定最终的文件路径，再用 ==url-loader== 将小于 4kb 的资源内联，以减少 HTTP 请求的数量。可以在 *luban.config.js* 中配置 `assetsLimit` 来修改默认的内联文件大小限制：
 
-``` javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   // 10kb
   assetsLimit: 10240,
-};
+});
 ```

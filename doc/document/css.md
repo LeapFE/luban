@@ -73,9 +73,11 @@ const SomeComponent = () => {
 
 有的时候需要向 ==webpack== 的预处理器 loader 传递选项。可以使用 *luban.config.js* 中的 `css.loaderOptions` 选项。比如可以这样向所有 Less 样式传入共享的全局变量：
 
-```javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   css: {
     loaderOptions: {
       // 给 less-loader 传递 Less.js 相关选项
@@ -97,7 +99,7 @@ module.exports = {
       },
     }
   }
-}
+});
 ```
 
 Loader 可以通过 `loaderOptions` 配置，包括：

@@ -13,7 +13,7 @@ luban init <project_name>
 
 ### `luban init` 命令
 
-在终端运行 `luban init <project_namer>` 命令后，将会以默认的 preset 来创建项目。默认的 preset 如下：
+在终端运行 `luban init <project_name>` 命令后，将会以默认的 preset 来创建项目。默认的 preset 如下：
 
 + 开发语言：<a-radio-group value='ts'><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
 + [ESLint](https://eslint.org/) 配置方案：<a-radio-group value='airbnb'><a-radio checked value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
@@ -22,8 +22,9 @@ luban init <project_name>
 + 使用 <a-checkbox checked>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
 + 使用 <a-checkbox checked>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
 + 使用 <a-checkbox checked>数据获取([Axios](https://github.com/axios/axios) + [use-request](https://www.npmjs.com/package/@luban-hooks/use-request))</a-checkbox>
++ 使用 <a-checkbox checked>[commitizen](https://github.com/commitizen/cz-cli) + [commitlint](https://commitlint.js.org/#/) 提交代码</a-checkbox>
 
-可以加上 `-m` 或 `--manual` 参数，即 `luban init <project_namer> -m` 来手动的选择决定项目将会有哪些特性。
+可以加上 `-m` 或 `--manual` 参数，即 `luban init <project_name> -m` 来手动的选择决定项目将会有哪些特性。
 
 手动选择的特性将包括：
 
@@ -35,6 +36,7 @@ luban init <project_name>
 - 是否使用 <a-checkbox>状态管理 ([rematch](https://rematch.github.io/rematch/#/))</a-checkbox>
 - 是否使用 <a-checkbox>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
 - 是否使用 <a-checkbox>数据获取([Axios](https://github.com/axios/axios) + [use-request](https://www.npmjs.com/package/@luban-hooks/use-request))</a-checkbox>
+- 是否使用 <a-checkbox>[commitizen](https://github.com/commitizen/cz-cli) + [commitlint](https://commitlint.js.org/#/) 提交代码</a-checkbox>
 
 `luban init` 命令将提供一些可选选项，可以运行下面的命令来获取这些选项
 

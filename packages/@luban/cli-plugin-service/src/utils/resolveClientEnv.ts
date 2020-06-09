@@ -1,12 +1,14 @@
-const prefixRE = /^APP_/;
+const allowInjectedEnvNamePrefixReg = /^APP_/;
 
 export function resolveClientEnv(publicPath: string, raw?: boolean): Record<string, any> {
   const env: Record<string, any> = {};
+
   Object.keys(process.env).forEach((key) => {
-    if (prefixRE.test(key) || key === "NODE_ENV") {
+    if (allowInjectedEnvNamePrefixReg.test(key) || key === "NODE_ENV") {
       env[key] = process.env[key];
     }
   });
+
   env.BASE_URL = publicPath;
 
   if (raw) {

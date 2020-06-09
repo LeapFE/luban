@@ -22,9 +22,11 @@
 
 如果需要基于一些环境变量来有条件的进行配置，可以对此字段使用一个函数，函数将会在环境变量设置成功后调用并执行，在函数内部可以直接修改配置或者返回一个已经修改好的配置。
 
-```javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
@@ -32,7 +34,7 @@ module.exports = {
       // 为开发环境修改配置...
     }
   },
-};
+});
 ```
 
 ## 链式操作
@@ -49,9 +51,11 @@ chainWebpack?: (config: Config) => void;
 
 修改某一个 loader 的配置:
 
-```javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   chainWebpack: config => {
     config.module
       .rule("js")
@@ -62,7 +66,7 @@ module.exports = {
           return options
         });
   },
-};
+});
 ```
 
 ::: tip 🙋
@@ -71,25 +75,27 @@ module.exports = {
 
 ### 添加一个新的 plugin
 
-```javascript
-// luban.config.js
-const PrepackWebpackPlugin = require("prepack-webpack-plugin").default;
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
 
-module.exports = {
-  chainWebpack: config => {
+export default createProjectConfig({
+ chainWebpack: config => {
     // https://github.com/gajus/prepack-webpack-plugin
     config.plugin("prepack").use(PrepackWebpackPlugin);
   },
-};
+});
 ```
 
 ### 替换一个规则里的 Loader
 
 如果需要替换一个已有的 loader，例如为内联的 SVG 文件使用 [svg-url-loader](https://www.npmjs.com/package/svg-url-loader) 而不是加载这个 svg 文件：
 
-```javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
 
@@ -106,14 +112,16 @@ module.exports = {
       .options({ /* 传递给 svg-url-loader 的配置选项 */ })
       .end();
   },
-}
+});
 ```
 
 ### 修改插件选项
 
-```javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   chainWebpack: config => {
     config
       .plugin("html")
@@ -121,16 +129,18 @@ module.exports = {
         return [/* 传递给 html-webpack-plugin's 构造函数的新参数 */]
       });
   },
-};
+});
 ```
 
 查阅 [webpack-chain 的 API](https://github.com/mozilla-neutrino/webpack-chain#getting-started) 并[阅读一些源码](https://github.com/leapFE/luban/tree/master/packages/%40luban/cli-plugin-service/src/config)以便了解如何最大程度利用好这个选项，但是比起直接修改 ==webpack== 配置，它的表达能力更强，也更为安全。
 
 比方说需要将 *index.html* 默认的路径从 */Users/username/proj/public/index.html* 改为 */Users/username/proj/app/templates/index.html*。通过参考 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin#options) 可以看到一个可以传入的选项列表。可以在下列配置中传入一个新的模板路径来改变它：
 
-```javascript
-// luban.config.js
-module.exports = {
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   chainWebpack: config => {
     config
       .plugin("html")
@@ -139,7 +149,7 @@ module.exports = {
         return args
       });
   },
-};
+});
 ```
 
 可以通过接下来的命令 **`luban-cli-service inspect`** 来确认 ==webpack== 配置变更是否符合预期。

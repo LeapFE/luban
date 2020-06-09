@@ -4,19 +4,31 @@ sidebar: auto
 
 # ⚙ 配置参考
 
-## luban.config.js
+## luban.config.ts | luban.config.js
 
-*luban.config.js* 是一个可选的配置文件，如果项目的 (和 *package.json* 同级的) 根目录中存在这个文件，
+*luban.config.ts* 或者 *luban.config.js* 是一个可选的配置文件，如果项目的 (和 *package.json* 同级的) 根目录中存在这个文件，
 那么它会被 <mark>@luban-cli/cli--plugin-service</mark> 自动识别加载。
-具体类型见下方 [配置文件](#配置文件)
 
-这个文件应该导出一个包含了选项的对象：
+另外，该配置文件的扩展名应该与创建项目时选择的开发语言保持一致。文档中其他地方也将以 *luban.config.ts* 进行举例说明。具体类型见下方 [配置文件](#配置文件)。
+
+使用 <mark>@luban-cli/cli--plugin-service</mark> 提供的 `createProjectConfig` 来导出配置选项可以获得很好的配置提示：
 
 ```javascript
 // luban.config.js
-module.exports = {
+const { createProjectConfig } = require("@luban-cli/cli-plugin-service");
+
+module.exports = createProjectConfig({
   // 选项...
-};
+});
+```
+
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
+  // 选项...
+});
 ```
 
 ### publicPath
@@ -30,10 +42,13 @@ module.exports = {
 
   由于 Luban 将构建后的资源进行了分类，输出到了不同的目录，查阅 [构建产物](../document/deployment.md#构建产物)，所以默认情况下在生产环境应该将 `publicPath` 指定为一个绝对路径，像下面这样：
 
-  ```javascript
-  module.exports = {
+  ```ts
+  // luban.config.ts
+  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+  export default createProjectConfig({
     publicPath: process.env.NODE_ENV === "production" ? "https://www.example.com/" : "/",
-  };
+  });
   ```
 
   对 `publicPath` 使用相对路径 `./` 时，部署到线上可能造成图片无法访问的情况，此时需要配置各个资源类型的输出目录，已确保资源可以被正确的访问。详细配置见下方 [assetsDir](#assetsdir)。
@@ -58,9 +73,12 @@ module.exports = {
   默认脚本文件放在 `scripts` 目录下，样式文件放在 `styles` 目录下，图片放在 `images` 目录下，字体文件放在 `fonts` 目录下，媒体文件放在 `media` 目录下，以上目录都是相对于 `outputDir` 目录。
 
   如果不需要对资源进行分类输出，可以进行如下配置：
-  ```javascript
-  // luban.config.js
-  module.exports = {
+
+  ```ts
+  // luban.config.ts
+  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+  export default createProjectConfig({
     assetsDir: {
       scripts: "",
       styles: "",
@@ -68,7 +86,7 @@ module.exports = {
       fonts: "",
       media: "",
     },
-  };
+  });
   ```
 
 ### indexPath
@@ -134,9 +152,11 @@ module.exports = {
 
   向 CSS 相关的 loader 传递选项。例如：
 
-  ```javascript
-  // luban.config.js
-  module.exports = {
+  ```ts
+  // luban.config.ts
+  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+  export default createProjectConfig({
     css: {
       loaderOptions: {
         css: {
@@ -147,7 +167,7 @@ module.exports = {
         },
       },
     },
-  };
+  });
   ```
 
   支持的 loader 有：
@@ -181,22 +201,26 @@ module.exports = {
 
   `devServer.proxy` 可以是一个指向开发环境 API 服务器的字符串：
 
-  ```javascript
-  // luban.config.js
-  module.exports = {
+  ```ts
+  // luban.config.ts
+  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+  export default createProjectConfig({
     devServer: {
       proxy: "http://localhost:4000",
     },
-  };
+  });
   ```
 
   这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到`http://localhost:4000`。
 
-  如果你想要更多的代理控制行为，也可以使用一个 `path: options` 成对的对象。完整的选项可以查阅 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
+  如果你想要更多的代理控制行为，也可以使用一个 `path: object` 成对的对象。完整的选项可以查阅 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
 
-  ```javascript
-  // luban.config.js
-  module.exports = {
+  ```ts
+  // luban.config.ts
+  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+  export default createProjectConfig({
     devServer: {
       proxy: {
         "/api": {
@@ -209,7 +233,7 @@ module.exports = {
         },
       },
     },
-  };
+  });
   ```
 
 ### assetsLimit
@@ -230,6 +254,13 @@ module.exports = {
 当时使用 TypeScript 为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅 [path-mapping](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
 :::
 
+### mock
+
+- Type: `boolean`
+- Default: `false`
+
+  是否开启 mock server, 详细信息查阅 [Mock Server](../document/data-fetch.md#mock-server)。
+
 ## Babel
 
 Babel 可以通过 *babel.config.js* 进行配置。
@@ -238,7 +269,7 @@ Babel 可以通过 *babel.config.js* 进行配置。
 Luban 使用了 Babel 7 中的新配置格式 *babel.config.js*。和 *.babelrc* 或 *package.json* 中的 `babel` 字段不同，这个配置文件不会使用基于文件位置的方案，而是会一致地运用到项目根目录以下的所有
 文件，包括 *node_modules* 内部的依赖。
 我们推荐在 Luban 创建的项目中始终使用 *babel.config.js* 取代其它格式。
-具体请查阅 [Configuration File Types](https://babeljs.io/docs/en/config-files#configuration-file-types) 
+具体请查阅 [Configuration File Types](https://babeljs.io/docs/en/config-files#configuration-file-types) 。
 :::
 
 同时查阅文档中的 [Polyfill](../document/browser-compatibility.md#polyfill) 章节。
@@ -268,10 +299,12 @@ TypeScript 可以通过 *tsconfig.json* 来配置。
 
 ## 配置文件
 
-默认的 *luban.config.js* 如下：
-```javascript
-// luban.config.js
-module.exports = {
+默认的 *luban.config.ts* 如下：
+```ts
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
   publicPath: "/",
   outputDir: "dist",
   indexPath: "index.html",
@@ -300,10 +333,12 @@ module.exports = {
   alias: {
     "@": "<project_path>/src",
   },
-};
+  // 选择 '数据获取' 特性是将开启此选项
+  mock: false,
+});
 ```
 
-同时 *luban.config.js* 应该被下面的 `ProjectConfig` 类型约束。
+同时传入 `createProjectConfig` 的对象应该被下面的 `ProjectConfig` 类型约束。
 
 ```typescript
 type OptionsOfCssLoader = {
@@ -311,6 +346,14 @@ type OptionsOfCssLoader = {
   less: Record<string, any>;
   postcss: Record<string, any>;
   miniCss: Record<string, any>;
+};
+
+type AssetsDir = {
+  scripts: string;
+  styles: string;
+  images: string;
+  fonts: string;
+  media: string;
 };
 
 type CssConfig = {
@@ -331,18 +374,20 @@ type CssConfig = {
   /**
    * @description 一些处理 css 的 loader 的配置项
    */
-  loaderOptions: OptionsOfCssLoader;
+  loaderOptions: Partial<OptionsOfCssLoader>;
 };
 
-export type ProjectConfig = {
+type ProjectConfig = {
   /**
    * @description 应用部署时的基本 URL
+   *
    * @default "/"
    */
   publicPath: string;
 
   /**
    * @description 生产环境下应用打包的目录
+   *
    * @default "dist"
    */
   outputDir: string;
@@ -356,25 +401,19 @@ export type ProjectConfig = {
    * 字体文件放在 `fonts` 目录下
    * 媒体文件放在 `media` 目录下
    * 以上目录都是相对于 `outputDir`
-   *
-   * @default ""
    */
-  assetsDir: {
-    scripts: string;
-    styles: string;
-    images: string;
-    fonts: string;
-    media: string;
-  };
+  assetsDir: AssetsDir;
 
   /**
    * @description 指定生成的 index.html 文件名或者相对路径（路径是相对于 `outputDir` 的）
+   * 默认路径为 `${outputDir}/index.html`
+   *
    * @default "index.html"
    */
   indexPath: string;
 
   /**
-   * @description 指定模板文件名称或者相对路径（路径是相对于 template 目录的）
+   * @description 指定模板文件名称或者相对路径（路径是相对于 `template` 的）
    * 默认路径为 `template/index.html`
    *
    * @default "index.html"
@@ -383,6 +422,7 @@ export type ProjectConfig = {
 
   /**
    * @description 是否在生成环境下开启 sourceMap
+   *
    * @default false
    */
   productionSourceMap: boolean;
@@ -393,6 +433,8 @@ export type ProjectConfig = {
    * 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数及可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
    *
    * @type {Object | Function | undefined}
+   *
+   * @default {() => undefined}
    */
   configureWebpack:
     | webpack.Configuration
@@ -401,6 +443,8 @@ export type ProjectConfig = {
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
    * 允许对内部的 webpack 配置进行更细粒度的修改
+   *
+   * @default {() => undefined}
    */
   chainWebpack: (config: Config) => void;
 
@@ -424,5 +468,11 @@ export type ProjectConfig = {
    * @description 项目路径映射别名
    */
   alias: Record<string, string>;
+
+  /**
+   * @description 是否开启本地 mock 服务
+   * 约定根目录下`mock/index.js` 为默认 mock 配置文件
+   */
+  mock: boolean;
 };
 ```

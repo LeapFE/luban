@@ -91,7 +91,7 @@ luban-cli-service inspect --mode=development > config.txt
 // 审查关于 css 规则的配置
 luban-cli-service inspect --rule=css
 
-// 生产 html 插件的配置
+// 审查 html 插件的配置
 luban-cli-service inspect --plugin=html
 ```
 
@@ -101,7 +101,7 @@ luban-cli-service inspect --plugin=html
 
 ```json
 {
-  "hooks": {
+  "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
