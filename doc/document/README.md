@@ -48,4 +48,4 @@ CLI 服务是对 [webpack](http://webpack.js.org/) 和
 
 整个系统采用插件式架构开发。一个插件是一个可以向项目中提供可选特性的包，例如 TypeScript、ESLint 以及单元测试等。
 
-当使用 `luban init` 命令创建项目时，插件会根据配置写入模板文件、增加配置文件以及扩展 *package.json* 等。在本地开发和构建时，插件同时会去修改 ==webpack== 配置。
+当使用 `luban init` 命令创建项目时，插件会根据配置写入模板文件、增加配置文件以及扩展 *package.json* 等。在本地开发和构建时，插件同时会去修改 ==webpack== 配置和其他工具的配置。

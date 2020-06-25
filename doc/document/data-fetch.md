@@ -10,23 +10,7 @@ import { APP_SERVER } from "./env";
 
 const request = axios.create({ baseURL: `${APP_SERVER}/api/` });
 
-request.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    return config;
-  },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  },
-);
-
-request.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  },
-);
+export { request };
 ```
 
 其中 `APP_SERVER` 是 dotenv 文件中指定的环境变量，此处为请求接口服务地址，推荐通过 *src/service/env.ts* 来统一导出被注入的环境变量。关于如何配置请求拦截、取消、超时等，查阅 [axios](https://github.com/axios/axios) 获取更多信息。
@@ -36,6 +20,8 @@ request.interceptors.response.use(
 ```tsx
 import React, { FunctionComponent } from "react";
 import { useRequest } from "@luban-hooks/use-request";
+
+import { getUserList } from "@/service/api/user";
 
 const UserList: FunctionComponent = () => {
   const { data, loading } = useRequest(getUserList);

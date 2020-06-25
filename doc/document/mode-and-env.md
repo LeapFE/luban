@@ -68,7 +68,7 @@ APP_SERVER=https://mock.server.cn
 
 这两种情况下，由于运行的是 build 命令，所以都是构建用于生产环境的应用，但是在 mock 模式下，`process.env.APP_SERVER` 将会被覆写为另外一个值。
 
-同时，只有以 `/^APP_/` 开头的变量才会被 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root) 注入客户端测的代码中，可以在项目代码中这样使用环境变量：
+**同时，只有以 `/^APP_/` 开头的变量才会被 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root) 注入客户端侧的代码中**，可以在项目代码中这样使用环境变量：
 
 ```javascript
 // 注意 APP_SERVER 对应的值将会变成 "https://example.mock.com"

@@ -41,7 +41,7 @@ Luban 默认创建的目录结构提供了良好的分层结构，约定的目�
 │   ├── types              # 公共类型
 │   ├── typings            # 自定义模块类型
 │   ├── utils              # 工具函数
-│   └── views              # 页面组件
+│   └── views              # 路由组件
 ├── template
 │   └── index.html       # 模板文件
 ├── tests                # 测试启动文件
