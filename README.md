@@ -3,7 +3,7 @@
 
 ## Documentation
 
-移步 https://luban.now.sh/
+https://luban.now.sh/
 
 ## License
 
