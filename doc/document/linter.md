@@ -80,7 +80,7 @@ Luban 创建的项目默认使用双引号，若是需要配置单引号，除�
 
 为保障多人协作开发下代码提交的一致性和规范性，当在终端运行 `git commit` 时（并不需要 `-m` 参数），会在终端提供交互式的询问，以完成 commit message 的填写：
 
-![commit](https://tva1.sinaimg.cn/large/007S8ZIlly1ggt8fzv9q3j31g20osn2o.jpg)
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggt8fzv9q3j31g20osn2o.jpg" alt="commit" style="zoom: 50%;" />
 
 
 上图中 Luban 使用了 [AngularJS's commit message convention](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) 来生成规范化的提交消息。
