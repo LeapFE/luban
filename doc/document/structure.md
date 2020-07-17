@@ -39,11 +39,11 @@ Luban 默认创建的目录结构提供了良好的分层结构，约定的目�
 │   │   └── request.ts       # 请求实例
 │   ├── style              # 公共样式
 │   ├── types              # 公共类型
-│   ├── typings            # 自定义模块类型
+│   ├── typings            # 自定义模块类型/命名空间/接口等
 │   ├── utils              # 工具函数
 │   └── views              # 路由组件
 ├── template
 │   └── index.html       # 模板文件
-├── tests                # 测试启动文件
-└── tsconfig.json        # typescript 配置文件
+├── tests                 # 测试启动文件
+└── tsconfig.json         # typescript 配置文件
 ```

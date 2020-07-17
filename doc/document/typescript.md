@@ -25,4 +25,3 @@ Luban 创建的项目默认使用 [TypeScript](http://www.typescriptlang.org) �
 + [TypeScript React Conversion Guide](https://github.com/microsoft/TypeScript-React-Conversion-Guide)
 + [TypeScript官方博客](https://devblogs.microsoft.com/typescript/)
 + [Interface vs Type in TypeScript](https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c)
-+ [Advanced Static Types in TypeScript — egghead.io](https://egghead.io/courses/advanced-static-types-in-typescript)
