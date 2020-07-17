@@ -64,7 +64,7 @@ ESLint 的规则会与 Prettier 的规则产生冲突，具体可以查阅 [esli
 ```json
 {
   "trailingComma": "all",
-  "printWidth": 120,
+  "printWidth": 100,
   "arrowParens": "always",
   "jsxBracketSameLine": false,
   "endOfLine": "lf",
