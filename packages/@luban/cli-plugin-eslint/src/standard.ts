@@ -106,7 +106,6 @@ export function eslintConfigStandard(api: GeneratorAPI, options: Required<RootOp
       scripts: {
         eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
         "eslint:fix": "eslint --fix --config .eslintrc --ext .tsx,.ts src/",
-        check: "tsc --noEmit",
         "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
         "format:check:ts": "prettier --check 'src/**/*.{ts,tsx}'",
       },

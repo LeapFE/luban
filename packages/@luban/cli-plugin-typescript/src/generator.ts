@@ -13,6 +13,9 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   }
 
   api.extendPackage({
+    scripts: {
+      compile: "tsc --noEmit --diagnostics",
+    },
     devDependencies: {
       "@types/react": "^16.9.35",
       "@types/react-dom": "^16.9.8",

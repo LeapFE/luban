@@ -6,12 +6,12 @@ Luban 创建的项目默认使用 [TypeScript](http://www.typescriptlang.org) �
 ```json
 {
   "scripts": {
-    "check": "tsc --noEmit"
+    "compile": "tsc --noEmit --diagnostics",
   }
 }
 ```
 
-可以在终端中运行 `npm run check` 检查项目代码中可能存在的编译错误。
+可以在终端中运行 `npm run compile` 检查项目代码中可能存在的编译错误以及诊断信息。
 
 ::: tip 🙋
 借助 ==webpack-dev-server== 的 [overlay](https://webpack.js.org/configuration/dev-server/#devserveroverlay) 和 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin) 可以实现线程外的快速类型检查并将错误打印在浏览器端的页面上。

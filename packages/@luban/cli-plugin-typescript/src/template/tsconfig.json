@@ -1,5 +1,5 @@
 {
-  // More tsconfig info see https://www.typescriptlang.org/tsconfig/
+  // More tsconfig info see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
   "include": ["src/**/*"],
   "files": ["luban.config.ts"],
   "exclude": ["public", "node_modules", "dist", "build"],
@@ -30,10 +30,8 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "paths": {
-      "*": ["./node_modules/*/index"],
       "@/*": ["src/*"]
     },
-    "typeRoots": ["src/typings", "node_modules/@types"],
 
     /* Linter Checks */
     "noUnusedLocals": true,
