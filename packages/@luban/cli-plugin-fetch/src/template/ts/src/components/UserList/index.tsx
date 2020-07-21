@@ -1,10 +1,6 @@
 import React, { FunctionComponent, ChangeEvent, useState, CSSProperties } from "react";
 import { useRequest } from "@luban-hooks/use-request";
 
-import { AxiosResponse } from "axios";
-import { ResponseData } from "@/service/interface/public";
-import { UserItem } from "@/service/interface/user";
-
 import { getUserList, addUser, delUser } from "@/service/api/user";
 
 const style: CSSProperties = {
@@ -22,10 +18,11 @@ const UserList: FunctionComponent = () => {
   const { data: userList, run: fetchUserList } = useRequest(getUserList, {
     initialData: [],
     defaultParams: {},
-    formatter: (res: AxiosResponse<ResponseData<UserItem[]>>) => res.data.data,
+    formatter: (res) => res.data.data,
   });
 
   const { run: putAddUser } = useRequest(addUser, {
+    manual: true,
     onSuccess: (res) => {
       if (res.code === 1) {
         fetchUserList({});
@@ -35,6 +32,7 @@ const UserList: FunctionComponent = () => {
   });
 
   const { run: putDelUser } = useRequest(delUser, {
+    manual: true,
     onSuccess: (res) => {
       if (res.code === 1) {
         fetchUserList({});

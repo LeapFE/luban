@@ -17,7 +17,9 @@ module.exports = {
   "GET /api/users": (req, res) => {
     let filterUsers = Users;
     if (typeof req.query.name === "string") {
-      filterUsers = Users.filter((user) => user.name === req.query.name);
+      filterUsers = Users.filter(
+        (user) => user.name.toLowerCase() === req.query.name.toLowerCase(),
+      );
     }
     res.send({
       code: 1,
