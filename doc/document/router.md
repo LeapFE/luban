@@ -84,13 +84,28 @@ export const config: RouteConfig = {
       name: "首页",
       path: "/",
       component: Index,
-      meta: { nav: true }
+      meta: { nav: true, name: "home page" }
     },
   ],
 };
 ```
 
 这个 `meta` 字段会在创建路由的时候将会作为 `props` 原模原样的传递给对应的组件。
+
+::: tip 🙋
+当给某一个路由项定义了 `meta` 字段，在具体组件中消费时，应该使用 ==luban-router== 导出的 `EnhancedRouteComponentProps` 约束组件的 `Props` 类型：
+
+```tsx 
+import React, { FunctionComponent } from "react";
+import { EnhancedRouteComponentProps } from "luban-router/es/definitions";
+
+const Home: FunctionComponent<EnhancedRouteComponentProps<{ nav: boolean, name: string }>> = ({ meta }) => {
+  return <div>{meta?.name}</div>;
+};
+
+export { Home };
+```
+:::
 
 同样这个字段在创建应用导航菜单是也很有用。详细见下面 [导航菜单](#导航菜单)。
 
