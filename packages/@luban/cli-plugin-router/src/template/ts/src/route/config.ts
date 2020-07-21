@@ -1,4 +1,4 @@
-import { RouteConfig } from "luban-router/lib/definitions";
+import { RouteConfig } from "luban-router/es/definitions";
 
 import { Home } from "@/views/Home";
 import { User } from "@/views/User";
