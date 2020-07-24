@@ -14,7 +14,7 @@
     "check:type": "node scripts/build.js --check",
     "build:changed": "node scripts/build.js --onlyChanged",
     "build": "node scripts/build.js",
-    "publish:next": "node scripts/publish.js --tag=next",
+    "publish:beta": "node scripts/publish.js --tag=beta",
     "publish:latest": "node scripts/publish.js --tag=latest",
     "test:changed": "node scripts/test.js --onlyChanged",
     "test": "node scripts/test.js",
