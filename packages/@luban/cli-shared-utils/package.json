@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-shared-utils",
-  "version": "1.4.0-beta.0",
+  "version": "1.4.0-beta.1",
   "description": "cli shared utils",
   "keywords": [
     "utils"
