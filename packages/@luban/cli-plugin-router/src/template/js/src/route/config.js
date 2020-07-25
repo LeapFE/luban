@@ -4,14 +4,16 @@ import { User } from "@/views/User";
 export const config = {
   routes: [
     {
-      name: "首页",
+      name: "Home",
       path: "/",
       component: Home,
+      meta: { name: "Home" },
     },
     {
-      name: "用户中心",
+      name: "User",
       path: "/user",
       component: User,
+      meta: { name: "User" },
     },
   ],
 };
