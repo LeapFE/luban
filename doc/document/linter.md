@@ -76,7 +76,7 @@ ESLint 的规则会与 Prettier 的规则产生冲突，具体可以查阅 [esli
 Luban 创建的项目默认使用双引号，若是需要配置单引号，除了配置 `singleQuote` 与 `jsxSingleQuote`, 还需要配置编辑器的行为，Visual Studio Code 查阅 [quote-style](https://code.visualstudio.com/updates/v1_24#_preferences-for-auto-imports-and-generated-code)，webstrom 查阅 [JavaScript and TypeScript tools](https://www.jetbrains.com/resharper/features/javascript_typescript.html)。 
 :::
 
-### commitizen 和 commitlint
+## commitizen 和 commitlint
 
 为保障多人协作开发下代码提交的一致性和规范性，当在终端运行 `git commit` 时（并不需要 `-m` 参数），会在终端提供交互式的询问，以完成 commit message 的填写：
 
@@ -99,7 +99,7 @@ Luban 创建的项目默认使用双引号，若是需要配置单引号，除�
 }
 ```
 
-## 手动添加 commitizen 和 commitlint
+### 手动添加 commitizen 和 commitlint
 
 在 Luban@1.3.2 版本之前，创建项目时并没有 commitizen 和 commitlint，可以通过以下步骤来添加：
 
