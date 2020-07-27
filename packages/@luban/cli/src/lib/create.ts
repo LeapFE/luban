@@ -4,6 +4,10 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import validateProjectName from "validate-npm-package-name";
 import { clearConsole, Spinner } from "@luban-cli/cli-shared-utils";
+import updateNotifier from "update-notifier";
+import boxen from "boxen";
+import pupa from "pupa";
+
 import { CliOptions } from "../definitions";
 
 import { Creator } from "./creator";
@@ -11,8 +15,55 @@ import { PromptModuleAPI } from "./promptModuleAPI";
 
 import { defaultPromptModule } from "./../constants";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pkg = require("../../package.json");
+
 function getPromptModules(): Array<(api: PromptModuleAPI) => void> {
   return defaultPromptModule.map((file) => require(`./promptModules/${file}`).default);
+}
+
+function updateNotify(): void {
+  const notifier = updateNotifier({
+    pkg: {
+      name: pkg.name,
+      version: pkg.version,
+    },
+    // 1 week
+    updateCheckInterval: 1000 * 60 * 60 * 24 * 7,
+  });
+
+  if (notifier.update) {
+    const template =
+      "Update available " +
+      chalk.dim("{currentVersion}") +
+      chalk.reset(" → ") +
+      chalk.green("{latestVersion}") +
+      " \nRun " +
+      chalk.cyan("{updateCommand}") +
+      " to update";
+
+    const message =
+      "\n" +
+      boxen(
+        pupa(template, {
+          packageName: pkg.name,
+          currentVersion: notifier.update.current,
+          latestVersion: notifier.update.latest,
+          updateCommand: "npm install @luban-cli/cli@latest -g",
+        }),
+        {
+          padding: 1,
+          margin: 1,
+          align: "center",
+          borderColor: "yellow",
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          borderStyle: "classic",
+        },
+      );
+
+    console.error(message);
+  }
 }
 
 async function create(projectName: string, options: CliOptions): Promise<void> {
@@ -80,6 +131,8 @@ async function create(projectName: string, options: CliOptions): Promise<void> {
 }
 
 export function init(projectName: string, options: CliOptions): Promise<void> {
+  updateNotify();
+
   return create(projectName, options).catch((error) => {
     const spinner = new Spinner();
     spinner.stopSpinner(false);
