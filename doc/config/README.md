@@ -251,7 +251,7 @@ export default createProjectConfig({
   使用 `import` 导入模块时的路径别名。用法和 `webpack` 的 [`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) 一致。默认只有 *src* 目录。
 
 ::: tip 🙋‍♂
-当时使用 TypeScript 为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅 [path-mapping](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
+当使用 TypeScript 作为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅 [path-mapping](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
 :::
 
 ### mock
@@ -278,13 +278,13 @@ Luban 使用了 Babel 7 中的新配置格式 *babel.config.js*。和 *.babelrc*
 
 ESLint 可以通过 *.eslintrc* 来配置。
 
-更多细节可查阅文档中的 [代码Linter 和 Prettier](../document/linter.md#eslinter) 章节。
+更多细节可查阅文档中的 [代码质量保障](../document/linter.md#eslinter) 章节。
 
 ## StyleLint
 
 StyleLint 可以通过 *.stylelintrc* 来配置。
 
-更多细节可查阅文档中 [代码Linter 和 Prettier](../document/linter.md#stylelinter) 章节。
+更多细节可查阅文档中 [代码质量保障](../document/linter.md#stylelinter) 章节。
 
 ## TypeScript
 
@@ -333,7 +333,7 @@ export default createProjectConfig({
   alias: {
     "@": "<project_path>/src",
   },
-  // 选择 '数据获取' 特性是将开启此选项
+  // 选择 '数据获取' 特性时将开启此选项
   mock: false,
 });
 ```

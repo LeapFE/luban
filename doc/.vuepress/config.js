@@ -75,11 +75,22 @@ module.exports = {
       ],
     },
     lastUpdated: "上次编辑于",
+
+    smoothScroll: true,
+
+    repo: "https://github.com/LeapFE/luban",
+    repoLabel: "查看源码",
+    docsDir: "doc",
+    docsBranch: "master",
+    editLinks: true,
+    editLinkText: "在 GitHub 上编辑此页",
   },
   plugins: [
     "@vuepress/back-to-top",
     ["@vuepress/medium-zoom", true],
     "@vuepress/active-header-links",
+    "@vuepress/last-updated",
+    "@vuepress/plugin-nprogress",
   ],
   extendMarkdown: (md) => {
     md.use(require("markdown-it-mark"));

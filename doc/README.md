@@ -3,6 +3,7 @@ home: true
 actionText: 开始 →
 actionLink: /document/creating-project
 footer: MIT Licensed | Copyright © 2020-present front-end-captain
+editLink: false
 ---
 
 <div class="features">
