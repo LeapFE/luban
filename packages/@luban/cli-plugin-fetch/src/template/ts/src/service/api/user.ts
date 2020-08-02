@@ -5,14 +5,14 @@ import { UserItem, getUserListQuery } from "../interface/user";
 
 
 export function getUserList(params: getUserListQuery) {
-  const url = params.name ? `/users?name=${params.name}` : "/users";
+  const url = params.name ? `/api/users?name=${params.name}` : "/api/users";
   return request.get<ResponseData<UserItem[]>>(url);
 }
 
 export function addUser(params: { name: string }) {
-  return request.post<ResponseData<boolean>>(`/user/${params.name}`);
+  return request.post<ResponseData<boolean>>(`/api/user/${params.name}`);
 }
 
 export function delUser(params: { id: number }) {
-  return request.delete<ResponseData<boolean>>(`/user/${params.id}`);
+  return request.delete<ResponseData<boolean>>(`/api/user/${params.id}`);
 }
