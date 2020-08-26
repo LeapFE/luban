@@ -341,7 +341,7 @@ class Service {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const configModule = require(`${configTempDirPath.replace("ts", "js")}`);
+    const configModule = require(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
 
     fs.removeSync(configTempDir);
 

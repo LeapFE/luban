@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/LeapFE/luban/compare/v1.4.0...v1.4.1) (2020-08-26)
+
+
+### Bug Fixes
+
+* **service:** exception while compile luban.config.ts file ([889d24e](https://github.com/LeapFE/luban/commit/889d24e53b52891ac8d5722a27a1142d18826a3e))
+
+
+### Features
+
+* **fetch:** move `env.{ts,js}` ([aac8943](https://github.com/LeapFE/luban/commit/aac894352ad9505808846bd7dbfad5a1356dc5f4))
+
+
+
+
+
 # [1.4.0](https://github.com/LeapFE/luban/compare/v1.4.0-beta.2...v1.4.0) (2020-07-27)
 
 **Note:** Version bump only for package luban

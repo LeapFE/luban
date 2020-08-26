@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/leapFE/luban/compare/v1.4.0...v1.4.1) (2020-08-26)
+
+
+### Features
+
+* **fetch:** move `env.{ts,js}` ([aac8943](https://github.com/leapFE/luban/commit/aac894352ad9505808846bd7dbfad5a1356dc5f4))
+
+
+
+
+
 # [1.4.0](https://github.com/leapFE/luban/compare/v1.4.0-beta.2...v1.4.0) (2020-07-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-fetch
