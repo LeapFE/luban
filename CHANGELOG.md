@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/LeapFE/luban/compare/v1.4.1...v1.4.2) (2020-08-26)
+
+
+### Features
+
+* **cli:** version update notify ([0d17244](https://github.com/LeapFE/luban/commit/0d172442fe79459728f0f5137cbd2dd2562ebbbf))
+
+
+
+
+
 ## [1.4.1](https://github.com/LeapFE/luban/compare/v1.4.0...v1.4.1) (2020-08-26)
 
 
