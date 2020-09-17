@@ -26,7 +26,8 @@
     "doc:dev": "vuepress dev doc --open --temp .temp",
     "doc:build": "vuepress build doc --temp .temp",
     "doc:info": "vuepress view-info docs --temp .temp",
-    "doc:pub": "now --prod"
+    "doc:pub": "vercel --prod",
+    "doc:pub:dev": "vercel"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -52,11 +53,11 @@
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.7",
     "markdown-it-mark": "^3.0.0",
-    "now": "^17.0.4",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^25.1.0",
     "typescript": "^3.9.3",
+    "vercel": "^20.1.0",
     "vuepress": "^1.5.0",
     "vuepress-theme-antdocs": "^1.1.0"
   },
