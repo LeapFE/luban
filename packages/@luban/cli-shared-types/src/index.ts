@@ -1,14 +1,14 @@
 export type RawPlugin = {
-  "@luban-cli/cli-plugin-babel"?: Record<string, any>;
-  "@luban-cli/cli-plugin-typescript"?: Record<string, any>;
-  "@luban-cli/cli-plugin-eslint"?: Record<string, any>;
-  "@luban-cli/cli-plugin-stylelint"?: Record<string, any>;
-  "@luban-cli/cli-plugin-router"?: Record<string, any>;
-  "@luban-cli/cli-plugin-store"?: Record<string, any>;
-  "@luban-cli/cli-plugin-unit-test"?: Record<string, any>;
-  "@luban-cli/cli-plugin-fetch"?: Record<string, any>;
-  "@luban-cli/cli-plugin-commit"?: Record<string, any>;
-  "@luban-cli/cli-plugin-service": { projectName: string } & Record<string, any>;
+  "@luban-cli/cli-plugin-babel"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-typescript"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-eslint"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-stylelint"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-router"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-store"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-unit-test"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-fetch"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-commit"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-service": { projectName: string } & Record<string, unknown>;
 };
 
 export type ESLinterConfig = "leap" | "airbnb" | "standard";
@@ -63,4 +63,4 @@ export type BasePkgFields = {
    * @deprecated
    */
   ["__USE_LOCAL_PLUGIN__"]?: boolean;
-} & Record<string, any>;
+} & Record<string, unknown>;
