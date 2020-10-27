@@ -1,4 +1,5 @@
 import { PromptModuleAPI } from "../promptModuleAPI";
+import { FinalAnswers } from "../../definitions";
 
 const baseConfigList = [
   {
@@ -20,11 +21,8 @@ export default function(cli: PromptModuleAPI): void {
     type: "list",
     message: "Pick a linter config:",
 
-    // REVIEW
-    // answer: { language: "js" | "ts" }
-    default: (answer: any) => (answer.language === "js" ? "airbnb" : "leap"),
+    default: (answer: FinalAnswers) => (answer.language === "js" ? "airbnb" : "leap"),
 
-    // answer: { language: "js" | "ts" }
     choices: (answer) => {
       if (answer.language === "js") {
         return baseConfigList;

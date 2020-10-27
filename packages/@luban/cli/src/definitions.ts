@@ -38,7 +38,6 @@ export type CliOptions = Partial<{
    */
   force: boolean;
 
-  // 创建项目时安装插件时下载本地插件，仅仅是为了测试
   /**
    * @description will install local plugins while create project for test or debug
    */
@@ -90,7 +89,7 @@ export interface ApplyFn {
 export type ResolvedPlugin = {
   id: keyof RawPlugin;
   apply: ApplyFn;
-  options: RawPlugin[keyof RawPlugin] & Record<string, any>;
+  options: RawPlugin[keyof RawPlugin] & Record<string, unknown>;
 };
 
 // TYPE REVIEW

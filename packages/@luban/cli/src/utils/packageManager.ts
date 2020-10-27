@@ -8,7 +8,14 @@ import { getPackageJson } from "./getPackageJson";
 import { executeCommand } from "./executeCommand";
 import { SUPPORTED_PACKAGE_MANAGER, PACKAGE_MANAGER_CONFIG } from "../definitions";
 
-const metadataCache = new LRU<string, any>({
+type LRUCacheValue =
+  | string
+  | string[]
+  | Record<string, string>
+  | Record<string, unknown>
+  | undefined;
+
+const metadataCache = new LRU<string, LRUCacheValue>({
   max: 200,
   // 30 min.
   maxAge: 1000 * 60 * 30,
@@ -23,6 +30,10 @@ const PACKAGE_MANAGER_CONFIG: PACKAGE_MANAGER_CONFIG = {
     remove: ["uninstall", "--loglevel", "error"],
   },
 };
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
 
 class PackageManager {
   private readonly context: string;
@@ -82,7 +93,7 @@ class PackageManager {
     return args;
   }
 
-  public async getMetadata(packageName: string, { field = "" } = {}): Promise<any> {
+  public async getMetadata(packageName: string, { field = "" } = {}): Promise<LRUCacheValue> {
     const registry = await this.getRegistry();
 
     const metadataKey = `${this.bin}-${registry}-${packageName}`;
@@ -115,11 +126,18 @@ class PackageManager {
     if (Object.keys(metadata["dist-tags"]).includes(versionRange)) {
       return metadata["dist-tags"][versionRange];
     }
-    const versions = Array.isArray(metadata.versions)
-      ? metadata.versions
-      : Object.keys(metadata.versions);
 
-    return semver.maxSatisfying(versions, versionRange);
+    if (isObject(metadata)) {
+      const versions: string[] | SemVer = Array.isArray(metadata.versions)
+        ? metadata.versions
+        : isObject(metadata.versions)
+        ? Object.keys(metadata.versions)
+        : [];
+
+      return semver.maxSatisfying(versions, versionRange);
+    }
+
+    return null;
   }
 
   public getInstalledVersion(packageName: string): string {
