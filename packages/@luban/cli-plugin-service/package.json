@@ -50,7 +50,7 @@
     "chalk": "^2.4.2",
     "clean-webpack-plugin": "^3.0.0",
     "cli-highlight": "^2.1.1",
-    "cliui": "^5.0.0",
+    "cliui": "^7.0.3",
     "copy-webpack-plugin": "^6.0.1",
     "cssnano": "^4.1.10",
     "default-gateway": "^5.0.4",
