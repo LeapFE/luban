@@ -4,14 +4,14 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const processors: (string | (string | Record<string, any>)[])[] = [];
-  const extendsConfig: (string | (string | Record<string, any>)[])[] = [
+  const processors: (string | (string | Record<string, unknown>)[])[] = [];
+  const extendsConfig: (string | (string | Record<string, unknown>)[])[] = [
     "stylelint-config-standard",
     "stylelint-config-prettier",
   ];
   const stylelintRules = new SimpleMapPolyfill<
     string,
-    string | Array<string | Record<string, any> | boolean>
+    string | Array<string | Record<string, unknown> | boolean>
   >([
     ["comment-empty-line-before", ["always"]],
 
