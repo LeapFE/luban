@@ -2,12 +2,55 @@ import webpack = require("webpack");
 import Config = require("webpack-chain");
 import webpackDevServer = require("webpack-dev-server");
 import { Request, Response, NextFunction } from "express";
+import { Parser, Stringifier, Syntax, Plugin } from "postcss/lib/postcss";
+import "less";
+
+type CssLoaderOptions = {
+  url: boolean | ((url: string, path: string) => boolean);
+  import: boolean | ((url: string, media: string, path: string) => boolean);
+  modules:
+    | boolean
+    | "global"
+    | "local"
+    | Partial<{
+        mode: "global" | "local";
+        localIdentName: string;
+        context: string;
+        hashPrefix: string;
+      }>;
+  sourceMap: boolean;
+  importLoaders: number;
+  localsConvention: string;
+  onlyLocals: boolean;
+  esModule: boolean;
+};
+
+type PostcssLoaderOptions = {
+  exec: boolean;
+  parser: boolean | Parser;
+  syntax: boolean | Syntax;
+  stringifier: Stringifier;
+  config: {
+    path?: string;
+    context?: { env?: string; file?: { extname?: string; dirname?: string; basename?: string } };
+    options: Record<string, unknown>;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins: Plugin<any>[] | ((loader: webpack.loader.LoaderContext) => Plugin<any>[]);
+  sourceMap: boolean | string;
+};
+
+type MiniCSSLoaderOptions = {
+  publicPath: string | ((url: string, path: string) => string);
+  hmr: boolean;
+  reloadAll: boolean;
+};
 
 type OptionsOfCssLoader = {
-  css: Record<string, any>;
-  less: Record<string, any>;
-  postcss: Record<string, any>;
-  miniCss: Record<string, any>;
+  css: Partial<CssLoaderOptions>;
+  less: Partial<Less.Options>;
+  postcss: Partial<PostcssLoaderOptions>;
+  miniCss: Partial<MiniCSSLoaderOptions>;
 };
 
 type AssetsDir = {
@@ -143,6 +186,6 @@ export function createProjectConfig(params: Partial<ProjectConfig>): Partial<Pro
 }
 
 export type MockFunction = (req: Request, res: Response, next?: NextFunction) => void;
-export type MockValue = string | { [key: string]: any } | MockFunction;
+export type MockValue = string | { [key: string]: unknown } | MockFunction;
 
 export type MockConfig = { [key: string]: MockValue };

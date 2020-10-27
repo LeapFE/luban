@@ -35,7 +35,7 @@ const schema = createSchema((joi) =>
   }),
 );
 
-export function validateProjectConfig(options: any, cb?: (msg?: string) => void): void {
+export function validateProjectConfig(options: unknown, cb?: (msg?: string) => void): void {
   validate(options, schema, { allowUnknown: true }, cb);
 }
 

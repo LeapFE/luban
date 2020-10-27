@@ -2,6 +2,7 @@ import Config = require("webpack-chain");
 import webpack = require("webpack");
 import webpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
+import WebpackDevServer from "webpack-dev-server";
 
 import {
   RootOptions as rootOptions,
@@ -25,7 +26,7 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type PluginApplyCallback = (api: PluginAPI, options: Record<string, any>) => void;
+export type PluginApplyCallback = (api: PluginAPI, options: Record<string, unknown>) => void;
 
 export type InlinePlugin = {
   id: string;
@@ -33,6 +34,10 @@ export type InlinePlugin = {
 };
 
 export type ServicePlugin = InlinePlugin;
+
+export type WebpackConfiguration = webpack.Configuration & {
+  devServer?: WebpackDevServer.Configuration;
+};
 
 export type WebpackChainCallback = (config: Config) => void;
 
@@ -46,13 +51,16 @@ export type WebpackRawConfigCallback =
 // TODO supported use function to config devServer
 export type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
 
-export type CommandCallback<P> = (args: ParsedArgs<P>, rawArgv: string[]) => void;
+export type CommandCallback<P extends Record<string | number, unknown>> = (
+  args: ParsedArgs<P>,
+  rawArgv: string[],
+) => void;
 
-export type CommandList<P> = Record<
+export type CommandList<P extends Record<string | number, unknown>> = Record<
   builtinServiceCommandName,
   {
     commandCallback: CommandCallback<P>;
-    opts: Record<string, any> | null | PluginApplyCallback;
+    opts: Record<string, unknown> | CommandCallback<P>;
   }
 >;
 
@@ -94,7 +102,7 @@ export type PLUGIN_IDS = keyof RawPlugin;
 
 export type CliArgs = ServeCliArgs | BuildCliArgs | InspectCliArgs;
 
-export type ParsedArgs<T extends Record<string | number, any> = CliArgs> = {
+export type ParsedArgs<T extends Record<string | number, unknown> = CliArgs> = {
   [K in keyof T]: T[K];
 } & {
   "--"?: string[];

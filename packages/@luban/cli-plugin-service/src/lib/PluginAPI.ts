@@ -1,6 +1,5 @@
 import path from "path";
 import Config = require("webpack-chain");
-import webpack = require("webpack");
 
 import { Service } from "./Service";
 import {
@@ -11,6 +10,7 @@ import {
   CliArgs,
   builtinServiceCommandName,
   RootOptions,
+  WebpackConfiguration,
 } from "../definitions";
 
 class PluginAPI {
@@ -54,15 +54,15 @@ class PluginAPI {
 
   public registerCommand(
     name: builtinServiceCommandName,
-    opts: Record<string, any> | CommandCallback<CliArgs> | null,
+    opts: Record<string, unknown> | CommandCallback<CliArgs>,
     callback?: CommandCallback<CliArgs>,
   ): void {
     let commandCallback = callback;
 
     // if opts is function, ignore callback param
     if (typeof opts === "function") {
-      commandCallback = opts as CommandCallback<CliArgs>;
-      opts = null;
+      commandCallback = opts;
+      opts = {};
     }
 
     if (typeof commandCallback === "function") {
@@ -82,7 +82,7 @@ class PluginAPI {
     return this.service.resolveChainableWebpackConfig();
   }
 
-  public resolveWebpackConfig(config?: Config): webpack.Configuration {
+  public resolveWebpackConfig(config?: Config): WebpackConfiguration {
     return this.service.resolveWebpackConfig(config);
   }
 
