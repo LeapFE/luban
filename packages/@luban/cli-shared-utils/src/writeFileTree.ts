@@ -3,8 +3,8 @@ import path from "path";
 
 function deleteRemovedFiles(
   directory: string,
-  newFiles: Record<string, any>,
-  previousFiles: Record<string, any>,
+  newFiles: Record<string, string>,
+  previousFiles: Record<string, string>,
 ): Promise<void[]> {
   // get all files that are not in the new filesystem and are still existing
   const filesToDelete = Object.keys(previousFiles).filter((filename) => !newFiles[filename]);
@@ -19,8 +19,8 @@ function deleteRemovedFiles(
 
 export const writeFileTree = async function(
   dir: string,
-  files: Record<string, any>,
-  previousFiles?: Record<string, any>,
+  files: Record<string, string>,
+  previousFiles?: Record<string, string>,
 ): Promise<void> {
   if (previousFiles) {
     await deleteRemovedFiles(dir, files, previousFiles);
