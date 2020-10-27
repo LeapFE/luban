@@ -10,7 +10,7 @@ export function eslintConfigStandard(api: GeneratorAPI, options: Required<RootOp
 
   const parserOptions = new SimpleMapPolyfill<
     string,
-    string | number | Record<string, any> | Array<string | Record<string, any>>
+    string | number | Record<string, unknown> | Array<string | Record<string, unknown>>
   >([
     ["ecmaVersion", 2018],
     ["sourceType", "module"],
@@ -22,7 +22,10 @@ export function eslintConfigStandard(api: GeneratorAPI, options: Required<RootOp
     ],
   ]);
 
-  const eslintRules = new SimpleMapPolyfill<string, string | Array<string | Record<string, any>>>([
+  const eslintRules = new SimpleMapPolyfill<
+    string,
+    string | Array<string | Record<string, unknown>>
+  >([
     ["quotes", ["error", "double"]],
     ["semi", ["error", "always"]],
     ["react/prop-types", ["error"]],
@@ -43,7 +46,7 @@ export function eslintConfigStandard(api: GeneratorAPI, options: Required<RootOp
 
   const eslintSettings = new SimpleMapPolyfill<
     string,
-    string | Array<string | Record<string, any>>
+    string | Array<string | Record<string, unknown>>
   >([
     [
       "react",

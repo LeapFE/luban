@@ -10,7 +10,7 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
 
   const parserOptions = new SimpleMapPolyfill<
     string,
-    string | number | Record<string, any> | Array<string | Record<string, any>>
+    string | number | Record<string, unknown> | Array<string | Record<string, unknown>>
   >([
     ["ecmaVersion", 2018],
     ["sourceType", "module"],
@@ -22,7 +22,10 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
     ],
   ]);
 
-  const eslintRules = new SimpleMapPolyfill<string, string | Array<string | Record<string, any>>>([
+  const eslintRules = new SimpleMapPolyfill<
+    string,
+    string | Array<string | Record<string, unknown>>
+  >([
     ["quotes", ["error", "double"]],
     ["semi", ["error", "always"]],
     ["react/display-name", ["warn"]],
@@ -49,7 +52,7 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
 
   const eslintSettings = new SimpleMapPolyfill<
     string,
-    string | Array<string | Record<string, any>>
+    string | Array<string | Record<string, unknown>>
   >([
     [
       "react",
@@ -132,7 +135,7 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
 
     eslintRules.set("react/prop-types", "off");
     eslintRules.set("@typescript-eslint/explicit-function-return-type", "off");
-    eslintRules.set("@typescript-eslint/no-explicit-any", "warn");
+    eslintRules.set("@typescript-eslint/no-explicit-unknown", "warn");
     eslintRules.set("@typescript-eslint/camelcase", "off");
     eslintRules.set("react/state-in-constructor", "warn");
     eslintRules.set("react/jsx-filename-extension", ["error", { extensions: [".ts", ".tsx"] }]);
