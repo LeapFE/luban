@@ -32,15 +32,23 @@ export const resolveModule = function(request: string, context: string): string 
  * @param force
  * @throws {Error} Throw "Cannot find module" Error
  */
-export const loadModule = function(request: string, context: string, force = false): unknown {
+export const loadModule = function<T = unknown>(
+  request: string,
+  context: string,
+  force = false,
+): T | undefined {
   const resolvedPath = resolveModule(request, context);
+
   if (resolvedPath) {
     if (force) {
       clearRequireCache(resolvedPath);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const m = require(resolvedPath);
+
     // first check module is ESModule
-    return require(resolvedPath).default || require(resolvedPath);
+    return m && m.__esModule ? m.default : m;
   }
 };
 
