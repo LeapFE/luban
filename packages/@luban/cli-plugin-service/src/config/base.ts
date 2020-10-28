@@ -1,5 +1,6 @@
 import Config = require("webpack-chain");
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import DefinePlugin from "webpack/lib/DefinePlugin";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
@@ -68,10 +69,6 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       .loader("eslint-loader")
       .end();
 
-    /**
-     * 生产环境下 使用 babel 来编译 ts 代码，并针对目标运行环境（浏览器）注入 polyfill 代码
-     * 开发环境下 使用 ts-loader 来编译 ts 代码，但是不会注入 polyfill 代码
-     */
     if (isTSProject && isProduction) {
       tsRule
         .test(/\.ts[x]?$/)
@@ -94,9 +91,6 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
         .end();
     }
 
-    /**
-     * 生产和开发环境下对 js 代码都使用 babel 来转译代码，同时针对目标运行环境（浏览器）注入 polyfill 代码
-     */
     if (!isTSProject) {
       jsRule
         .test(/\.jsx?$/)
@@ -137,13 +131,10 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       fs: "empty",
       net: "empty",
       tls: "empty",
-      // eslint-disable-next-line @typescript-eslint/camelcase
       child_process: "empty",
     });
 
-    webpackConfig
-      .plugin("define")
-      .use(require("webpack").DefinePlugin, [resolveClientEnv(options.publicPath)]);
+    webpackConfig.plugin("define").use(DefinePlugin, [resolveClientEnv(options.publicPath)]);
 
     webpackConfig.plugin("clean").use(CleanWebpackPlugin, [{ verbose: true }]);
   });

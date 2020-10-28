@@ -3,6 +3,7 @@ import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import CssNano from "cssnano";
 import path from "path";
 import PreloadWebpackPlugin = require("preload-webpack-plugin");
+import HashedModuleIdsPlugin from "webpack/lib/HashedModuleIdsPlugin";
 
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
@@ -55,10 +56,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     if (isProduction) {
       webpackConfig.mode("production").devtool(options.productionSourceMap ? "source-map" : false);
 
-      webpackConfig
-        .plugin("hash-module-ids")
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        .use(require("webpack/lib/HashedModuleIdsPlugin"), [{ hashDigest: "hex" }]);
+      webpackConfig.plugin("hash-module-ids").use(HashedModuleIdsPlugin, [{ hashDigest: "hex" }]);
     }
 
     if (isProduction) {

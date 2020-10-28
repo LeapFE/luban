@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PluginAPI } from "./../lib/PluginAPI";
 import { InspectCliArgs, ParsedArgs, WebpackConfiguration } from "./../definitions";
 
@@ -37,25 +38,21 @@ export default function(api: PluginAPI): void {
 
       if (args.rule) {
         res = webpackConfig.module
-          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            webpackConfig.module.rules.find((r) => (r as any).__ruleNames[0] === args.rule) || {}
+          ? webpackConfig.module.rules.find((r) => (r as any).__ruleNames[0] === args.rule) || {}
           : {};
       }
 
       if (args.plugin) {
         res = webpackConfig.plugins
-          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            webpackConfig.plugins.find((p) => (p as any).__pluginName === args.plugin) || {}
+          ? webpackConfig.plugins.find((p) => (p as any).__pluginName === args.plugin) || {}
           : {};
       }
 
       if (args.rules) {
         res = webpackConfig.module
           ? webpackConfig.module.rules.map((r) => {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const name = (r as any).__ruleNames ? (r as any).__ruleNames[0] : "Nameless Rule (*)";
 
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               hasUnnamedRule = hasUnnamedRule || !(r as any).__ruleNames;
 
               return name;
@@ -65,8 +62,7 @@ export default function(api: PluginAPI): void {
 
       if (args.plugins) {
         res = webpackConfig.plugins
-          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            webpackConfig.plugins.map((p) => (p as any).__pluginName || p.constructor.name)
+          ? webpackConfig.plugins.map((p) => (p as any).__pluginName || p.constructor.name)
           : {};
       }
 

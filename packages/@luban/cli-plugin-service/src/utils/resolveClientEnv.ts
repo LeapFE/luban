@@ -1,11 +1,14 @@
 const allowInjectedEnvNamePrefixReg = /^APP_/;
 
-export function resolveClientEnv(publicPath: string, raw?: boolean): Record<string, unknown> {
-  const env: Record<string, unknown> = {};
+export function resolveClientEnv(
+  publicPath: string,
+  raw?: boolean,
+): Record<"process.env", Record<string, string>> | Record<string, string> {
+  const env: Record<string, string> = {};
 
   Object.keys(process.env).forEach((key) => {
     if (allowInjectedEnvNamePrefixReg.test(key) || key === "NODE_ENV") {
-      env[key] = process.env[key];
+      env[key] = process.env[key] || "";
     }
   });
 

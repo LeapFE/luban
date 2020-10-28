@@ -27,6 +27,7 @@ import {
   WebpackConfiguration,
 } from "./../definitions";
 import { ProjectConfig, MockConfig } from "./../main";
+import { isObject } from "../commands/help";
 
 type ResetParams = Partial<{
   plugins: InlinePlugin[];
@@ -108,7 +109,7 @@ class Service {
   public mode: string;
   private inlineProjectOptions?: ProjectConfig;
   private configFilename: string;
-  public mockConfig: MockConfig | null;
+  public mockConfig: MockConfig | undefined;
   private rootOptions: RootOptions;
   private mockConfigFile: string;
 
@@ -139,7 +140,7 @@ class Service {
 
     this.inlineProjectOptions = projectOptions;
 
-    this.mockConfig = null;
+    this.mockConfig = undefined;
 
     this.plugins = this.resolvePlugins(plugins || [], useBuiltIn || false);
   }
@@ -221,7 +222,7 @@ class Service {
         id: id.replace(/^.\//, "built-in:"),
         apply: prefixRE.test(id)
           ? loadPluginServiceWithWarn(id, this.context)
-          : require(id).default,
+          : loadModule(id, this.context) || (() => undefined),
       };
     };
 
@@ -322,12 +323,13 @@ class Service {
     }
   }
 
-  private requireSpecifiedConfigFile(filePath: string, configFilename: string): unknown {
+  private requireSpecifiedConfigFile<T>(filePath: string, configFilename: string): T | undefined {
     if (/\w+\.js$/.test(configFilename)) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const configModule = require(filePath);
+      const configModule = loadModule<T>(filePath, this.context);
 
-      return configModule.__esModule ? configModule.default : configModule;
+      if (configModule) {
+        return configModule;
+      }
     }
 
     const spinner = new Spinner();
@@ -345,14 +347,16 @@ class Service {
       warn(`compiled ${chalk.bold(configFilename)} file failure \n`);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const configModule = require(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
+    const configModule = loadModule<T>(
+      `${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`,
+      this.context,
+    );
 
     fs.removeSync(configTempDir);
 
     spinner.stopSpinner();
 
-    return configModule.__esModule ? configModule.default : configModule;
+    return configModule;
   }
 
   public loadProjectOptions(inlineOptions?: ProjectConfig): Partial<ProjectConfig> {
@@ -367,14 +371,17 @@ class Service {
     }
 
     try {
-      let _fileConfig = this.requireSpecifiedConfigFile(configPath, this.configFilename);
+      let _fileConfig = this.requireSpecifiedConfigFile<Partial<ProjectConfig>>(
+        configPath,
+        this.configFilename,
+      );
 
       if (!_fileConfig || typeof _fileConfig !== "object") {
         error(`Error load ${chalk.bold(`${this.configFilename}`)}: should export an object. \n`);
-        _fileConfig = null;
+        _fileConfig = undefined;
       }
 
-      if (typeof _fileConfig === "object") {
+      if (isObject(_fileConfig)) {
         fileConfig = _fileConfig;
       }
     } catch (e) {}
@@ -395,8 +402,8 @@ class Service {
     return resolved;
   }
 
-  private loadMockConfig(): MockConfig | null {
-    let _mockConfig: MockConfig | null = null;
+  private loadMockConfig(): MockConfig | undefined {
+    let _mockConfig: MockConfig | undefined = undefined;
 
     if (!this.projectConfig.mock) {
       return _mockConfig;
@@ -414,11 +421,11 @@ class Service {
     }
 
     try {
-      _mockConfig = require(mockConfigFilePath);
+      _mockConfig = loadModule(mockConfigFilePath, this.context);
 
-      if (!_mockConfig || typeof _mockConfig !== "object") {
+      if (!_mockConfig || typeof _mockConfig !== "object" || _mockConfig === null) {
         error(`Error load ${chalk.bold(`${this.mockConfigFile}`)}: should export an object. \n`);
-        _mockConfig = null;
+        _mockConfig = undefined;
       }
     } catch (e) {}
 
