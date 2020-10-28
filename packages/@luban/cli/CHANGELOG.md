@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.0](https://github.com/leapFE/luban/compare/v1.4.2...v2.0.0-next.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* **cli:** modify that get package.json way ([fd94739](https://github.com/leapFE/luban/commit/fd94739eecc445c0e56d6d6f4c69ce877d61f275))
+
+
+
+
+
 ## [1.4.2](https://github.com/leapFE/luban/compare/v1.4.1...v1.4.2) (2020-08-26)
 
 
