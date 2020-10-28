@@ -2,6 +2,8 @@ import { gt, valid, SemVer, minor, major, diff, gte } from "semver";
 
 import { PackageManager } from "./packageManager";
 
+import pkg = require("../../package.json");
+
 const pm = new PackageManager({ context: process.cwd() });
 
 async function getAndCacheLatestVersion(cached: string): Promise<string | SemVer> {
@@ -19,7 +21,7 @@ async function getAndCacheLatestVersion(cached: string): Promise<string | SemVer
 }
 
 async function getVersions(): Promise<{ current: string; latest: string; latestMinor: string }> {
-  const local: string = require("./../../package.json").version;
+  const local: string = pkg.version;
 
   let latest: string | SemVer = "";
 

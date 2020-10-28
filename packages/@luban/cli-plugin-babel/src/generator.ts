@@ -1,16 +1,16 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
-// 生产 babel 配置并写入 .babelrc
-// 添加与 babel 相关的开发依赖
-
 export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): void {
-  const babelConfigPreset: Array<string | Array<string | Record<string, any>>> = [
-    ["@babel/preset-env", { useBuiltIns: "usage", corejs: { version: 3, proposals: true } }],
+  const babelConfigPreset: Array<string | Array<string | Record<string, unknown>>> = [
+    [
+      "@babel/preset-env",
+      { modules: false, useBuiltIns: "usage", corejs: { version: 3, proposals: true } },
+    ],
     "@babel/preset-react",
   ];
 
-  const babelConfigPlugins: Array<string | Array<string | Record<string, any>>> = [
+  const babelConfigPlugins: Array<string | Array<string | Record<string, unknown>>> = [
     "react-hot-loader/babel",
     "@babel/plugin-transform-runtime",
   ];

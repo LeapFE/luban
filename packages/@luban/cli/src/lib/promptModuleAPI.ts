@@ -2,7 +2,7 @@ import { DistinctQuestion } from "inquirer";
 
 import { Creator } from "./creator";
 
-import { PromptCompleteCallback } from "../definitions";
+import { PromptCompleteCallback, FinalAnswers } from "../definitions";
 
 class PromptModuleAPI {
   private creator: Creator;
@@ -11,7 +11,7 @@ class PromptModuleAPI {
     this.creator = creator;
   }
 
-  public injectPrompt(prompt: DistinctQuestion): void {
+  public injectPrompt(prompt: DistinctQuestion<FinalAnswers>): void {
     this.creator.injectedPrompts.push(prompt);
   }
 

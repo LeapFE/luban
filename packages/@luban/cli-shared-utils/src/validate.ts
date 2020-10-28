@@ -5,7 +5,7 @@ export const createSchema = function(callback: (joi: typeof JOI) => ObjectSchema
 };
 
 export const validate = async function(
-  value: Record<any, any>,
+  value: unknown,
   schema: ObjectSchema,
   options: AsyncValidationOptions,
   callback?: (msg: string) => void,
@@ -21,7 +21,7 @@ export const validate = async function(
   }
 };
 
-export const validateSync = function(value: Record<any, any>, schema: ObjectSchema): void {
+export const validateSync = function(value: unknown, schema: ObjectSchema): void {
   const result = schema.validate(value);
   if (result.error) {
     throw result.error;

@@ -182,7 +182,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
         before: (app: Application, server: WebpackDevServer) => {
           if (options.mock && api.service.mockConfig !== null) {
             info("setup development mock server...\n");
-            setupMockServer(app, api.service.mockConfig);
+            setupMockServer(app, api.service.mockConfig || {});
           }
 
           // TODO supported use function to config devServer

@@ -12,14 +12,22 @@ const DEFAULT_OPTIONS = {
 
 const PROJECT_ID = process.env.LUBAN_CLI_PROJECT_ID;
 
+type Data = {
+  _projectId?: string;
+  ok?: boolean;
+  done?: boolean;
+  _data?: Data;
+  [key: string]: unknown;
+};
+
 class IpcMessenger {
   private id: string;
   private connected: boolean;
   private connecting: boolean;
   private disconnecting: boolean;
   private options: Partial<typeof DEFAULT_OPTIONS>;
-  private queue: null | any[];
-  private listeners: Array<(data: any) => void>;
+  private queue: null | Data[];
+  private listeners: Array<(data: Data) => void>;
   private disconnectTimeout: number;
   private idleTimer: NodeJS.Timeout | null;
 
@@ -58,7 +66,7 @@ class IpcMessenger {
     }
   }
 
-  public send(data: any, type = "message"): void {
+  public send(data: Data, type = "message"): void {
     this.checkConnection();
 
     if (this.connected) {
@@ -120,7 +128,7 @@ class IpcMessenger {
 
     this.send({ done: true }, "ack");
 
-    ipc.of[this.id].on("ack", (data: any) => {
+    ipc.of[this.id].on("ack", (data: Data) => {
       if (data.ok) {
         clearTimeout(ipcTimer);
         this._disconnect();
@@ -128,11 +136,11 @@ class IpcMessenger {
     });
   }
 
-  public on(listener: (data: any) => void): void {
+  public on(listener: (data: Data) => void): void {
     this.listeners.push(listener);
   }
 
-  public off(listener: (data: any) => void): void {
+  public off(listener: (data: Data) => void): void {
     const index = this.listeners.indexOf(listener);
     if (index !== -1) this.listeners.splice(index, 1);
   }
@@ -149,10 +157,10 @@ class IpcMessenger {
     this._reset();
   }
 
-  private _onMessage(data: any): void {
+  private _onMessage(data: Data): void {
     this.listeners.forEach((fn) => {
       if (this.options.namespaceOnProject && data._projectId) {
-        if (data._projectId === PROJECT_ID) {
+        if (data._projectId === PROJECT_ID && data._data) {
           data = data._data;
         } else {
           return;

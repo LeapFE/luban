@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PluginAPI } from "./../lib/PluginAPI";
-import { InspectCliArgs, ParsedArgs } from "./../definitions";
+import { InspectCliArgs, ParsedArgs, WebpackConfiguration } from "./../definitions";
 
 import Config = require("webpack-chain");
 import { highlight } from "cli-highlight";
 import chalk from "chalk";
-import { get } from "@luban-cli/cli-shared-utils";
+import webpack from "webpack";
 
 export default function(api: PluginAPI): void {
   api.registerCommand(
@@ -24,42 +25,56 @@ export default function(api: PluginAPI): void {
     },
     (args: ParsedArgs<InspectCliArgs>) => {
       const webpackConfig = api.resolveWebpackConfig();
+
       const { _: paths } = args;
 
-      let res: Record<string, any>;
+      let res:
+        | WebpackConfiguration
+        | webpack.Plugin
+        | webpack.RuleSetRule
+        | string[] = webpackConfig;
+
       let hasUnnamedRule: boolean = false;
+
       if (args.rule) {
         res = webpackConfig.module
-          ? webpackConfig.module.rules.find((r: any) => (r as any).__ruleNames[0] === args.rule) ||
-            {}
+          ? webpackConfig.module.rules.find((r) => (r as any).__ruleNames[0] === args.rule) || {}
           : {};
-      } else if (args.plugin) {
-        res = webpackConfig.plugins
-          ? webpackConfig.plugins.find((p: any) => (p as any).__pluginName === args.plugin) || {}
-          : {};
-      } else if (args.rules) {
-        res = webpackConfig.module
-          ? webpackConfig.module.rules.map((r: any) => {
-              const name = r.__ruleNames ? r.__ruleNames[0] : "Nameless Rule (*)";
+      }
 
-              hasUnnamedRule = hasUnnamedRule || !r.__ruleNames;
+      if (args.plugin) {
+        res = webpackConfig.plugins
+          ? webpackConfig.plugins.find((p) => (p as any).__pluginName === args.plugin) || {}
+          : {};
+      }
+
+      if (args.rules) {
+        res = webpackConfig.module
+          ? webpackConfig.module.rules.map((r) => {
+              const name = (r as any).__ruleNames ? (r as any).__ruleNames[0] : "Nameless Rule (*)";
+
+              hasUnnamedRule = hasUnnamedRule || !(r as any).__ruleNames;
 
               return name;
             })
           : {};
-      } else if (args.plugins) {
+      }
+
+      if (args.plugins) {
         res = webpackConfig.plugins
-          ? webpackConfig.plugins.map((p: any) => p.__pluginName || p.constructor.name)
+          ? webpackConfig.plugins.map((p) => (p as any).__pluginName || p.constructor.name)
           : {};
-      } else if (paths.length > 1) {
+      }
+
+      if (paths.length > 1) {
         res = {};
         paths.forEach((path: string) => {
-          res[path] = get(webpackConfig, path);
+          res[path] = webpackConfig[path];
         });
-      } else if (paths.length === 1) {
-        res = get(webpackConfig, paths[0]);
-      } else {
-        res = webpackConfig;
+      }
+
+      if (paths.length === 1) {
+        res = webpackConfig[paths[0]];
       }
 
       // class `Config` override `Function.toString`

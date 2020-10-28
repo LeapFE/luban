@@ -10,11 +10,19 @@ import { renderFile } from "./../utils/renderFile";
 import { fileMiddlewareCallback, Generator } from "./generator";
 import { BasePkgFields, RootOptions } from "../definitions";
 
-function isObject(value: unknown): value is Record<string, any> {
+function isObject(value: unknown): value is Record<string, unknown> {
   return Object.prototype.toString.call(value) === "[object Object]";
 }
 
-function mergeArrayWithDeduplicate(a: any[], b: any[]): any[] {
+function isEveryObjectValueString(params: unknown): params is Record<string, string> {
+  if (isObject(params)) {
+    return Object.values(params).every((p) => typeof p === "string");
+  }
+
+  return false;
+}
+
+function mergeArrayWithDeduplicate<T>(a: T[], b: T[]): T[] {
   return Array.from(new Set([...a, ...b]));
 }
 
@@ -37,8 +45,8 @@ function extractCallDir(): string {
 class GeneratorAPI {
   private readonly id: string;
   private readonly generator: Generator;
-  private readonly options: Record<string, any>;
-  private readonly rootOptions: Record<string, any>;
+  private readonly options: Record<string, unknown>;
+  private readonly rootOptions: Record<string, unknown>;
   private readonly pluginsData: Array<{ name: string; link: string }>;
   private _entryFile: string | undefined;
 
@@ -51,7 +59,7 @@ class GeneratorAPI {
   constructor(
     id: string,
     generator: Generator,
-    options: Record<string, any>,
+    options: Record<string, unknown>,
     rootOptions: RootOptions,
   ) {
     this.id = id;
@@ -72,7 +80,7 @@ class GeneratorAPI {
   /**
    * Resolves the data when rendering templates.
    */
-  private _resolveData(additionalData: Record<string, any>): Record<string, any> {
+  private _resolveData(additionalData: Record<string, unknown>): Record<string, unknown> {
     return Object.assign(
       {
         options: this.options,
@@ -101,10 +109,6 @@ class GeneratorAPI {
    */
   public resolve(_path: string): string {
     return path.resolve(this.generator.context, _path);
-  }
-
-  public get cliVersion(): string {
-    return require("../package.json").version;
   }
 
   /**
@@ -138,7 +142,12 @@ class GeneratorAPI {
     for (const key in toMerge) {
       const value = toMerge[key];
       const existing = pkg[key];
-      if (isObject(value) && (key === "dependencies" || key === "devDependencies")) {
+
+      if (
+        isEveryObjectValueString(value) &&
+        (key === "dependencies" || key === "devDependencies") &&
+        (existing === undefined || isEveryObjectValueString(existing))
+      ) {
         // use special version resolution merge
         pkg[key] = resolveDeps(this.id, existing || {}, value, {}, forceNewVersion);
       } else if (!(key in pkg)) {
@@ -165,8 +174,8 @@ class GeneratorAPI {
    * @param {object} [ejsOptions] - options for ejs.
    */
   public render(
-    source: string | Record<string | number | symbol, any> | fileMiddlewareCallback,
-    additionalData: Record<string, any> = {},
+    source: string | Record<string, string> | fileMiddlewareCallback,
+    additionalData: Record<string, unknown> = {},
     ejsOptions: EJSOptions = {},
   ): void {
     const baseDir = extractCallDir();
@@ -202,11 +211,11 @@ class GeneratorAPI {
           }
         }
       });
-    } else if (typeof source === "object" && source !== null) {
+    } else if (isObject(source)) {
       this._injectFileMiddleware((files) => {
         const data = this._resolveData(additionalData);
 
-        for (const targetPath in source as Record<string | symbol | number, any>) {
+        for (const targetPath in source as Record<string, unknown>) {
           const sourcePath = path.resolve(baseDir, source[targetPath]);
           const content = renderFile(sourcePath, data, ejsOptions);
           if (Buffer.isBuffer(content) || content.trim()) {
@@ -253,7 +262,7 @@ class GeneratorAPI {
     return this._entryFile;
   }
 
-  public run(command: string, args?: any): ExecaChildProcess {
+  public run(command: string, args?: string[]): ExecaChildProcess {
     if (!args) {
       [command, ...args] = command.split(/\s+/);
     }

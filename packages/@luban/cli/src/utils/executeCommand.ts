@@ -3,7 +3,7 @@ import { log } from "@luban-cli/cli-shared-utils";
 
 export const executeCommand = async function executeCommand(
   command: string,
-  args: any[],
+  args: string[],
   cwd: string,
 ): Promise<void> {
   try {

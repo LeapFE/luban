@@ -1,9 +1,9 @@
-export const sortObject = function<T extends Record<string, any>>(
+export const sortObject = function<T extends Record<string, unknown>>(
   obj: T,
-  keyOrder?: Array<keyof T>,
+  keyOrder?: Array<string>,
   notSortByUnicode?: boolean,
 ): T {
-  const res: Record<keyof T, any> = Object.create({});
+  const res: Record<string, unknown> = Object.create({});
 
   if (keyOrder) {
     keyOrder.forEach((key) => {
@@ -14,12 +14,13 @@ export const sortObject = function<T extends Record<string, any>>(
     });
   }
 
-  const keys: Array<keyof T> = Object.keys(obj);
+  const keys = Object.keys(obj);
 
   !notSortByUnicode && keys.sort();
+
   keys.forEach((key) => {
     res[key] = obj[key];
   });
 
-  return res;
+  return res as T;
 };

@@ -8,7 +8,7 @@ export function eslintConfigLeap(api: GeneratorAPI): void {
 
   const parserOptions = new SimpleMapPolyfill<
     string,
-    string | number | Record<string, any> | Array<string | Record<string, any>>
+    string | number | Record<string, unknown> | Array<string | Record<string, unknown>>
   >([["project", ["./tsconfig.json"]]]);
 
   const eslintExtends = ["leap"];

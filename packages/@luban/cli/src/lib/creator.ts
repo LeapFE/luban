@@ -1,11 +1,5 @@
 import execa, { ExecaChildProcess } from "execa";
-import inquirer, {
-  QuestionCollection,
-  Question,
-  ListQuestion,
-  CheckboxQuestion,
-  DistinctQuestion,
-} from "inquirer";
+import inquirer, { QuestionCollection, Question, ListQuestion, CheckboxQuestion } from "inquirer";
 import chalk from "chalk";
 import path from "path";
 import cloneDeep from "lodash.clonedeep";
@@ -43,7 +37,7 @@ import {
 } from "../definitions";
 import { defaultPreset, confirmUseDefaultPresetMsg } from "../constants";
 
-type FeaturePrompt = CheckboxQuestion<Array<{ name: string; value: any; short?: string }>>;
+type FeaturePrompt = CheckboxQuestion<Array<{ name: string; value: unknown; short?: string }>>;
 
 class Creator {
   private name: string;
@@ -52,7 +46,7 @@ class Creator {
   public readonly featurePrompt: FeaturePrompt;
   public promptCompletedCallbacks: Array<PromptCompleteCallback>;
   private readonly outroPrompts: Question[];
-  public readonly injectedPrompts: DistinctQuestion[];
+  public readonly injectedPrompts: Question<FinalAnswers>[];
   private _pkgManager: SUPPORTED_PACKAGE_MANAGER | undefined;
   private readonly installLocalPlugin: boolean;
 
@@ -214,7 +208,7 @@ class Creator {
     process.exit(1);
   }
 
-  public run(command: string, args?: any): ExecaChildProcess {
+  public run(command: string, args?: string[]): ExecaChildProcess {
     if (!args) {
       [command, ...args] = command.split(/\s+/);
     }
@@ -275,16 +269,13 @@ class Creator {
       return defaultPreset;
     }
 
-    /**
-     * @type FinallyAnswers
-     */
-    const answers = await inquirer.prompt(this.resolveFinalPrompts());
+    const answers = await inquirer.prompt<FinalAnswers>(this.resolveFinalPrompts());
 
     const preset: Preset = {
       plugins: { "@luban-cli/cli-plugin-service": { projectName: "" } },
     };
 
-    this.promptCompletedCallbacks.forEach((cb) => cb(answers as FinalAnswers, preset));
+    this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
 
     return preset as Required<Preset>;
   }
@@ -323,18 +314,6 @@ class Creator {
   }
 
   public resolveFinalPrompts(): QuestionCollection {
-    this.injectedPrompts.forEach((prompt: DistinctQuestion) => {
-      const originalWhen = prompt.when || ((): boolean => true);
-      // CHECK TYPE answer
-      prompt.when = function(answers: any): boolean | Promise<boolean> {
-        if (typeof originalWhen === "function") {
-          return originalWhen(answers);
-        }
-
-        return originalWhen;
-      };
-    });
-
     return [...this.injectedPrompts, ...this.outroPrompts];
   }
 

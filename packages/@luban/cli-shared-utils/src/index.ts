@@ -6,7 +6,6 @@ import { openBrowser } from "./openBrowser";
 import { Spinner } from "./spinner";
 import { createSchema, validate, validateSync } from "./validate";
 import { writeFileTree } from "./writeFileTree";
-import { set, get, unset } from "./object";
 import { SimpleMapPolyfill } from "./mapPolyfill";
 export {
   hasGit,
@@ -31,8 +30,5 @@ export {
   validate,
   validateSync,
   writeFileTree,
-  set,
-  get,
-  unset,
   SimpleMapPolyfill,
 };

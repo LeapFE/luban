@@ -1,6 +1,6 @@
 process.env.NODE_PATH = __dirname + "../node_modules";
 
-import { Command } from "commander";
+import { Command, Option } from "commander";
 import chalk from "chalk";
 import envinfo from "envinfo";
 import didYouMean from "didyoumean";
@@ -11,20 +11,18 @@ didYouMean.threshold = 0.6;
 import { enhanceErrorMessages } from "./utils/enhanceErrorMessages";
 import { CliOptions } from "./definitions";
 import { init } from "./lib/create";
+import pkg = require("../package.json");
 
 const program = new Command();
 
 function suggestCommands(unknownCommand: string): void {
-  const availableCommands = program.commands.map((cmd: any) => {
-    return cmd._name;
+  const availableCommands = program.commands.map((cmd) => {
+    return cmd._name as string;
   });
 
   const suggestion: string | string[] = didYouMean(unknownCommand, availableCommands);
-  if (suggestion) {
-    console.log(
-      `  ` +
-        chalk.red(`Did you mean ${chalk.yellow((suggestion as any) as TemplateStringsArray)}?`),
-    );
+  if (suggestion && !Array.isArray(suggestion)) {
+    console.log(`  ` + chalk.red(`Did you mean ${chalk.yellow(suggestion)}?`));
   }
 }
 
@@ -34,18 +32,18 @@ function camelize(str: string): string {
 
 function prepareInitOptions(cmd: Command): CliOptions {
   const args = {};
-  cmd.options.forEach((o: any) => {
+
+  (cmd.options as Array<Option>).forEach((o) => {
     const key = camelize(o.long.replace(/^--/, ""));
     if (typeof cmd[key] !== "function" && typeof cmd[key] !== "undefined") {
       args[key] = cmd[key];
     }
   });
+
   return args;
 }
 
-program
-  .version(`@luban-cli/cli ${require("../package.json").version}`)
-  .usage("<command> [options]");
+program.version(`@luban-cli/cli ${pkg.version}`).usage("<command> [options]");
 
 program
   .command("init <project>")
@@ -59,7 +57,7 @@ program
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("-l, --localPlugin", "Install local plugins while create project for test or debug")
   .option("-m, --manual", "Manual select features while create project")
-  .action((project, cmd) => {
+  .action((project: string, cmd: Command) => {
     if (project.replace(/^\s+|\s+$/g, "") === "") {
       const programName = `${cmd.parent._name} ${cmd._name}`;
 
@@ -140,7 +138,7 @@ enhanceErrorMessages("unknownOption", (optionName: string) => {
   return `Unknown option ${chalk.yellow(optionName)}.`;
 });
 
-enhanceErrorMessages("optionMissingArgument", (option: any, flag: any) => {
+enhanceErrorMessages("optionMissingArgument", (option: Option, flag: string) => {
   return (
     `Missing required argument for option ${chalk.yellow(option.flags)}` +
     (flag ? `, got ${chalk.yellow(flag)}` : ``)

@@ -8,7 +8,6 @@ import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { error, warn, loadModule, log, info, Spinner } from "@luban-cli/cli-shared-utils";
 import shell from "shelljs";
-import webpack = require("webpack");
 
 import { PluginAPI } from "./PluginAPI";
 import { validateProjectConfig, mergeProjectOptions } from "./options";
@@ -25,8 +24,10 @@ import {
   PluginApplyCallback,
   builtinServiceCommandName,
   RootOptions,
+  WebpackConfiguration,
 } from "./../definitions";
 import { ProjectConfig, MockConfig } from "./../main";
+import { isObject } from "../commands/help";
 
 type ResetParams = Partial<{
   plugins: InlinePlugin[];
@@ -84,15 +85,15 @@ const defaultRootOptions: Required<RootOptions> = {
   },
 };
 
-function ensureSlash(config: Record<string, any>, key: string): void {
+function ensureSlash(config: Record<string, unknown>, key: string): void {
   if (typeof config[key] === "string") {
-    config[key] = config[key].replace(/([^/])$/, "$1/");
+    config[key] = (config[key] as string).replace(/([^/])$/, "$1/");
   }
 }
 
-function removeSlash(config: Record<string, any>, key: string): void {
+function removeSlash(config: Record<string, unknown>, key: string): void {
   if (typeof config[key] === "string") {
-    config[key] = config[key].replace(/^\/|\/$/g, "");
+    config[key] = (config[key] as string).replace(/^\/|\/$/g, "");
   }
 }
 
@@ -108,7 +109,7 @@ class Service {
   public mode: string;
   private inlineProjectOptions?: ProjectConfig;
   private configFilename: string;
-  public mockConfig: MockConfig | null;
+  public mockConfig: MockConfig | undefined;
   private rootOptions: RootOptions;
   private mockConfigFile: string;
 
@@ -139,7 +140,7 @@ class Service {
 
     this.inlineProjectOptions = projectOptions;
 
-    this.mockConfig = null;
+    this.mockConfig = undefined;
 
     this.plugins = this.resolvePlugins(plugins || [], useBuiltIn || false);
   }
@@ -212,7 +213,7 @@ class Service {
         serviceApply = (): void => undefined;
       }
 
-      return serviceApply;
+      return serviceApply as PluginApplyCallback;
     };
 
     const prefixRE = /^@luban-cli\/cli-plugin-/;
@@ -221,7 +222,7 @@ class Service {
         id: id.replace(/^.\//, "built-in:"),
         apply: prefixRE.test(id)
           ? loadPluginServiceWithWarn(id, this.context)
-          : require(id).default,
+          : loadModule(id, this.context) || (() => undefined),
       };
     };
 
@@ -247,7 +248,7 @@ class Service {
 
   public resolveWebpackConfig(
     chainableConfig = this.resolveChainableWebpackConfig(),
-  ): webpack.Configuration {
+  ): WebpackConfiguration {
     let config = chainableConfig.toConfig();
 
     this.webpackRawConfigCallback.forEach((fn) => {
@@ -297,7 +298,7 @@ class Service {
     load(baseModePath);
     load(basePath);
 
-    const writeEnv = (key: string, value: any): void => {
+    const writeEnv = (key: string, value: string): void => {
       Object.defineProperty(process.env, key, {
         value: value,
         writable: false,
@@ -306,23 +307,29 @@ class Service {
       });
     };
 
-    if (commandName === "serve" || commandName === "inspect") {
+    if (this.mode && commandName === "inspect") {
+      writeEnv("NODE_ENV", this.mode);
+      writeEnv("BABEL_ENV", this.mode);
+    }
+
+    if (commandName === "serve" && !this.mode) {
       writeEnv("NODE_ENV", "development");
       writeEnv("BABEL_ENV", "development");
     }
 
-    if (commandName === "build") {
+    if (commandName === "build" && !this.mode) {
       writeEnv("NODE_ENV", "production");
       writeEnv("BABEL_ENV", "production");
     }
   }
 
-  private requireSpecifiedConfigFile(filePath: string, configFilename: string): any {
+  private requireSpecifiedConfigFile<T>(filePath: string, configFilename: string): T | undefined {
     if (/\w+\.js$/.test(configFilename)) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const configModule = require(filePath);
+      const configModule = loadModule<T>(filePath, this.context);
 
-      return configModule.__esModule ? configModule.default : configModule;
+      if (configModule) {
+        return configModule;
+      }
     }
 
     const spinner = new Spinner();
@@ -340,14 +347,16 @@ class Service {
       warn(`compiled ${chalk.bold(configFilename)} file failure \n`);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const configModule = require(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
+    const configModule = loadModule<T>(
+      `${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`,
+      this.context,
+    );
 
     fs.removeSync(configTempDir);
 
     spinner.stopSpinner();
 
-    return configModule.__esModule ? configModule.default : configModule;
+    return configModule;
   }
 
   public loadProjectOptions(inlineOptions?: ProjectConfig): Partial<ProjectConfig> {
@@ -362,11 +371,18 @@ class Service {
     }
 
     try {
-      fileConfig = this.requireSpecifiedConfigFile(configPath, this.configFilename);
+      let _fileConfig = this.requireSpecifiedConfigFile<Partial<ProjectConfig>>(
+        configPath,
+        this.configFilename,
+      );
 
-      if (!fileConfig || typeof fileConfig !== "object") {
+      if (!_fileConfig || typeof _fileConfig !== "object") {
         error(`Error load ${chalk.bold(`${this.configFilename}`)}: should export an object. \n`);
-        fileConfig = null;
+        _fileConfig = undefined;
+      }
+
+      if (isObject(_fileConfig)) {
+        fileConfig = _fileConfig;
       }
     } catch (e) {}
 
@@ -386,8 +402,8 @@ class Service {
     return resolved;
   }
 
-  private loadMockConfig(): MockConfig | null {
-    let _mockConfig: MockConfig | null = null;
+  private loadMockConfig(): MockConfig | undefined {
+    let _mockConfig: MockConfig | undefined = undefined;
 
     if (!this.projectConfig.mock) {
       return _mockConfig;
@@ -405,11 +421,11 @@ class Service {
     }
 
     try {
-      _mockConfig = require(mockConfigFilePath);
+      _mockConfig = loadModule(mockConfigFilePath, this.context);
 
-      if (!_mockConfig || typeof _mockConfig !== "object") {
+      if (!_mockConfig || typeof _mockConfig !== "object" || _mockConfig === null) {
         error(`Error load ${chalk.bold(`${this.mockConfigFile}`)}: should export an object. \n`);
-        _mockConfig = null;
+        _mockConfig = undefined;
       }
     } catch (e) {}
 

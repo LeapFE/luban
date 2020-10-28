@@ -8,24 +8,26 @@ import { MockConfig } from "../main";
 
 function pathMatch(
   options: TokensToRegexpOptions & ParseOptions,
-): (path: string) => (pathname: string, params?: Record<string, any>) => Record<string, any> {
+): (path: string) => (pathname: string) => Record<string, string> {
   options = options || {};
 
-  return (
-    path: string,
-  ): ((pathname: string, params?: Record<string, any>) => Record<string, any>) => {
+  return (path: string): ((pathname: string) => Record<string, string>) => {
+    // `PathRegexp.pathToRegexp` will modify `keys`
     const keys: (Key & TokensToRegexpOptions & ParseOptions & { repeat: boolean })[] = [];
+
     const reg = PathRegexp.pathToRegexp(path, keys, options);
 
-    return (pathname: string, params?: any): Record<string, any> => {
+    return (pathname: string): Record<string, string> => {
       const m = reg.exec(pathname);
+      const params = {};
 
-      if (!m) return params;
+      if (!m) {
+        return params;
+      }
 
-      params = params || {};
-      let key,
-        param,
-        i = 0;
+      let key: Key & TokensToRegexpOptions & ParseOptions & { repeat: boolean };
+      let param: string;
+      let i: number = 0;
 
       for (i = 0; i < keys.length; i++) {
         key = keys[i];
@@ -35,7 +37,9 @@ function pathMatch(
 
         params[key.name] = decodeURIComponent(param);
 
-        if (key.repeat) params[key.name] = params[key.name].split(key.delimiter);
+        if (key.repeat) {
+          params[key.name] = params[key.name].split(key.delimiter);
+        }
       }
 
       return params;

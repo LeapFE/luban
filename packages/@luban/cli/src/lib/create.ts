@@ -15,8 +15,7 @@ import { PromptModuleAPI } from "./promptModuleAPI";
 
 import { defaultPromptModule } from "./../constants";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pkg = require("../../package.json");
+import pkg = require("../../package.json");
 
 function getPromptModules(): Array<(api: PromptModuleAPI) => void> {
   return defaultPromptModule.map((file) => require(`./promptModules/${file}`).default);
@@ -56,9 +55,6 @@ function updateNotify(): void {
           margin: 1,
           align: "center",
           borderColor: "yellow",
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          borderStyle: "classic",
         },
       );
 

@@ -5,9 +5,9 @@ import path from "path";
 import zlib from "zlib";
 import chalk from "chalk";
 import url from "url";
+import CliUI = require("cliui");
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ui = require("cliui")({ width: 80 });
+const UI = CliUI({ width: 80 });
 
 import { PluginAPI } from "../lib/PluginAPI";
 
@@ -30,7 +30,13 @@ export function formatStats(stats: webpack.Stats, dir: string, api: PluginAPI): 
   let assets = json.assets;
 
   if (assets === undefined && Array.isArray(json.children)) {
-    assets = json.children.reduce((acc, child) => acc.concat(child.assets as any), []);
+    assets = json.children.reduce((acc, child) => {
+      if (child.assets) {
+        return acc.concat(child.assets);
+      }
+
+      return acc;
+    }, [] as Asset[]);
   }
 
   if (assets === undefined) {
@@ -76,7 +82,7 @@ export function formatStats(stats: webpack.Stats, dir: string, api: PluginAPI): 
     return `  ${a}\t    ${b}\t ${c}`;
   }
 
-  ui.div(
+  UI.div(
     makeRow(chalk.cyan.bold(`File`), chalk.cyan.bold(`Size`), chalk.cyan.bold(`Gzipped`)) +
       `\n\n` +
       assets
@@ -92,7 +98,7 @@ export function formatStats(stats: webpack.Stats, dir: string, api: PluginAPI): 
         .join(`\n`),
   );
 
-  return `${ui.toString()}\n\n  ${chalk.gray(`Images and other types of assets omitted.`)}\n`;
+  return `${UI.toString()}\n\n  ${chalk.gray(`Images and other types of assets omitted.`)}\n`;
 }
 
 export function logStatsErrorsAndWarnings(stats: webpack.Stats): void {

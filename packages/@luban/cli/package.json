@@ -43,7 +43,7 @@
   "dependencies": {
     "@luban-cli/cli-shared-utils": "^1.4.2",
     "chalk": "^3.0.0",
-    "commander": "^4.1.0",
+    "commander": "^6.2.0",
     "deepmerge": "^4.2.2",
     "didyoumean": "^1.2.1",
     "ejs": "^3.0.1",
