@@ -21,6 +21,9 @@
   "rules": {
     "@typescript-eslint/no-inferrable-types": 0,
     "no-debugger": "error",
-    "no-unused-vars": "error"
+    "no-unused-vars": "error",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/triple-slash-reference": "off",
+    "@typescript-eslint/explicit-function-return-type": "off"
   }
 }
