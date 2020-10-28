@@ -11,6 +11,7 @@ didYouMean.threshold = 0.6;
 import { enhanceErrorMessages } from "./utils/enhanceErrorMessages";
 import { CliOptions } from "./definitions";
 import { init } from "./lib/create";
+import pkg = require("../package.json");
 
 const program = new Command();
 
@@ -42,9 +43,7 @@ function prepareInitOptions(cmd: Command): CliOptions {
   return args;
 }
 
-program
-  .version(`@luban-cli/cli ${require("../package.json").version}`)
-  .usage("<command> [options]");
+program.version(`@luban-cli/cli ${pkg.version}`).usage("<command> [options]");
 
 program
   .command("init <project>")

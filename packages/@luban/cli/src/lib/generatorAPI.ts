@@ -111,10 +111,6 @@ class GeneratorAPI {
     return path.resolve(this.generator.context, _path);
   }
 
-  public get cliVersion(): string {
-    return require("../package.json").version;
-  }
-
   /**
    * Check if the project has a given plugin.
    *
