@@ -6,7 +6,7 @@ import path from "path";
 import chalk from "chalk";
 import { config as dotenvConfig } from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { error, warn, loadModule, log, info, Spinner } from "@luban-cli/cli-shared-utils";
+import { error, warn, log, info, Spinner, loadFile } from "@luban-cli/cli-shared-utils";
 import shell from "shelljs";
 
 import { PluginAPI } from "./PluginAPI";
@@ -203,8 +203,8 @@ class Service {
   }
 
   public resolvePlugins(inlinePlugins: InlinePlugin[], useBuiltIn: boolean): ServicePlugin[] {
-    const loadPluginServiceWithWarn = (id: string, context: string): PluginApplyCallback => {
-      let serviceApply = loadModule(`${id}/dist/index.js`, context);
+    const loadPluginServiceWithWarn = (id: string): PluginApplyCallback => {
+      let serviceApply = loadFile<PluginApplyCallback>(`${id}/dist/index.js`);
 
       if (typeof serviceApply !== "function") {
         warn(
@@ -213,16 +213,14 @@ class Service {
         serviceApply = (): void => undefined;
       }
 
-      return serviceApply as PluginApplyCallback;
+      return serviceApply;
     };
 
     const prefixRE = /^@luban-cli\/cli-plugin-/;
     const idToPlugin = (id: string): InlinePlugin => {
       return {
         id: id.replace(/^.\//, "built-in:"),
-        apply: prefixRE.test(id)
-          ? loadPluginServiceWithWarn(id, this.context)
-          : loadModule(id, this.context) || (() => undefined),
+        apply: prefixRE.test(id) ? loadPluginServiceWithWarn(id) : require(id) || (() => undefined),
       };
     };
 
@@ -325,7 +323,7 @@ class Service {
 
   private requireSpecifiedConfigFile<T>(filePath: string, configFilename: string): T | undefined {
     if (/\w+\.js$/.test(configFilename)) {
-      const configModule = loadModule<T>(filePath, this.context);
+      const configModule = loadFile<T>(filePath);
 
       if (configModule) {
         return configModule;
@@ -347,10 +345,7 @@ class Service {
       warn(`compiled ${chalk.bold(configFilename)} file failure \n`);
     }
 
-    const configModule = loadModule<T>(
-      `${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`,
-      this.context,
-    );
+    const configModule = loadFile<T>(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
 
     fs.removeSync(configTempDir);
 
@@ -421,7 +416,7 @@ class Service {
     }
 
     try {
-      _mockConfig = loadModule(mockConfigFilePath, this.context);
+      _mockConfig = loadFile<MockConfig>(mockConfigFilePath);
 
       if (!_mockConfig || typeof _mockConfig !== "object" || _mockConfig === null) {
         error(`Error load ${chalk.bold(`${this.mockConfigFile}`)}: should export an object. \n`);
