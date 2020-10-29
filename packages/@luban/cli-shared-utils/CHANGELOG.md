@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.2](https://github.com/leapFE/luban/compare/v2.0.0-next.1...v2.0.0-next.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **cli-shared-utils:** export `loadFile` ([ee89111](https://github.com/leapFE/luban/commit/ee89111449bd03daf1fcc60ccafa4425db93dc7a))
+
+
+
+
+
 # [2.0.0-next.1](https://github.com/leapFE/luban/compare/v2.0.0-next.0...v2.0.0-next.1) (2020-10-29)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-utils
