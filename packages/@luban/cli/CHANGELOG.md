@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.1](https://github.com/leapFE/luban/compare/v2.0.0-next.0...v2.0.0-next.1) (2020-10-29)
+
+
+### Bug Fixes
+
+* **cli:** correctly resolve deps ([0d95588](https://github.com/leapFE/luban/commit/0d95588f752021c5e90201172b2d81fae1d16050))
+
+
+
+
+
 # [2.0.0-next.0](https://github.com/leapFE/luban/compare/v1.4.2...v2.0.0-next.0) (2020-10-28)
 
 
