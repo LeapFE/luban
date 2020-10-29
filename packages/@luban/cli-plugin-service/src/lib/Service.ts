@@ -220,7 +220,10 @@ class Service {
     const idToPlugin = (id: string): InlinePlugin => {
       return {
         id: id.replace(/^.\//, "built-in:"),
-        apply: prefixRE.test(id) ? loadPluginServiceWithWarn(id) : require(id) || (() => undefined),
+        apply: prefixRE.test(id)
+          ? loadPluginServiceWithWarn(id)
+          : // id is a relatively path, so require it
+            require(id).default || (() => undefined),
       };
     };
 
