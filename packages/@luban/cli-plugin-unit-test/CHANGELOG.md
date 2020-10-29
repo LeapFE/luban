@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.3](https://github.com/leapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
+
+
+
+
+
 # [2.0.0-next.2](https://github.com/leapFE/luban/compare/v2.0.0-next.1...v2.0.0-next.2) (2020-10-29)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
