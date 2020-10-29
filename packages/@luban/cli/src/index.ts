@@ -5,13 +5,14 @@ import chalk from "chalk";
 import envinfo from "envinfo";
 import didYouMean from "didyoumean";
 import minimist from "minimist";
+import path from "path";
 
 didYouMean.threshold = 0.6;
 
 import { enhanceErrorMessages } from "./utils/enhanceErrorMessages";
 import { CliOptions } from "./definitions";
 import { init } from "./lib/create";
-import pkg = require("../package.json");
+import { getPackageJson } from "./utils/getPackageJson";
 
 const program = new Command();
 
@@ -43,7 +44,9 @@ function prepareInitOptions(cmd: Command): CliOptions {
   return args;
 }
 
-program.version(`@luban-cli/cli ${pkg.version}`).usage("<command> [options]");
+program
+  .version(`@luban-cli/cli ${getPackageJson(path.join(__dirname, "../")).version}`)
+  .usage("<command> [options]");
 
 program
   .command("init <project>")

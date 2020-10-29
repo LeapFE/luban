@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-eslint",
-  "version": "1.4.2",
+  "version": "2.0.0-next.3",
   "description": "cli-plugin-eslint",
   "author": "front-end-captain <18810940932@163.com>",
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-eslint/README.md",
@@ -30,12 +30,12 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^1.4.2"
+    "@luban-cli/cli-shared-types": "^2.0.0-next.3"
   },
   "engines": {
     "node": ">=10"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "^1.4.2"
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.3"
   }
 }

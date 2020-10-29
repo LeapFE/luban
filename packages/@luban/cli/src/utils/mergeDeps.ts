@@ -23,7 +23,7 @@ export const resolveDeps = function(
     const r1 = to[name];
     const r2 = from[name];
 
-    if (typeof r1 === "string" && typeof r2 === "string") {
+    if (typeof r2 === "string") {
       const sourceGeneratorId = sources[name];
 
       const isValidURI =

@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.3](https://github.com/LeapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** load file error ([96e411c](https://github.com/LeapFE/luban/commit/96e411c713799e1567f043a5f4cd5c1f50370282))
+
+
+
+
+
+# [2.0.0-next.2](https://github.com/LeapFE/luban/compare/v2.0.0-next.1...v2.0.0-next.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **cli-shared-utils:** export `loadFile` ([ee89111](https://github.com/LeapFE/luban/commit/ee89111449bd03daf1fcc60ccafa4425db93dc7a))
+
+
+
+
+
+# [2.0.0-next.1](https://github.com/LeapFE/luban/compare/v2.0.0-next.0...v2.0.0-next.1) (2020-10-29)
+
+
+### Bug Fixes
+
+* **cli:** correctly resolve deps ([0d95588](https://github.com/LeapFE/luban/commit/0d95588f752021c5e90201172b2d81fae1d16050))
+
+
+
+
+
+# [2.0.0-next.0](https://github.com/LeapFE/luban/compare/v1.4.2...v2.0.0-next.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* **cli:** modify that get package.json way ([fd94739](https://github.com/LeapFE/luban/commit/fd94739eecc445c0e56d6d6f4c69ce877d61f275))
+
+
+
+
+
 ## [1.4.2](https://github.com/LeapFE/luban/compare/v1.4.1...v1.4.2) (2020-08-26)
 
 

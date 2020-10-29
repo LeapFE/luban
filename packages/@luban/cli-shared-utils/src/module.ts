@@ -15,6 +15,14 @@ function clearRequireCache(id: string, map: Map<string, boolean> = new Map()): v
   }
 }
 
+export const loadFile = function<T>(path: string): T | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const m = require(path);
+
+  // first check module is ESModule
+  return m && m.__esModule ? m.default : m;
+};
+
 export const resolveModule = function(request: string, context: string): string {
   let resolvedPath: string = "";
   try {
@@ -44,11 +52,7 @@ export const loadModule = function<T = unknown>(
       clearRequireCache(resolvedPath);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const m = require(resolvedPath);
-
-    // first check module is ESModule
-    return m && m.__esModule ? m.default : m;
+    return loadFile(resolvedPath);
   }
 };
 

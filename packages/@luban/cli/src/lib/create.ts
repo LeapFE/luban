@@ -14,19 +14,20 @@ import { Creator } from "./creator";
 import { PromptModuleAPI } from "./promptModuleAPI";
 
 import { defaultPromptModule } from "./../constants";
-
-import pkg = require("../../package.json");
+import { getPackageJson } from "../utils/getPackageJson";
 
 function getPromptModules(): Array<(api: PromptModuleAPI) => void> {
   return defaultPromptModule.map((file) => require(`./promptModules/${file}`).default);
 }
 
 function updateNotify(): void {
+  const pkg = getPackageJson(path.join(__dirname, "../../"));
   const notifier = updateNotifier({
     pkg: {
       name: pkg.name,
       version: pkg.version,
     },
+
     // 1 week
     updateCheckInterval: 1000 * 60 * 60 * 24 * 7,
   });
