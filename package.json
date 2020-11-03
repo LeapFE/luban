@@ -26,7 +26,6 @@
     "clear": "rimraf packages/**/dist/",
     "doc:dev": "vuepress dev doc --open --temp .temp",
     "doc:build": "vuepress build doc --temp .temp",
-    "doc:info": "vuepress view-info docs --temp .temp",
     "doc:pub": "vercel --prod",
     "doc:pub:dev": "vercel"
   },
