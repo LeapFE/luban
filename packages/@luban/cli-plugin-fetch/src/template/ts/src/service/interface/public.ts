@@ -1,20 +1,20 @@
 export interface ResponseData<T> {
   /**
-   * 状态码
+   * status code
    *
    * @type {number}
    */
   code: number;
 
   /**
-   * 消息
+   * message
    *
    * @type {number}
    */
   msg?: string;
 
   /**
-   * 数据
+   * returned data
    *
    * @type {T}
    */
