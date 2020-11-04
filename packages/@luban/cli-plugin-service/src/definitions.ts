@@ -12,6 +12,7 @@ import {
 } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { PluginAPI } from "./lib/PluginAPI";
+import { ProjectConfig } from "./main";
 
 export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
 
@@ -26,7 +27,7 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type PluginApplyCallback = (api: PluginAPI, options: Record<string, unknown>) => void;
+export type PluginApplyCallback = (api: PluginAPI, options: ProjectConfig) => void;
 
 export type InlinePlugin = {
   id: string;
