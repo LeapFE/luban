@@ -1,5 +1,5 @@
 import { PromptModuleAPI } from "../promptModuleAPI";
-import { FinalAnswers } from "../../definitions";
+import { FinalAnswers } from "../../../definitions";
 
 const baseConfigList = [
   {

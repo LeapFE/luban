@@ -10,14 +10,24 @@ import pupa from "pupa";
 
 import { CliOptions } from "../definitions";
 
-import { Creator } from "./creator";
-import { PromptModuleAPI } from "./promptModuleAPI";
+import { Creator } from "./webAppCreator";
+import { PromptModuleAPI } from "./webAppCreator/promptModuleAPI";
+import { LibPromptModuleAPI } from "./libCreator/promptModuleAPI";
 
-import { defaultPromptModule } from "./../constants";
+import { defaultPromptModule, libDefaultPromptModule } from "./../constants";
 import { getPackageJson } from "../utils/getPackageJson";
+import { LibCreator } from "./libCreator";
 
 function getPromptModules(): Array<(api: PromptModuleAPI) => void> {
-  return defaultPromptModule.map((file) => require(`./promptModules/${file}`).default);
+  return defaultPromptModule.map(
+    (file) => require(`./webAppCreator/promptModules/${file}`).default,
+  );
+}
+
+function getCreateLibPromptModules(): Array<(api: LibPromptModuleAPI) => void> {
+  return libDefaultPromptModule.map(
+    (file) => require(`./libCreator/promptModules/${file}`).default,
+  );
 }
 
 function updateNotify(): void {
@@ -123,8 +133,27 @@ async function create(projectName: string, options: CliOptions): Promise<void> {
     }
   }
 
-  const creator = new Creator(name, targetDir, options, getPromptModules());
-  await creator.create();
+  const { projectType } = await inquirer.prompt<{ projectType: "lib" | "webApp" }>([
+    {
+      name: "projectType",
+      type: "list",
+      message: "Pick you will creating project type",
+      choices: [
+        { name: "React Component Library", value: "lib" },
+        { name: "React Web App", value: "webApp" },
+      ],
+    },
+  ]);
+
+  if (projectType === "webApp") {
+    const creator = new Creator(name, targetDir, options, getPromptModules());
+    await creator.create();
+  }
+
+  if (projectType === "lib") {
+    const creator = new LibCreator(name, targetDir, options, getCreateLibPromptModules());
+    await creator.create();
+  }
 }
 
 export function init(projectName: string, options: CliOptions): Promise<void> {

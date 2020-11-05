@@ -1,8 +1,8 @@
 import { DistinctQuestion } from "inquirer";
 
-import { Creator } from "./creator";
+import { Creator } from ".";
 
-import { PromptCompleteCallback, FinalAnswers } from "../definitions";
+import { PromptCompleteCallback, FinalAnswers } from "../../definitions";
 
 class PromptModuleAPI {
   private creator: Creator;

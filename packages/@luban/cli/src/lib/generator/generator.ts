@@ -3,11 +3,16 @@ import semver from "semver";
 import { writeFileTree, log, info, done, warn, error } from "@luban-cli/cli-shared-utils";
 
 import { GeneratorAPI } from "./generatorAPI";
-import { PackageManager } from "../utils/packageManager";
-import { sortObject } from "../utils/sortObject";
+import { PackageManager } from "../../utils/packageManager";
+import { sortObject } from "../../utils/sortObject";
 
-import { ResolvedPlugin, BasePkgFields, RootOptions } from "../definitions";
-import { defaultRootOptions } from "../constants";
+import {
+  ResolvedPlugin,
+  BasePkgFields,
+  RootOptions,
+  CreateLibRootOptions,
+} from "../../definitions";
+import { defaultRootOptions } from "../../constants";
 
 const logTypes = {
   log,
@@ -33,7 +38,7 @@ export class Generator {
   public readonly plugins: ResolvedPlugin[];
   public pkg: BasePkgFields;
   private readonly pm: PackageManager;
-  public readonly rootOptions: Required<RootOptions>;
+  public readonly rootOptions: Required<RootOptions | CreateLibRootOptions>;
   private readonly files: Record<string, string>;
   public readonly fileMiddlewares: Array<fileMiddlewareCallback>;
   public postProcessFilesCbs: Array<(files: Record<string, string>) => void>;

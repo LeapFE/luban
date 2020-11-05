@@ -11,6 +11,14 @@ export type RawPlugin = {
   "@luban-cli/cli-plugin-service": { projectName: string } & Record<string, unknown>;
 };
 
+export type CreateLibRawPlugin = {
+  "@luban-cli/cli-plugin-commit"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-stylelint"?: Record<string, unknown>;
+  "@luban-cli/cli-plugin-eslint": Record<string, unknown>;
+  "@luban-cli/cli-plugin-unit-test": Record<string, unknown>;
+  "@luban-cli/cli-lib-service": { projectName: string } & Record<string, unknown>;
+};
+
 export type ESLinterConfig = "leap" | "airbnb" | "standard";
 
 export type DevLanguage = "js" | "ts";
@@ -38,7 +46,17 @@ export type Preset = {
   plugins: RawPlugin;
 };
 
+export type CreateLibPreset = {
+  eslint?: ESLinterConfig;
+  stylelint?: boolean;
+  plugins: CreateLibRawPlugin;
+  commit?: boolean;
+  unitTest?: boolean;
+};
+
 export type RootOptions = Preset & { projectName: string };
+
+export type CreateLibRootOptions = CreateLibPreset & { projectName: string };
 
 /**
  * @description package.json fields, name and version must required
@@ -58,9 +76,5 @@ export type BasePkgFields = {
   author?: string;
   browserslist?: string[];
   homepage?: string;
-  ["__luban_config__"]?: Required<RootOptions>;
-  /**
-   * @deprecated
-   */
-  ["__USE_LOCAL_PLUGIN__"]?: boolean;
+  ["__luban_config__"]?: Required<RootOptions | CreateLibRootOptions>;
 } & Record<string, unknown>;

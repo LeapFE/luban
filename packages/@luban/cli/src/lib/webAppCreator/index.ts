@@ -1,15 +1,15 @@
 import execa, { ExecaChildProcess } from "execa";
-import inquirer, { QuestionCollection, Question, ListQuestion, CheckboxQuestion } from "inquirer";
+import inquirer, { Question, CheckboxQuestion } from "inquirer";
 import chalk from "chalk";
 import path from "path";
 import cloneDeep from "lodash.clonedeep";
 
-import { PackageManager } from "../utils/packageManager";
+import { PackageManager } from "../../utils/packageManager";
 import { PromptModuleAPI } from "./promptModuleAPI";
-import { sortObject } from "../utils/sortObject";
-import { generateReadme } from "./../utils/getReadme";
-import { getVersions } from "../utils/getVersions";
-import { printDefaultPreset } from "../utils/printPreset";
+import { sortObject } from "../../utils/sortObject";
+import { generateReadme } from "../../utils/getReadme";
+import { getVersions } from "../../utils/getVersions";
+import { printDefaultPreset } from "../../utils/printPreset";
 
 import {
   Spinner,
@@ -21,7 +21,7 @@ import {
   warn,
 } from "@luban-cli/cli-shared-utils";
 
-import { Generator } from "./generator";
+import { Generator } from "../generator/generator";
 
 import {
   CliOptions,
@@ -34,8 +34,8 @@ import {
   SUPPORTED_PACKAGE_MANAGER,
   FinalAnswers,
   ApplyFn,
-} from "../definitions";
-import { defaultPreset, confirmUseDefaultPresetMsg } from "../constants";
+} from "../../definitions";
+import { defaultPreset, confirmUseDefaultPresetMsg } from "../../constants";
 
 type FeaturePrompt = CheckboxQuestion<Array<{ name: string; value: unknown; short?: string }>>;
 
@@ -45,7 +45,6 @@ class Creator {
   private options: CliOptions;
   public readonly featurePrompt: FeaturePrompt;
   public promptCompletedCallbacks: Array<PromptCompleteCallback>;
-  private readonly outroPrompts: Question[];
   public readonly injectedPrompts: Question<FinalAnswers>[];
   private _pkgManager: SUPPORTED_PACKAGE_MANAGER | undefined;
   private readonly installLocalPlugin: boolean;
@@ -69,7 +68,6 @@ class Creator {
 
     this.injectedPrompts = [];
     this.promptCompletedCallbacks = [];
-    this.outroPrompts = this.resolveOutroPrompts();
 
     const promptAPI = new PromptModuleAPI(this);
     promptModules.forEach((m) => m(promptAPI));
@@ -269,7 +267,7 @@ class Creator {
       return defaultPreset;
     }
 
-    const answers = await inquirer.prompt<FinalAnswers>(this.resolveFinalPrompts());
+    const answers = await inquirer.prompt<FinalAnswers>(this.injectedPrompts);
 
     const preset: Preset = {
       plugins: { "@luban-cli/cli-plugin-service": { projectName: "" } },
@@ -311,16 +309,6 @@ class Creator {
     }
 
     return !hasProjectGit(this.context);
-  }
-
-  public resolveFinalPrompts(): QuestionCollection {
-    return [...this.injectedPrompts, ...this.outroPrompts];
-  }
-
-  public resolveOutroPrompts(): ListQuestion[] {
-    const outroPrompts: ListQuestion[] = [];
-
-    return outroPrompts;
   }
 
   public async resolvePlugins(rawPlugins: RawPlugin): Promise<ResolvedPlugin[]> {

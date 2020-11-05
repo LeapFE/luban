@@ -1,4 +1,5 @@
 import { RootOptions, Preset } from "./definitions";
+import { CreateLibPreset } from "@luban-cli/cli-shared-types/dist/shared";
 
 export const defaultPreset: Required<Preset> = {
   language: "ts",
@@ -47,6 +48,12 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "unitTest",
   "fetch",
   "commit",
+];
+
+export const libDefaultPromptModule: Array<keyof CreateLibPreset> = [
+  "commit",
+  "eslint",
+  "stylelint",
 ];
 
 export const defaultRootOptions: Required<RootOptions> = {

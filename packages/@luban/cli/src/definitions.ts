@@ -8,9 +8,18 @@ import {
   CssSolution as cssSolution,
   UILibrary as uiLibrary,
   BasePkgFields as basePkgFields,
+  CreateLibPreset,
+  CreateLibRawPlugin,
+  CreateLibRootOptions,
 } from "@luban-cli/cli-shared-types/dist/shared";
 
-import { GeneratorAPI } from "./lib/generatorAPI";
+import { GeneratorAPI } from "./lib/generator/generatorAPI";
+
+export {
+  CreateLibPreset,
+  CreateLibRootOptions,
+  CreateLibRawPlugin,
+} from "@luban-cli/cli-shared-types/dist/shared";
 
 export type CliOptions = Partial<{
   /**
@@ -76,20 +85,18 @@ export type RawPlugin = rawPlugin;
 
 export type Preset = preset;
 
-export type PLUGIN_ID = keyof RawPlugin;
+type ALL_PLUGINS = RawPlugin & CreateLibRawPlugin;
+
+export type PLUGIN_ID = keyof ALL_PLUGINS;
 
 export interface ApplyFn {
-  (api: GeneratorAPI, rootOptions: RootOptions): void;
-  /**
-   * @deprecated
-   */
-  hooks?: (api: GeneratorAPI, rootOptions: RootOptions, pluginIds: string[]) => void;
+  (api: GeneratorAPI, rootOptions: RootOptions | CreateLibRootOptions): void;
 }
 
 export type ResolvedPlugin = {
-  id: keyof RawPlugin;
+  id: PLUGIN_ID;
   apply: ApplyFn;
-  options: RawPlugin[keyof RawPlugin] & Record<string, unknown>;
+  options: ALL_PLUGINS[PLUGIN_ID] & Record<string, unknown>;
 };
 
 // TYPE REVIEW
@@ -105,7 +112,17 @@ export type FinalAnswers = {
   commit: boolean;
 };
 
+export type CreateLibFinalAnswers = {
+  commit: boolean;
+  eslint: ESLinterConfig;
+  stylelint: boolean;
+};
+
 export type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;
+export type CreateLibPromptCompleteCallback = (
+  answer: CreateLibFinalAnswers,
+  options: CreateLibPreset,
+) => void;
 
 export type InquirerQuestionType = keyof QuestionMap;
 
