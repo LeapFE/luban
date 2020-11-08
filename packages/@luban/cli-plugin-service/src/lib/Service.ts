@@ -435,7 +435,7 @@ class Service {
 
     const pkg = this.resolvePkg();
     if (pkg.__luban_config__) {
-      initConfig = pkg.__luban_config__;
+      initConfig = pkg.__luban_config__ as Required<RootOptions>;
     }
 
     return initConfig;
