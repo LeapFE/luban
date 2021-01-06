@@ -126,40 +126,18 @@ export { Home };
 比如当前角色为 `66`，路由配置中某一个路由项的 authority 为 `[66, 55, 77]`，那个这个路由项就可以被访问到，当角色变为 `88`，则不能被访问到。
 
 
-## 导航菜单
-
-==luban-router== 默认不带有任何的布局方案，可以通过下面这种方式来实现自定义布局：
-```typescript
- <LubanRouter config={config} role={66}>
-  {({ renderedTable, matchedRouteList, permissionRouteList }) => {
-    return (
-        <div>
-        // 渲染侧边栏导航
-        // 渲染面包屑导航
-        // ...
-        </div>
-    );
-  }}
-</LubanRouter>
-```
-
-`<LubanRouter />` 除了接收 `config` 和 `role` 参数外，也可以提供 `children` 参数，该回调函数接收三个参数。
-
-其中，第一个参数是已经渲染好的路由表，可以直接使用，第二个参数是与当前路径匹配的路由列表，第三个参数是当前角色可有权访问的路由表（这个路由表是嵌套结构的）。其中第二个参数的路由列表的路由项会追加一个 `active` 字段，表示当前活跃的路由项，可以很方便的实现面包屑导航。更多路由项定义请查阅 [这里](https://github.com/leapFE/luban-router/blob/master/src/definitions.ts)。
-
-
 ## 路由赖加载
 在构建时，JavaScript 包会变得非常大，影响页面加载时间。这个时候我们希望按路由将打包后的代码进行分割，然后在当前路由被访问时才去加载对应的代码块文件。
 
 结合 [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy) API 和 [webpack](https://webpack.js.org/guides/code-splitting/#root) 的代码分割功能，可以轻松的实现路由的赖加载。
 
-第一步，通过 `React.lazy` 和 [动态import](https://webpack.js.org/guides/code-splitting/#dynamic-imports) 引入组件
+第一步，通过 `React.lazy` 和 [动态import](https://webpack.js.org/guides/code-splitting/#dynamic-imports) 引入组件:
 
 ```typescript
 const Index = React.lazy(() => import("./Index"));
 ```
 
-第二步，在 *config.ts* 中不用做任何改变，像之前一样使用它：
+第二步，在 *config.ts* 中不用做任何改变，像之前一样使用它:
 ```typescript
 // config.ts
 import { RouteConfig } from "luban-router/lib/definitions";
@@ -182,4 +160,52 @@ export const config: RouteConfig = {
 const Index = React.lazy(() => import(/* webpackChunkName: "group-index" */  "./Index"));
 const User = React.lazy(() => import(/* webpackChunkName: "group-user" */  "./User"));
 const About = React.lazy(() => import(/* webpackChunkName: "group-about" */  "./About"));
+```
+
+
+## 页面布局
+
+==luban-router== 默认不带有任何的布局方案，可以通过下面这种方式来实现自定义布局：
+```typescript
+ <LubanRouter config={config} role={66}>
+  {({ renderedTable, matchedRouteList, permissionRouteList }) => {
+    return (
+        <div>
+        // 渲染侧边栏导航
+        // 渲染面包屑导航
+        // ...
+        </div>
+    );
+  }}
+</LubanRouter>
+```
+
+`<LubanRouter />` 除了接收 `config` 和 `role` 参数外，还可以传递 `children` 参数，该回调函数接收三个参数。
+
+其中，第一个参数是已经渲染好的路由表，可以直接使用，第二个参数是与当前路径匹配的路由列表，第三个参数是当前角色可有权访问的路由表（这个路由表是嵌套结构的）。其中第二个参数的路由列表的路由项会追加一个 `active` 字段，表示当前活跃的路由项，可以很方便的实现面包屑导航。更多路由项定义请查阅 [这里](https://github.com/leapFE/luban-router/blob/master/src/definitions.ts)。
+
+需要注意的是，当赖加载一些组件后，`luban-router` 会将渲染好的路由表用 <React.Suspense /> 包裹起来，同时还设置了一个默认的 `fallback` 内容，可以向 `luban-router` 传递 `fallback` 参数来自定义 `fallback` 内容：
+```typescript
+<LubanRouter config={config} fallback={<span>my chunk loading...</span>} />
+
+// 或者不显示任何 `fallback` 信息
+<LubanRouter config={config} fallback={null} />
+```
+
+**同样的，实现自定义布局时，也需要将渲染好的路由表用 <React.Suspense /> 包裹起来：**
+```typescript
+import React, { Suspense } from "react";
+
+<LubanRouter config={config} role={66}>
+  {({ renderedTable, matchedRouteList, permissionRouteList }) => {
+    return (
+        <div>
+          // 渲染侧边栏导航
+          // 渲染面包屑导航
+          // ...
+          <Suspense fallback={<span>my chunk loading...</span>}>{renderedTable}</Suspense>
+        </div>
+    );
+  }}
+</LubanRouter>
 ```
