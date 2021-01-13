@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
