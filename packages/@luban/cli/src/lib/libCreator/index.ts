@@ -1,16 +1,7 @@
 import path from "path";
 import inquirer, { Question } from "inquirer";
 import cloneDeep from "lodash.clonedeep";
-import execa, { ExecaChildProcess } from "execa";
-import {
-  Spinner,
-  log,
-  writeFileTree,
-  hasGit,
-  hasProjectGit,
-  loadModule,
-  warn,
-} from "@luban-cli/cli-shared-utils";
+import { Spinner, log, writeFileTree, warn } from "@luban-cli/cli-shared-utils";
 import chalk from "chalk";
 
 import {
@@ -19,19 +10,15 @@ import {
   CreateLibPreset,
   CliOptions,
   BasePkgFields,
-  ResolvedPlugin,
-  ApplyFn,
-  PLUGIN_ID,
 } from "../../definitions";
 import { LibPromptModuleAPI } from "./promptModuleAPI";
 import { PackageManager } from "../../utils/packageManager";
 import { getVersions } from "../../utils/getVersions";
-import { CreateLibRawPlugin } from "@luban-cli/cli-shared-types/dist/shared";
-import { sortObject } from "../../utils/sortObject";
 import { generateReadme } from "../../utils/getReadme";
 import { Generator } from "../generator/generator";
+import { BaseCreator } from "../baseCreator";
 
-class LibCreator {
+class LibCreator extends BaseCreator {
   public promptCompletedCallbacks: Array<CreateLibPromptCompleteCallback>;
   public readonly injectedPrompts: Question<CreateLibFinalAnswers>[];
 
@@ -47,6 +34,8 @@ class LibCreator {
     options: CliOptions,
     promptModules: Array<(api: LibPromptModuleAPI) => void>,
   ) {
+    super();
+
     this.context = context;
     this.name = name;
     this.options = options;
@@ -109,12 +98,12 @@ class LibCreator {
 
     // init git repository before installing deps
     // so that cli-plugin-service can setup git hooks.
-    const shouldInitGitFlag = this.shouldInitGit(this.options);
+    const shouldInitGitFlag = this.shouldInitGit(this.options, this.context);
     if (shouldInitGitFlag) {
       spinner.stopSpinner();
       log();
       spinner.logWithSpinner(`🗄`, `Initializing git repository...`);
-      await this.run("git init");
+      await this.run(this.context, "git init");
     }
 
     // install plugins
@@ -123,7 +112,10 @@ class LibCreator {
     log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
     await pkgManager.install();
 
-    const resolvedPlugins = await this.resolvePlugins(cloneDeep(adaptedPreset.plugins));
+    const resolvedPlugins = await this.resolvePlugins(
+      cloneDeep(adaptedPreset.plugins),
+      this.context,
+    );
 
     log();
     log(`🔩  Invoking plugin's generators...`);
@@ -189,10 +181,12 @@ class LibCreator {
     }
 
     await this.run(
+      this.context,
       "./node_modules/prettier/bin-prettier.js",
       ["--write"].concat(formatConfigJsFile),
     );
     await this.run(
+      this.context,
       "./node_modules/prettier/bin-prettier.js",
       ["--parser=json", "--write"].concat(formatConfigJsonFiles),
     );
@@ -202,16 +196,8 @@ class LibCreator {
     const lintArgs = ["--config=.eslintrc", "--fix", "src/", "--ext=.tsx,.ts"];
     const formatArgs = ["--write", "src/**/*.{ts,tsx}", "src/**/*.{ts,tsx}"];
 
-    await this.run("./node_modules/eslint/bin/eslint.js", lintArgs);
-    await this.run("./node_modules/prettier/bin-prettier.js", formatArgs);
-  }
-
-  // REVIEW repeated with `webAppCreator.run`
-  public run(command: string, args?: string[]): ExecaChildProcess {
-    if (!args) {
-      [command, ...args] = command.split(/\s+/);
-    }
-    return execa(command, args, { cwd: this.context });
+    await this.run(this.context, "./node_modules/eslint/bin/eslint.js", lintArgs);
+    await this.run(this.context, "./node_modules/prettier/bin-prettier.js", formatArgs);
   }
 
   public async promptAndResolvePreset(): Promise<Required<CreateLibPreset>> {
@@ -228,56 +214,6 @@ class LibCreator {
     this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
 
     return preset as Required<CreateLibPreset>;
-  }
-
-  // REVIEW repeated with `webAppCreator.shouldInitGit`
-  public shouldInitGit(cliOptions: CliOptions): boolean {
-    if (!hasGit()) {
-      return false;
-    }
-    if (cliOptions.skipGit) {
-      return false;
-    }
-    // --git
-    if (cliOptions.forceGit) {
-      return true;
-    }
-
-    if (typeof cliOptions.git === "string") {
-      return true;
-    }
-
-    return !hasProjectGit(this.context);
-  }
-
-  // REVIEW repeated with `webAppCreator.resolvePlugins`
-  public async resolvePlugins(rawPlugins: CreateLibRawPlugin): Promise<ResolvedPlugin[]> {
-    const sortedRawPlugins = sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
-    const plugins: ResolvedPlugin[] = [];
-
-    const pluginIDs = Object.keys(sortedRawPlugins);
-
-    const loadPluginGeneratorWithWarn = (id: string, context: string): ApplyFn => {
-      let generatorApply = loadModule(`${id}/dist/generator`, context);
-
-      if (typeof generatorApply !== "function") {
-        warn(
-          `generator of plugin [${id}] not found while resolving plugin, use default generator function instead`,
-        );
-        generatorApply = (): void => undefined;
-      }
-
-      return generatorApply as ApplyFn;
-    };
-
-    for (const id of pluginIDs) {
-      plugins.push({
-        id: id as PLUGIN_ID,
-        apply: loadPluginGeneratorWithWarn(id, this.context),
-        options: sortedRawPlugins[id] || {},
-      });
-    }
-    return plugins;
   }
 }
 
