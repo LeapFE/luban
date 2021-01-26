@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
+
+
+### Bug Fixes
+
+* **all:** import reference path for `GeneratorAPI` ([3c4f93a](https://github.com/leapFE/luban/commit/3c4f93a861c66e2d9cdce0c00f56b308e26111bc))
+* **cli-plugin-service:** correctly require builtin plguins ([a5a3a9a](https://github.com/leapFE/luban/commit/a5a3a9ab9483107f24d5ada8af0ab4807c7ba15c))
+* **cli-plugin-service:** fix type error ([3a785b5](https://github.com/leapFE/luban/commit/3a785b54a17f700924a5a08341cfc955f11885dc))
+
+
+### Features
+
+* **cli-lib-service:** support create lib project ([209f739](https://github.com/leapFE/luban/commit/209f739af007c0496da989c965ec66eeed87a614))
+
+
+
+
+
 # [2.0.0-next.3](https://github.com/leapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
 
 

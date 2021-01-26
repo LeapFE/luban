@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
+
+
+### Features
+
+* **cli-lib-service:** support create lib project ([209f739](https://github.com/leapFE/luban/commit/209f739af007c0496da989c965ec66eeed87a614))
+
+
+
+
+
 # [2.0.0-next.3](https://github.com/leapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
 
 
