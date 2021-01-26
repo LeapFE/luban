@@ -2,7 +2,7 @@ module.exports = {
   verbose: true,
   <%_ if (isTsProject) { _%>
   preset: "ts-jest",
-  transform: { "\\.tsx?$": "@luban-cli/cli-lib-service/preprocessor" },
+  transform: { "\\.tsx?$": "@luban-cli/cli-lib-service" },
   <%_ } else { _%>
   transform: { "^.+\\.jsx?$": "babel-jest" },
   <%_ } _%>
