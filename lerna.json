@@ -12,7 +12,6 @@
     },
     "publish": {
       "allowBranch": "master",
-      "bump": "patch",
       "ignoreChanges": [
         "*.md",
         "scripts/**"
@@ -23,7 +22,6 @@
       "message": "chore(release): publish"
     },
     "version": {
-      "allowBranch": "master",
       "ignoreChanges": [
         "*.md",
         "scripts/**"
