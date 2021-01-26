@@ -7,7 +7,6 @@ import { PackageManager } from "../../utils/packageManager";
 import { PromptModuleAPI } from "./promptModuleAPI";
 import { generateReadme } from "../../utils/getReadme";
 import { getVersions } from "../../utils/getVersions";
-import { printDefaultPreset } from "../../utils/printPreset";
 
 import { Spinner, log, writeFileTree, warn } from "@luban-cli/cli-shared-utils";
 
@@ -21,7 +20,7 @@ import {
   SUPPORTED_PACKAGE_MANAGER,
   FinalAnswers,
 } from "../../definitions";
-import { defaultPreset, confirmUseDefaultPresetMsg } from "../../constants";
+import { defaultPreset } from "../../constants";
 import { BaseCreator } from "../baseCreator";
 
 type FeaturePrompt = CheckboxQuestion<Array<{ name: string; value: unknown; short?: string }>>;
@@ -31,7 +30,7 @@ class Creator extends BaseCreator {
   private readonly context: string;
   private options: CliOptions;
   public readonly featurePrompt: FeaturePrompt;
-  public promptCompletedCallbacks: Array<PromptCompleteCallback>;
+  public promptCompletedCallbacks: Array<PromptCompleteCallback<FinalAnswers>>;
   public readonly injectedPrompts: Question<FinalAnswers>[];
   private _pkgManager: SUPPORTED_PACKAGE_MANAGER | undefined;
   private readonly installLocalPlugin: boolean;
@@ -66,7 +65,7 @@ class Creator extends BaseCreator {
     const { options, context, name, shouldInitGit, run, formatConfigFiles, fixLintErrors } = this;
 
     if (!options.manual) {
-      const useDefaultPreset = await this.confirmUseDefaultPrest();
+      const useDefaultPreset = await this.confirmUseDefaultPrest(defaultPreset);
       if (!useDefaultPreset) {
         warn("You cancel current operation.");
         process.exit(1);
@@ -266,20 +265,6 @@ class Creator extends BaseCreator {
     this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
 
     return preset as Required<Preset>;
-  }
-
-  public async confirmUseDefaultPrest(): Promise<boolean> {
-    const { useDefaultPreset } = await inquirer.prompt<{ useDefaultPreset: boolean }>([
-      {
-        type: "confirm",
-        name: "useDefaultPreset",
-        message: confirmUseDefaultPresetMsg,
-        default: true,
-      },
-    ]);
-
-    printDefaultPreset(defaultPreset);
-    return useDefaultPreset;
   }
 }
 

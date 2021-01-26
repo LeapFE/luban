@@ -19,7 +19,7 @@
     "publish:latest": "node scripts/publish.js --tag=latest",
     "test:changed": "node scripts/test.js --onlyChanged",
     "test": "node scripts/test.js",
-    "jest-coverage": "yarn jest --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
+    "coverage": "node scripts/test.js --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
     "commit": "lint-staged && git-cz",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
@@ -69,7 +69,7 @@
     }
   },
   "lint-staged": {
-    "*": "yarn run test:changed",
+    "packages/**/*.test.ts": "yarn run test:changed",
     "packages/**/*.ts": [
       "yarn run format:packages",
       "yarn run eslint:packages"

@@ -1,9 +1,15 @@
 import { loadModule, warn, hasProjectGit, hasGit } from "@luban-cli/cli-shared-utils";
 import execa, { ExecaChildProcess } from "execa";
+import inquirer from "inquirer";
+
+import { printDefaultPreset } from "../utils/printPreset";
 
 import { sortObject } from "../utils/sortObject";
 
+import { confirmUseDefaultPresetMsg } from "../constants";
+
 import { ResolvedPlugin, ApplyFn, CliOptions, PLUGIN_ID } from "../definitions";
+import { Preset } from "@luban-cli/cli-shared-types/dist/shared";
 
 class BaseCreator {
   public shouldInitGit(cliOptions: CliOptions, path: string): boolean {
@@ -62,6 +68,20 @@ class BaseCreator {
       [command, ...args] = command.split(/\s+/);
     }
     return execa(command, args, { cwd });
+  }
+
+  public async confirmUseDefaultPrest(defaultPreset: Required<Preset>): Promise<boolean> {
+    const { useDefaultPreset } = await inquirer.prompt<{ useDefaultPreset: boolean }>([
+      {
+        type: "confirm",
+        name: "useDefaultPreset",
+        message: confirmUseDefaultPresetMsg,
+        default: true,
+      },
+    ]);
+
+    printDefaultPreset(defaultPreset);
+    return useDefaultPreset;
   }
 }
 

@@ -6,10 +6,10 @@ import chalk from "chalk";
 
 import {
   CreateLibFinalAnswers,
-  CreateLibPromptCompleteCallback,
-  CreateLibPreset,
+  PromptCompleteCallback,
   CliOptions,
   BasePkgFields,
+  Preset,
 } from "../../definitions";
 import { LibPromptModuleAPI } from "./promptModuleAPI";
 import { PackageManager } from "../../utils/packageManager";
@@ -17,9 +17,10 @@ import { getVersions } from "../../utils/getVersions";
 import { generateReadme } from "../../utils/getReadme";
 import { Generator } from "../generator/generator";
 import { BaseCreator } from "../baseCreator";
+import { defaultPresetForLib } from "../../constants";
 
 class LibCreator extends BaseCreator {
-  public promptCompletedCallbacks: Array<CreateLibPromptCompleteCallback>;
+  public promptCompletedCallbacks: Array<PromptCompleteCallback<CreateLibFinalAnswers>>;
   public readonly injectedPrompts: Question<CreateLibFinalAnswers>[];
 
   private name: string;
@@ -50,7 +51,15 @@ class LibCreator extends BaseCreator {
   }
 
   public async create(): Promise<void> {
-    const preset = await this.promptAndResolvePreset();
+    if (!this.options.manual) {
+      const useDefaultPreset = await this.confirmUseDefaultPrest(defaultPresetForLib);
+      if (!useDefaultPreset) {
+        warn("You cancel current operation.");
+        process.exit(1);
+      }
+    }
+
+    const preset = await this.promptAndResolvePreset(this.options.manual || false);
 
     const adaptedPreset = cloneDeep(preset);
 
@@ -67,7 +76,7 @@ class LibCreator extends BaseCreator {
 
     const pkg: BasePkgFields = {
       name: this.name,
-      description: "A react library",
+      description: "A react component library",
       version: "0.0.1",
       private: true,
       devDependencies: {},
@@ -81,7 +90,9 @@ class LibCreator extends BaseCreator {
     deps.forEach((dep: string) => {
       let packageDirName = "";
       let packageDirPath = "";
-      const packageDirNameMatchResult = /^@luban-cli\/(cli-plugin-.+)$/.exec(dep);
+
+      const packageDirNameMatchResult = /^@luban-cli\/(cli-(plugin|lib)-.+)$/.exec(dep);
+
       if (Array.isArray(packageDirNameMatchResult)) {
         packageDirName = packageDirNameMatchResult[1];
         packageDirPath = path.resolve(process.cwd(), `../../${packageDirName}`);
@@ -168,7 +179,7 @@ class LibCreator extends BaseCreator {
     process.exit(1);
   }
 
-  public async formatConfigFiles(preset: Required<CreateLibPreset>): Promise<void> {
+  public async formatConfigFiles(preset: Required<Preset>): Promise<void> {
     const formatConfigJsFile = ["./jest.config.js"];
     const formatConfigJsonFiles = ["./.eslintrc", "./tsconfig.json"];
 
@@ -193,17 +204,23 @@ class LibCreator extends BaseCreator {
   }
 
   public async fixLintErrors(): Promise<void> {
-    const lintArgs = ["--config=.eslintrc", "--fix", "src/", "--ext=.tsx,.ts"];
-    const formatArgs = ["--write", "src/**/*.{ts,tsx}", "src/**/*.{ts,tsx}"];
+    const lintArgs = ["--config=.eslintrc", "--fix", "components/", "--ext=.tsx,.ts"];
+    const formatArgs = ["--write", "components/**/*.{ts,tsx}", "components/**/*.{ts,tsx}"];
 
     await this.run(this.context, "./node_modules/eslint/bin/eslint.js", lintArgs);
     await this.run(this.context, "./node_modules/prettier/bin-prettier.js", formatArgs);
   }
 
-  public async promptAndResolvePreset(): Promise<Required<CreateLibPreset>> {
+  public async promptAndResolvePreset(manual: boolean): Promise<Required<Preset>> {
+    if (!manual) {
+      return defaultPresetForLib;
+    }
+
     const answers = await inquirer.prompt<CreateLibFinalAnswers>(this.injectedPrompts);
 
-    const preset: CreateLibPreset = {
+    const preset: Preset = {
+      isLib: true,
+      cssSolution: "less",
       plugins: {
         "@luban-cli/cli-lib-service": { projectName: "" },
         "@luban-cli/cli-plugin-eslint": {},
@@ -213,7 +230,7 @@ class LibCreator extends BaseCreator {
 
     this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
 
-    return preset as Required<CreateLibPreset>;
+    return preset as Required<Preset>;
   }
 }
 

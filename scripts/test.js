@@ -14,7 +14,7 @@ let regex = `.*@${organizationName}/.*/.*\\.test\\.ts$`;
 // node scripts/build.js --package=cli
 if (args.package) {
   const packages = (args.p || args.package).split(",").join("|");
-  regex = `.*@${organizationName}/(${packages}|cli-plugin-(${packages}))/.*\\.test\\.ts$`;
+  regex = `.*@${organizationName}/(${packages}|cli-(plugin|lib)-(${packages}))/.*\\.test\\.ts$`;
   const i = rawArgs.indexOf("-p");
   rawArgs.splice(i, 2);
 }
@@ -28,7 +28,7 @@ if (args.onlyChanged) {
     exit(0);
   }
 
-  regex = `.*@${organizationName}/(${changePackages}|cli-plugin-(${changePackages}))/.*\\.test\\.ts$`;
+  regex = `.*@${organizationName}/(${changePackages}|cli-(plugin|lib)-(${changePackages}))/.*\\.test\\.ts$`;
 }
 
 const jestArgs = [

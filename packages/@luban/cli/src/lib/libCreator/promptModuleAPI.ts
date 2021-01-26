@@ -2,7 +2,7 @@ import { DistinctQuestion } from "inquirer";
 
 import { LibCreator } from "./index";
 
-import { CreateLibPromptCompleteCallback, CreateLibFinalAnswers } from "../../definitions";
+import { PromptCompleteCallback, CreateLibFinalAnswers } from "../../definitions";
 
 class LibPromptModuleAPI {
   private creator: LibCreator;
@@ -15,7 +15,7 @@ class LibPromptModuleAPI {
     this.creator.injectedPrompts.push(prompt);
   }
 
-  public onPromptComplete(callback: CreateLibPromptCompleteCallback): void {
+  public onPromptComplete(callback: PromptCompleteCallback<CreateLibFinalAnswers>): void {
     this.creator.promptCompletedCallbacks.push(callback);
   }
 }

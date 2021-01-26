@@ -29,7 +29,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   }
 
   if (options.eslint === "leap") {
-    eslintConfigLeap(api);
+    eslintConfigLeap(api, options);
     return;
   }
 
