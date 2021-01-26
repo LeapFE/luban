@@ -25,6 +25,7 @@ _site
 public
 doc/.vuepress/dist
 packages/**/project_name/**
+packages/**/react-component-lib-demo/**
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release

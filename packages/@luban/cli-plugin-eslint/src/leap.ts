@@ -1,9 +1,11 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
-// import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
-export function eslintConfigLeap(api: GeneratorAPI): void {
+export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOptions>): void {
+  const sourceDir = options.isLib ? "components" : "src";
+
   const eslintParser = "@typescript-eslint/parser";
 
   const parserOptions = new SimpleMapPolyfill<
@@ -17,10 +19,10 @@ export function eslintConfigLeap(api: GeneratorAPI): void {
 
   api.extendPackage({
     scripts: {
-      eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
-      "eslint:fix": "eslint --fix --config .eslintrc --ext .tsx,.ts src/",
-      "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
-      "format:check:ts": "prettier --check 'src/**/*.{ts,tsx}'",
+      eslint: `eslint --config .eslintrc --ext .tsx,.ts ${sourceDir}/`,
+      "eslint:fix": `eslint --fix --config .eslintrc --ext .tsx,.ts ${sourceDir}/`,
+      "format:ts": `prettier --write '${sourceDir}/**/*.{ts,tsx}'`,
+      "format:check:ts": `prettier --check '${sourceDir}/**/*.{ts,tsx}'`,
     },
     devDependencies: {
       eslint: "^6.8.0",

@@ -36,7 +36,7 @@ export function printDefaultPreset(preset: Required<Preset>): void {
       return;
     }
 
-    if (key === "uiLibrary" && preset["uiLibrary"].length === 0) {
+    if (key === "isLib") {
       return;
     }
 

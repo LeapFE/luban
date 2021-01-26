@@ -4,6 +4,8 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOptions>): void {
+  const sourceDir = options.isLib ? "components" : "src";
+
   const eslintParser = options.language === "ts" ? "@typescript-eslint/parser" : "babel-eslint";
 
   const lintFileSuffix = options.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
@@ -87,10 +89,10 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
   if (options.language === "js") {
     api.extendPackage({
       scripts: {
-        eslint: "eslint --config .eslintrc --ext .jsx,.js src/",
-        "eslint:fix": "eslint --fix --config .eslintrc --ext .jsx,.js src/",
-        "format:js": "prettier --write 'src/**/*.{js,jsx}'",
-        "format:check:js": "prettier --check 'src/**/*.{js,jsx}'",
+        eslint: `eslint --config .eslintrc --ext .jsx,.js ${sourceDir}/`,
+        "eslint:fix": `eslint --fix --config .eslintrc --ext .jsx,.js ${sourceDir}/`,
+        "format:js": `prettier --write '${sourceDir}/**/*.{js,jsx}'`,
+        "format:check:js": `prettier --check '${sourceDir}/**/*.{js,jsx}'`,
       },
       devDependencies: {
         "babel-eslint": "^10.1.0",
@@ -108,10 +110,10 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
   if (options.language === "ts") {
     api.extendPackage({
       scripts: {
-        eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
-        "eslint:fix": "eslint --fix --config .eslintrc --ext .tsx,.ts src/",
-        "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
-        "format:check:ts": "prettier --check 'src/**/*.{ts,tsx}'",
+        eslint: `eslint --config .eslintrc --ext .tsx,.ts ${sourceDir}/`,
+        "eslint:fix": `eslint --fix --config .eslintrc --ext .tsx,.ts ${sourceDir}/`,
+        "format:ts": `prettier --write '${sourceDir}/**/*.{ts,tsx}'`,
+        "format:check:ts": `prettier --check '${sourceDir}/**/*.{ts,tsx}'`,
       },
       devDependencies: {
         "@typescript-eslint/parser": "^2.30.0",

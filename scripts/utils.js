@@ -15,7 +15,7 @@ module.exports = {
     const changePackagesList = new Set();
 
     changedFiles.forEach((fileName) => {
-      if (/(cli|cli-plugin-)/.test(fileName)) {
+      if (!/cli-share-/.test(fileName)) {
         const matchedResult = fileName.match(/\/cli-?(\w|-){0,20}\//);
         if (Array.isArray(matchedResult)) {
           const matchedPackageName = matchedResult[0];

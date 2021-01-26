@@ -4,6 +4,8 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
+  const sourceDir = options.isLib ? "components" : "src";
+
   const processors: (string | (string | Record<string, unknown>)[])[] = [];
   const extendsConfig: (string | (string | Record<string, unknown>)[])[] = [
     "stylelint-config-standard",
@@ -25,7 +27,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       ],
     ],
   ]);
-  let lintScript = "stylelint src/**/*.css";
+  let lintScript = `stylelint ${sourceDir}/**/*.css`;
 
   if (options.cssSolution === "styled-components") {
     processors.push([
@@ -45,16 +47,16 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         "stylelint-processor-styled-components": "^1.10.0",
       },
       scripts: {
-        "format:style": `prettier --write 'src/**/*.{css,css.${options.language}}'`,
-        "format:check:style": `prettier --check 'src/**/*.{css,css.${options.language}}'`,
+        "format:style": `prettier --write '${sourceDir}/**/*.{css,css.${options.language}}'`,
+        "format:check:style": `prettier --check '${sourceDir}/**/*.{css,css.${options.language}}'`,
       },
     });
 
-    lintScript = `stylelint src/**/*.{css,css.${options.language}}`;
+    lintScript = `stylelint ${sourceDir}/**/*.{css,css.${options.language}}`;
   }
 
   if (options.cssSolution === "less") {
-    lintScript = "stylelint src/**/*.{css,less}";
+    lintScript = `stylelint ${sourceDir}/**/*.{css,less}`;
     stylelintRules.set("selector-pseudo-class-no-unknown", [
       true,
       {
@@ -64,21 +66,21 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
 
     api.extendPackage({
       scripts: {
-        "format:style": "prettier --write 'src/**/*.{css,less}'",
-        "format:check:style": "prettier --check 'src/**/*.{css,less}'",
+        "format:style": `prettier --write '${sourceDir}/**/*.{css,less}'`,
+        "format:check:style": `prettier --check '${sourceDir}/**/*.{css,less}'`,
       },
     });
   }
 
-  let lintStyleFileSuffix = "src/**/*.{css,less}";
+  let lintStyleFileSuffix = `${sourceDir}/**/*.{css,less}`;
 
   if (options.cssSolution === "styled-components") {
     if (options.language === "js") {
-      lintStyleFileSuffix = "src/**/*.{css,css.js}";
+      lintStyleFileSuffix = `${sourceDir}/**/*.{css,css.js}`;
     }
 
     if (options.language === "ts") {
-      lintStyleFileSuffix = "src/**/*.{css,css.ts}";
+      lintStyleFileSuffix = `${sourceDir}/**/*.{css,css.ts}`;
     }
   }
 

@@ -70,6 +70,7 @@ const defaultRootOptions: Required<RootOptions> = {
   unitTest: true,
   fetch: true,
   commit: true,
+  isLib: false,
   plugins: {
     "@luban-cli/cli-plugin-service": {
       projectName: "",

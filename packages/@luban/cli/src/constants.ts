@@ -1,6 +1,6 @@
 import { RootOptions, Preset } from "./definitions";
-import { CreateLibPreset } from "@luban-cli/cli-shared-types/dist/shared";
 
+// default preset for webapp
 export const defaultPreset: Required<Preset> = {
   language: "ts",
   eslint: "leap",
@@ -11,6 +11,7 @@ export const defaultPreset: Required<Preset> = {
   unitTest: true,
   fetch: true,
   commit: true,
+  isLib: false,
   plugins: {
     "@luban-cli/cli-plugin-service": {
       projectName: "",
@@ -26,7 +27,30 @@ export const defaultPreset: Required<Preset> = {
   },
 };
 
-export const defaultPresetNameMap: Record<keyof Omit<Preset, "plugins">, string> = {
+// default preset for lib
+export const defaultPresetForLib: Required<Preset> = {
+  language: "ts",
+  eslint: "leap",
+  cssSolution: "less",
+  stylelint: true,
+  router: false,
+  store: false,
+  unitTest: true,
+  fetch: false,
+  commit: true,
+  isLib: true,
+  plugins: {
+    "@luban-cli/cli-lib-service": {
+      projectName: "",
+    },
+    "@luban-cli/cli-plugin-eslint": {},
+    "@luban-cli/cli-plugin-stylelint": {},
+    "@luban-cli/cli-plugin-unit-test": {},
+    "@luban-cli/cli-plugin-commit": {},
+  },
+};
+
+export const defaultPresetNameMap: Record<keyof Omit<Omit<Preset, "plugins">, "isLib">, string> = {
   language: "development language",
   eslint: "eslint config",
   cssSolution: "css solution",
@@ -50,12 +74,9 @@ export const defaultPromptModule: Array<keyof Preset> = [
   "commit",
 ];
 
-export const libDefaultPromptModule: Array<keyof CreateLibPreset> = [
-  "commit",
-  "eslint",
-  "stylelint",
-];
+export const libDefaultPromptModule = ["commit", "eslint", "stylelint"];
 
+// default root options for webapp
 export const defaultRootOptions: Required<RootOptions> = {
   projectName: "",
   language: "ts",
@@ -67,8 +88,28 @@ export const defaultRootOptions: Required<RootOptions> = {
   unitTest: true,
   fetch: true,
   commit: true,
+  isLib: false,
   plugins: {
     "@luban-cli/cli-plugin-service": {
+      projectName: "",
+    },
+  },
+};
+
+export const defaultRootOptionsForLib: Required<RootOptions> = {
+  projectName: "",
+  language: "ts",
+  eslint: "leap",
+  cssSolution: "less",
+  stylelint: true,
+  router: false,
+  store: false,
+  unitTest: false,
+  fetch: false,
+  commit: true,
+  isLib: true,
+  plugins: {
+    "@luban-cli/cli-lib-service": {
       projectName: "",
     },
   },
