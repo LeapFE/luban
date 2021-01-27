@@ -260,4 +260,4 @@ function getWebpackConfig() {
   return [prodConfig, uncompressedConfig];
 }
 
-module.exports = getWebpackConfig;
+export { getWebpackConfig };
