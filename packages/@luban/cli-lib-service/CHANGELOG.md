@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.5](https://github.com/leapFE/luban/compare/v2.0.0-next.4...v2.0.0-next.5) (2021-01-28)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** supported build and publish command ([a1bab5e](https://github.com/leapFE/luban/commit/a1bab5ecbe6f729c22eb5da7660ce2397b259aac))
+
+
+### Features
+
+* **cli-lib-service:** add entry(main) file ([ad5dd99](https://github.com/leapFE/luban/commit/ad5dd99622fcde0dab9ce62eaae2103b82eefb4e))
+
+
+
+
+
 # [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
 
 

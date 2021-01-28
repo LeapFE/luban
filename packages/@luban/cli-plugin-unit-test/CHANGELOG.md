@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.5](https://github.com/leapFE/luban/compare/v2.0.0-next.4...v2.0.0-next.5) (2021-01-28)
+
+
+### Bug Fixes
+
+* **cli-plugin-unit-test:** modify jest config file ([f08b68c](https://github.com/leapFE/luban/commit/f08b68cdb3a0d6857671843abd5042726aebdb08))
+
+
+
+
+
 # [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
 
 
