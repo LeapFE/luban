@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.6](https://github.com/leapFE/luban/compare/v2.0.0-next.5...v2.0.0-next.6) (2021-01-29)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** adjust some config file and template ([7d1389e](https://github.com/leapFE/luban/commit/7d1389e3e0e8097ba9a97e8de01aaf5a45232148))
+
+
+
+
+
 # [2.0.0-next.5](https://github.com/leapFE/luban/compare/v2.0.0-next.4...v2.0.0-next.5) (2021-01-28)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
