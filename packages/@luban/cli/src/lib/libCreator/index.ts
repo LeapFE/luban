@@ -136,6 +136,7 @@ class LibCreator extends BaseCreator {
     log();
     log(`📥  Installing additional dependencies...`);
     await pkgManager.install();
+    await pkgManager.install(["react@16.14.0", "react-dom@16.14.0"]);
 
     log();
     spinner.logWithSpinner("📝", "Generating README.md...");

@@ -13,7 +13,7 @@ import { compileLess } from "./compileLess";
 import { getBabelConfig } from "./getBabelConfig";
 import { getWebpackConfig } from "./getWebpackConfig";
 
-const SOURCE_DIR = "src";
+const SOURCE_DIR = "components";
 const libDir = getProjectPath("lib");
 const esDir = getProjectPath("es");
 

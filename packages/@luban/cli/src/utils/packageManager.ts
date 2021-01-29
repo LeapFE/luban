@@ -149,8 +149,13 @@ class PackageManager {
     }
   }
 
-  public async install(): Promise<void> {
+  public async install(packages?: string[]): Promise<void> {
     const args = await this.addRegistryToArgs(PACKAGE_MANAGER_CONFIG[this.bin].install);
+
+    if (Array.isArray(packages)) {
+      args.concat(packages);
+    }
+
     return executeCommand(this.bin, args, this.context);
   }
 

@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*"],
+  "include": ["components/**/*"],
   "exclude": ["lib", "es"],
   "compilerOptions": {
     "module": "ESNext",

@@ -191,7 +191,7 @@ function getWebpackConfig() {
     },
   };
 
-  const entry = ["./src/index"];
+  const entry = ["./components/index"];
 
   // Common config
   config.externals = {

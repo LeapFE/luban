@@ -6,6 +6,10 @@ export const executeCommand = async function executeCommand(
   args: string[],
   cwd: string,
 ): Promise<void> {
+  if (process.env.__DEBUG__) {
+    log(args.join(" "), `execute command: ${command}`);
+  }
+
   try {
     await execa(command, args, {
       cwd,
