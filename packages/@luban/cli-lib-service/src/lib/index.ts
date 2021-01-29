@@ -10,4 +10,4 @@ const builtInPluginsRelativePath = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-require(builtInPluginsRelativePath[command])(args, rawArgv);
+require(builtInPluginsRelativePath[command]).default(args, rawArgv);

@@ -14,3 +14,4 @@ luban.config.js
 jest.config.js
 babel.config.js
 commitlint.config.js
+doczrc.js

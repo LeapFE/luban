@@ -13,6 +13,7 @@ import { compileLess } from "./compileLess";
 import { getBabelConfig } from "./getBabelConfig";
 import { getWebpackConfig } from "./getWebpackConfig";
 
+const SOURCE_DIR = "src";
 const libDir = getProjectPath("lib");
 const esDir = getProjectPath("es");
 
@@ -100,7 +101,7 @@ function babelify(js: Readable, isCommonJsModule: boolean) {
 function compile(isCommonJsModule: boolean) {
   rimraf.sync(isCommonJsModule !== false ? libDir : esDir);
 
-  const less = Gulp.src(["components/**/*.less"])
+  const less = Gulp.src([`${SOURCE_DIR}/**/*.less`])
     .pipe(
       through2.obj(function(file, _encoding, next) {
         this.push(file.clone());
@@ -122,21 +123,21 @@ function compile(isCommonJsModule: boolean) {
     )
     .pipe(Gulp.dest(isCommonJsModule === false ? esDir : libDir));
 
-  const assets = Gulp.src(["components/**/*.@(png|svg)"]).pipe(
+  const assets = Gulp.src([`${SOURCE_DIR}/**/*.@(png|svg)`]).pipe(
     Gulp.dest(isCommonJsModule === false ? esDir : libDir),
   );
 
   const source = [
-    "components/**/*.tsx",
-    "components/**/*.ts",
+    `${SOURCE_DIR}/**/*.tsx`,
+    `${SOURCE_DIR}/**/*.ts`,
     "typings/**/*.d.ts",
-    "!components/**/__tests__/**",
+    `!${SOURCE_DIR}/**/__tests__/**`,
   ];
 
   const compilerOptions = getTsConfig(isCommonJsModule);
 
   if (compilerOptions.allowJs) {
-    source.unshift("components/**/*.jsx");
+    source.unshift(`${SOURCE_DIR}/**/*.jsx`);
   }
 
   const tsResult = Gulp.src(source).pipe(ts(compilerOptions));

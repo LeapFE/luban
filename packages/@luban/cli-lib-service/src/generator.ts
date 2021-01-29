@@ -12,7 +12,7 @@ export default function(api: GeneratorAPI, _options: Required<RootOptions>): voi
     scripts: {
       serve: "docz dev",
       "doc:build": "docz build",
-      eslint: "eslint --ext .tsx,.ts components/",
+      eslint: "eslint --ext .tsx,.ts src/",
       compile: "tsc --noEmit",
       build: "luban-lib-service build",
       test: "jest",
@@ -30,6 +30,8 @@ export default function(api: GeneratorAPI, _options: Required<RootOptions>): voi
       docz: "^2.3.1",
       "gatsby-plugin-less": "^4.5.0",
       prettier: "^1.19.1",
+      react: "^16.14.0",
+      "react-dom": "^16.14.0",
     },
     peerDependencies: {
       react: ">=16.0.0",
@@ -45,5 +47,7 @@ export default function(api: GeneratorAPI, _options: Required<RootOptions>): voi
     },
   });
 
-  api.render("./template");
+  api.render("./template", {
+    projectName: _options.projectName,
+  });
 }

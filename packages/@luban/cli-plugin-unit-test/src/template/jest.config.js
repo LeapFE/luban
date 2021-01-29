@@ -7,7 +7,7 @@ module.exports = {
   transform: { "^.+\\.jsx?$": "babel-jest" },
   <%_ } _%>
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "md"],
-  testRegex: "<%- testRegex %>"",
+  testRegex: "<%- testRegex %>",
   setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
   transformIgnorePatterns: ["node_modules/[^/]+?/(?!(es|node_modules)/)", "/dist/"],
   collectCoverageFrom:  <%- collectCoverageFrom %>,

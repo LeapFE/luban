@@ -19,7 +19,7 @@ export const processor: Transformer = {
       require.resolve("babel-plugin-import"),
       {
         libraryName: pkg.name,
-        libraryDirectory: "../components",
+        libraryDirectory: "../src",
       },
     ]);
 

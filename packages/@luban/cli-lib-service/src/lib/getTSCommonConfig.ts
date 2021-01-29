@@ -13,6 +13,6 @@ export function getTsConfig(isCommonjsModule: boolean): Settings {
     declaration: true,
     allowSyntheticDefaultImports: true,
     ...externalConfig.compilerOptions,
-    target: isCommonjsModule ? "commonjs" : "esnext",
+    module: isCommonjsModule ? "commonjs" : "esnext",
   };
 }

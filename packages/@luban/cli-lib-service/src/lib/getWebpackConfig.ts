@@ -30,13 +30,12 @@ const imageOptions = {
 function getWebpackConfig() {
   const babelConfig = getBabelConfig(false);
 
-  // babel import for components
   babelConfig.plugins?.push([
     require.resolve("babel-plugin-import"),
     {
       style: true,
       libraryName: pkg.name,
-      libraryDirectory: "components",
+      libraryDirectory: "src",
     },
   ]);
 
@@ -183,9 +182,6 @@ function getWebpackConfig() {
       }),
       new CleanUpStatsPlugin(),
       new FilterWarningsPlugin({
-        // suppress conflicting order warnings from mini-css-extract-plugin.
-        // ref: https://github.com/ant-design/ant-design/issues/14895
-        // see https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
         exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
       }),
     ],
@@ -195,7 +191,7 @@ function getWebpackConfig() {
     },
   };
 
-  const entry = ["./components/index"];
+  const entry = ["./src/index"];
 
   // Common config
   config.externals = {
