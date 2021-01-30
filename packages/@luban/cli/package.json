@@ -62,8 +62,7 @@
     "resolve": "^1.15.1",
     "semver": "^7.1.2",
     "update-notifier": "^4.1.0",
-    "validate-npm-package-name": "^3.0.0",
-    "yaml-front-matter": "^4.1.0"
+    "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
     "@luban-cli/cli-shared-types": "^2.0.0-next.6",
@@ -74,8 +73,7 @@
     "@types/minimist": "^1.2.0",
     "@types/resolve": "^1.14.0",
     "@types/update-notifier": "^4.1.0",
-    "@types/validate-npm-package-name": "^3.0.0",
-    "@types/yaml-front-matter": "^4.1.0"
+    "@types/validate-npm-package-name": "^3.0.0"
   },
   "engines": {
     "node": ">=10"
