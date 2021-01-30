@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.7](https://github.com/leapFE/luban/compare/v2.0.0-next.6...v2.0.0-next.7) (2021-01-30)
+
+
+### Reverts
+
+* **cli-lib-service:** adjust template structure ([108ef3f](https://github.com/leapFE/luban/commit/108ef3f4c87cee0095e0d3feeae539e9150acb4a))
+
+
+
+
+
 # [2.0.0-next.6](https://github.com/leapFE/luban/compare/v2.0.0-next.5...v2.0.0-next.6) (2021-01-29)
 
 
