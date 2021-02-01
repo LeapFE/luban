@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.8](https://github.com/LeapFE/luban/compare/v2.0.0-next.7...v2.0.0-next.8) (2021-02-01)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** adjust .mdx file in template ([308d001](https://github.com/LeapFE/luban/commit/308d0013c4123585d48dba715cc2e2ba9b2c33f9))
+
+
+
+
+
 # [2.0.0-next.7](https://github.com/LeapFE/luban/compare/v2.0.0-next.6...v2.0.0-next.7) (2021-01-30)
 
 
