@@ -38,8 +38,8 @@ export default function(api: GeneratorAPI, _options: Required<RootOptions>): voi
       "react-dom": ">=16.0.0",
     },
     optionalDependencies: {
-      react: ">=16.0.0",
-      "react-dom": ">=16.0.0",
+      react: ">=16.0.0 <=16.14.0",
+      "react-dom": ">=16.0.0 <=16.14.0",
     },
     publishConfig: {
       access: "public",
