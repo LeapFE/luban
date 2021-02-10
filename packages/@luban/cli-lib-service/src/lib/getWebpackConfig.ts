@@ -9,7 +9,7 @@ import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
 import FilterWarningsPlugin from "webpack-filter-warnings-plugin";
 
 import { getBabelConfig } from "./getBabelConfig";
-import { CleanUpStatsPlugin } from "./CleanUpStatsPlugin";
+import { CleanUpStatsPlugin } from "./cleanUpStatsPlugin";
 
 import { getProjectPath, injectRequire, getProjectPackageJson } from "./share";
 
