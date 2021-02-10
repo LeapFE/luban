@@ -11,7 +11,7 @@ export default async function publish(_: minimist.ParsedArgs, rawArgv: string[])
   });
 
   try {
-    await run(argv._[0], argv as CliOptions);
+    await run(argv._[1], argv as CliOptions);
   } catch (err) {
     error(err.message);
     process.exit(1);
