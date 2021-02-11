@@ -16,7 +16,6 @@ export default function(api: GeneratorAPI, _options: Required<RootOptions>): voi
       compile: "tsc --noEmit",
       build: "luban-lib-service build",
       test: "jest",
-      coverage: "jest --coverage --color",
       "release:beta":
         "luban-lib-service publish prerelease --tag beta --run-scripts 'test eslint build' --allow-any-branch",
       release:
