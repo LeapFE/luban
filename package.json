@@ -65,6 +65,7 @@
   "author": "front-end-captain <18810940932@163.com>",
   "husky": {
     "hooks": {
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
