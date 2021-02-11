@@ -20,7 +20,7 @@ export default function(api: GeneratorAPI, _options: Required<RootOptions>): voi
       "release:beta":
         "luban-lib-service publish prerelease --tag beta --run-scripts 'test eslint build' --allow-any-branch",
       release:
-        "luban-lib-service publish patch --tag latest --run-scripts 'test eslint build' --branch main",
+        "luban-lib-service publish --tag latest --run-scripts 'test eslint build' --branch main",
     },
     dependencies: {
       classnames: "^2.2.6",
