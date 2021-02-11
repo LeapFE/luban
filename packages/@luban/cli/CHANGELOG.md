@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** remove 'private' field while create lib ([d150755](https://github.com/leapFE/luban/commit/d1507550de6f80d3d3c75b2d3e2eaa4a10d17e2b))
+
+
+
+
+
 # [2.0.0-next.8](https://github.com/leapFE/luban/compare/v2.0.0-next.7...v2.0.0-next.8) (2021-02-01)
 
 **Note:** Version bump only for package @luban-cli/cli

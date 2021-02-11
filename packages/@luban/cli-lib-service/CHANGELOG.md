@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** lock react and react-dom version ([6df24bc](https://github.com/leapFE/luban/commit/6df24bc07478836bdf37d5afcc827d01c8bd22a0))
+* **cli-lib-service:** pass 'version' param exception when run publish ([bd6ddee](https://github.com/leapFE/luban/commit/bd6ddee2ffa06985778a116f50c11b84b2af7728))
+* **cli-lib-service:** type error(import path case) ([57d2c70](https://github.com/leapFE/luban/commit/57d2c709d7923c05b38aeb77b283720ab5479d3e))
+
+
+
+
+
 # [2.0.0-next.8](https://github.com/leapFE/luban/compare/v2.0.0-next.7...v2.0.0-next.8) (2021-02-01)
 
 
