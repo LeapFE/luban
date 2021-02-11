@@ -99,7 +99,7 @@
     "rimraf": "^3.0.2",
     "semver": "7.1.2",
     "through2": "^4.0.2",
-    "togo-np": "^0.0.12",
+    "togo-np": "^1.0.0",
     "ts-jest": "^25.2.1",
     "ts-loader": "^8.0.14",
     "typescript": "^3.9.7",
