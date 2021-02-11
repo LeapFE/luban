@@ -78,7 +78,6 @@ class LibCreator extends BaseCreator {
       name: this.name,
       description: "A react component library",
       version: "0.0.1",
-      private: true,
       devDependencies: {},
       ["__luban_config__"]: { projectName: this.name, ...adaptedPreset },
       engines: {
