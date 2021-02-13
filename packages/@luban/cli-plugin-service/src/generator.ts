@@ -55,36 +55,26 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       });
     }
 
+    const additionalData = {
+      modifyFile,
+      useStore: options.store,
+      useFetch: options.fetch,
+    };
+
     if (options.cssSolution === "less" && options.language === "js") {
-      api.render("./template/JSLess", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
+      api.render("./template/JSLess", additionalData);
     }
 
     if (options.cssSolution === "less" && options.language === "ts") {
-      api.render("./template/TSLess", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
+      api.render("./template/TSLess", additionalData);
     }
 
     if (options.cssSolution === "styled-components" && options.language === "js") {
-      api.render("./template/JSstyledComponents", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
+      api.render("./template/JSstyledComponents", additionalData);
     }
 
     if (options.cssSolution === "styled-components" && options.language === "ts") {
-      api.render("./template/TSstyledComponents", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
+      api.render("./template/TSstyledComponents", additionalData);
     }
   }
 }
