@@ -53,16 +53,16 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   }
 
   if (options.isLib) {
-    collectCoverageFrom.concat([
+    collectCoverageFrom.push(
       "components/**/*.{ts,tsx}",
       "!components/*/style/index.tsx",
       "!components/style/index.tsx",
       "!components/*/locale/index.tsx",
       "!components/*/__tests__/type.test.tsx",
       "!components/**/*/interface.{ts,tsx}",
-    ]);
+    );
   } else {
-    collectCoverageFrom.concat([`src/**/*.${testFileSuffix}`]);
+    collectCoverageFrom.push(`src/**/*.${testFileSuffix}`);
   }
 
   api.render("./template", {
