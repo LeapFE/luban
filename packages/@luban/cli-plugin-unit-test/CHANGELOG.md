@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.10](https://github.com/leapFE/luban/compare/v2.0.0-next.9...v2.0.0-next.10) (2021-02-13)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** render correct jest config(collectCoverageFrom) ([07ca11d](https://github.com/leapFE/luban/commit/07ca11d2d0afd611b810d8acdbca59cff8df7cfc))
+
+
+
+
+
 # [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-unit-test

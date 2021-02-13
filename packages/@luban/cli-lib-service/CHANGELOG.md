@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.10](https://github.com/leapFE/luban/compare/v2.0.0-next.9...v2.0.0-next.10) (2021-02-13)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** remove 'coverage' script ([bfbab3e](https://github.com/leapFE/luban/commit/bfbab3ee7205b669d6874aac25858a0a3abc8f38))
+
+
+
+
+
 # [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
 
 
