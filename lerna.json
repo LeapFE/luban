@@ -7,9 +7,6 @@
   "version": "2.0.0-next.10",
   "useWorkspaces": true,
   "command": {
-    "create": {
-      "license": "MIT"
-    },
     "publish": {
       "allowBranch": "master",
       "ignoreChanges": [
@@ -19,7 +16,7 @@
       "verifyAccess": true,
       "verifyRegistry": true,
       "conventionalCommits": true,
-      "message": "chore(release): publish"
+      "message": "chore(release): publish %s"
     },
     "version": {
       "ignoreChanges": [
@@ -27,7 +24,7 @@
         "scripts/**"
       ],
       "conventionalCommits": true,
-      "message": "chore(release): version"
+      "message": "chore(release): version %s"
     }
   },
   "changelog": {
