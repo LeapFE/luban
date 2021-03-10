@@ -2,7 +2,6 @@ import { RootOptions, Preset } from "./definitions";
 
 // default preset for webapp
 export const defaultPreset: Required<Preset> = {
-  language: "ts",
   eslint: "leap",
   cssSolution: "less",
   stylelint: true,
@@ -29,7 +28,6 @@ export const defaultPreset: Required<Preset> = {
 
 // default preset for lib
 export const defaultPresetForLib: Required<Preset> = {
-  language: "ts",
   eslint: "leap",
   cssSolution: "less",
   stylelint: true,
@@ -51,7 +49,6 @@ export const defaultPresetForLib: Required<Preset> = {
 };
 
 export const defaultPresetNameMap: Record<keyof Omit<Omit<Preset, "plugins">, "isLib">, string> = {
-  language: "development language",
   eslint: "eslint config",
   cssSolution: "css solution",
   stylelint: "use stylelint",
@@ -63,7 +60,6 @@ export const defaultPresetNameMap: Record<keyof Omit<Omit<Preset, "plugins">, "i
 };
 
 export const defaultPromptModule: Array<keyof Preset> = [
-  "language",
   "eslint",
   "cssSolution",
   "stylelint",
@@ -79,7 +75,6 @@ export const libDefaultPromptModule = ["commit", "eslint", "stylelint"];
 // default root options for webapp
 export const defaultRootOptions: Required<RootOptions> = {
   projectName: "",
-  language: "ts",
   eslint: "leap",
   cssSolution: "less",
   stylelint: true,
@@ -98,7 +93,6 @@ export const defaultRootOptions: Required<RootOptions> = {
 
 export const defaultRootOptionsForLib: Required<RootOptions> = {
   projectName: "",
-  language: "ts",
   eslint: "leap",
   cssSolution: "less",
   stylelint: true,

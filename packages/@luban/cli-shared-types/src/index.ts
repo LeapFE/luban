@@ -14,20 +14,12 @@ export type RawPlugin = {
 
 export type ESLinterConfig = "leap" | "airbnb" | "standard";
 
-export type DevLanguage = "js" | "ts";
-
 export type CssSolution = "less" | "styled-components";
-
 /**
- * @deprecated
- */
-export type UILibrary = "ant-design" | "ant-design-mobile";
-
-/**
+ *
  * @description preset config and plugin options after created project
  */
 export type Preset = {
-  language?: DevLanguage;
   eslint?: ESLinterConfig;
   cssSolution?: CssSolution;
   stylelint?: boolean;

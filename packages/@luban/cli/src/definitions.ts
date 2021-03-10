@@ -4,9 +4,7 @@ import {
   RawPlugin as rawPlugin,
   Preset as preset,
   ESLinterConfig as esLinterConfig,
-  DevLanguage as devLanguage,
   CssSolution as cssSolution,
-  UILibrary as uiLibrary,
   BasePkgFields as basePkgFields,
 } from "@luban-cli/cli-shared-types/dist/shared";
 
@@ -64,11 +62,7 @@ export type CONFIG_FILE_TYPE = "js" | "json" | "yaml" | "lines";
 
 export type ESLinterConfig = esLinterConfig;
 
-export type DevLanguage = devLanguage;
-
 export type CssSolution = cssSolution;
-
-export type UILibrary = uiLibrary;
 
 export type RootOptions = rootOptions;
 
@@ -92,7 +86,6 @@ export type ResolvedPlugin = {
 
 // TYPE REVIEW
 export type FinalAnswers = {
-  language: DevLanguage;
   eslint: ESLinterConfig;
   cssSolution: CssSolution;
   stylelint: boolean;

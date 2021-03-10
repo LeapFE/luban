@@ -26,8 +26,6 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
 
   const entryFileOfApp = api.getEntryFile();
 
-  const isTSProject = api.resolveInitConfig().language === "ts";
-
   api.chainWebpack((webpackConfig: Config) => {
     webpackConfig
       .mode("development")
@@ -55,13 +53,9 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       });
     }
 
-    const jsRule = webpackConfig.module.rule("js");
-
-    const tsRule = webpackConfig.module.rule("ts");
-
-    const eslintRule = webpackConfig.module.rule("eslint");
-    eslintRule
-      .test(isTSProject ? /\.ts[x]?$/ : /\.jsx?$/)
+    webpackConfig.module
+      .rule("eslint")
+      .test(/\.ts[x]?$/)
       .enforce("pre")
       .exclude.add(/node_modules/)
       .end()
@@ -69,7 +63,8 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       .loader("eslint-loader")
       .end();
 
-    if (isTSProject && isProduction) {
+    const tsRule = webpackConfig.module.rule("ts");
+    if (isProduction) {
       tsRule
         .test(/\.ts[x]?$/)
         .exclude.add(/node_modules/)
@@ -80,7 +75,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
         .end();
     }
 
-    if (isTSProject && !isProduction) {
+    if (!isProduction) {
       tsRule
         .test(/\.ts[x]?$/)
         .exclude.add(/node_modules/)
@@ -88,19 +83,6 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
         .use("ts-loader")
         .loader("ts-loader")
         .options({ transpileOnly: true })
-        .end();
-    }
-
-    if (!isTSProject) {
-      jsRule
-        .test(/\.jsx?$/)
-        .include.add(api.resolve("src"))
-        .end()
-        .exclude.add(/node_modules/)
-        .end()
-        .use("babel-loader")
-        .loader("babel-loader")
-        .options({ cacheDirectory: true })
         .end();
     }
 

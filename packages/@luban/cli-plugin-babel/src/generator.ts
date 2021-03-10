@@ -15,8 +15,6 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     "@babel/plugin-transform-runtime",
   ];
 
-  let babelConfigEnv = {};
-
   api.extendPackage({
     devDependencies: {
       "@babel/cli": "^7.7.0",
@@ -30,29 +28,13 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     },
   });
 
-  if (rootOptions.language === "ts") {
-    babelConfigPreset.push("@babel/preset-typescript");
+  babelConfigPreset.push("@babel/preset-typescript");
 
-    api.extendPackage({
-      devDependencies: {
-        "@babel/preset-typescript": "^7.8.0",
-      },
-    });
-  }
-
-  if (rootOptions.language === "js") {
-    babelConfigPlugins.push(
-      "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-proposal-class-properties",
-    );
-
-    api.extendPackage({
-      devDependencies: {
-        "@babel/plugin-proposal-class-properties": "^7.7.0",
-        "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-      },
-    });
-  }
+  api.extendPackage({
+    devDependencies: {
+      "@babel/preset-typescript": "^7.8.0",
+    },
+  });
 
   if (rootOptions.cssSolution === "styled-components") {
     babelConfigPlugins.push([
@@ -72,23 +54,8 @@ export default function(api: GeneratorAPI, rootOptions: Required<RootOptions>): 
     });
   }
 
-  if (rootOptions.eslint && rootOptions.language === "js") {
-    api.extendPackage({
-      devDependencies: {
-        "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-      },
-    });
-
-    babelConfigEnv = {
-      production: {
-        plugins: ["transform-react-remove-prop-types"],
-      },
-    };
-  }
-
   api.render("./template", {
     presets: JSON.stringify(babelConfigPreset),
     plugins: JSON.stringify(babelConfigPlugins),
-    env: JSON.stringify(babelConfigEnv),
   });
 }

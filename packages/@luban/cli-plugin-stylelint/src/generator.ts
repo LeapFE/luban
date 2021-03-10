@@ -47,12 +47,12 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         "stylelint-processor-styled-components": "^1.10.0",
       },
       scripts: {
-        "format:style": `prettier --write '${sourceDir}/**/*.{css,css.${options.language}}'`,
-        "format:check:style": `prettier --check '${sourceDir}/**/*.{css,css.${options.language}}'`,
+        "format:style": `prettier --write '${sourceDir}/**/*.{css,css.ts}'`,
+        "format:check:style": `prettier --check '${sourceDir}/**/*.{css,css.ts}'`,
       },
     });
 
-    lintScript = `stylelint ${sourceDir}/**/*.{css,css.${options.language}}`;
+    lintScript = `stylelint ${sourceDir}/**/*.{css,css.ts}`;
   }
 
   if (options.cssSolution === "less") {
@@ -75,13 +75,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   let lintStyleFileSuffix = `${sourceDir}/**/*.{css,less}`;
 
   if (options.cssSolution === "styled-components") {
-    if (options.language === "js") {
-      lintStyleFileSuffix = `${sourceDir}/**/*.{css,css.js}`;
-    }
-
-    if (options.language === "ts") {
-      lintStyleFileSuffix = `${sourceDir}/**/*.{css,css.ts}`;
-    }
+    lintStyleFileSuffix = `${sourceDir}/**/*.{css,css.ts}`;
   }
 
   api.extendPackage({

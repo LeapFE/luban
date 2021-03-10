@@ -1,11 +1,7 @@
 module.exports = {
   verbose: true,
-  <%_ if (isTsProject) { _%>
   preset: "ts-jest",
   transform: { "\\.tsx?$": "@luban-cli/cli-lib-service" },
-  <%_ } else { _%>
-  transform: { "^.+\\.jsx?$": "babel-jest" },
-  <%_ } _%>
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "md"],
   testRegex: "<%- testRegex %>",
   setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],

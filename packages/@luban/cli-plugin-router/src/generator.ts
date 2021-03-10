@@ -9,12 +9,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       },
     });
 
-    if (options.language === "js") {
-      api.render("./template/js");
-    }
-
-    if (options.language === "ts") {
-      api.render("./template/ts");
-    }
+    api.render("./template/ts");
   }
 }

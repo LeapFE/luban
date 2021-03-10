@@ -160,7 +160,7 @@ class Creator extends BaseCreator {
     log();
     spinner.logWithSpinner("🔧", "Fixing and formatting some lint errors...");
     try {
-      await fixLintErrors(adaptedPreset);
+      await fixLintErrors();
     } catch (e) {
       log("\n");
       warn("🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
@@ -201,14 +201,10 @@ class Creator extends BaseCreator {
     const { run } = this;
 
     const formatConfigJsFile = ["./babel.config.js"];
-    const formatConfigJsonFiles = ["./.eslintrc", "./.postcssrc"];
+    const formatConfigJsonFiles = ["./.eslintrc", "./.postcssrc", "./tsconfig.json"];
 
     if (preset.stylelint) {
       formatConfigJsonFiles.push("./.stylelintrc ");
-    }
-
-    if (preset.language === "ts") {
-      formatConfigJsonFiles.push("./tsconfig.json");
     }
 
     if (preset.unitTest) {
@@ -231,21 +227,11 @@ class Creator extends BaseCreator {
     );
   }
 
-  public async fixLintErrors(preset: Required<Preset>): Promise<void> {
+  public async fixLintErrors(): Promise<void> {
     const { run } = this;
 
-    const lintArgs = ["--config=.eslintrc", "--fix", "src/"];
-    const formatArgs = ["--write", "src/**/*.{ts,tsx}"];
-
-    if (preset.language === "ts") {
-      lintArgs.push("--ext=.tsx,.ts");
-      formatArgs.push("src/**/*.{ts,tsx}");
-    }
-
-    if (preset.language === "js") {
-      lintArgs.push("--ext=.jsx,.js");
-      formatArgs.push("src/**/*.{js,jsx}");
-    }
+    const lintArgs = ["--config=.eslintrc", "--fix", "src/", "--ext=.tsx,.ts"];
+    const formatArgs = ["--write", "src/**/*.{ts,tsx}", "src/**/*.{ts,tsx}"];
 
     await run(this.context, "./node_modules/eslint/bin/eslint.js", lintArgs);
     await run(this.context, "./node_modules/prettier/bin-prettier.js", formatArgs);
@@ -259,7 +245,10 @@ class Creator extends BaseCreator {
     const answers = await inquirer.prompt<FinalAnswers>(this.injectedPrompts);
 
     const preset: Preset = {
-      plugins: { "@luban-cli/cli-plugin-service": { projectName: "" } },
+      plugins: {
+        "@luban-cli/cli-plugin-service": { projectName: "" },
+        "@luban-cli/cli-plugin-typescript": {},
+      },
     };
 
     this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));

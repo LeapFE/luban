@@ -11,10 +11,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  const modifyFile =
-    options.language === "ts"
-      ? "src/components/Welcome/index.tsx"
-      : "src/components/Welcome/index.jsx";
+  const modifyFile = "src/components/Welcome/index.tsx";
 
   api.render("./template/service");
 
@@ -61,19 +58,11 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       useFetch: options.fetch,
     };
 
-    if (options.cssSolution === "less" && options.language === "js") {
-      api.render("./template/JSLess", additionalData);
-    }
-
-    if (options.cssSolution === "less" && options.language === "ts") {
+    if (options.cssSolution === "less") {
       api.render("./template/TSLess", additionalData);
     }
 
-    if (options.cssSolution === "styled-components" && options.language === "js") {
-      api.render("./template/JSstyledComponents", additionalData);
-    }
-
-    if (options.cssSolution === "styled-components" && options.language === "ts") {
+    if (options.cssSolution === "styled-components") {
       api.render("./template/TSstyledComponents", additionalData);
     }
   }
