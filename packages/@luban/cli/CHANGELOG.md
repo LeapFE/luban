@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.11](https://github.com/leapFE/luban/compare/v2.0.0-next.10...v2.0.0-next.11) (2021-03-10)
+
+
+### Features
+
+* cancel dev language(javascript) support ([7e3f65b](https://github.com/leapFE/luban/commit/7e3f65b0ae988de1292a7cfdb79f31b912324527))
+
+
+
+
+
 # [2.0.0-next.10](https://github.com/leapFE/luban/compare/v2.0.0-next.9...v2.0.0-next.10) (2021-02-13)
 
 **Note:** Version bump only for package @luban-cli/cli
