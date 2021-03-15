@@ -8,5 +8,5 @@ export default function(api: GeneratorAPI): void {
     },
   });
 
-  api.render("./template/ts");
+  api.render("./template");
 }

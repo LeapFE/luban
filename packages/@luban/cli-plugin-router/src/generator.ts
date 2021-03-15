@@ -9,6 +9,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       },
     });
 
-    api.render("./template/ts");
+    api.render("./template");
   }
 }

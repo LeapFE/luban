@@ -15,5 +15,5 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  api.render("./template/ts", { useRouter: options.router });
+  api.render("./template", { useRouter: options.router });
 }
