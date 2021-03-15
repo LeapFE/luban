@@ -67,5 +67,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     coveragePathIgnorePatterns: JSON.stringify(coveragePathIgnorePatterns),
     testRegex,
     collectCoverageFrom: JSON.stringify(collectCoverageFrom),
+    isLib: options.isLib,
   });
 }

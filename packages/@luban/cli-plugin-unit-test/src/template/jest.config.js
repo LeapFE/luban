@@ -1,7 +1,9 @@
 module.exports = {
   verbose: true,
   preset: "ts-jest",
+  <%_ if (isLib) { _%>
   transform: { "\\.tsx?$": "@luban-cli/cli-lib-service" },
+  <%_ } _%>
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "md"],
   testRegex: "<%- testRegex %>",
   setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
@@ -13,5 +15,8 @@ module.exports = {
       "<rootDir>/tests/fileMock.js",
     "\\.(css|less)$": "<rootDir>/tests/styleMock.js",
     "\\.\\/style$": "<rootDir>/tests/styleMock.js",
+    <%_ if (!isLib) { _%>
+    '@/(.*)$': '<rootDir>/src',
+    <%_ } _%>
   },
 };
