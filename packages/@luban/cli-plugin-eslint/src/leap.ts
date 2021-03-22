@@ -27,8 +27,7 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
     devDependencies: {
       eslint: "^6.8.0",
       "eslint-loader": "^3.0.3",
-      // TODO update version
-      "eslint-config-leap": "^1.0.0",
+      "eslint-config-leap": "^1.0.1",
       "eslint-config-prettier": "^6.10.0",
       "eslint-plugin-react": "^7.16.0",
       "eslint-plugin-react-hooks": "^2.4.0",
