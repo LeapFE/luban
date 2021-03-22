@@ -15,7 +15,7 @@
 
 ## 测试覆盖率
 
-默认除了 *src/route*、*src/service* 和 *src/models* 不在收集测试覆盖率的范围，其他 *src* 目录中的任何测试用例文件都会属于测试覆盖率收集的范围之内。
+默认除了 *src/route*、*src/service*、 *src/models* 和 *src/typings* 不在收集测试覆盖率的范围，其他 *src* 目录中的文件都会在测试覆盖率收集的范围之内。
 
 可以在终端运行 `npm run test:coverage` 来查看测试覆盖率。配置 *jest.config.js* 来更改测试覆盖率收集的范围以及其他测试行为。更多查阅 [jest](https://jestjs.io/)。
 
