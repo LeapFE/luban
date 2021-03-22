@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-service",
-  "version": "2.0.0-next.12",
+  "version": "2.0.0-next.13",
   "description": "A development runtime environment dependency",
   "keywords": [
     "webpack",
@@ -41,7 +41,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "^2.0.0-next.12",
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.13",
     "@types/less": "3.0.1",
     "@types/webpack": "4.41.23",
     "@types/webpack-dev-server": "^3.11.0",
@@ -77,7 +77,7 @@
     "webpackbar": "^4.0.0"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^2.0.0-next.12",
+    "@luban-cli/cli-shared-types": "^2.0.0-next.13",
     "@types/body-parser": "^1.19.0",
     "@types/copy-webpack-plugin": "^6.0.0",
     "@types/cssnano": "^4.0.0",
