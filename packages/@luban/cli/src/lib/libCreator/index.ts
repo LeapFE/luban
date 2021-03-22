@@ -76,7 +76,7 @@ class LibCreator extends BaseCreator {
 
     const pkg: BasePkgFields = {
       name: this.name,
-      description: "A react component library",
+      description: "A React Component Library",
       version: "0.0.1",
       devDependencies: {},
       ["__luban_config__"]: { projectName: this.name, ...adaptedPreset },
