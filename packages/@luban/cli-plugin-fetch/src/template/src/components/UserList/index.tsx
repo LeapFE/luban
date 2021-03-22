@@ -41,7 +41,7 @@ const UserList: FunctionComponent = () => {
     },
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const {
       target: { value: searchKeyword },
     } = event;
@@ -51,11 +51,11 @@ const UserList: FunctionComponent = () => {
     setValue(searchKeyword);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (): void => {
     fetchUserList({ name: value });
   };
 
-  const handleAddUser = () => {
+  const handleAddUser = (): void => {
     if (value) {
       putAddUser({ name: value });
     }

@@ -71,14 +71,13 @@ export function eslintConfigStandard(api: GeneratorAPI, options: Required<RootOp
     devDependencies: {
       eslint: "^6.8.0",
       "eslint-loader": "^4.0.2",
-      "eslint-config-prettier": "^6.11.0",
-      "eslint-plugin-react": "^7.19.0",
-      "eslint-plugin-react-hooks": "^3.0.0",
+      "eslint-config-prettier": "^6.15.0",
+      "eslint-plugin-react": "^7.22.0",
+      "eslint-plugin-react-hooks": "^4.2.0",
       "eslint-config-standard": "^14.1.0",
-      "eslint-plugin-standard": "^4.0.1",
-      "eslint-plugin-import": "^2.20.0",
+      "eslint-plugin-import": "^2.22.1",
       "eslint-plugin-node": "^11.1.0",
-      "eslint-plugin-promise": "^4.2.1",
+      "eslint-plugin-promise": "^4.3.1",
     },
   });
 

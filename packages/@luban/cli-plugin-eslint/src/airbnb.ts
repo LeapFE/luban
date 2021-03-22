@@ -77,12 +77,12 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
     devDependencies: {
       eslint: "^6.8.0",
       "eslint-loader": "^4.0.2",
-      "eslint-config-prettier": "^6.11.0",
-      "eslint-plugin-react": "^7.19.0",
-      "eslint-plugin-react-hooks": "^3.0.0",
-      "eslint-plugin-import": "^2.20.0",
-      "eslint-config-airbnb": "^18.1.0",
-      "eslint-plugin-jsx-a11y": "^6.2.3",
+      "eslint-config-prettier": "^6.15.0",
+      "eslint-plugin-react": "^7.22.0",
+      "eslint-plugin-react-hooks": "^4.2.0",
+      "eslint-plugin-import": "^2.22.1",
+      "eslint-config-airbnb": "^18.2.1",
+      "eslint-plugin-jsx-a11y": "^6.4.1",
     },
   });
 

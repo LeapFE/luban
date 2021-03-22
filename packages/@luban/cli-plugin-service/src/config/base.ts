@@ -53,16 +53,6 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       });
     }
 
-    webpackConfig.module
-      .rule("eslint")
-      .test(/\.ts[x]?$/)
-      .enforce("pre")
-      .exclude.add(/node_modules/)
-      .end()
-      .use("eslint-loader")
-      .loader("eslint-loader")
-      .end();
-
     const tsRule = webpackConfig.module.rule("ts");
     if (isProduction) {
       tsRule

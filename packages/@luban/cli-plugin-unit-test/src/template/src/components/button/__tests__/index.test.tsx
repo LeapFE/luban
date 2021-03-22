@@ -4,7 +4,7 @@ import renderer from "react-test-renderer";
 
 import { Button } from "..";
 
-function mountTest(Component: React.ComponentType) {
+function mountTest(Component: React.ComponentType): void {
   describe(`mount and unmount`, () => {
     it(`component could be updated and unmounted without errors`, () => {
       const wrapper = mount(<Component />);

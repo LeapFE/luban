@@ -1,17 +1,30 @@
+# project release files
 /build/**
 /dist/**
+
+# test result files
 /coverage/**
+**/*.snap
+/tests/**
+
+# document files
 /docs/**
 /jsdoc/**
+
+# others
 /template/**
 /public/**
-/tests/**
-/node_modules/**
 mock/**
-**/*.snap
+
+/node_modules/**
+
+# config files
 luban.config.ts
-luban.config.js
 jest.config.js
 babel.config.js
 commitlint.config.js
 doczrc.js
+
+# auto generated api files
+src/service/api
+src/service/interface

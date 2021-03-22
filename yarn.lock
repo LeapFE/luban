@@ -9773,10 +9773,10 @@ eslint-config-esnext@^4.1.0:
     eslint-plugin-babel "^5.2.1"
     eslint-plugin-import "^2.14.0"
 
-eslint-config-leap@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-leap/-/eslint-config-leap-1.0.0.tgz#e28a6545b7dfc7d23155433dea76bf6bcd39246d"
-  integrity sha512-VZeUhZU0135zQ8x3O8RZNao4OMs+Zhq5omoFF4jbzdeFTRQx+G3FoRfCvImkzRp0RcwaP2gsgjnesjzUt2gM/w==
+eslint-config-leap@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-leap/-/eslint-config-leap-1.0.1.tgz#8a3ce5a505d6a2d449faec87ff1ff135097279a6"
+  integrity sha512-zHs8Rbws2Ivol5+DG5RiS3Yf2jJxPNKkge6UUE6d7j8yQMjGSq/CjlWOilvn0D5iUEkkcN8XiW70JKqHUO5WkA==
 
 eslint-config-node@^4.1.0:
   version "4.1.0"
@@ -9793,7 +9793,7 @@ eslint-config-prettier@^6.10.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-config-prettier@^6.11.0:
+eslint-config-prettier@^6.15.0:
   version "6.15.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.15.0.tgz#7f93f6cb7d45a92f1537a70ecc06366e1ac6fed9"
   integrity sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==
@@ -9894,20 +9894,20 @@ eslint-plugin-jsx-a11y@^6.3.1:
     jsx-ast-utils "^3.1.0"
     language-tags "^1.0.5"
 
-eslint-plugin-promise@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
-  integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
+eslint-plugin-promise@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.3.1.tgz#61485df2a359e03149fdafc0a68b0e030ad2ac45"
+  integrity sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==
 
 eslint-plugin-react-hooks@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.7.0.tgz#6210b6d5a37205f0b92858f895a4e827020a7d04"
   integrity sha512-iXTCFcOmlWvw4+TOE8CLWj6yX1GwzT0Y6cUfHHZqWnSk144VmVIRcVGtUAzrLES7C798lmvnt02C7rxaOX1HNA==
 
-eslint-plugin-react-hooks@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-3.0.0.tgz#9e80c71846eb68dd29c3b21d832728aa66e5bd35"
-  integrity sha512-EjxTHxjLKIBWFgDJdhKKzLh5q+vjTFrqNZX36uIxWS4OfyXe5DawqPj3U5qeJ1ngLwatjzQnmR0Lz0J0YH3kxw==
+eslint-plugin-react-hooks@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.2.0.tgz#8c229c268d468956334c943bb45fc860280f5556"
+  integrity sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==
 
 eslint-plugin-react@^7.20.6, eslint-plugin-react@^7.22.0:
   version "7.22.0"
@@ -21579,10 +21579,10 @@ to-vfile@^6.0.0:
     is-buffer "^2.0.0"
     vfile "^4.0.0"
 
-togo-np@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/togo-np/-/togo-np-0.0.12.tgz#decd3d0b9d918833a8596fa3cf6ab4cc2a3010ae"
-  integrity sha512-matDApUZR+AWD/b8NfCz8nG+xrzxWiwx8fliETtp6HdA2XU3eUBITG3EPDGYIeWl5rOCHlhY1P0Jh8+MH+ycAg==
+togo-np@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/togo-np/-/togo-np-1.0.0.tgz#4432fe2bc5c3740ca86e310a5b7ab3bbd6cae541"
+  integrity sha512-Y+CtxxxsU4Rz4wM6wKvdU4pWSCcORkQxR9bd7gfxdZ5npsqp7mOIsXcH6+9hvxgeFQS1XtzYA0DTqP1D6NLhZQ==
   dependencies:
     "@luban-cli/cli-shared-utils" "^1.4.2"
     chalk "^4.1.0"
