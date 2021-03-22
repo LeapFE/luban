@@ -91,7 +91,7 @@ class Creator extends BaseCreator {
 
     const pkg: BasePkgFields = {
       name,
-      description: "A react application",
+      description: "A React Web Application",
       version: "0.1.0",
       private: true,
       devDependencies: {},
