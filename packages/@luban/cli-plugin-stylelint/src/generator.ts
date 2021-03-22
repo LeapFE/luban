@@ -13,7 +13,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   ];
   const stylelintRules = new SimpleMapPolyfill<
     string,
-    string | Array<string | Record<string, unknown> | boolean>
+    string | Array<string | Record<string, unknown> | boolean | null>
   >([
     ["comment-empty-line-before", ["always"]],
 
@@ -26,6 +26,8 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         },
       ],
     ],
+    ["font-family-no-missing-generic-family-keyword", [null]],
+    ["no-descending-specificity", [null]],
   ]);
   let lintScript = `stylelint ${sourceDir}/**/*.css`;
 
