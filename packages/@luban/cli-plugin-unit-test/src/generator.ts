@@ -37,16 +37,20 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     });
   }
 
-  const coveragePathIgnorePatterns: string[] = ["/node_modules/"];
+  const coveragePathIgnorePatterns: string[] = ["/src/typings/"];
   const testFileSuffix = "{ts,tsx}";
   const testRegex = ".*\\.test\\.tsx?$";
 
   if (options.router) {
-    coveragePathIgnorePatterns.push("/src/router/");
+    coveragePathIgnorePatterns.push("/src/route/");
   }
 
   if (options.store) {
     coveragePathIgnorePatterns.push("/src/models/");
+  }
+
+  if (options.fetch) {
+    coveragePathIgnorePatterns.push("/src/service/");
   }
 
   if (options.isLib) {
