@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.12](https://github.com/leapFE/luban/compare/v2.0.0-next.11...v2.0.0-next.12) (2021-03-22)
+
+
+### Bug Fixes
+
+* **unit-test:** modify jest.config.js in template ([3ad68c5](https://github.com/leapFE/luban/commit/3ad68c5f90058f028e8ba025abee80242caecb72))
+
+
+### Features
+
+* **unit-test:** add example of unit-test in template ([b0db70d](https://github.com/leapFE/luban/commit/b0db70dfa6714d1ca7d85bac846038594079fe9c))
+
+
+
+
+
 # [2.0.0-next.11](https://github.com/leapFE/luban/compare/v2.0.0-next.10...v2.0.0-next.11) (2021-03-10)
 
 
