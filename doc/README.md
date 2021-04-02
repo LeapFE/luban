@@ -2,7 +2,7 @@
 home: true
 actionText: 开始 →
 actionLink: /document/creating-project
-footer: MIT Licensed | Copyright © 2020-present front-end-captain
+footer: Open-source MIT Licensed | Copyright © 2020-present | front-end-captain
 editLink: false
 ---
 
@@ -30,3 +30,9 @@ npm i @luban-cli/cli -g
 # 创建一个项目
 luban init <project_name>
 ```
+
+# 反馈
+
+| 知音楼群                                                     | 微信群(备注'鲁班')                                           |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="https://i.loli.net/2021/04/02/R469LEAUBq1yFpw.jpg" alt="2CA60091-DC80-4D9A-8098-6E53B233D38A" style="zoom: 15%;" /> | <img src="https://i.loli.net/2021/04/02/DI2lF6dZRQL7pna.jpg" alt="WechatIMG7" style="zoom:15%;" /> |
