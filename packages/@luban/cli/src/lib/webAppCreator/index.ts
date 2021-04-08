@@ -1,4 +1,3 @@
-import execa, { ExecaChildProcess } from "execa";
 import inquirer, { Question, CheckboxQuestion } from "inquirer";
 import chalk from "chalk";
 import path from "path";
@@ -6,45 +5,32 @@ import cloneDeep from "lodash.clonedeep";
 
 import { PackageManager } from "../../utils/packageManager";
 import { PromptModuleAPI } from "./promptModuleAPI";
-import { sortObject } from "../../utils/sortObject";
 import { generateReadme } from "../../utils/getReadme";
 import { getVersions } from "../../utils/getVersions";
-import { printDefaultPreset } from "../../utils/printPreset";
 
-import {
-  Spinner,
-  log,
-  hasGit,
-  hasProjectGit,
-  writeFileTree,
-  loadModule,
-  warn,
-} from "@luban-cli/cli-shared-utils";
+import { Spinner, log, writeFileTree, warn } from "@luban-cli/cli-shared-utils";
 
 import { Generator } from "../generator/generator";
 
 import {
   CliOptions,
   Preset,
-  RawPlugin,
-  ResolvedPlugin,
   PromptCompleteCallback,
   BasePkgFields,
-  PLUGIN_ID,
   SUPPORTED_PACKAGE_MANAGER,
   FinalAnswers,
-  ApplyFn,
 } from "../../definitions";
-import { defaultPreset, confirmUseDefaultPresetMsg } from "../../constants";
+import { defaultPreset } from "../../constants";
+import { BaseCreator } from "../baseCreator";
 
 type FeaturePrompt = CheckboxQuestion<Array<{ name: string; value: unknown; short?: string }>>;
 
-class Creator {
+class Creator extends BaseCreator {
   private name: string;
   private readonly context: string;
   private options: CliOptions;
   public readonly featurePrompt: FeaturePrompt;
-  public promptCompletedCallbacks: Array<PromptCompleteCallback>;
+  public promptCompletedCallbacks: Array<PromptCompleteCallback<FinalAnswers>>;
   public readonly injectedPrompts: Question<FinalAnswers>[];
   private _pkgManager: SUPPORTED_PACKAGE_MANAGER | undefined;
   private readonly installLocalPlugin: boolean;
@@ -55,6 +41,8 @@ class Creator {
     options: CliOptions,
     promptModules: Array<(api: PromptModuleAPI) => void>,
   ) {
+    super();
+
     this.name = name;
     this.options = options;
     this.context = context;
@@ -77,7 +65,7 @@ class Creator {
     const { options, context, name, shouldInitGit, run, formatConfigFiles, fixLintErrors } = this;
 
     if (!options.manual) {
-      const useDefaultPreset = await this.confirmUseDefaultPrest();
+      const useDefaultPreset = await this.confirmUseDefaultPrest(defaultPreset);
       if (!useDefaultPreset) {
         warn("You cancel current operation.");
         process.exit(1);
@@ -103,7 +91,7 @@ class Creator {
 
     const pkg: BasePkgFields = {
       name,
-      description: "A react application",
+      description: "A React Web Application",
       version: "0.1.0",
       private: true,
       devDependencies: {},
@@ -134,12 +122,12 @@ class Creator {
 
     // init git repository before installing deps
     // so that cli-plugin-service can setup git hooks.
-    const shouldInitGitFlag = shouldInitGit(options);
+    const shouldInitGitFlag = shouldInitGit(options, this.context);
     if (shouldInitGitFlag) {
       spinner.stopSpinner();
       log();
       spinner.logWithSpinner(`🗄`, `Initializing git repository...`);
-      await run("git init");
+      await run(this.context, "git init");
     }
 
     // install plugins
@@ -148,7 +136,10 @@ class Creator {
     log(`⚙\u{fe0f}  Installing CLI plugins. This might take a while...`);
     await pkgManager.install();
 
-    const resolvedPlugins = await this.resolvePlugins(cloneDeep(adaptedPreset.plugins));
+    const resolvedPlugins = await this.resolvePlugins(
+      cloneDeep(adaptedPreset.plugins),
+      this.context,
+    );
 
     log();
     log(`🔩  Invoking plugin's generators...`);
@@ -169,7 +160,7 @@ class Creator {
     log();
     spinner.logWithSpinner("🔧", "Fixing and formatting some lint errors...");
     try {
-      await fixLintErrors(adaptedPreset);
+      await fixLintErrors();
     } catch (e) {
       log("\n");
       warn("🚨fix lint errors failure, you can manual fix it later by `npm run eslint:fix`");
@@ -206,25 +197,14 @@ class Creator {
     process.exit(1);
   }
 
-  public run(command: string, args?: string[]): ExecaChildProcess {
-    if (!args) {
-      [command, ...args] = command.split(/\s+/);
-    }
-    return execa(command, args, { cwd: this.context });
-  }
-
   public async formatConfigFiles(preset: Required<Preset>): Promise<void> {
     const { run } = this;
 
     const formatConfigJsFile = ["./babel.config.js"];
-    const formatConfigJsonFiles = ["./.eslintrc", "./.postcssrc"];
+    const formatConfigJsonFiles = ["./.eslintrc", "./.postcssrc", "./tsconfig.json"];
 
     if (preset.stylelint) {
       formatConfigJsonFiles.push("./.stylelintrc ");
-    }
-
-    if (preset.language === "ts") {
-      formatConfigJsonFiles.push("./tsconfig.json");
     }
 
     if (preset.unitTest) {
@@ -235,31 +215,26 @@ class Creator {
       formatConfigJsFile.push("./commitlint.config.js");
     }
 
-    await run("./node_modules/prettier/bin-prettier.js", ["--write"].concat(formatConfigJsFile));
     await run(
+      this.context,
+      "./node_modules/prettier/bin-prettier.js",
+      ["--write"].concat(formatConfigJsFile),
+    );
+    await run(
+      this.context,
       "./node_modules/prettier/bin-prettier.js",
       ["--parser=json", "--write"].concat(formatConfigJsonFiles),
     );
   }
 
-  public async fixLintErrors(preset: Required<Preset>): Promise<void> {
+  public async fixLintErrors(): Promise<void> {
     const { run } = this;
 
-    const lintArgs = ["--config=.eslintrc", "--fix", "src/"];
-    const formatArgs = ["--write", "src/**/*.{ts,tsx}"];
+    const lintArgs = ["--config=.eslintrc", "--fix", "src/", "--ext=.tsx,.ts"];
+    const formatArgs = ["--write", "src/**/*.{ts,tsx}", "src/**/*.{ts,tsx}"];
 
-    if (preset.language === "ts") {
-      lintArgs.push("--ext=.tsx,.ts");
-      formatArgs.push("src/**/*.{ts,tsx}");
-    }
-
-    if (preset.language === "js") {
-      lintArgs.push("--ext=.jsx,.js");
-      formatArgs.push("src/**/*.{js,jsx}");
-    }
-
-    await run("./node_modules/eslint/bin/eslint.js", lintArgs);
-    await run("./node_modules/prettier/bin-prettier.js", formatArgs);
+    await run(this.context, "./node_modules/eslint/bin/eslint.js", lintArgs);
+    await run(this.context, "./node_modules/prettier/bin-prettier.js", formatArgs);
   }
 
   public async promptAndResolvePreset(manual: boolean): Promise<Required<Preset>> {
@@ -270,74 +245,15 @@ class Creator {
     const answers = await inquirer.prompt<FinalAnswers>(this.injectedPrompts);
 
     const preset: Preset = {
-      plugins: { "@luban-cli/cli-plugin-service": { projectName: "" } },
+      plugins: {
+        "@luban-cli/cli-plugin-service": { projectName: "" },
+        "@luban-cli/cli-plugin-typescript": {},
+      },
     };
 
     this.promptCompletedCallbacks.forEach((cb) => cb(answers, preset));
 
     return preset as Required<Preset>;
-  }
-
-  public async confirmUseDefaultPrest(): Promise<boolean> {
-    const { useDefaultPreset } = await inquirer.prompt<{ useDefaultPreset: boolean }>([
-      {
-        type: "confirm",
-        name: "useDefaultPreset",
-        message: confirmUseDefaultPresetMsg,
-        default: true,
-      },
-    ]);
-
-    printDefaultPreset(defaultPreset);
-    return useDefaultPreset;
-  }
-
-  public shouldInitGit(cliOptions: CliOptions): boolean {
-    if (!hasGit()) {
-      return false;
-    }
-    if (cliOptions.skipGit) {
-      return false;
-    }
-    // --git
-    if (cliOptions.forceGit) {
-      return true;
-    }
-
-    if (typeof cliOptions.git === "string") {
-      return true;
-    }
-
-    return !hasProjectGit(this.context);
-  }
-
-  public async resolvePlugins(rawPlugins: RawPlugin): Promise<ResolvedPlugin[]> {
-    const sortedRawPlugins = sortObject(rawPlugins, ["@luban-cli/cli-plugin-service"], true);
-    const plugins: ResolvedPlugin[] = [];
-
-    const pluginIDs = Object.keys(sortedRawPlugins);
-
-    const loadPluginGeneratorWithWarn = (id: string, context: string): ApplyFn => {
-      let generatorApply = loadModule(`${id}/dist/generator`, context);
-
-      if (typeof generatorApply !== "function") {
-        warn(
-          `generator of plugin [${id}] not found while resolving plugin, use default generator function instead`,
-        );
-        generatorApply = (): void => undefined;
-      }
-
-      return generatorApply as ApplyFn;
-    };
-
-    for (const id of pluginIDs) {
-      plugins.push({
-        id: id as PLUGIN_ID,
-        apply: loadPluginGeneratorWithWarn(id, this.context),
-        options: sortedRawPlugins[id] || {},
-      });
-    }
-    return plugins;
   }
 }
 

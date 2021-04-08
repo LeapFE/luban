@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli",
-  "version": "2.0.0-next.3",
+  "version": "2.0.0-next.13",
   "description": "a scaffold to create a react app",
   "bin": {
     "luban": "bin/index.js"
@@ -41,7 +41,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "^2.0.0-next.3",
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.13",
     "chalk": "^3.0.0",
     "commander": "^6.2.0",
     "deepmerge": "^4.2.2",
@@ -62,11 +62,10 @@
     "resolve": "^1.15.1",
     "semver": "^7.1.2",
     "update-notifier": "^4.1.0",
-    "validate-npm-package-name": "^3.0.0",
-    "yaml-front-matter": "^4.1.0"
+    "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^2.0.0-next.3",
+    "@luban-cli/cli-shared-types": "^2.0.0-next.13",
     "@types/didyoumean": "^1.2.0",
     "@types/ejs": "^3.0.0",
     "@types/inquirer": "^6.5.0",
@@ -74,8 +73,7 @@
     "@types/minimist": "^1.2.0",
     "@types/resolve": "^1.14.0",
     "@types/update-notifier": "^4.1.0",
-    "@types/validate-npm-package-name": "^3.0.0",
-    "@types/yaml-front-matter": "^4.1.0"
+    "@types/validate-npm-package-name": "^3.0.0"
   },
   "engines": {
     "node": ">=10"

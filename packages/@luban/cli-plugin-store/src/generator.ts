@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
@@ -9,17 +9,11 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.language === "ts") {
-    api.extendPackage({
-      devDependencies: {
-        "@types/react-redux": "^7.1.7",
-      },
-    });
+  api.extendPackage({
+    devDependencies: {
+      "@types/react-redux": "^7.1.7",
+    },
+  });
 
-    api.render("./template/ts", { useRouter: options.router });
-  }
-
-  if (options.language === "js") {
-    api.render("./template/js", { useRouter: options.router });
-  }
+  api.render("./template", { useRouter: options.router });
 }

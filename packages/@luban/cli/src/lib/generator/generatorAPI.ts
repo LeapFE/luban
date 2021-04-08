@@ -8,7 +8,7 @@ import execa, { ExecaChildProcess } from "execa";
 import { resolveDeps } from "../../utils/mergeDeps";
 import { renderFile } from "../../utils/renderFile";
 import { fileMiddlewareCallback, Generator } from "./generator";
-import { BasePkgFields, RootOptions, CreateLibRootOptions } from "../../definitions";
+import { BasePkgFields, RootOptions } from "../../definitions";
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return Object.prototype.toString.call(value) === "[object Object]";
@@ -60,7 +60,7 @@ class GeneratorAPI {
     id: string,
     generator: Generator,
     options: Record<string, unknown>,
-    rootOptions: RootOptions | CreateLibRootOptions,
+    rootOptions: RootOptions,
   ) {
     this.id = id;
     this.generator = generator;

@@ -42,7 +42,7 @@ class PluginAPI {
   }
 
   public getEntryFile(): string {
-    return this.resolveInitConfig().language === "ts" ? "index.tsx" : "index.jsx";
+    return "index.tsx";
   }
 
   // set project mode.

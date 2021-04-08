@@ -1,7 +1,7 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
-// import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
-export default function(api: GeneratorAPI): void {
+export default function(api: GeneratorAPI, options: RootOptions): void {
   api.extendPackage({
     devDependencies: {
       "@commitlint/cli": "^8.3.5",
@@ -9,19 +9,36 @@ export default function(api: GeneratorAPI): void {
       commitizen: "^4.1.2",
       "cz-conventional-changelog": "^3.2.0",
     },
-    husky: {
-      hooks: {
-        "pre-commit": "lint-staged",
-        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-        "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      },
-    },
     config: {
       commitizen: {
         path: "cz-conventional-changelog",
       },
     },
   });
+
+  if (options.isLib) {
+    api.extendPackage({
+      scripts: {
+        commit: "lint-staged && git-cz",
+      },
+      husky: {
+        hooks: {
+          "pre-commit": "lint-staged",
+          "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+        },
+      },
+    });
+  } else {
+    api.extendPackage({
+      husky: {
+        hooks: {
+          "pre-commit": "lint-staged",
+          "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+          "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+        },
+      },
+    });
+  }
 
   api.render("./template");
 }

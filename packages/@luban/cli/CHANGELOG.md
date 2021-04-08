@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
+
+**Note:** Version bump only for package @luban-cli/cli
+
+
+
+
+
+# [2.0.0-next.12](https://github.com/leapFE/luban/compare/v2.0.0-next.11...v2.0.0-next.12) (2021-03-22)
+
+
+### Features
+
+* **unit-test:** add example of unit-test in template ([b0db70d](https://github.com/leapFE/luban/commit/b0db70dfa6714d1ca7d85bac846038594079fe9c))
+
+
+
+
+
+# [2.0.0-next.11](https://github.com/leapFE/luban/compare/v2.0.0-next.10...v2.0.0-next.11) (2021-03-10)
+
+
+### Features
+
+* cancel dev language(javascript) support ([7e3f65b](https://github.com/leapFE/luban/commit/7e3f65b0ae988de1292a7cfdb79f31b912324527))
+
+
+
+
+
+# [2.0.0-next.10](https://github.com/leapFE/luban/compare/v2.0.0-next.9...v2.0.0-next.10) (2021-02-13)
+
+**Note:** Version bump only for package @luban-cli/cli
+
+
+
+
+
+# [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** remove 'private' field while create lib ([d150755](https://github.com/leapFE/luban/commit/d1507550de6f80d3d3c75b2d3e2eaa4a10d17e2b))
+
+
+
+
+
+# [2.0.0-next.8](https://github.com/leapFE/luban/compare/v2.0.0-next.7...v2.0.0-next.8) (2021-02-01)
+
+**Note:** Version bump only for package @luban-cli/cli
+
+
+
+
+
+# [2.0.0-next.7](https://github.com/leapFE/luban/compare/v2.0.0-next.6...v2.0.0-next.7) (2021-01-30)
+
+
+### Reverts
+
+* **cli-lib-service:** adjust template structure ([108ef3f](https://github.com/leapFE/luban/commit/108ef3f4c87cee0095e0d3feeae539e9150acb4a))
+
+
+
+
+
+# [2.0.0-next.6](https://github.com/leapFE/luban/compare/v2.0.0-next.5...v2.0.0-next.6) (2021-01-29)
+
+**Note:** Version bump only for package @luban-cli/cli
+
+
+
+
+
+# [2.0.0-next.5](https://github.com/leapFE/luban/compare/v2.0.0-next.4...v2.0.0-next.5) (2021-01-28)
+
+**Note:** Version bump only for package @luban-cli/cli
+
+
+
+
+
+# [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
+
+
+### Features
+
+* **cli:** supported create library ([7cff44f](https://github.com/leapFE/luban/commit/7cff44fea367c62381033c2f11229d10c56b992f))
+* **cli-lib-service:** support create lib project ([209f739](https://github.com/leapFE/luban/commit/209f739af007c0496da989c965ec66eeed87a614))
+
+
+
+
+
 # [2.0.0-next.3](https://github.com/leapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
 
 **Note:** Version bump only for package @luban-cli/cli

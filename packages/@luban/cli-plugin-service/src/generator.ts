@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
@@ -11,17 +11,14 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  const modifyFile =
-    options.language === "ts"
-      ? "src/components/Welcome/index.tsx"
-      : "src/components/Welcome/index.jsx";
+  const modifyFile = "src/components/Welcome/index.tsx";
 
   api.render("./template/service");
 
   api.extendPackage({
     dependencies: {
-      react: "^16.13.1",
-      "react-dom": "^16.13.1",
+      react: "^16.14.0",
+      "react-dom": "^16.14.0",
       "react-hot-loader": "^4.12.19",
     },
     devDependencies: {
@@ -55,36 +52,18 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
       });
     }
 
-    if (options.cssSolution === "less" && options.language === "js") {
-      api.render("./template/JSLess", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
+    const additionalData = {
+      modifyFile,
+      useStore: options.store,
+      useFetch: options.fetch,
+    };
+
+    if (options.cssSolution === "less") {
+      api.render("./template/TSLess", additionalData);
     }
 
-    if (options.cssSolution === "less" && options.language === "ts") {
-      api.render("./template/TSLess", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
-    }
-
-    if (options.cssSolution === "styled-components" && options.language === "js") {
-      api.render("./template/JSstyledComponents", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
-    }
-
-    if (options.cssSolution === "styled-components" && options.language === "ts") {
-      api.render("./template/TSstyledComponents", {
-        modifyFile,
-        useStore: options.store,
-        useFetch: options.fetch,
-      });
+    if (options.cssSolution === "styled-components") {
+      api.render("./template/TSstyledComponents", additionalData);
     }
   }
 }

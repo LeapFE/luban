@@ -1,9 +1,11 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
-// import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
+import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
-export function eslintConfigLeap(api: GeneratorAPI): void {
+export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOptions>): void {
+  const sourceDir = options.isLib ? "components" : "src";
+
   const eslintParser = "@typescript-eslint/parser";
 
   const parserOptions = new SimpleMapPolyfill<
@@ -17,20 +19,20 @@ export function eslintConfigLeap(api: GeneratorAPI): void {
 
   api.extendPackage({
     scripts: {
-      eslint: "eslint --config .eslintrc --ext .tsx,.ts src/",
-      "eslint:fix": "eslint --fix --config .eslintrc --ext .tsx,.ts src/",
-      "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
-      "format:check:ts": "prettier --check 'src/**/*.{ts,tsx}'",
+      eslint: `eslint --config .eslintrc --ext .tsx,.ts ${sourceDir}/`,
+      "eslint:fix": `eslint --fix --config .eslintrc --ext .tsx,.ts ${sourceDir}/`,
+      "format:ts": `prettier --write '${sourceDir}/**/*.{ts,tsx}'`,
+      "format:check:ts": `prettier --check '${sourceDir}/**/*.{ts,tsx}'`,
     },
     devDependencies: {
       eslint: "^6.8.0",
-      "eslint-loader": "^3.0.3",
-      "eslint-config-leap": "^1.0.0",
-      "eslint-config-prettier": "^6.10.0",
-      "eslint-plugin-react": "^7.16.0",
-      "eslint-plugin-react-hooks": "^2.4.0",
-      "eslint-plugin-import": "^2.18.2",
-      "eslint-plugin-promise": "^4.2.1",
+      "eslint-loader": "^4.0.2",
+      "eslint-config-leap": "^1.0.1",
+      "eslint-config-prettier": "^6.15.0",
+      "eslint-plugin-react": "^7.22.0",
+      "eslint-plugin-react-hooks": "^4.2.0",
+      "eslint-plugin-import": "^2.22.1",
+      "eslint-plugin-promise": "^4.3.1",
       "@typescript-eslint/parser": "^2.30.0",
       "@typescript-eslint/eslint-plugin": "^2.30.0",
     },

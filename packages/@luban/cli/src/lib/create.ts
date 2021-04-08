@@ -139,8 +139,8 @@ async function create(projectName: string, options: CliOptions): Promise<void> {
       type: "list",
       message: "Pick you will creating project type",
       choices: [
-        { name: "React Component Library", value: "lib" },
         { name: "React Web App", value: "webApp" },
+        { name: "React Component Library", value: "lib" },
       ],
     },
   ]);

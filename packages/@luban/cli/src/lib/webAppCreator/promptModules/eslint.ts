@@ -1,7 +1,11 @@
 import { PromptModuleAPI } from "../promptModuleAPI";
-import { FinalAnswers } from "../../../definitions";
 
 const baseConfigList = [
+  {
+    name: "ESLint + Leap config",
+    value: "leap",
+    short: "Leap",
+  },
   {
     name: "ESLint + Airbnb config",
     value: "airbnb",
@@ -20,22 +24,8 @@ export default function(cli: PromptModuleAPI): void {
     name: "eslint",
     type: "list",
     message: "Pick a linter config:",
-
-    default: (answer: FinalAnswers) => (answer.language === "js" ? "airbnb" : "leap"),
-
-    choices: (answer) => {
-      if (answer.language === "js") {
-        return baseConfigList;
-      }
-
-      return [
-        {
-          name: "ESLint + Leap config",
-          value: "leap",
-          short: "Leap",
-        },
-      ].concat(baseConfigList);
-    },
+    default: "leap",
+    choices: baseConfigList,
   });
 
   cli.onPromptComplete((answers, preset) => {

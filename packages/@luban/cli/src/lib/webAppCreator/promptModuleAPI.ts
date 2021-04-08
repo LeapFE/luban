@@ -15,7 +15,7 @@ class PromptModuleAPI {
     this.creator.injectedPrompts.push(prompt);
   }
 
-  public onPromptComplete(callback: PromptCompleteCallback): void {
+  public onPromptComplete(callback: PromptCompleteCallback<FinalAnswers>): void {
     this.creator.promptCompletedCallbacks.push(callback);
   }
 }

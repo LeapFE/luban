@@ -107,7 +107,7 @@ export type ProjectConfig = {
    * 媒体文件放在 `media` 目录下
    * 以上目录都是相对于 `outputDir`
    */
-  assetsDir: AssetsDir;
+  assetsDir: Partial<AssetsDir>;
 
   /**
    * @description 指定生成的 index.html 文件名或者相对路径（路径是相对于 `outputDir` 的）
@@ -156,7 +156,7 @@ export type ProjectConfig = {
   /**
    * @description 一些解析 css 的配置选项
    */
-  css: CssConfig;
+  css: Partial<CssConfig>;
 
   /**
    * @description webpack-dev-server 的配置项

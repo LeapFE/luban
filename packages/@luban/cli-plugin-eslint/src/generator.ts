@@ -1,4 +1,4 @@
-import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generatorAPI";
+import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { eslintConfigLeap } from "./leap";
@@ -6,7 +6,7 @@ import { eslintConfigAirbnb } from "./airbnb";
 import { eslintConfigStandard } from "./standard";
 
 export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const lintFileSuffix = options.language === "ts" ? "{ts,tsx}" : "{js,jsx}";
+  const lintFileSuffix = "{ts,tsx}";
 
   if (api.isGitRepository()) {
     api.extendPackage({
@@ -20,16 +20,13 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
         },
       },
       "lint-staged": {
-        [`src/**/*.${lintFileSuffix}`]: [
-          "npm run eslint",
-          `npm run format:check:${options.language}`,
-        ],
+        [`src/**/*.${lintFileSuffix}`]: ["npm run eslint", `npm run format:check:ts`],
       },
     });
   }
 
   if (options.eslint === "leap") {
-    eslintConfigLeap(api);
+    eslintConfigLeap(api, options);
     return;
   }
 

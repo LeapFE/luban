@@ -1,5 +1,15 @@
-// import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
+import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
 
-export default function(): void {
-  // console.log("TODO this is cli-plugin-eslint for cli-service call");
+export default function(api: PluginAPI): void {
+  api.chainWebpack((config) => {
+    config.module
+      .rule("eslint")
+      .test(/\.ts[x]?$/)
+      .enforce("pre")
+      .exclude.add(/node_modules/)
+      .end()
+      .use("eslint-loader")
+      .loader("eslint-loader")
+      .end();
+  });
 }

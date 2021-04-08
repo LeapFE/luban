@@ -3,6 +3,95 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.12](https://github.com/leapFE/luban/compare/v2.0.0-next.11...v2.0.0-next.12) (2021-03-22)
+
+
+### Features
+
+* remove all js template ([10ea048](https://github.com/leapFE/luban/commit/10ea048764a0f9051aa0e9a283931e4a537de129))
+
+
+
+
+
+# [2.0.0-next.11](https://github.com/leapFE/luban/compare/v2.0.0-next.10...v2.0.0-next.11) (2021-03-10)
+
+
+### Features
+
+* cancel dev language(javascript) support ([7e3f65b](https://github.com/leapFE/luban/commit/7e3f65b0ae988de1292a7cfdb79f31b912324527))
+
+
+
+
+
+# [2.0.0-next.10](https://github.com/leapFE/luban/compare/v2.0.0-next.9...v2.0.0-next.10) (2021-02-13)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.8](https://github.com/leapFE/luban/compare/v2.0.0-next.7...v2.0.0-next.8) (2021-02-01)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.7](https://github.com/leapFE/luban/compare/v2.0.0-next.6...v2.0.0-next.7) (2021-01-30)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.6](https://github.com/leapFE/luban/compare/v2.0.0-next.5...v2.0.0-next.6) (2021-01-29)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.5](https://github.com/leapFE/luban/compare/v2.0.0-next.4...v2.0.0-next.5) (2021-01-28)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-store
+
+
+
+
+
+# [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
+
+
+### Bug Fixes
+
+* **all:** import reference path for `GeneratorAPI` ([3c4f93a](https://github.com/leapFE/luban/commit/3c4f93a861c66e2d9cdce0c00f56b308e26111bc))
+
+
+
+
+
 # [2.0.0-next.3](https://github.com/leapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-store

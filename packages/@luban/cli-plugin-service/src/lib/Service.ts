@@ -61,7 +61,6 @@ const builtinServiceCommandNameList = new Set<builtinServiceCommandName>([
 
 const defaultRootOptions: Required<RootOptions> = {
   projectName: "",
-  language: "ts",
   eslint: "standard",
   cssSolution: "less",
   stylelint: true,
@@ -70,6 +69,7 @@ const defaultRootOptions: Required<RootOptions> = {
   unitTest: true,
   fetch: true,
   commit: true,
+  isLib: false,
   plugins: {
     "@luban-cli/cli-plugin-service": {
       projectName: "",
@@ -127,8 +127,7 @@ class Service {
 
     this.rootOptions = this.resolveLubanConfig();
 
-    this.configFilename =
-      this.rootOptions.language === "js" ? "luban.config.js" : "luban.config.ts";
+    this.configFilename = "luban.config.ts";
 
     this.mockConfigFile = "mock/index.js";
 

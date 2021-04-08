@@ -4,22 +4,11 @@ import {
   RawPlugin as rawPlugin,
   Preset as preset,
   ESLinterConfig as esLinterConfig,
-  DevLanguage as devLanguage,
   CssSolution as cssSolution,
-  UILibrary as uiLibrary,
   BasePkgFields as basePkgFields,
-  CreateLibPreset,
-  CreateLibRawPlugin,
-  CreateLibRootOptions,
 } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { GeneratorAPI } from "./lib/generator/generatorAPI";
-
-export {
-  CreateLibPreset,
-  CreateLibRootOptions,
-  CreateLibRawPlugin,
-} from "@luban-cli/cli-shared-types/dist/shared";
 
 export type CliOptions = Partial<{
   /**
@@ -73,11 +62,7 @@ export type CONFIG_FILE_TYPE = "js" | "json" | "yaml" | "lines";
 
 export type ESLinterConfig = esLinterConfig;
 
-export type DevLanguage = devLanguage;
-
 export type CssSolution = cssSolution;
-
-export type UILibrary = uiLibrary;
 
 export type RootOptions = rootOptions;
 
@@ -85,12 +70,12 @@ export type RawPlugin = rawPlugin;
 
 export type Preset = preset;
 
-type ALL_PLUGINS = RawPlugin & CreateLibRawPlugin;
+type ALL_PLUGINS = RawPlugin;
 
 export type PLUGIN_ID = keyof ALL_PLUGINS;
 
 export interface ApplyFn {
-  (api: GeneratorAPI, rootOptions: RootOptions | CreateLibRootOptions): void;
+  (api: GeneratorAPI, rootOptions: RootOptions): void;
 }
 
 export type ResolvedPlugin = {
@@ -101,7 +86,6 @@ export type ResolvedPlugin = {
 
 // TYPE REVIEW
 export type FinalAnswers = {
-  language: DevLanguage;
   eslint: ESLinterConfig;
   cssSolution: CssSolution;
   stylelint: boolean;
@@ -118,11 +102,7 @@ export type CreateLibFinalAnswers = {
   stylelint: boolean;
 };
 
-export type PromptCompleteCallback = (answer: FinalAnswers, options: Preset) => void;
-export type CreateLibPromptCompleteCallback = (
-  answer: CreateLibFinalAnswers,
-  options: CreateLibPreset,
-) => void;
+export type PromptCompleteCallback<T> = (answer: T, options: Preset) => void;
 
 export type InquirerQuestionType = keyof QuestionMap;
 

@@ -3,6 +3,105 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
+
+
+### Bug Fixes
+
+* **stylelint:** adjust stylelint rules ([8a50a75](https://github.com/leapFE/luban/commit/8a50a75b6efac518d34ef52cf78838e1fefc8008))
+
+
+### Features
+
+* **eslint:** adjust version about eslint plugins and config ([ecf4c57](https://github.com/leapFE/luban/commit/ecf4c578cc69ac48bc00a5e834ef947a4b6154c3))
+
+
+
+
+
+# [2.0.0-next.12](https://github.com/leapFE/luban/compare/v2.0.0-next.11...v2.0.0-next.12) (2021-03-22)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.11](https://github.com/leapFE/luban/compare/v2.0.0-next.10...v2.0.0-next.11) (2021-03-10)
+
+
+### Features
+
+* cancel dev language(javascript) support ([7e3f65b](https://github.com/leapFE/luban/commit/7e3f65b0ae988de1292a7cfdb79f31b912324527))
+
+
+
+
+
+# [2.0.0-next.10](https://github.com/leapFE/luban/compare/v2.0.0-next.9...v2.0.0-next.10) (2021-02-13)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.9](https://github.com/leapFE/luban/compare/v2.0.0-next.8...v2.0.0-next.9) (2021-02-11)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.8](https://github.com/leapFE/luban/compare/v2.0.0-next.7...v2.0.0-next.8) (2021-02-01)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.7](https://github.com/leapFE/luban/compare/v2.0.0-next.6...v2.0.0-next.7) (2021-01-30)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.6](https://github.com/leapFE/luban/compare/v2.0.0-next.5...v2.0.0-next.6) (2021-01-29)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.5](https://github.com/leapFE/luban/compare/v2.0.0-next.4...v2.0.0-next.5) (2021-01-28)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
+# [2.0.0-next.4](https://github.com/leapFE/luban/compare/v2.0.0-next.3...v2.0.0-next.4) (2021-01-26)
+
+
+### Bug Fixes
+
+* **all:** import reference path for `GeneratorAPI` ([3c4f93a](https://github.com/leapFE/luban/commit/3c4f93a861c66e2d9cdce0c00f56b308e26111bc))
+
+
+### Features
+
+* **cli-lib-service:** support create lib project ([209f739](https://github.com/leapFE/luban/commit/209f739af007c0496da989c965ec66eeed87a614))
+
+
+
+
+
 # [2.0.0-next.3](https://github.com/leapFE/luban/compare/v2.0.0-next.2...v2.0.0-next.3) (2020-10-29)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-stylelint

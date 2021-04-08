@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-store",
-  "version": "2.0.0-next.3",
+  "version": "2.0.0-next.13",
   "description": "cli-plugin-store",
   "keywords": [
     "store",
@@ -35,7 +35,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^2.0.0-next.3"
+    "@luban-cli/cli-shared-types": "^2.0.0-next.13"
   },
   "engines": {
     "node": ">=10"

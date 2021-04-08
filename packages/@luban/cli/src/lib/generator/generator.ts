@@ -6,12 +6,7 @@ import { GeneratorAPI } from "./generatorAPI";
 import { PackageManager } from "../../utils/packageManager";
 import { sortObject } from "../../utils/sortObject";
 
-import {
-  ResolvedPlugin,
-  BasePkgFields,
-  RootOptions,
-  CreateLibRootOptions,
-} from "../../definitions";
+import { ResolvedPlugin, BasePkgFields, RootOptions } from "../../definitions";
 import { defaultRootOptions } from "../../constants";
 
 const logTypes = {
@@ -38,7 +33,7 @@ export class Generator {
   public readonly plugins: ResolvedPlugin[];
   public pkg: BasePkgFields;
   private readonly pm: PackageManager;
-  public readonly rootOptions: Required<RootOptions | CreateLibRootOptions>;
+  public readonly rootOptions: Required<RootOptions>;
   private readonly files: Record<string, string>;
   public readonly fileMiddlewares: Array<fileMiddlewareCallback>;
   public postProcessFilesCbs: Array<(files: Record<string, string>) => void>;
