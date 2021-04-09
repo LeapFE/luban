@@ -1,7 +1,6 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
-import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
-export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
+export default function(api: GeneratorAPI): void {
   api.extendPackage({
     scripts: {
       start: "npm run serve",
@@ -12,8 +11,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   });
 
   const modifyFile = "src/components/Welcome/index.tsx";
-
-  api.render("./template/service");
 
   api.extendPackage({
     dependencies: {
@@ -34,36 +31,16 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.cssSolution) {
-    if (options.cssSolution === "less") {
-      api.extendPackage({
-        devDependencies: {
-          less: "^3.10.0",
-          "less-loader": "^5.0.0",
-        },
-      });
-    }
+  api.extendPackage({
+    devDependencies: {
+      less: "^3.10.0",
+      "less-loader": "^5.0.0",
+    },
+  });
 
-    if (options.cssSolution === "styled-components") {
-      api.extendPackage({
-        dependencies: {
-          "styled-components": "^4.4.0",
-        },
-      });
-    }
+  const additionalData = {
+    modifyFile,
+  };
 
-    const additionalData = {
-      modifyFile,
-      useStore: options.store,
-      useFetch: options.fetch,
-    };
-
-    if (options.cssSolution === "less") {
-      api.render("./template/TSLess", additionalData);
-    }
-
-    if (options.cssSolution === "styled-components") {
-      api.render("./template/TSstyledComponents", additionalData);
-    }
-  }
+  api.render("./template/service", additionalData);
 }

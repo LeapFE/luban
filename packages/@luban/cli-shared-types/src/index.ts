@@ -1,10 +1,7 @@
 export type RawPlugin = {
   "@luban-cli/cli-plugin-babel"?: Record<string, unknown>;
-  "@luban-cli/cli-plugin-typescript"?: Record<string, unknown>;
   "@luban-cli/cli-plugin-eslint"?: Record<string, unknown>;
   "@luban-cli/cli-plugin-stylelint"?: Record<string, unknown>;
-  "@luban-cli/cli-plugin-router"?: Record<string, unknown>;
-  "@luban-cli/cli-plugin-store"?: Record<string, unknown>;
   "@luban-cli/cli-plugin-unit-test"?: Record<string, unknown>;
   "@luban-cli/cli-plugin-fetch"?: Record<string, unknown>;
   "@luban-cli/cli-plugin-commit"?: Record<string, unknown>;
@@ -14,21 +11,18 @@ export type RawPlugin = {
 
 export type ESLinterConfig = "leap" | "airbnb" | "standard";
 
-export type CssSolution = "less" | "styled-components";
+export type AppType = "lib" | "web";
 /**
  *
  * @description preset config and plugin options after created project
  */
 export type Preset = {
   eslint?: ESLinterConfig;
-  cssSolution?: CssSolution;
   stylelint?: boolean;
-  router?: boolean;
-  store?: boolean;
   unitTest?: boolean;
   fetch?: boolean;
   commit?: boolean;
-  isLib?: boolean;
+  type?: AppType;
   plugins: RawPlugin;
 };
 

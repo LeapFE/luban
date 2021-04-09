@@ -29,7 +29,7 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     },
   });
 
-  if (options.isLib) {
+  if (options.type === "lib") {
     api.extendPackage({
       devDependencies: {
         "babel-jest": "^25.1.0",
@@ -41,19 +41,15 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
   const testFileSuffix = "{ts,tsx}";
   const testRegex = ".*\\.test\\.tsx?$";
 
-  if (options.router) {
-    coveragePathIgnorePatterns.push("/src/route/");
-  }
-
-  if (options.store) {
-    coveragePathIgnorePatterns.push("/src/models/");
+  if (options.type === "web") {
+    coveragePathIgnorePatterns.push("/src/.luban/");
   }
 
   if (options.fetch) {
     coveragePathIgnorePatterns.push("/src/service/");
   }
 
-  if (options.isLib) {
+  if (options.type === "lib") {
     collectCoverageFrom.push(
       "components/**/*.{ts,tsx}",
       "!components/*/style/index.tsx",
@@ -70,6 +66,6 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     coveragePathIgnorePatterns: JSON.stringify(coveragePathIgnorePatterns),
     testRegex,
     collectCoverageFrom: JSON.stringify(collectCoverageFrom),
-    isLib: options.isLib,
+    isLib: options.type === "lib",
   });
 }

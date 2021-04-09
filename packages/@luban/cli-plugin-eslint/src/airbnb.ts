@@ -4,7 +4,7 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const sourceDir = options.isLib ? "components" : "src";
+  const sourceDir = options.type === "lib" ? "components" : "src";
 
   const eslintParser = "@typescript-eslint/parser";
 

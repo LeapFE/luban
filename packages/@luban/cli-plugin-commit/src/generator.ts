@@ -16,7 +16,7 @@ export default function(api: GeneratorAPI, options: RootOptions): void {
     },
   });
 
-  if (options.isLib) {
+  if (options.type === "lib") {
     api.extendPackage({
       scripts: {
         commit: "lint-staged && git-cz",

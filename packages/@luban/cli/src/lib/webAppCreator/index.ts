@@ -247,7 +247,6 @@ class Creator extends BaseCreator {
     const preset: Preset = {
       plugins: {
         "@luban-cli/cli-plugin-service": { projectName: "" },
-        "@luban-cli/cli-plugin-typescript": {},
       },
     };
 

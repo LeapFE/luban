@@ -179,6 +179,11 @@ export type ProjectConfig = {
    * 约定根目录下`mock/index.js` 为默认 mock 配置文件
    */
   mock: boolean;
+
+  /**
+   * @description 是否开启 server side rendering
+   */
+  ssr: boolean;
 };
 
 export function createProjectConfig(params: Partial<ProjectConfig>): Partial<ProjectConfig> {
