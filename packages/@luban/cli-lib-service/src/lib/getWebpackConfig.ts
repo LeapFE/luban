@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import path from "path";
 import webpack from "webpack";
 import WebpackBar from "webpackbar";
@@ -226,6 +227,7 @@ function getWebpackConfig() {
     },
     mode: "development",
     plugins: [
+      // @ts-ignore
       new MiniCssExtractPlugin({
         filename: "[name].css",
       }),
@@ -243,6 +245,7 @@ function getWebpackConfig() {
       new webpack.LoaderOptionsPlugin({
         minimize: true,
       }),
+      // @ts-ignore
       new MiniCssExtractPlugin({
         filename: "[name].css",
       }),

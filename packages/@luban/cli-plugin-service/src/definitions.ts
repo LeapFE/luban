@@ -3,6 +3,8 @@ import webpack = require("webpack");
 import webpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import WebpackDevServer from "webpack-dev-server";
+import { StaticRouterContext } from "react-router";
+import { RematchStore } from "@rematch/core";
 
 import {
   RootOptions as rootOptions,
@@ -14,7 +16,7 @@ import {
 import { PluginAPI } from "./lib/PluginAPI";
 import { ProjectConfig } from "./main";
 
-export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
+export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help" | "produce";
 
 export type RootOptions = rootOptions;
 
@@ -120,3 +122,12 @@ export type UrlLoaderOptions = {
     };
   };
 };
+export type Context = { path: string; initProps: {} };
+
+export type ServerEntry = (
+  req: Context,
+  staticRouterContext: StaticRouterContext,
+  store: RematchStore | null,
+) => null | Promise<JSX.Element>;
+
+export type ServerBundle = { default: ServerEntry; createStore?: () => RematchStore | null };

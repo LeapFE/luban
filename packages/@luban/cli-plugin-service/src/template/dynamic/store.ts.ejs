@@ -1,0 +1,42 @@
+import { ReactNode } from "react";
+// @ts-ignore
+import { init, RematchStore, InitConfig } from "@rematch/core";
+import { OriginRouteConfig } from "./definitions";
+
+// @ts-ignore
+import entry from "../";
+
+<%_ if (useStore) { _%>
+import { RootModel } from "../";
+<%_ } _%>
+
+
+<%_ if (useStore) { _%>
+export const store: RematchStore<RootModel> = init({
+  models: entry?.models,
+  redux: { initialState: window ? window.__INITIAL_STATE__ || {} : {} },
+});
+<%_ } else { _%>
+export const store: null = null;  
+<%_ }_%>
+
+export interface Config {
+  root?: string;
+  wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
+  route: OriginRouteConfig;
+  <%_ if (useStore) { _%>
+  models?: InitConfig<RootModel>["models"];
+  <%_ } else { _%>
+  models?: InitConfig["models"];
+  <%_ }_%>
+}
+
+export interface Context {
+  path: string;
+  <%_ if (useStore) { _%>
+  store: RematchStore<RootModel> 
+  <%_ } else { _%>
+  store: null;
+  <%_ }_%>
+  [k: string]: unknown;
+}

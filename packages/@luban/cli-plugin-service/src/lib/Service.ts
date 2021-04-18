@@ -46,6 +46,7 @@ const builtInPluginsRelativePath = [
   "./../commands/build",
   "./../commands/inspect",
   "./../commands/help",
+  "./../commands/produce",
   "./../config/base",
   "./../config/css",
   "./../config/dev",
@@ -57,6 +58,7 @@ const builtinServiceCommandNameList = new Set<builtinServiceCommandName>([
   "inspect",
   "serve",
   "help",
+  "produce",
 ]);
 
 const defaultRootOptions: Required<RootOptions> = {
@@ -318,32 +320,31 @@ class Service {
   }
 
   private requireSpecifiedConfigFile<T>(filePath: string, configFilename: string): T | undefined {
-    if (/\w+\.js$/.test(configFilename)) {
-      const configModule = loadFile<T>(filePath);
-
-      if (configModule) {
-        return configModule;
-      }
-    }
-
     const spinner = new Spinner();
     spinner.logWithSpinner(`compiling ${chalk.green(configFilename)} ... \n`);
 
     const configTempDir = path.resolve(this.context, ".config");
     const configTempDirPath = path.resolve(`${configTempDir}/${configFilename}`);
 
-    const tscBinPath = `${this.context}/node_modules/typescript/bin/tsc`;
-    const compileArgs = `--module commonjs --skipLibCheck --outDir ${configTempDir}`;
-    const { code } = shell.exec(`${tscBinPath} ${filePath} ${compileArgs}`);
+    try {
+      const tscBinPath = `${this.context}/node_modules/typescript/bin/tsc`;
+      const compileArgs = `--module commonjs --skipLibCheck --outDir ${configTempDir}`;
+      const { code } = shell.exec(`${tscBinPath} ${filePath} ${compileArgs}`);
 
-    if (code !== 0) {
-      // ignore compile error, just print warn
-      warn(`compiled ${chalk.bold(configFilename)} file failure \n`);
+      if (code !== 0) {
+        // ignore compile error, just print warn
+        warn(`compiled ${chalk.bold(configFilename)} file failure \n`);
+      }
+    } catch (e) {}
+
+    let configModule = undefined;
+
+    try {
+      configModule = loadFile<T>(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
+      fs.removeSync(configTempDir);
+    } catch (e) {
+      spinner.stopSpinner();
     }
-
-    const configModule = loadFile<T>(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
-
-    fs.removeSync(configTempDir);
 
     spinner.stopSpinner();
 
@@ -403,12 +404,13 @@ class Service {
     const mockConfigFilePath = path.resolve(this.context, this.mockConfigFile);
 
     if (!fs.pathExistsSync(mockConfigFilePath)) {
-      error(
+      warn(
         `specified mock config file ${chalk.bold(
           `${mockConfigFilePath}`,
         )} nonexistent, please check it.`,
       );
-      process.exit();
+
+      return;
     }
 
     try {

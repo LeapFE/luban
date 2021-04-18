@@ -7,6 +7,7 @@ export default function(api: GeneratorAPI): void {
       serve: "luban-cli-service serve --open",
       build: "luban-cli-service build",
       inspect: "luban-cli-service inspect",
+      postinstall: "luban-cli-service produce",
     },
   });
 
