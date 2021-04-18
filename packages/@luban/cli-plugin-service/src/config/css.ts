@@ -4,7 +4,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
 
-export default function(api: PluginAPI, options: ProjectConfig): void {
+export default function (api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig: Config) => {
     const isProduction = process.env.NODE_ENV === "production";
 
@@ -39,16 +39,9 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     cssRule.test(/\.css$/).end();
 
     if (extract) {
-      cssRule
-        .use("extract-css")
-        .loader(MiniCssExtractPlugin.loader)
-        .options(miniCssOptions)
-        .end();
+      cssRule.use("extract-css").loader(MiniCssExtractPlugin.loader).options(miniCssOptions).end();
     } else {
-      cssRule
-        .use("style-loader")
-        .loader("style-loader")
-        .end();
+      cssRule.use("style-loader").loader("style-loader").end();
     }
 
     cssRule
@@ -66,16 +59,9 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     lessRule.test(/\.less$/).end();
 
     if (extract) {
-      lessRule
-        .use("extract-css")
-        .loader(MiniCssExtractPlugin.loader)
-        .options(miniCssOptions)
-        .end();
+      lessRule.use("extract-css").loader(MiniCssExtractPlugin.loader).options(miniCssOptions).end();
     } else {
-      lessRule
-        .use("style-loader")
-        .loader("style-loader")
-        .end();
+      lessRule.use("style-loader").loader("style-loader").end();
     }
 
     lessRule

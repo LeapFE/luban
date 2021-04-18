@@ -3,7 +3,7 @@ import { join } from "path";
 
 import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
 
-export default function(api: PluginAPI): void {
+export default function (api: PluginAPI): void {
   api.chainWebpack((webpackConfig) => {
     webpackConfig.plugin("style-lint-plugin").use(StylelintPlugin, [
       {

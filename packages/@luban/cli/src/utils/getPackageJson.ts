@@ -3,7 +3,7 @@ import path from "path";
 
 import { BasePkgFields } from "../definitions";
 
-export const getPackageJson = function(projectPath: string): BasePkgFields {
+export const getPackageJson = function (projectPath: string): BasePkgFields {
   const packagePath = path.join(projectPath, "package.json");
 
   let packageJson: string = "";

@@ -5,7 +5,7 @@ import { eslintConfigLeap } from "./leap";
 import { eslintConfigAirbnb } from "./airbnb";
 import { eslintConfigStandard } from "./standard";
 
-export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
+export default function (api: GeneratorAPI, options: Required<RootOptions>): void {
   const lintFileSuffix = "{ts,tsx}";
 
   if (api.isGitRepository()) {

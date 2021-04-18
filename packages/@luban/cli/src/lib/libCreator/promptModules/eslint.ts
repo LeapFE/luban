@@ -1,6 +1,6 @@
 import { LibPromptModuleAPI } from "../promptModuleAPI";
 
-export default function(cli: LibPromptModuleAPI): void {
+export default function (cli: LibPromptModuleAPI): void {
   // Checking code errors and enforcing an unitive code style is recommended.
   cli.injectPrompt({
     name: "eslint",

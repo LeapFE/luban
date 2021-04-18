@@ -1,4 +1,4 @@
-export const sortObject = function<T extends Record<string, unknown>>(
+export const sortObject = function <T extends Record<string, unknown>>(
   obj: T,
   keyOrder?: Array<string>,
   notSortByUnicode?: boolean,

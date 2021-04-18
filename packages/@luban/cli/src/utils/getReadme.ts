@@ -29,7 +29,7 @@ function printScripts(pkg: BasePkgFields, packageManager: SUPPORTED_PACKAGE_MANA
     .join("");
 }
 
-export const generateReadme = function(
+export const generateReadme = function (
   pkg: BasePkgFields,
   packageManager: SUPPORTED_PACKAGE_MANAGER,
 ): string {

@@ -15,7 +15,7 @@ function clearRequireCache(id: string, map: Map<string, boolean> = new Map()): v
   }
 }
 
-export const loadFile = function<T>(path: string): T | undefined {
+export const loadFile = function <T>(path: string): T | undefined {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const m = require(path);
 
@@ -23,7 +23,7 @@ export const loadFile = function<T>(path: string): T | undefined {
   return m && m.__esModule ? m.default : m;
 };
 
-export const resolveModule = function(request: string, context: string): string {
+export const resolveModule = function (request: string, context: string): string {
   let resolvedPath: string = "";
   try {
     resolvedPath = require.resolve(request, { paths: [context] });
@@ -40,7 +40,7 @@ export const resolveModule = function(request: string, context: string): string 
  * @param force
  * @throws {Error} Throw "Cannot find module" Error
  */
-export const loadModule = function<T = unknown>(
+export const loadModule = function <T = unknown>(
   request: string,
   context: string,
   force = false,
@@ -56,7 +56,7 @@ export const loadModule = function<T = unknown>(
   }
 };
 
-export const clearModule = function(request: string, context: string): void {
+export const clearModule = function (request: string, context: string): void {
   const resolvedPath = resolveModule(request, context);
   if (resolvedPath) {
     clearRequireCache(resolvedPath);

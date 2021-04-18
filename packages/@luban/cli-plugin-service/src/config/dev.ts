@@ -8,16 +8,13 @@ import { PluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
 import { resolveClientEnv } from "./../utils/resolveClientEnv";
 
-export default function(api: PluginAPI, options: ProjectConfig): void {
+export default function (api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig) => {
     const isProduction = process.env.NODE_ENV === "production";
 
     const outputDir = api.resolve(options.outputDir);
 
-    webpackConfig.output
-      .path(outputDir)
-      .filename("[name]-[hash:8].js")
-      .end();
+    webpackConfig.output.path(outputDir).filename("[name]-[hash:8].js").end();
 
     const htmlPath =
       options.templatePath === "index.html"

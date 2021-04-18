@@ -20,7 +20,7 @@ function getScriptsDir(dir: string = ""): string {
   return `${adaptedDir}/`;
 }
 
-export default function(api: PluginAPI, options: ProjectConfig): void {
+export default function (api: PluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig) => {
     const isProduction = process.env.NODE_ENV === "production";
 
@@ -31,11 +31,7 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
     const filename = `${scriptsDir}[name]-[hash:8].js`;
     const chunkFilename = `${scriptsDir}[name]-[chunkhash:8].js`;
 
-    webpackConfig.output
-      .path(outputDir)
-      .filename(filename)
-      .chunkFilename(chunkFilename)
-      .end();
+    webpackConfig.output.path(outputDir).filename(filename).chunkFilename(chunkFilename).end();
 
     if (options.productionSourceMap) {
       webpackConfig.output.sourceMapFilename(`${scriptsDir}[name].[hash:8]-map.js`).end();

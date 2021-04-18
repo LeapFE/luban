@@ -3,7 +3,7 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
-export default function(api: GeneratorAPI, options: Required<RootOptions>): void {
+export default function (api: GeneratorAPI, options: Required<RootOptions>): void {
   const sourceDir = options.type === "lib" ? "components" : "src";
 
   const processors: (string | (string | Record<string, unknown>)[])[] = [];

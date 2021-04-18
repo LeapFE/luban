@@ -80,7 +80,7 @@ export function setupMockServer(app: Application, config: MockConfig): void {
           break;
       }
 
-      bodyParser(req, res, function() {
+      bodyParser(req, res, function () {
         if (typeof mockValue === "function") {
           const rgxStr = ~matchedMockKey.indexOf(" ") ? " " : "";
 

@@ -1,7 +1,7 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
-export default function(api: GeneratorAPI, _options: Required<RootOptions>): void {
+export default function (api: GeneratorAPI, _options: Required<RootOptions>): void {
   api.extendPackage({
     files: ["dist", "lib", "es"],
     sideEffects: ["dist/*", "es/**/style/*", "lib/**/style/*", "*.less"],

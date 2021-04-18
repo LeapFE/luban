@@ -76,7 +76,7 @@ async function build(
   });
 }
 
-export default function(api: PluginAPI, options: ProjectConfig): void {
+export default function (api: PluginAPI, options: ProjectConfig): void {
   api.registerCommand(
     "build",
     {

@@ -7,7 +7,7 @@ import { highlight } from "cli-highlight";
 import chalk from "chalk";
 import webpack from "webpack";
 
-export default function(api: PluginAPI): void {
+export default function (api: PluginAPI): void {
   api.registerCommand(
     "inspect",
     {

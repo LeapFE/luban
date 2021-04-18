@@ -3,14 +3,14 @@ import { warn } from "@luban-cli/cli-shared-utils";
 
 import { tryGetNewerRange } from "./tryGetNewerRange";
 
-const extractSemver = function(r: string): string {
+const extractSemver = function (r: string): string {
   return r.replace(/^.+#semver:/, "");
 };
-const injectSemver = function(r: string, v: string): string {
+const injectSemver = function (r: string, v: string): string {
   return semver.validRange(r) ? v : r.replace(/#semver:.+$/, `#semver:${v}`);
 };
 
-export const resolveDeps = function(
+export const resolveDeps = function (
   generatorId: string,
   to: Record<string, string>,
   from: Record<string, string>,

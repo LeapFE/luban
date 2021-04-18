@@ -71,7 +71,7 @@ function logHelpForCommand(
   }
 }
 
-export default function(api: PluginAPI): void {
+export default function (api: PluginAPI): void {
   api.registerCommand("help", (args) => {
     const commandName = args._[0] as builtinServiceCommandName;
 
