@@ -1,26 +1,44 @@
-:local(.App) {
+:local(.welcome-wrapper) {
   text-align: center;
+  overflow: hidden;
 
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+  .header {
+    position: relative;
+    min-height: 98vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
+    color: #555;
 
-    h2 {
-      margin-top: 0;
+    &::before {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      opacity: 0.1;
+      background: url(./logo.svg);
     }
 
-    .App-logo {
+    h2 {
+      position: absolute;
+      opacity: 0.05;
+      top: 55%;
+      left: 40%;
+      font-size: 20rem;
+      margin: 0;
+    }
+
+    .logo {
       height: 20vmin;
     }
 
-    .App-link {
+    .link {
       color: #09d3ac;
+      z-index: 2;
     }
   }
 }

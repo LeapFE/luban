@@ -7,8 +7,8 @@ import { resolveClientEnv } from "./../utils/resolveClientEnv";
 import { UrlLoaderOptions } from "./../definitions";
 import { ProjectConfig } from "./../main";
 
-export default function(api: PluginAPI, options: ProjectConfig): void {
-  const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
+export default function (api: PluginAPI, options: ProjectConfig): void {
+  const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
     return {
       limit: options.assetsLimit,
       fallback: {
@@ -106,7 +106,9 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
       child_process: "empty",
     });
 
-    webpackConfig.plugin("define").use(DefinePlugin, [resolveClientEnv(options.publicPath)]);
+    webpackConfig
+      .plugin("define")
+      .use(DefinePlugin, [{ ...resolveClientEnv(options.publicPath), "__IS_BROWSER__ ": true }]);
 
     webpackConfig.plugin("clean").use(CleanWebpackPlugin, [{ verbose: true }]);
   });

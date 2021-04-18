@@ -1,8 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { run } from "@/.luban";
 
-import App from "./App";
+import { Nav } from "@/components/Nav";
 
-const root = document.getElementById("root");
+import route from "@/route";
 
-ReactDOM.render(<App />, root);
+export default run({
+  wrapper: (props) => <Nav {...props} />,
+  route,
+  // models: { count },
+});

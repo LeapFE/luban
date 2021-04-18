@@ -85,11 +85,6 @@ class PluginAPI {
   public resolveWebpackConfig(config?: Config): WebpackConfiguration {
     return this.service.resolveWebpackConfig(config);
   }
-
-  // TODO supported use function to config devServer
-  // public configureDevServer(fn: WebpackDevServerConfigCallback): void {
-  //   this.service.webpackDevServerConfigCallback.push(fn);
-  // }
 }
 
 export { PluginAPI };

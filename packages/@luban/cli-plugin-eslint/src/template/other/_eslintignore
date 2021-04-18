@@ -15,6 +15,7 @@
 /template/**
 /public/**
 mock/**
+src/typings/*.d.ts
 
 /node_modules/**
 

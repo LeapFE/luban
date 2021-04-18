@@ -1,10 +1,15 @@
-// more information see https://www.typescriptlang.org/docs/handbook/declaration-files/templates/global-d-ts.html
-
-declare namespace NodeJS {
-  interface ProcessEnv extends Dict<string> {
-    AFFECT_FOR_ALL_ENV: string;
-    APP_SERVER: string;
-    APP_PUBLIC_PATH: string;
-    NODE_ENV: "development" | "production";
-  }
+interface Window {
+  __USE_SSR__?: boolean;
+  __INITIAL_DATA__?: any;
+  __INITIAL_STATE__?: any;
 }
+
+declare const __IS_BROWSER__: boolean | undefined;
+
+interface NodeRequire extends NodeJS.Require {
+  resolveWeak: (path: string) => any,
+}
+
+declare var require: NodeRequire;
+
+declare module "isomorphic-style-loader/StyleContext";

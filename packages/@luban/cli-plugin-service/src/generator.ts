@@ -1,6 +1,6 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 
-export default function(api: GeneratorAPI): void {
+export default function (api: GeneratorAPI): void {
   api.extendPackage({
     scripts: {
       start: "npm run serve",
@@ -16,8 +16,8 @@ export default function(api: GeneratorAPI): void {
   api.extendPackage({
     dependencies: {
       react: "^16.14.0",
-      "react-dom": "^16.14.0",
-      "react-hot-loader": "^4.12.19",
+      "react-router-dom": "^5.2.0",
+      "lodash.clonedeepwith": "^4.5.0",
     },
     devDependencies: {
       prettier: "^1.19.1",

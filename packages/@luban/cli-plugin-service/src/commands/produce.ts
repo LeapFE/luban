@@ -6,7 +6,7 @@ import { renderFile } from "../utils/serverRender";
 import { generateRoutes } from "../utils/generateRoutes";
 import { PluginAPI } from "./../lib/PluginAPI";
 
-async function produceBoilerplate(context: string) {
+export async function produceBoilerplate(context: string) {
   info("produce boilerplate files ...");
 
   const templatePath = path.resolve(__dirname, "../template/boilerplate");
@@ -71,7 +71,7 @@ async function produceEntry(useStore: boolean, context: string) {
   fs.writeFileSync(targetServerEntryPath, serverContent);
 }
 
-async function produceRoutesAndStore(context: string) {
+export async function produceRoutesAndStore(context: string) {
   info("produce route files ...");
 
   const targetPath = `${context}/src/.luban`;
@@ -96,7 +96,7 @@ async function produceRoutesAndStore(context: string) {
   await produceEntry(useStore, context);
 }
 
-export default function(api: PluginAPI): void {
+export default function (api: PluginAPI): void {
   api.registerCommand(
     "produce",
     {

@@ -11,17 +11,14 @@ import chalk from "chalk";
 import address from "address";
 import defaultGateway from "default-gateway";
 
-export function prepareUrls(
-  protocol: string,
-  host: string,
-  port: number,
-  pathname = "/",
-): {
+export type UrlList = {
   lanUrlForConfig?: string;
   lanUrlForTerminal: string;
   localUrlForTerminal: string;
   localUrlForBrowser: string;
-} {
+};
+
+export function prepareUrls(protocol: string, host: string, port: number, pathname = "/"): UrlList {
   const formatUrl = (hostname: string): string =>
     url.format({
       protocol,
