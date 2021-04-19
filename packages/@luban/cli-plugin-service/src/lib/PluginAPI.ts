@@ -10,6 +10,7 @@ import {
   CliArgs,
   builtinServiceCommandName,
   WebpackConfiguration,
+  WebpackConfigName,
 } from "../definitions";
 
 class PluginAPI {
@@ -64,22 +65,32 @@ class CommandPluginAPI extends PluginAPI {
     }
   }
 
-  public resolveChainableWebpackConfig(): Config {
-    return this.service.resolveChainableWebpackConfig();
+  public resolveChainableWebpackConfig(name: WebpackConfigName): Config {
+    return this.service.resolveChainableWebpackConfig(name);
   }
 
-  public resolveWebpackConfig(config?: Config): WebpackConfiguration {
-    return this.service.resolveWebpackConfig(config);
+  public resolveWebpackConfig(name: WebpackConfigName, config?: Config): WebpackConfiguration {
+    return this.service.resolveWebpackConfig(name, config);
   }
 }
 
 class ConfigPluginAPI extends PluginAPI {
-  public chainWebpack(fn: WebpackChainCallback): void {
-    this.service.webpackChainCallback.push(fn);
+  public chainWebpack(name: WebpackConfigName, fn: WebpackChainCallback): void {
+    this.service.webpackConfigList[name].chainCallback.push(fn);
   }
 
-  public configureWebpack(fn: WebpackRawConfigCallback): void {
-    this.service.webpackRawConfigCallback.push(fn);
+  public configureWebpack(name: WebpackConfigName, fn: WebpackRawConfigCallback): void {
+    this.service.webpackConfigList[name].rawCallback.push(fn);
+  }
+
+  public configureAllWebpack(fn: WebpackRawConfigCallback): void {
+    this.service.webpackConfigList["client"].rawCallback.push(fn);
+    this.service.webpackConfigList["server"].rawCallback.push(fn);
+  }
+
+  public chainAllWebpack(fn: WebpackChainCallback): void {
+    this.service.webpackConfigList["client"].chainCallback.push(fn);
+    this.service.webpackConfigList["server"].chainCallback.push(fn);
   }
 }
 

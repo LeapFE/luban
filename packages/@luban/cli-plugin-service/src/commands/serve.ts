@@ -88,7 +88,7 @@ class Serve implements CommandPluginInstance {
       process.exit();
     }
 
-    const webpackConfig = api.resolveWebpackConfig();
+    const webpackConfig = api.resolveWebpackConfig("client");
 
     webpackConfig.entry = {
       app: api.resolve("src/.luban/client.entry.tsx"),

@@ -10,7 +10,7 @@ export default class Stylelint implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const { api } = args;
 
-    api.chainWebpack((webpackConfig) => {
+    api.chainWebpack("client", (webpackConfig) => {
       webpackConfig.plugin("style-lint-plugin").use(StylelintPlugin, [
         {
           files: ["**/*.css", "**/*.less"],

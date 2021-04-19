@@ -32,7 +32,7 @@ export default class Inspect implements CommandPluginInstance {
         },
       },
       (args: ParsedArgs<InspectCliArgs>) => {
-        const webpackConfig = api.resolveWebpackConfig();
+        const webpackConfig = api.resolveWebpackConfig("client");
 
         const { _: paths } = args;
 

@@ -1,5 +1,5 @@
 import webpack = require("webpack");
-import Config = require("webpack-chain");
+// import Config = require("webpack-chain");
 import webpackDevServer = require("webpack-dev-server");
 import { Request, Response, NextFunction } from "express";
 import { Parser, Stringifier, Syntax, Plugin } from "postcss/lib/postcss";
@@ -134,9 +134,9 @@ export type ProjectConfig = {
    *
    * @default {() => undefined}
    */
-  configureWebpack:
-    | webpack.Configuration
-    | ((config: webpack.Configuration) => webpack.Configuration | void);
+  // configureWebpack:
+  //   | webpack.Configuration
+  //   | ((config: webpack.Configuration) => webpack.Configuration | void);
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
@@ -144,7 +144,7 @@ export type ProjectConfig = {
    *
    * @default {() => undefined}
    */
-  chainWebpack: (config: Config) => void;
+  // chainWebpack: (config: Config) => void;
 
   /**
    * @description 一些解析 css 的配置选项

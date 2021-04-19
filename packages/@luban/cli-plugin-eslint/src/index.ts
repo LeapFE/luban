@@ -7,7 +7,7 @@ export default class Eslint implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const { api } = args;
 
-    api.chainWebpack((config) => {
+    api.chainWebpack("client", (config) => {
       config.module
         .rule("eslint")
         .test(/\.ts[x]?$/)

@@ -3,15 +3,22 @@ import Config = require("webpack-chain");
 
 class Entry implements ConfigPluginInstance {
   public apply(args: ConfigPluginApplyCallbackArgs) {
-    const { api, projectConfig } = args;
+    const { api } = args;
 
-    const entryName = projectConfig.ssr ? "server" : "client";
-    const entry = projectConfig.ssr
-      ? api.resolve("src/.luban/server.entry.tsx")
-      : api.resolve("src/.luban/client.entry.tsx");
+    api.chainWebpack("server", (webpackConfig: Config) => {
+      webpackConfig
+        .context(api.service.context)
+        .entry("server")
+        .add(api.resolve("src/.luban/server.entry.tsx"))
+        .end();
+    });
 
-    api.chainWebpack((webpackConfig: Config) => {
-      webpackConfig.context(api.service.context).entry(entryName).add(entry).end();
+    api.chainWebpack("client", (webpackConfig) => {
+      webpackConfig
+        .context(api.service.context)
+        .entry("client")
+        .add(api.resolve("src/.luban/client.entry.tsx"))
+        .end();
     });
   }
 }

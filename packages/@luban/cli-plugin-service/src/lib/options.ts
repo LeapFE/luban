@@ -31,7 +31,7 @@ const schema = createSchema((joi) =>
     alias: joi.object(),
     assetsLimit: joi.number(),
     mock: joi.boolean(),
-    chainWebpack: joi.function(),
+    // chainWebpack: joi.function(),
   }),
 );
 
@@ -86,7 +86,7 @@ export function mergeProjectOptions(
       },
     },
     mock: rootOptions.fetch || false,
-    chainWebpack: () => undefined,
-    configureWebpack: () => undefined,
+    // chainWebpack: () => undefined,
+    // configureWebpack: () => undefined,
   });
 }

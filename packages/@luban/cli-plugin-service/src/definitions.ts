@@ -81,6 +81,14 @@ export type CommandList<P extends Record<string | number, unknown>> = Record<
   }
 >;
 
+export type WebpackConfigName = "client" | "server";
+export type WebpackConfigItem = {
+  config: Config;
+  chainCallback: WebpackChainCallback[];
+  rawCallback: WebpackRawConfigCallback[];
+};
+export type WebpackConfigList = Record<WebpackConfigName, WebpackConfigItem>;
+
 export type ServeCliArgs = Partial<{
   entry: string;
   config: string;

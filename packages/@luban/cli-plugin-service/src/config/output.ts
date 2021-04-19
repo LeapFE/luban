@@ -23,26 +23,26 @@ class Output implements ConfigPluginInstance {
     const chunkFilename =
       commandName === "build" ? `${scriptsDir}${baseChunkFilename}` : baseChunkFilename;
 
-    api.chainWebpack((webpackConfig) => {
-      if (projectConfig.ssr) {
-        webpackConfig.output
-          .path(outputDir)
-          .filename("server-bundle.js")
-          .libraryTarget("commonjs2")
-          .library("server-output")
-          .publicPath(projectConfig.publicPath)
-          .end();
-      } else {
-        webpackConfig.output
-          .path(outputDir)
-          .filename(filename)
-          .publicPath(projectConfig.publicPath)
-          .chunkFilename(chunkFilename)
-          .end();
+    api.chainWebpack("server", (webpackConfig) => {
+      webpackConfig.output
+        .path(outputDir)
+        .filename("server-bundle.js")
+        .libraryTarget("commonjs2")
+        .library("server-output")
+        .publicPath(projectConfig.publicPath)
+        .end();
+    });
 
-        if (projectConfig.productionSourceMap) {
-          webpackConfig.output.sourceMapFilename(`${scriptsDir}[name].[hash:8].map.json`).end();
-        }
+    api.chainWebpack("client", (webpackConfig) => {
+      webpackConfig.output
+        .path(outputDir)
+        .filename(filename)
+        .publicPath(projectConfig.publicPath)
+        .chunkFilename(chunkFilename)
+        .end();
+
+      if (projectConfig.productionSourceMap) {
+        webpackConfig.output.sourceMapFilename(`${scriptsDir}[name].[hash:8].map.json`).end();
       }
     });
   }

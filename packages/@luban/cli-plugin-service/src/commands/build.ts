@@ -28,7 +28,10 @@ async function build(
 
   const targetDir = api.resolve(options.outputDir);
 
-  const webpackConfig = api.resolveWebpackConfig(api.resolveChainableWebpackConfig());
+  const webpackConfig = api.resolveWebpackConfig(
+    "client",
+    api.resolveChainableWebpackConfig("client"),
+  );
 
   if (args.report) {
     if (Array.isArray(webpackConfig.plugins)) {

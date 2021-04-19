@@ -18,8 +18,6 @@ import {
 
 import {
   BasePkgFields,
-  WebpackChainCallback,
-  WebpackRawConfigCallback,
   CommandList,
   ParsedArgs,
   CliArgs,
@@ -29,15 +27,15 @@ import {
   CommandPlugin,
   ConfigPlugin,
   ConfigPluginApplyCallback,
+  WebpackConfigList,
+  WebpackConfigName,
 } from "../definitions";
 import { ProjectConfig, MockConfig } from "../main";
 
 class Service {
   public context: string;
   public pkg: BasePkgFields;
-  public webpackConfig: Config;
-  public webpackChainCallback: WebpackChainCallback[];
-  public webpackRawConfigCallback: WebpackRawConfigCallback[];
+  public webpackConfigList: WebpackConfigList;
   public commands: Partial<CommandList<CliArgs>>;
   public projectConfig: ProjectConfig;
   public configPlugins: ConfigPlugin[];
@@ -51,17 +49,28 @@ class Service {
   constructor(context: string) {
     this.context = context;
 
+    this.commands = {};
+
     this.pkg = resolvePkg(this.context);
+
     this.rootOptions = resolveLubanConfig(this.pkg);
 
     this.PROJECT_CONFIG_FILE_NAME = "luban.config.ts";
 
     this.PROJECT_MOCK_CONFIG_FILE_NAME = "mock/index.js";
 
-    this.webpackConfig = new Config();
-    this.webpackChainCallback = [];
-    this.webpackRawConfigCallback = [];
-    this.commands = {};
+    this.webpackConfigList = {
+      client: {
+        config: new Config(),
+        chainCallback: [],
+        rawCallback: [],
+      },
+      server: {
+        config: new Config(),
+        chainCallback: [],
+        rawCallback: [],
+      },
+    };
 
     this.mockConfig = undefined;
   }
@@ -95,14 +104,6 @@ class Service {
         commandName,
       });
     });
-
-    if (this.projectConfig.chainWebpack) {
-      this.webpackChainCallback.push(this.projectConfig.chainWebpack);
-    }
-
-    if (this.projectConfig.configureWebpack) {
-      this.webpackRawConfigCallback.push(this.projectConfig.configureWebpack);
-    }
 
     this.commandPlugins.forEach(({ id, instance }) => {
       const _api = new CommandPluginAPI(id, this);
@@ -197,18 +198,21 @@ class Service {
     return builtInPlugins.concat(projectPlugins);
   }
 
-  public resolveChainableWebpackConfig(): Config {
-    const chainableConfig = new Config();
-    this.webpackChainCallback.forEach((fn) => fn(chainableConfig));
-    return chainableConfig;
+  public resolveChainableWebpackConfig(name: WebpackConfigName): Config {
+    this.webpackConfigList[name].chainCallback.forEach((fn) =>
+      fn(this.webpackConfigList[name].config),
+    );
+
+    return this.webpackConfigList[name].config;
   }
 
   public resolveWebpackConfig(
-    chainableConfig = this.resolveChainableWebpackConfig(),
+    name: WebpackConfigName,
+    chainableConfig = this.resolveChainableWebpackConfig(name),
   ): WebpackConfiguration {
     let config = chainableConfig.toConfig();
 
-    this.webpackRawConfigCallback.forEach((fn) => {
+    this.webpackConfigList[name].rawCallback.forEach((fn) => {
       if (typeof fn === "function") {
         const result = fn(config);
         if (result) {
