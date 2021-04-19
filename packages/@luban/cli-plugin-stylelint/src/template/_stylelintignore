@@ -1,9 +1,5 @@
 # https://stylelint.io/user-guide/ignore-code
 
-**/*.js
-**/*.ts
-!**/*.css.js
-!**/*.css.ts
 dist/**/*.css
 build/**/*.css
 node_modules/**/*.css

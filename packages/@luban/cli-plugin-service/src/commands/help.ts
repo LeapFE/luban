@@ -1,7 +1,12 @@
 import chalk from "chalk";
 
-import { PluginAPI } from "./../lib/PluginAPI";
-import { builtinServiceCommandName, CommandList } from "./../definitions";
+import { CommandPluginAPI } from "../lib/PluginAPI";
+import {
+  builtinServiceCommandName,
+  CommandList,
+  CommandPluginInstance,
+  CommandPluginApplyCallbackArgs,
+} from "../definitions";
 
 export function isObject(value: unknown): value is Record<string, unknown> {
   return Object.prototype.toString.call(value) === "[object Object]";
@@ -18,7 +23,7 @@ function getPadLength(obj: Record<string, unknown>): number {
   return longest;
 }
 
-function logMainHelp(api: PluginAPI): void {
+function logMainHelp(api: CommandPluginAPI): void {
   console.log(`\n  Usage: luban-cli-service <command> [options]\n` + `\n  Commands:\n`);
 
   const commands = api.service.commands;
@@ -71,14 +76,18 @@ function logHelpForCommand(
   }
 }
 
-export default function (api: PluginAPI): void {
-  api.registerCommand("help", (args) => {
-    const commandName = args._[0] as builtinServiceCommandName;
+export default class Help implements CommandPluginInstance {
+  apply(params: CommandPluginApplyCallbackArgs) {
+    const { api } = params;
 
-    if (!commandName) {
-      logMainHelp(api);
-    } else {
-      logHelpForCommand(commandName, (api.service.commands as CommandList<{}>)[commandName]);
-    }
-  });
+    api.registerCommand("help", (args) => {
+      const commandName = args._[0] as builtinServiceCommandName;
+
+      if (!commandName) {
+        logMainHelp(api);
+      } else {
+        logHelpForCommand(commandName, (api.service.commands as CommandList<{}>)[commandName]);
+      }
+    });
+  }
 }

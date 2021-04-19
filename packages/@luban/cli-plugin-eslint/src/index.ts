@@ -1,15 +1,22 @@
-import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
+import {
+  ConfigPluginApplyCallbackArgs,
+  ConfigPluginInstance,
+} from "@luban-cli/cli-shared-types/dist/cli-service/definitions";
 
-export default function (api: PluginAPI): void {
-  api.chainWebpack((config) => {
-    config.module
-      .rule("eslint")
-      .test(/\.ts[x]?$/)
-      .enforce("pre")
-      .exclude.add(/node_modules/)
-      .end()
-      .use("eslint-loader")
-      .loader("eslint-loader")
-      .end();
-  });
+export default class Eslint implements ConfigPluginInstance {
+  apply(args: ConfigPluginApplyCallbackArgs) {
+    const { api } = args;
+
+    api.chainWebpack((config) => {
+      config.module
+        .rule("eslint")
+        .test(/\.ts[x]?$/)
+        .enforce("pre")
+        .exclude.add(/node_modules/)
+        .end()
+        .use("eslint-loader")
+        .loader("eslint-loader")
+        .end();
+    });
+  }
 }

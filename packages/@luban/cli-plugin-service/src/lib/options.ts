@@ -2,7 +2,7 @@ import { createSchema, validate } from "@luban-cli/cli-shared-utils";
 import defaultsDeep from "lodash.defaultsdeep";
 
 import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
-import { ProjectConfig } from "./../main";
+import { ProjectConfig } from "../main";
 
 const schema = createSchema((joi) =>
   joi.object<ProjectConfig>({

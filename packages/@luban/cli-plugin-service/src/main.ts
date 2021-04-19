@@ -63,13 +63,6 @@ type AssetsDir = {
 
 type CssConfig = {
   /**
-   * @description 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到文档中的内联样式代码)
-   *
-   * @default process.env.NODE_ENV === "production"
-   */
-  extract: boolean;
-
-  /**
    * @description 是否为 CSS 开启 source map
    *
    * @default process.env.NODE_ENV === "development"

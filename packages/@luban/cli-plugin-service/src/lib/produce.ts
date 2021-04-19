@@ -4,7 +4,6 @@ import { info } from "@luban-cli/cli-shared-utils";
 
 import { renderFile } from "../utils/serverRender";
 import { generateRoutes } from "../utils/generateRoutes";
-import { PluginAPI } from "./../lib/PluginAPI";
 
 export async function produceBoilerplate(context: string) {
   info("produce boilerplate files ...");
@@ -96,19 +95,11 @@ export async function produceRoutesAndStore(context: string) {
   await produceEntry(useStore, context);
 }
 
-export default function (api: PluginAPI): void {
-  api.registerCommand(
-    "produce",
-    {
-      description: "produce boilerplate",
-      usage: "luban-cli-service produce",
-    },
-    async () => {
-      const context = api.getCwd();
+async function produce() {
+  const context = process.cwd();
+  await produceBoilerplate(context);
 
-      await produceBoilerplate(context);
-
-      await produceRoutesAndStore(context);
-    },
-  );
+  await produceRoutesAndStore(context);
 }
+
+export { produce };

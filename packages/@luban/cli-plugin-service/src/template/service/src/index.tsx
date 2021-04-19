@@ -8,5 +8,4 @@ import route from "@/route";
 export default run({
   wrapper: (props) => <Nav {...props} />,
   route,
-  // models: { count },
 });

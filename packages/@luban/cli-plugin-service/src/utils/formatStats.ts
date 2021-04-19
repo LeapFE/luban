@@ -9,7 +9,7 @@ import CliUI = require("cliui");
 
 const UI = CliUI({ width: 80 });
 
-import { PluginAPI } from "../lib/PluginAPI";
+import { CommandPluginAPI } from "../lib/PluginAPI";
 
 type Asset = {
   chunks: Array<number | string>;
@@ -20,7 +20,7 @@ type Asset = {
   size: number;
 };
 
-export function formatStats(stats: webpack.Stats, dir: string, api: PluginAPI): string {
+export function formatStats(stats: webpack.Stats, dir: string, api: CommandPluginAPI): string {
   const json = stats.toJson({
     hash: false,
     modules: false,

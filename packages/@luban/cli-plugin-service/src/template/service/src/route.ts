@@ -5,7 +5,6 @@
 import { route } from "@/.luban";
 
 export default route({
-  // fallback: "@/components/Fallback",
   routes: [
     {
       path: "/",

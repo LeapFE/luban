@@ -1,8 +1,3 @@
-// Type definitions for LubanRouter 1.2.0
-// Project: https://github.com/LeapFE/luban-router
-// Definitions by: front-end-captain <https://github.com/LeapFE>
-// TypeScript Version: 3.8.3
-
 import { ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
 // eslint-disable-next-line import/no-extraneous-dependencies

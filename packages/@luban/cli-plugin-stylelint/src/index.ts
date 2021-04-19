@@ -1,17 +1,24 @@
 import StylelintPlugin from "stylelint-webpack-plugin";
 import { join } from "path";
 
-import { PluginAPI } from "@luban-cli/cli-shared-types/dist/cli-service/lib/PluginAPI";
+import {
+  ConfigPluginInstance,
+  ConfigPluginApplyCallbackArgs,
+} from "@luban-cli/cli-shared-types/dist/cli-service/definitions";
 
-export default function (api: PluginAPI): void {
-  api.chainWebpack((webpackConfig) => {
-    webpackConfig.plugin("style-lint-plugin").use(StylelintPlugin, [
-      {
-        files: ["**/*.css", "**/*.css.js", "**/*.less", "**/*.css.ts"],
-        emitErrors: true,
-        context: api.resolve("src"),
-        configFile: join(api.service.context, ".stylelintrc"),
-      },
-    ]);
-  });
+export default class Stylelint implements ConfigPluginInstance {
+  apply(args: ConfigPluginApplyCallbackArgs) {
+    const { api } = args;
+
+    api.chainWebpack((webpackConfig) => {
+      webpackConfig.plugin("style-lint-plugin").use(StylelintPlugin, [
+        {
+          files: ["**/*.css", "**/*.less"],
+          emitErrors: true,
+          context: api.resolve("src"),
+          configFile: join(api.service.context, ".stylelintrc"),
+        },
+      ]);
+    });
+  }
 }

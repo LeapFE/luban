@@ -1,15 +1,15 @@
 import Config = require("webpack-chain");
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-import { PluginAPI } from "./../lib/PluginAPI";
+import { ConfigPluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
 
-export default function (api: PluginAPI, options: ProjectConfig): void {
+export default function (api: ConfigPluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig: Config) => {
     const isProduction = process.env.NODE_ENV === "production";
 
     const {
-      css: { extract, sourceMap, loaderOptions = {} },
+      css: { sourceMap, loaderOptions = {} },
     } = options;
 
     const filename = `${options.assetsDir.styles}/[name]${isProduction ? ".[hash:8]" : ""}.css`;
@@ -36,13 +36,12 @@ export default function (api: PluginAPI, options: ProjectConfig): void {
 
     const cssRule = webpackConfig.module.rule("css");
 
-    cssRule.test(/\.css$/).end();
-
-    if (extract) {
-      cssRule.use("extract-css").loader(MiniCssExtractPlugin.loader).options(miniCssOptions).end();
-    } else {
-      cssRule.use("style-loader").loader("style-loader").end();
-    }
+    cssRule
+      .test(/\.css$/)
+      .use("extract-css")
+      .loader(MiniCssExtractPlugin.loader)
+      .options(miniCssOptions)
+      .end();
 
     cssRule
       .use("css-loader")
@@ -56,13 +55,12 @@ export default function (api: PluginAPI, options: ProjectConfig): void {
 
     const lessRule = webpackConfig.module.rule("less");
 
-    lessRule.test(/\.less$/).end();
-
-    if (extract) {
-      lessRule.use("extract-css").loader(MiniCssExtractPlugin.loader).options(miniCssOptions).end();
-    } else {
-      lessRule.use("style-loader").loader("style-loader").end();
-    }
+    lessRule
+      .test(/\.less$/)
+      .use("extract-css")
+      .loader(MiniCssExtractPlugin.loader)
+      .options(miniCssOptions)
+      .end();
 
     lessRule
       .use("css-loader")
@@ -87,8 +85,6 @@ export default function (api: PluginAPI, options: ProjectConfig): void {
       .options({ sourceMap, noIeCompat: true, ...loaderOptions.less })
       .end();
 
-    if (extract) {
-      webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]);
-    }
+    webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]);
   });
 }

@@ -1,7 +1,5 @@
 import Config = require("webpack-chain");
 import webpack = require("webpack");
-import webpackDevServer = require("webpack-dev-server");
-import { Application } from "express";
 import WebpackDevServer from "webpack-dev-server";
 import { StaticRouterContext } from "react-router";
 import { RematchStore } from "@rematch/core";
@@ -13,10 +11,10 @@ import {
   BasePkgFields as basePkgFields,
 } from "@luban-cli/cli-shared-types/dist/shared";
 
-import { PluginAPI } from "./lib/PluginAPI";
+import { CommandPluginAPI, ConfigPluginAPI } from "./lib/PluginAPI";
 import { ProjectConfig } from "./main";
 
-export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help" | "produce";
+export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
 
 export type RootOptions = rootOptions;
 
@@ -29,14 +27,36 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type PluginApplyCallback = (api: PluginAPI, options: ProjectConfig) => void;
-
-export type InlinePlugin = {
-  id: string;
-  apply: PluginApplyCallback;
+export type CommonFields = {
+  projectConfig: ProjectConfig;
+  options: rootOptions;
+  mode: string;
+  commandName: builtinServiceCommandName;
 };
 
-export type ServicePlugin = InlinePlugin;
+export type CommandPluginApplyCallbackArgs = { api: CommandPluginAPI } & CommonFields;
+
+export type CommandPluginApplyCallback = (options: CommandPluginApplyCallbackArgs) => void;
+
+export interface CommandPluginInstance {
+  apply: CommandPluginApplyCallback;
+}
+
+export type CommandPlugin = {
+  id: string;
+  instance: CommandPluginInstance;
+};
+export type ConfigPluginApplyCallbackArgs = { api: ConfigPluginAPI } & CommonFields;
+export type ConfigPluginApplyCallback = (options: ConfigPluginApplyCallbackArgs) => void;
+
+export interface ConfigPluginInstance {
+  apply: ConfigPluginApplyCallback;
+}
+
+export type ConfigPlugin = {
+  id: string;
+  instance: ConfigPluginInstance;
+};
 
 export type WebpackConfiguration = webpack.Configuration & {
   devServer?: WebpackDevServer.Configuration;
@@ -47,12 +67,6 @@ export type WebpackChainCallback = (config: Config) => void;
 export type WebpackRawConfigCallback =
   | ((config: webpack.Configuration) => webpack.Configuration | void)
   | webpack.Configuration;
-
-/**
- * @deprecated
- */
-// TODO supported use function to config devServer
-export type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
 
 export type CommandCallback<P extends Record<string | number, unknown>> = (
   args: ParsedArgs<P>,

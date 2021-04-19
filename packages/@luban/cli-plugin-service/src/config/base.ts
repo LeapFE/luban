@@ -2,12 +2,12 @@ import Config = require("webpack-chain");
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import DefinePlugin from "webpack/lib/DefinePlugin";
 
-import { PluginAPI } from "./../lib/PluginAPI";
-import { resolveClientEnv } from "./../utils/resolveClientEnv";
-import { UrlLoaderOptions } from "./../definitions";
-import { ProjectConfig } from "./../main";
+import { ConfigPluginAPI } from "../lib/PluginAPI";
+import { resolveClientEnv } from "../utils/resolveClientEnv";
+import { UrlLoaderOptions } from "../definitions";
+import { ProjectConfig } from "../main";
 
-export default function (api: PluginAPI, options: ProjectConfig): void {
+export default function (api: ConfigPluginAPI, options: ProjectConfig): void {
   const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
     return {
       limit: options.assetsLimit,
@@ -22,20 +22,16 @@ export default function (api: PluginAPI, options: ProjectConfig): void {
     };
   };
 
-  const isProduction = process.env.NODE_ENV === "production";
-
-  const entryFileOfApp = api.getEntryFile();
-
   api.chainWebpack((webpackConfig: Config) => {
-    webpackConfig
-      .mode("development")
-      .context(api.service.context)
-      .entry("app")
-      .add(`./src/${entryFileOfApp}`)
-      .end()
-      .output.path(api.resolve(options.outputDir))
-      .filename("[name].js")
-      .publicPath(options.publicPath);
+    // webpackConfig
+    //   .mode("development")
+    //   .context(api.service.context)
+    //   .entry("app")
+    //   .add(`./src/${entryFileOfApp}`)
+    //   .end()
+    //   .output.path(api.resolve(options.outputDir))
+    //   .filename("[name].js")
+    //   .publicPath(options.publicPath);
 
     webpackConfig.resolve.extensions
       .merge([".js", ".jsx", ".ts", ".json", ".tsx"])
@@ -53,28 +49,15 @@ export default function (api: PluginAPI, options: ProjectConfig): void {
       });
     }
 
-    const tsRule = webpackConfig.module.rule("ts");
-    if (isProduction) {
-      tsRule
-        .test(/\.ts[x]?$/)
-        .exclude.add(/node_modules/)
-        .end()
-        .use("babel-loader")
-        .loader("babel-loader")
-        .options({ cacheDirectory: true })
-        .end();
-    }
-
-    if (!isProduction) {
-      tsRule
-        .test(/\.ts[x]?$/)
-        .exclude.add(/node_modules/)
-        .end()
-        .use("ts-loader")
-        .loader("ts-loader")
-        .options({ transpileOnly: true })
-        .end();
-    }
+    webpackConfig.module
+      .rule("ts")
+      .test(/\.ts[x]?$/)
+      .exclude.add(/node_modules/)
+      .end()
+      .use("babel-loader")
+      .loader("babel-loader")
+      .options({ cacheDirectory: true })
+      .end();
 
     webpackConfig.module
       .rule("images")

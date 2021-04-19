@@ -9,7 +9,6 @@ import {
   PLUGIN_IDS,
   CliArgs,
   builtinServiceCommandName,
-  RootOptions,
   WebpackConfiguration,
 } from "../definitions";
 
@@ -22,7 +21,7 @@ class PluginAPI {
     this.service = service;
   }
 
-  public getCwd(): string {
+  public getContext(): string {
     return this.service.context;
   }
 
@@ -32,26 +31,21 @@ class PluginAPI {
 
   public hasPlugin(id: PLUGIN_IDS): boolean {
     const prefixRE = /^@luban-cli\/cli-plugin-/;
-    return this.service.plugins.some((p) => {
+    return this.service.configPlugins.some((p) => {
       return p.id === id || p.id.replace(prefixRE, "") === id;
     });
   }
 
-  public resolveInitConfig(): Required<RootOptions> {
-    return this.service.resolveLubanConfig();
+  public getClientSideEntryFile(): string {
+    return "src/.luban/client.entry.tsx";
   }
 
-  public getEntryFile(): string {
-    return "index.tsx";
+  public getServerSideClientEntryFile(): string {
+    return "src/.luban/server.entry.tsx";
   }
+}
 
-  // set project mode.
-  // this should be called by any registered command as early as possible.
-  public setMode(mode: string, commandName: builtinServiceCommandName): void {
-    process.env.LUBAN_CLI_SERVICE_MODE = mode;
-    this.service.loadAndSetEnv(mode, commandName);
-  }
-
+class CommandPluginAPI extends PluginAPI {
   public registerCommand(
     name: builtinServiceCommandName,
     opts: Record<string, unknown> | CommandCallback<CliArgs>,
@@ -70,14 +64,6 @@ class PluginAPI {
     }
   }
 
-  public chainWebpack(fn: WebpackChainCallback): void {
-    this.service.webpackChainCallback.push(fn);
-  }
-
-  public configureWebpack(fn: WebpackRawConfigCallback): void {
-    this.service.webpackRawConfigCallback.push(fn);
-  }
-
   public resolveChainableWebpackConfig(): Config {
     return this.service.resolveChainableWebpackConfig();
   }
@@ -87,4 +73,14 @@ class PluginAPI {
   }
 }
 
-export { PluginAPI };
+class ConfigPluginAPI extends PluginAPI {
+  public chainWebpack(fn: WebpackChainCallback): void {
+    this.service.webpackChainCallback.push(fn);
+  }
+
+  public configureWebpack(fn: WebpackRawConfigCallback): void {
+    this.service.webpackRawConfigCallback.push(fn);
+  }
+}
+
+export { CommandPluginAPI, ConfigPluginAPI };

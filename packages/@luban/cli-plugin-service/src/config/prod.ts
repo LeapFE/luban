@@ -5,7 +5,7 @@ import path from "path";
 import PreloadWebpackPlugin = require("preload-webpack-plugin");
 import HashedModuleIdsPlugin from "webpack/lib/HashedModuleIdsPlugin";
 
-import { PluginAPI } from "./../lib/PluginAPI";
+import { ConfigPluginAPI } from "./../lib/PluginAPI";
 import { ProjectConfig } from "./../main";
 
 import { terserOptions } from "./../utils/terserOptions";
@@ -20,7 +20,7 @@ function getScriptsDir(dir: string = ""): string {
   return `${adaptedDir}/`;
 }
 
-export default function (api: PluginAPI, options: ProjectConfig): void {
+export default function (api: ConfigPluginAPI, options: ProjectConfig): void {
   api.chainWebpack((webpackConfig) => {
     const isProduction = process.env.NODE_ENV === "production";
 

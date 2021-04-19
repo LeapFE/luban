@@ -11,5 +11,3 @@ interface NodeRequire extends NodeJS.Require {
 }
 
 declare var require: NodeRequire;
-
-declare module "isomorphic-style-loader/StyleContext";
