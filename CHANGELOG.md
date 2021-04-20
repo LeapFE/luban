@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.15](https://github.com/LeapFE/luban/compare/v2.0.0-next.14...v2.0.0-next.15) (2021-04-20)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** after load and set env and load command and config plugin ([630644b](https://github.com/LeapFE/luban/commit/630644b05c9e17c41a5e022bfa65f1465a44d331))
+* **eslint:** modify eslint(extends) ([86453c6](https://github.com/LeapFE/luban/commit/86453c63a6be3376420e9d67cdd99eae440bf9c5))
+
+
+
+
+
 # [2.0.0-next.14](https://github.com/LeapFE/luban/compare/v2.0.0-next.13...v2.0.0-next.14) (2021-04-20)
 
 

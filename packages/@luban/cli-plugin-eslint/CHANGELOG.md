@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.15](https://github.com/leapFE/luban/compare/v2.0.0-next.14...v2.0.0-next.15) (2021-04-20)
+
+
+### Bug Fixes
+
+* **eslint:** modify eslint(extends) ([86453c6](https://github.com/leapFE/luban/commit/86453c63a6be3376420e9d67cdd99eae440bf9c5))
+
+
+
+
+
 # [2.0.0-next.14](https://github.com/leapFE/luban/compare/v2.0.0-next.13...v2.0.0-next.14) (2021-04-20)
 
 
