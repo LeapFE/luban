@@ -1,13 +1,18 @@
 import React from "react";
-import { Context as LubanPageContext } from "@/.luban"
+import { Context as LubanPageContext } from "@/.luban";
 
 declare module "react" {
   export = React;
   export as namespace React;
   declare namespace React {
     // Base component for plain JS classes
-    interface Component<OWN_PROPS = {}, STATE = {}, INIT_PROPS = {}, SNAPSHOT = {}, FINAL = OWN_PROPS & INIT_PROPS>
-      extends ComponentLifecycle<FINAL, STATE, SNAPSHOT> {}
+    interface Component<
+      OWN_PROPS = {},
+      STATE = {},
+      INIT_PROPS = {},
+      SNAPSHOT = {},
+      FINAL = OWN_PROPS & INIT_PROPS
+    > extends ComponentLifecycle<FINAL, STATE, SNAPSHOT> {}
     class Component<OWN_PROPS, STATE, INIT_PROPS, FINAL = OWN_PROPS & INIT_PROPS> {
       /**
        * If set, `this.context` will be set at runtime to the current value of the given Context.

@@ -181,7 +181,10 @@ class Plugin implements ConfigPluginInstance {
         .use(CleanWebpackPlugin, [{ verbose: true }])
         .end();
 
-      webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]).end();
+      webpackConfig
+        .plugin("extract-css")
+        .use(MiniCssExtractPlugin, [extractOptions])
+        .end();
 
       if (!isProduction) {
         webpackConfig.plugin("hmr").use(HotModuleReplacementPlugin);

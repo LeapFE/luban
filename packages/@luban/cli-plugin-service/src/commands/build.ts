@@ -1,4 +1,4 @@
-import { Spinner, log, done, info } from "@luban-cli/cli-shared-utils";
+import { log, done, info } from "@luban-cli/cli-shared-utils";
 import webpack = require("webpack");
 import path from "path";
 import chalk from "chalk";
@@ -18,11 +18,13 @@ import { ProjectConfig } from "../main";
 
 class Build {
   private api: CommandPluginAPI;
+  private projectConfig: ProjectConfig;
 
   private outputDir: string;
 
   constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<BuildCliArgs>) {
     this.api = api;
+    this.projectConfig = projectConfig;
 
     let output = projectConfig.outputDir;
 
@@ -55,11 +57,13 @@ class Build {
 
         const targetDirShort = path.relative(this.api.service.context, this.outputDir);
         log(formatStats(stats, targetDirShort, this.api));
+        console.log();
         done(
           `Client Build complete. The ${chalk.cyan(
             targetDirShort,
           )} directory is ready to be deployed.`,
         );
+        console.log();
 
         resolve();
       });
@@ -71,12 +75,21 @@ class Build {
       "server",
       this.api.resolveChainableWebpackConfig("server"),
     );
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       webpack(webpackConfig, (err, stats) => {
         if (err || stats.hasErrors()) {
           reject();
           return;
         }
+
+        const targetDirShort = path.relative(this.api.service.context, this.outputDir);
+
+        console.log();
+        done(
+          `Server Build complete. The file ${chalk.cyan(
+            `${targetDirShort}/server.js`,
+          )} is ready to be deployed.`,
+        );
 
         resolve();
       });
@@ -127,8 +140,15 @@ class Build {
 
     console.log();
 
-    await Promise.all([this.buildClient(), this.buildServer()]);
+    const queue = [this.buildClient];
 
+    if (this.projectConfig.ssr) {
+      queue.push(this.buildServer);
+    }
+
+    await Promise.all(queue.map((q) => q.call(this)));
+
+    console.log();
     info("generate server side deploy file");
 
     const template = fs.readFileSync(this.outputDir + "/server.ejs", { encoding: "utf-8" });
@@ -141,8 +161,11 @@ class Build {
       },
     );
 
-    fs.copyFileSync(__dirname + "../utils/server.js", this.outputDir + "/server.js");
-    fs.copyFileSync(__dirname + "../utils/server.d.ts", this.outputDir + "/server.d.ts");
+    fs.copyFileSync(path.resolve(__dirname, "../utils/server.js"), this.outputDir + "/server.js");
+    fs.copyFileSync(
+      path.resolve(__dirname, "../utils/server.d.ts"),
+      this.outputDir + "/server.d.ts",
+    );
 
     await this.buildDeploy();
 
@@ -151,7 +174,7 @@ class Build {
     fs.removeSync(this.outputDir + "/server.ejs");
 
     console.log();
-    info("Done");
+    info("Done 🎉");
 
     ["SIGINT", "SIGTERM"].forEach((signal) => {
       process.on(signal, () => {
@@ -177,13 +200,10 @@ export default class BuildWrapper implements CommandPluginInstance<BuildCliArgs>
         },
       },
       async () => {
-        const spinner = new Spinner();
-        spinner.logWithSpinner("Building... \n");
+        info("Building... \n");
 
         const build = new Build(api, projectConfig, args);
         await build.start();
-
-        spinner.stopSpinner();
       },
     );
   }

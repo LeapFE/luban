@@ -10,7 +10,7 @@ class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const { api, projectConfig } = args;
 
-    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
+    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
       return {
         limit: projectConfig.assetsLimit,
         fallback: {

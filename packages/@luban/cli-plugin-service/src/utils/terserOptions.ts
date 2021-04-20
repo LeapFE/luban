@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { TerserPluginOptions } from "terser-webpack-plugin";
 
-export const terserOptions = function (productionSourceMap: boolean): TerserPluginOptions {
+export const terserOptions = function(productionSourceMap: boolean): TerserPluginOptions {
   return {
     terserOptions: {
       compress: {

@@ -7,7 +7,7 @@ class Externals implements ConfigPluginInstance {
     const { api } = args;
 
     api.chainWebpack("server", (webpackConfig) => {
-      webpackConfig.externals([nodeExternals({ allowlist: /\.(css|less|sass|scss)$/ })]);
+      webpackConfig.externals([nodeExternals({ allowlist: /\.(css|less)$/ })]);
     });
   }
 }

@@ -1,6 +1,6 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 
-export default function (api: GeneratorAPI): void {
+export default function(api: GeneratorAPI): void {
   api.extendPackage({
     scripts: {
       start: "npm run serve",
@@ -8,6 +8,7 @@ export default function (api: GeneratorAPI): void {
       build: "luban-cli-service build",
       inspect: "luban-cli-service inspect",
       postinstall: "luban-cli-service produce",
+      compile: "tsc --noEmit --diagnostics",
     },
   });
 
@@ -31,6 +32,7 @@ export default function (api: GeneratorAPI): void {
       "url-loader": "^3.0.0",
       "style-loader": "^1.1.3",
       typescript: "^3.8.3",
+      "@types/react-router-dom": "^5.1.7",
     },
   });
 

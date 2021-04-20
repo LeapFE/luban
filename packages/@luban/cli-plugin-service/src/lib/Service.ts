@@ -78,13 +78,13 @@ class Service {
     args: ParsedArgs,
     rawArgv: string[],
   ): Promise<void> {
-    this.configPlugins = await this.resolveConfigPlugins();
-
-    this.commandPlugins = await this.resolveCommandPlugins();
-
     this.mode = mode;
 
     loadAndSetEnv(this.mode, this.context, commandName);
+
+    this.configPlugins = await this.resolveConfigPlugins();
+
+    this.commandPlugins = await this.resolveCommandPlugins();
 
     const loadedProjectConfig = loadProjectOptions(this.context, this.PROJECT_CONFIG_FILE_NAME);
 
