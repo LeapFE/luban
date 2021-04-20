@@ -1,7 +1,7 @@
 import semver from "semver";
 
 const leadRE = /^(~|\^|>=?)/;
-const rangeToVersion = function (r: string): string {
+const rangeToVersion = function(r: string): string {
   return r.replace(leadRE, "").replace(/x/g, "0");
 };
 

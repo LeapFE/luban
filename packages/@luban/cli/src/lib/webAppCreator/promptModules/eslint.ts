@@ -18,7 +18,7 @@ const baseConfigList = [
   },
 ];
 
-export default function (cli: PromptModuleAPI): void {
+export default function(cli: PromptModuleAPI): void {
   // Checking code errors and enforcing an unitive code style is recommended.
   cli.injectPrompt({
     name: "eslint",

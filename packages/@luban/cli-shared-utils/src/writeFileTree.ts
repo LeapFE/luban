@@ -17,7 +17,7 @@ function deleteRemovedFiles(
   );
 }
 
-export const writeFileTree = async function (
+export const writeFileTree = async function(
   dir: string,
   files: Record<string, string>,
   previousFiles?: Record<string, string>,

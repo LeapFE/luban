@@ -102,7 +102,7 @@ function startBrowserProcess(browser: string | undefined, url: string): boolean 
  * Reads the BROWSER environment variable and decides what to do with it. Returns
  * true if it opened a browser or ran a node.js script, otherwise false.
  */
-export const openBrowser = function (url: string): boolean | never {
+export const openBrowser = function(url: string): boolean | never {
   const { action, value } = getBrowserEnv();
   switch (action) {
     case Actions.NONE:

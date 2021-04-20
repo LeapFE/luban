@@ -106,7 +106,7 @@ function compile(isCommonJsModule: boolean) {
 
   const less = Gulp.src([`${SOURCE_DIR}/**/*.less`])
     .pipe(
-      through2.obj(function (file, _encoding, next) {
+      through2.obj(function(file, _encoding, next) {
         this.push(file.clone());
         if (file.path.match(/(\/|\\)style(\/|\\)index\.less$/)) {
           compileLess(file.path)

@@ -1,6 +1,6 @@
 import { LibPromptModuleAPI } from "../promptModuleAPI";
 
-export default function (cli: LibPromptModuleAPI): void {
+export default function(cli: LibPromptModuleAPI): void {
   cli.injectPrompt({
     type: "confirm",
     name: "stylelint",

@@ -1,10 +1,10 @@
 import JOI, { ObjectSchema, AsyncValidationOptions } from "@hapi/joi";
 
-export const createSchema = function (callback: (joi: typeof JOI) => ObjectSchema): ObjectSchema {
+export const createSchema = function(callback: (joi: typeof JOI) => ObjectSchema): ObjectSchema {
   return callback(JOI);
 };
 
-export const validate = async function (
+export const validate = async function(
   value: unknown,
   schema: ObjectSchema,
   options: AsyncValidationOptions,
@@ -21,7 +21,7 @@ export const validate = async function (
   }
 };
 
-export const validateSync = function (value: unknown, schema: ObjectSchema): void {
+export const validateSync = function(value: unknown, schema: ObjectSchema): void {
   const result = schema.validate(value);
   if (result.error) {
     throw result.error;

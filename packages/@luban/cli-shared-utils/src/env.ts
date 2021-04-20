@@ -11,7 +11,7 @@ const _gitProjects = new LRU({
   maxAge: 1000,
 });
 
-export const hasGit = function (): boolean {
+export const hasGit = function(): boolean {
   if (_hasGit != null) {
     return _hasGit;
   }
@@ -23,7 +23,7 @@ export const hasGit = function (): boolean {
   }
 };
 
-export const hasProjectGit = function (cwd: string): boolean {
+export const hasProjectGit = function(cwd: string): boolean {
   if (_gitProjects.has(cwd)) {
     return !!_gitProjects.get(cwd);
   }
@@ -77,7 +77,7 @@ function getMacAppVersion(bundleIdentifier: string): string | undefined {
   }
 }
 
-export const installedBrowsers = function (): typeof browsers {
+export const installedBrowsers = function(): typeof browsers {
   if (hasCheckedBrowsers) {
     return browsers;
   }

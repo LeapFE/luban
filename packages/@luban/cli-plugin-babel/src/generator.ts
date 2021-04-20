@@ -1,7 +1,7 @@
 import { GeneratorAPI } from "@luban-cli/cli-shared-types/dist/cli/lib/generator/generatorAPI";
 // import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 
-export default function (api: GeneratorAPI): void {
+export default function(api: GeneratorAPI): void {
   const babelConfigPreset: Array<string | Array<string | Record<string, unknown>>> = [
     [
       "@babel/preset-env",
