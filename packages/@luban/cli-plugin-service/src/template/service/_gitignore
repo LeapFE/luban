@@ -21,6 +21,7 @@ dist
 build
 lib
 _site
+src/.luban
 
 # Dependency directories
 /node_modules

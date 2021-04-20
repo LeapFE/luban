@@ -6,15 +6,14 @@ import webpack from "webpack";
 
 import {
   InspectCliArgs,
-  ParsedArgs,
   WebpackConfiguration,
   CommandPluginInstance,
   CommandPluginApplyCallbackArgs,
 } from "../definitions";
 
-export default class Inspect implements CommandPluginInstance {
-  apply(args: CommandPluginApplyCallbackArgs) {
-    const { api } = args;
+export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
+  apply(params: CommandPluginApplyCallbackArgs<InspectCliArgs>) {
+    const { api, args } = params;
 
     api.registerCommand(
       "inspect",
@@ -31,7 +30,7 @@ export default class Inspect implements CommandPluginInstance {
           "--verbose": "show full function definitions in output",
         },
       },
-      (args: ParsedArgs<InspectCliArgs>) => {
+      () => {
         const webpackConfig = api.resolveWebpackConfig("client");
 
         const { _: paths } = args;

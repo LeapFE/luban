@@ -5,9 +5,9 @@ export const defaultPackageFields: BasePkgFields = {
   version: "",
 };
 
-export const builtInCommandPluginsRelativePath = "./../commands/*";
+export const builtInCommandPluginsRelativePath = "../commands/*";
 
-export const builtInConfigPluginsRelativePath = "./../config/*";
+export const builtInConfigPluginsRelativePath = "../config/*";
 
 export const builtinServiceCommandNameList = new Set<builtinServiceCommandName>([
   "build",

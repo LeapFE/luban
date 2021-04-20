@@ -11,13 +11,14 @@ import { ServerBundle } from "../definitions";
 export const getTemplate = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     fetch(url)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((response: any) => {
         if (response.status >= 400) {
           reject(new Error("Bad response from server"));
         }
         resolve(response.text());
       })
-      .catch((error: any) => {
+      .catch((error: unknown) => {
         reject(error);
       });
   });

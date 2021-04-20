@@ -36,28 +36,24 @@ import {
   getTemplate,
   generateInjectedTag,
 } from "../utils/serverRender";
-import { setServerConfig } from "../utils/getServerSideConfig";
 
-function isAbsoluteUrl(url: string): boolean {
-  // A URL is considered absolute if it begins with "<scheme>://" or "//"
-  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-}
+const DEFAULT_HOST = "0.0.0.0";
 
 const defaultClientServerConfig = {
-  host: "0.0.0.0",
+  host: DEFAULT_HOST,
   port: 8080,
   https: false,
 };
 
 const defaultSSRServerConfig = {
-  host: "0.0.0.0",
+  host: DEFAULT_HOST,
   port: 3000,
   https: false,
 };
 
-class Serve implements CommandPluginInstance {
+class Serve {
   private pluginApi: CommandPluginAPI;
-  private projectOptions: ProjectConfig;
+  private projectConfig: ProjectConfig;
   private commandArgs: ParsedArgs<ServeCliArgs>;
 
   private CSRUrlList: UrlList | null;
@@ -65,73 +61,66 @@ class Serve implements CommandPluginInstance {
   private csrServer: WebpackDevServer | null;
   private ssrServer: http.Server | null;
 
+  private clientSideHost: string;
+  private clientSidePort: number;
+
+  private serverSideHost: string;
+  private serverSidePort: number;
+
+  private publicUrl: string | null;
+
   private protocol: "https" | "http";
 
   private clientSideServerOptions: WebpackDevServer.Configuration;
 
   private clientSideWebpackConfig: webpack.Configuration;
+  private serverSideWebpackConfig: webpack.Configuration;
 
-  // private isProduction: boolean;
-
-  constructor(api: CommandPluginAPI, options: ProjectConfig, args: ParsedArgs<ServeCliArgs>) {
+  constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<ServeCliArgs>) {
     this.pluginApi = api;
-    this.projectOptions = options;
+    this.projectConfig = projectConfig;
     this.commandArgs = args;
 
-    // this.isProduction = process.env.NODE_ENV === "production";
+    this.clientSideWebpackConfig = api.resolveWebpackConfig("client");
 
-    const defaultEntryFile = api.getClientSideEntryFile();
-    const entryFile = args.entry || `src/${defaultEntryFile}`;
+    this.serverSideWebpackConfig = api.resolveWebpackConfig("server");
 
-    if (!pathExistsSync(api.resolve(entryFile))) {
-      error(`The entry file ${entryFile} not exit, please check it`);
-      process.exit();
-    }
-
-    const webpackConfig = api.resolveWebpackConfig("client");
-
-    webpackConfig.entry = {
-      app: api.resolve("src/.luban/client.entry.tsx"),
-    };
-
-    this.clientSideWebpackConfig = webpackConfig;
-
-    this.clientSideServerOptions = Object.assign(webpackConfig.devServer || {}, options.devServer);
+    this.clientSideServerOptions = Object.assign(
+      this.clientSideWebpackConfig.devServer || {},
+      projectConfig.devServer,
+    );
 
     const useHttps =
       args.https || this.clientSideServerOptions.https || defaultClientServerConfig.https;
     this.protocol = useHttps ? "https" : "http";
   }
 
-  private async startClientSide() {
-    const host =
-      this.commandArgs.host ||
-      process.env.DEV_SERVER_HOST ||
-      this.clientSideServerOptions.host ||
-      defaultClientServerConfig.host;
+  private async init() {
+    this.clientSideHost =
+      this.commandArgs.host || this.clientSideServerOptions.host || defaultClientServerConfig.host;
 
-    const _port =
-      this.commandArgs.port ||
-      process.env.DEV_SERVER_PORT ||
-      this.clientSideServerOptions.port ||
-      defaultClientServerConfig.port;
+    const clientSidePort =
+      this.commandArgs.port || this.clientSideServerOptions.port || defaultClientServerConfig.port;
 
-    const port = await portfinder.getPortPromise({ port: Number(_port) });
+    this.serverSideHost = this.clientSideHost;
+    const serverSidePort = defaultSSRServerConfig.port;
+
+    this.clientSidePort = await portfinder.getPortPromise({ port: Number(clientSidePort) });
+    this.serverSidePort = await portfinder.getPortPromise({ port: Number(serverSidePort) });
 
     const rawPublicUrl = this.commandArgs.public || this.clientSideServerOptions.public;
-    const publicUrl = rawPublicUrl
+    this.publicUrl = rawPublicUrl
       ? /^[a-zA-Z]+:\/\//.test(rawPublicUrl)
         ? rawPublicUrl
         : `${this.protocol}://${rawPublicUrl}`
       : null;
 
-    this.CSRUrlList = prepareUrls(
-      this.protocol,
-      host,
-      port,
-      isAbsoluteUrl(this.projectOptions.publicPath) ? "/" : this.projectOptions.publicPath,
-    );
+    this.CSRUrlList = prepareUrls(this.protocol, this.clientSideHost, this.clientSidePort);
 
+    this.SSRUrlList = prepareUrls(this.protocol, this.serverSideHost, this.serverSidePort);
+  }
+
+  private async startClientSide() {
     const compiler = webpack(this.clientSideWebpackConfig);
 
     const webpackDevServerOptions: WebpackDevServer.Configuration = {
@@ -139,14 +128,14 @@ class Serve implements CommandPluginInstance {
       historyApiFallback: {
         disableDotRule: true,
         rewrites: [
-          { from: /./, to: path.posix.join(this.projectOptions.publicPath || "/", "index.html") },
+          { from: /./, to: path.posix.join(this.projectConfig.publicPath || "/", "index.html") },
         ],
       },
       contentBase: this.pluginApi.resolve("public"),
       watchContentBase: true,
       hot: true,
       compress: true,
-      publicPath: this.projectOptions.publicPath,
+      publicPath: this.projectConfig.publicPath,
       overlay: { warnings: false, errors: true },
       https: this.protocol === "https",
       open: false,
@@ -161,7 +150,7 @@ class Serve implements CommandPluginInstance {
       ...this.clientSideServerOptions,
 
       before: (app: Application) => {
-        if (this.projectOptions.mock && this.pluginApi.service.mockConfig !== null) {
+        if (this.projectConfig.mock && this.pluginApi.service.mockConfig !== null) {
           info("setup development mock server...\n");
           setupMockServer(app, this.pluginApi.service.mockConfig || {});
         }
@@ -180,8 +169,8 @@ class Serve implements CommandPluginInstance {
           return;
         }
 
-        const networkUrl = publicUrl
-          ? publicUrl.replace(/([^/])$/, "$1/")
+        const networkUrl = this.publicUrl
+          ? this.publicUrl.replace(/([^/])$/, "$1/")
           : this.CSRUrlList?.lanUrlForTerminal || "";
 
         if (isFirstCompile) {
@@ -193,7 +182,7 @@ class Serve implements CommandPluginInstance {
           console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
           console.log();
 
-          if (this.projectOptions.mock && this.pluginApi.service.mockConfig !== null) {
+          if (this.projectConfig.mock && this.pluginApi.service.mockConfig !== null) {
             console.log("  Development mock server running at:");
             console.log(`  - Local:   ${chalk.cyan(this.CSRUrlList?.localUrlForTerminal || "")}`);
             console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
@@ -211,7 +200,7 @@ class Serve implements CommandPluginInstance {
         }
       });
 
-      this.csrServer?.listen(port, host, (err?: Error) => {
+      this.csrServer?.listen(this.clientSidePort, this.clientSideHost, (err?: Error) => {
         if (err) {
           reject(err);
         }
@@ -223,16 +212,8 @@ class Serve implements CommandPluginInstance {
     const mfs = new MemoryFS();
 
     const server = express();
-    const ssrWebpackConfig = setServerConfig(
-      "development",
-      this.projectOptions.publicPath,
-      this.pluginApi.resolve("src"),
-      this.projectOptions.outputDir,
-    );
 
-    this.SSRUrlList = prepareUrls(this.protocol, defaultClientServerConfig.host, 3000, "/");
-
-    const compiler = webpack(ssrWebpackConfig);
+    const compiler = webpack(this.serverSideWebpackConfig);
 
     compiler.outputFileSystem = mfs;
 
@@ -248,11 +229,11 @@ class Serve implements CommandPluginInstance {
       info.warnings.forEach((warn) => console.warn(warn));
 
       let bundlePath = "";
-      if (ssrWebpackConfig.output) {
-        if (typeof ssrWebpackConfig.output.filename === "string") {
+      if (this.serverSideWebpackConfig.output) {
+        if (typeof this.serverSideWebpackConfig.output.filename === "string") {
           bundlePath = path.join(
-            ssrWebpackConfig.output.path || "",
-            ssrWebpackConfig.output.filename,
+            this.serverSideWebpackConfig.output.path || "",
+            this.serverSideWebpackConfig.output.filename,
           );
         }
       }
@@ -284,7 +265,7 @@ class Serve implements CommandPluginInstance {
       logLevel: "silent",
     });
 
-    server.use(this.projectOptions.publicPath, assetsProxy);
+    server.use(this.projectConfig.publicPath, assetsProxy);
 
     // TODO handle /favicon.ico
 
@@ -296,10 +277,10 @@ class Serve implements CommandPluginInstance {
 
       try {
         const templateUrl =
-          this.CSRUrlList?.localUrlForBrowser + this.projectOptions.publicPath + "server.ejs";
+          this.CSRUrlList?.localUrlForBrowser + this.projectConfig.publicPath + "server.ejs";
         const assetsManifestJsonUrl =
           this.CSRUrlList?.localUrlForBrowser +
-          this.projectOptions.publicPath +
+          this.projectConfig.publicPath +
           "asset-manifest.json";
 
         const template = await getTemplate(templateUrl.replace(/(\d+)[(^/)](\/)+/, "$1$2"));
@@ -377,7 +358,7 @@ class Serve implements CommandPluginInstance {
           isFirstSSRCompile = false;
 
           console.log();
-          console.log(`  SSR running at:`);
+          console.log(`  Server Side Rendering running at:`);
           console.log(`  - Local:   ${chalk.cyan(this.SSRUrlList?.localUrlForTerminal || "")}`);
           console.log(`  - Network: ${chalk.cyan(this.SSRUrlList?.lanUrlForTerminal || "")}`);
           console.log();
@@ -396,6 +377,8 @@ class Serve implements CommandPluginInstance {
   }
 
   public async start() {
+    await this.init();
+
     const context = this.pluginApi.getContext();
     const isLubanDirExists = pathExistsSync(context + "/src/.luban");
 
@@ -409,18 +392,18 @@ class Serve implements CommandPluginInstance {
 
     console.log();
 
-    const queue = [this.startClientSide()];
+    const queue = [this.startClientSide];
 
-    if (this.projectOptions.ssr) {
-      queue.push(this.startServerSide());
+    if (this.projectConfig.ssr) {
+      queue.push(this.startServerSide);
     }
 
-    await Promise.all(queue);
+    await Promise.all(queue.map((q) => q.call(this)));
 
     if (this.commandArgs.open || this.clientSideServerOptions.open) {
       openBrowser(this.CSRUrlList?.localUrlForBrowser || "");
 
-      if (this.projectOptions.ssr) {
+      if (this.projectConfig.ssr) {
         openBrowser(this.SSRUrlList?.localUrlForBrowser || "");
       }
     }
@@ -433,9 +416,11 @@ class Serve implements CommandPluginInstance {
       });
     });
   }
+}
 
-  public apply(params: CommandPluginApplyCallbackArgs) {
-    const { api, projectConfig } = params;
+class ServeWrapper implements CommandPluginInstance<ServeCliArgs> {
+  apply(params: CommandPluginApplyCallbackArgs<ServeCliArgs>) {
+    const { api, projectConfig, args } = params;
 
     api.registerCommand(
       "serve",
@@ -445,18 +430,17 @@ class Serve implements CommandPluginInstance {
         options: {
           "--open": `open browser on server start`,
           "--mode": `specify env mode (default: development)`,
-          "--host": `specify host (default: ${defaultClientServerConfig.host})`,
-          "--port": `specify port (default: ${defaultClientServerConfig.port})`,
+          "--host": `specify host (default: ${DEFAULT_HOST})`,
+          "--port": `specify port (default: Client: ${defaultClientServerConfig.port}); Server: ${defaultSSRServerConfig.port}`,
           "--https": `use https (default: ${defaultClientServerConfig.https})`,
           "--public": `specify the public network URL for the HMR client`,
         },
       },
-      async (args: ParsedArgs<ServeCliArgs>) => {
+      async () => {
         const serve = new Serve(api, projectConfig, args);
         await serve.start();
       },
     );
   }
 }
-
-export default Serve;
+export default ServeWrapper;

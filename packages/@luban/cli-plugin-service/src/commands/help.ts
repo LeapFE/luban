@@ -43,7 +43,7 @@ function logMainHelp(api: CommandPluginAPI): void {
 
 function logHelpForCommand(
   name: builtinServiceCommandName,
-  command?: CommandList<{}>[builtinServiceCommandName],
+  command?: CommandList[builtinServiceCommandName],
 ): void {
   if (!command) {
     console.log(chalk.red(`\n  command "${name}" unregistered.`));
@@ -76,17 +76,17 @@ function logHelpForCommand(
   }
 }
 
-export default class Help implements CommandPluginInstance {
-  apply(params: CommandPluginApplyCallbackArgs) {
-    const { api } = params;
+export default class Help implements CommandPluginInstance<{}> {
+  apply(params: CommandPluginApplyCallbackArgs<{}>) {
+    const { api, args } = params;
 
-    api.registerCommand("help", (args) => {
+    api.registerCommand("help", () => {
       const commandName = args._[0] as builtinServiceCommandName;
 
       if (!commandName) {
         logMainHelp(api);
       } else {
-        logHelpForCommand(commandName, (api.service.commands as CommandList<{}>)[commandName]);
+        logHelpForCommand(commandName, (api.service.commands as CommandList)[commandName]);
       }
     });
   }

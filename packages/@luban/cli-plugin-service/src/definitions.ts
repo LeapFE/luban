@@ -27,35 +27,45 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type CommonFields = {
+export type CommonFields<Args extends CliArgs> = {
   projectConfig: ProjectConfig;
   options: rootOptions;
   mode: string;
   commandName: builtinServiceCommandName;
+  args: ParsedArgs<Args>;
+  rawArgv: string[];
 };
 
-export type CommandPluginApplyCallbackArgs = { api: CommandPluginAPI } & CommonFields;
+export type CommandPluginApplyCallbackArgs<Args extends CliArgs> = {
+  api: CommandPluginAPI;
+} & CommonFields<Args>;
 
-export type CommandPluginApplyCallback = (options: CommandPluginApplyCallbackArgs) => void;
+export type CommandPluginApplyCallback<Args extends CliArgs> = (
+  options: CommandPluginApplyCallbackArgs<Args>,
+) => void;
 
-export interface CommandPluginInstance {
-  apply: CommandPluginApplyCallback;
+export interface CommandPluginInstance<Args extends CliArgs> {
+  apply: CommandPluginApplyCallback<Args>;
 }
 
-export type CommandPlugin = {
+export type CommandPlugin<Args extends CliArgs> = {
   id: string;
-  instance: CommandPluginInstance;
+  instance: CommandPluginInstance<Args>;
 };
-export type ConfigPluginApplyCallbackArgs = { api: ConfigPluginAPI } & CommonFields;
-export type ConfigPluginApplyCallback = (options: ConfigPluginApplyCallbackArgs) => void;
+export type ConfigPluginApplyCallbackArgs<Args extends CliArgs = CliArgs> = {
+  api: ConfigPluginAPI;
+} & CommonFields<Args>;
+export type ConfigPluginApplyCallback<Args extends CliArgs = CliArgs> = (
+  options: ConfigPluginApplyCallbackArgs<Args>,
+) => void;
 
-export interface ConfigPluginInstance {
-  apply: ConfigPluginApplyCallback;
+export interface ConfigPluginInstance<Args extends CliArgs = CliArgs> {
+  apply: ConfigPluginApplyCallback<Args>;
 }
 
-export type ConfigPlugin = {
+export type ConfigPlugin<Args extends CliArgs = CliArgs> = {
   id: string;
-  instance: ConfigPluginInstance;
+  instance: ConfigPluginInstance<Args>;
 };
 
 export type WebpackConfiguration = webpack.Configuration & {
@@ -68,16 +78,13 @@ export type WebpackRawConfigCallback =
   | ((config: webpack.Configuration) => webpack.Configuration | void)
   | webpack.Configuration;
 
-export type CommandCallback<P extends Record<string | number, unknown>> = (
-  args: ParsedArgs<P>,
-  rawArgv: string[],
-) => void;
+export type CommandCallback = () => void;
 
-export type CommandList<P extends Record<string | number, unknown>> = Record<
+export type CommandList = Record<
   builtinServiceCommandName,
   {
-    commandCallback: CommandCallback<P>;
-    opts: Record<string, unknown> | CommandCallback<P>;
+    commandCallback: CommandCallback;
+    opts: Record<string, unknown> | CommandCallback;
   }
 >;
 

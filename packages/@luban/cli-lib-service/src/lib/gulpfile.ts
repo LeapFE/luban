@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Gulp from "gulp";
 import through2 from "through2";
 import ts from "gulp-typescript";
@@ -33,6 +34,7 @@ function dist(done: Gulp.TaskFunctionCallback) {
   webpack(webpackConfig, (err, stats) => {
     if (err) {
       console.error(err.stack || err);
+
       if ((err as any).details) {
         console.error((err as any).details);
       }
@@ -58,6 +60,7 @@ function dist(done: Gulp.TaskFunctionCallback) {
       hash: false,
       version: false,
     });
+
     console.log(buildInfo);
 
     done(null);

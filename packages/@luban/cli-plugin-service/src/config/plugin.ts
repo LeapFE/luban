@@ -11,15 +11,21 @@ import { HotModuleReplacementPlugin } from "webpack";
 import WebpackBar = require("webpackbar");
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import PreloadWebpackPlugin = require("preload-webpack-plugin");
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 import { resolveClientEnv } from "../utils/resolveClientEnv";
 import { MovePlugin } from "./../utils/movePlugin";
 
-import { ConfigPluginInstance, ConfigPluginApplyCallbackArgs } from "../definitions";
+import {
+  ConfigPluginInstance,
+  ConfigPluginApplyCallbackArgs,
+  BuildCliArgs,
+  ParsedArgs,
+} from "../definitions";
 
 class Plugin implements ConfigPluginInstance {
-  apply(args: ConfigPluginApplyCallbackArgs) {
-    const { api, projectConfig, options } = args;
+  apply(params: ConfigPluginApplyCallbackArgs) {
+    const { api, projectConfig, options, args } = params;
 
     const isProduction = process.env.NODE_ENV === "production";
 
@@ -42,7 +48,7 @@ class Plugin implements ConfigPluginInstance {
       webpackConfig
         .plugin("define")
         .use(DefinePlugin, [
-          { ...resolveClientEnv(projectConfig.publicPath), "__IS_BROWSER__ ": true },
+          { ...resolveClientEnv(projectConfig.publicPath), __IS_BROWSER__: true },
         ]);
 
       const htmlPath =
@@ -140,13 +146,28 @@ class Plugin implements ConfigPluginInstance {
           },
         ]);
       }
+
+      if (isProduction) {
+        if ((args as ParsedArgs<BuildCliArgs>).report) {
+          if (Array.isArray(webpackConfig.plugins)) {
+            webpackConfig.plugins.push(
+              new BundleAnalyzerPlugin({
+                logLevel: "error",
+                openAnalyzer: false,
+                analyzerMode: (args as ParsedArgs<BuildCliArgs>).report ? "static" : "disabled",
+                reportFilename: "report.html",
+              }),
+            );
+          }
+        }
+      }
     });
 
     api.chainWebpack("server", (webpackConfig) => {
       webpackConfig
         .plugin("define")
         .use(DefinePlugin, [
-          { ...resolveClientEnv(projectConfig.publicPath), "__IS_BROWSER__ ": false },
+          { ...resolveClientEnv(projectConfig.publicPath), __IS_BROWSER__: false },
         ]);
 
       webpackConfig

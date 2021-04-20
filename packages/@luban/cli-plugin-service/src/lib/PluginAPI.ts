@@ -7,7 +7,6 @@ import {
   WebpackRawConfigCallback,
   CommandCallback,
   PLUGIN_IDS,
-  CliArgs,
   builtinServiceCommandName,
   WebpackConfiguration,
   WebpackConfigName,
@@ -49,8 +48,8 @@ class PluginAPI {
 class CommandPluginAPI extends PluginAPI {
   public registerCommand(
     name: builtinServiceCommandName,
-    opts: Record<string, unknown> | CommandCallback<CliArgs>,
-    callback?: CommandCallback<CliArgs>,
+    opts: Record<string, unknown> | CommandCallback,
+    callback?: CommandCallback,
   ): void {
     let commandCallback = callback;
 

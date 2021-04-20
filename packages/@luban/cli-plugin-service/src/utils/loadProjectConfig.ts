@@ -11,8 +11,8 @@ import { ProjectConfig } from "../main";
 
 function requireSpecifiedConfigFile<T>(
   filePath: string,
-  configFilename: string,
   context: string,
+  configFilename: string,
 ): T | undefined {
   const spinner = new Spinner();
   spinner.logWithSpinner(`compiling ${chalk.green(configFilename)} ... \n`);
@@ -82,10 +82,12 @@ export function loadProjectOptions(
     resolved = {};
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  resolved.publicPath = resolved.publicPath!.replace(/([^/])$/, "$1/");
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  resolved.outputDir = resolved.outputDir!.replace(/^\/|\/$/g, "");
+  resolved.publicPath = resolved.publicPath
+    ? resolved.publicPath.replace(/([^/])$/, "$1/")
+    : resolved.publicPath;
+  resolved.outputDir = resolved.outputDir
+    ? resolved.outputDir.replace(/^\/|\/$/g, "")
+    : resolved.outputDir;
 
   validateProjectConfig(resolved, (msg) => {
     error(`Invalid options in ${chalk.bold(configFilename)}: ${msg}`);

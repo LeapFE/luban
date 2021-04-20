@@ -12,6 +12,7 @@ export default function (api: GeneratorAPI): void {
   ];
 
   const babelConfigPlugins: Array<string | Array<string | Record<string, unknown>>> = [
+    "@babel/plugin-proposal-class-properties",
     "@babel/plugin-transform-runtime",
     "react-refresh/babel",
   ];
@@ -27,6 +28,7 @@ export default function (api: GeneratorAPI): void {
       "core-js": "^3.10.1",
       "babel-loader": "^8.2.2",
       "react-refresh": "^0.9.0",
+      "@babel/plugin-proposal-class-properties": "^7.13.0",
     },
   });
 

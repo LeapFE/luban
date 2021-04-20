@@ -41,7 +41,7 @@ class Module implements ConfigPluginInstance {
       ...loaderOptions.css,
     };
 
-    api.chainAllWebpack((webpackConfig) => {
+    api.chainWebpack("server", (webpackConfig) => {
       webpackConfig.module
         .rule("ts")
         .test(/\.ts[x]?$/)
@@ -49,9 +49,27 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("babel-loader")
         .loader("babel-loader")
-        .options({ cacheDirectory: true })
+        .options({
+          cacheDirectory: true,
+          presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
+          plugins: [],
+        })
         .end();
+    });
 
+    api.chainWebpack("client", (webpackConfig) => {
+      webpackConfig.module
+        .rule("ts")
+        .test(/\.ts[x]?$/)
+        .exclude.add(/node_modules/)
+        .end()
+        .use("babel-loader")
+        .loader("babel-loader")
+        .options({ cacheDirectory: true, configFile: api.resolve("babel.config.js") })
+        .end();
+    });
+
+    api.chainAllWebpack((webpackConfig) => {
       webpackConfig.module
         .rule("images")
         .test(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/)

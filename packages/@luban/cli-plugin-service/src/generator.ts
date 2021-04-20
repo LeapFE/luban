@@ -18,6 +18,7 @@ export default function (api: GeneratorAPI): void {
       react: "^16.14.0",
       "react-router-dom": "^5.2.0",
       "lodash.clonedeepwith": "^4.5.0",
+      "path-to-regexp": "^6.2.0",
     },
     devDependencies: {
       prettier: "^1.19.1",
@@ -29,6 +30,7 @@ export default function (api: GeneratorAPI): void {
       "postcss-loader": "^3.0.0",
       "url-loader": "^3.0.0",
       "style-loader": "^1.1.3",
+      typescript: "^3.8.3",
     },
   });
 
