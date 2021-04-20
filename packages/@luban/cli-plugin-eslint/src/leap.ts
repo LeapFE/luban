@@ -13,7 +13,7 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
     string | number | Record<string, unknown> | Array<string | Record<string, unknown>>
   >([["project", ["./tsconfig.json"]]]);
 
-  const eslintExtends = ["leap"];
+  const eslintExtends = ["leapfe"];
 
   const eslintEnv = new SimpleMapPolyfill<string, boolean>([["es2017", true]]);
 
