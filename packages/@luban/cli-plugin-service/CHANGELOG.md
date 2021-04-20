@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.14](https://github.com/leapFE/luban/compare/v2.0.0-next.13...v2.0.0-next.14) (2021-04-20)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** modify 'APP_PUBLIC_PATH' in .env.development ([58dcb62](https://github.com/leapFE/luban/commit/58dcb62fd4f582230c7490a1532bc5d804c3b757))
+
+
+### Features
+
+* **cli-plugin-service:** produce boilerplate ([3b41f71](https://github.com/leapFE/luban/commit/3b41f71c724dd2d4f52e8d760ffb6c1c17268e86))
+* **cli-plugin-service:** refact command plugin ([20c026a](https://github.com/leapFE/luban/commit/20c026a82b01b8678c4a99d3722903bd15cd4a59))
+* **cli-plugin-service:** refact config plugin ([a243efa](https://github.com/leapFE/luban/commit/a243efa2b1f883b7017815a6e65b76cb7ef9bd0a))
+* **cli-plugin-service:** refact service plugin ([4f8283a](https://github.com/leapFE/luban/commit/4f8283ae204e6c5f9b877e953114a2d32a85e92b))
+* **cli-plugin-service:** server side render for local develop ([b6a6288](https://github.com/leapFE/luban/commit/b6a6288b42f3632c1818422b29d63e2b2d529543))
+* **store,router,typescript:** remove plugin(store, router, typescript) ([26216ca](https://github.com/leapFE/luban/commit/26216ca1771983063216b83495fbb242c4b37d38))
+
+
+
+
+
 # [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
 
 

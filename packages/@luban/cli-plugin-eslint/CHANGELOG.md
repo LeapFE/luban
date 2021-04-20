@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.14](https://github.com/leapFE/luban/compare/v2.0.0-next.13...v2.0.0-next.14) (2021-04-20)
+
+
+### Features
+
+* **cli-plugin-service:** refact config plugin ([a243efa](https://github.com/leapFE/luban/commit/a243efa2b1f883b7017815a6e65b76cb7ef9bd0a))
+* **cli-plugin-service:** refact service plugin ([4f8283a](https://github.com/leapFE/luban/commit/4f8283ae204e6c5f9b877e953114a2d32a85e92b))
+* **cli-plugin-service:** server side render for local develop ([b6a6288](https://github.com/leapFE/luban/commit/b6a6288b42f3632c1818422b29d63e2b2d529543))
+* **store,router,typescript:** remove plugin(store, router, typescript) ([26216ca](https://github.com/leapFE/luban/commit/26216ca1771983063216b83495fbb242c4b37d38))
+
+
+
+
+
 # [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
 
 

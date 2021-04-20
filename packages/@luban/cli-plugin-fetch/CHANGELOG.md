@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.14](https://github.com/leapFE/luban/compare/v2.0.0-next.13...v2.0.0-next.14) (2021-04-20)
+
+
+### Features
+
+* **cli-plugin-service:** refact command plugin ([20c026a](https://github.com/leapFE/luban/commit/20c026a82b01b8678c4a99d3722903bd15cd4a59))
+
+
+
+
+
 # [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
 
 
