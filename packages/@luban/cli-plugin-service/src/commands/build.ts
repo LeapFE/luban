@@ -100,7 +100,7 @@ class Build {
   }
 
   private async buildDeploy() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const entry = path.join(this.outputDir, "/server.js");
       webpack(
         {
@@ -168,17 +168,19 @@ class Build {
       },
     );
 
-    fs.copyFileSync(path.resolve(__dirname, "../utils/server.js"), this.outputDir + "/server.js");
-    fs.copyFileSync(
-      path.resolve(__dirname, "../utils/server.d.ts"),
-      this.outputDir + "/server.d.ts",
-    );
+    if (this.projectConfig.ssr) {
+      fs.copyFileSync(path.resolve(__dirname, "../utils/server.js"), this.outputDir + "/server.js");
+      fs.copyFileSync(
+        path.resolve(__dirname, "../utils/server.d.ts"),
+        this.outputDir + "/server.d.ts",
+      );
 
-    await this.buildDeploy();
+      await this.buildDeploy();
 
-    fs.removeSync(this.outputDir + "/server_template.js");
-    fs.removeSync(this.outputDir + "/server-bundle.js");
-    fs.removeSync(this.outputDir + "/server.ejs");
+      fs.removeSync(this.outputDir + "/server_template.js");
+      fs.removeSync(this.outputDir + "/server-bundle.js");
+      fs.removeSync(this.outputDir + "/server.ejs");
+    }
 
     console.log();
     info("Done 🎉");
