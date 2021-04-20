@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.16](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.16) (2021-04-20)
+
+
+### Bug Fixes
+
+* **babel:** add 'react-refresh/babel' plugin just in 'development' env in babel.config.js ([58e2404](https://github.com/leapFE/luban/commit/58e24048443d3bbea2b3b851168689d7ebd07a4f))
+
+
+
+
+
 # [2.0.0-next.15](https://github.com/leapFE/luban/compare/v2.0.0-next.14...v2.0.0-next.15) (2021-04-20)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-babel
