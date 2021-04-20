@@ -6,6 +6,8 @@ import fs from "fs-extra";
 
 import { formatStats, logStatsErrorsAndWarnings } from "../utils/formatStats";
 import { delay } from "../utils/serverRender";
+import { cleanDest } from "../utils/clean";
+
 import { produceBoilerplate, produceRoutesAndStore } from "../lib/produce";
 import { CommandPluginAPI } from "../lib/PluginAPI";
 import {
@@ -63,7 +65,6 @@ class Build {
             targetDirShort,
           )} directory is ready to be deployed.`,
         );
-        console.log();
 
         resolve();
       });
@@ -84,12 +85,14 @@ class Build {
 
         const targetDirShort = path.relative(this.api.service.context, this.outputDir);
 
+        log(formatStats(stats, targetDirShort, this.api));
         console.log();
         done(
           `Server Build complete. The file ${chalk.cyan(
             `${targetDirShort}/server.js`,
           )} is ready to be deployed.`,
         );
+        console.log();
 
         resolve();
       });
@@ -128,6 +131,10 @@ class Build {
 
   public async start() {
     const ctx = this.api.getContext();
+
+    info(`clean dest files...`);
+
+    await cleanDest(ctx, this.outputDir);
 
     const isLubanDirExists = fs.pathExistsSync(ctx + "src/.luban");
     if (!isLubanDirExists) {

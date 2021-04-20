@@ -36,6 +36,7 @@ import {
   getTemplate,
   generateInjectedTag,
 } from "../utils/serverRender";
+import { cleanDest } from "../utils/clean";
 
 const DEFAULT_HOST = "0.0.0.0";
 
@@ -377,9 +378,14 @@ class Serve {
   }
 
   public async start() {
+    const context = this.pluginApi.getContext();
+
+    info(`clean dest files...`);
+
+    await cleanDest(context, this.pluginApi.resolve(this.projectConfig.outputDir));
+
     await this.init();
 
-    const context = this.pluginApi.getContext();
     const isLubanDirExists = pathExistsSync(context + "/src/.luban");
 
     if (!isLubanDirExists) {

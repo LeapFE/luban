@@ -37,7 +37,7 @@ async function produceStore(useStore: boolean, context: string) {
 }
 
 async function produceEntry(useStore: boolean, context: string) {
-  info("produce client and server entry files ...");
+  info("produce entry files ...");
 
   const clientEntryTemplatePath = path.resolve(
     __dirname,

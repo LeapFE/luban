@@ -7,7 +7,7 @@ class Devtool implements ConfigPluginInstance {
     const isProduction = process.env.NODE_ENV === "production";
 
     api.chainAllWebpack((webpackConfig) => {
-      if (isProduction) {
+      if (!isProduction) {
         webpackConfig.devtool("cheap-module-eval-source-map");
       } else {
         webpackConfig.devtool(projectConfig.productionSourceMap ? "source-map" : false);

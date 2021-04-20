@@ -1,4 +1,3 @@
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import DefinePlugin from "webpack/lib/DefinePlugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin, { Options as HtmlPluginOptions } from "html-webpack-plugin";
@@ -176,11 +175,6 @@ class Plugin implements ConfigPluginInstance {
     });
 
     api.chainAllWebpack((webpackConfig) => {
-      webpackConfig
-        .plugin("clean")
-        .use(CleanWebpackPlugin, [{ verbose: true }])
-        .end();
-
       webpackConfig
         .plugin("extract-css")
         .use(MiniCssExtractPlugin, [extractOptions])
