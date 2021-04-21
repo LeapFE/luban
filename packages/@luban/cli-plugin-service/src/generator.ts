@@ -33,6 +33,9 @@ export default function(api: GeneratorAPI): void {
       "style-loader": "^1.1.3",
       typescript: "^3.8.3",
       "@types/react-router-dom": "^5.1.7",
+      "@types/lodash.clonedeepwith": "^4.5.6",
+      "@types/react-dom": "^17.0.3",
+      "@types/react-loadable": "^5.5.5",
     },
   });
 
