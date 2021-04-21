@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.18](https://github.com/leapFE/luban/compare/v2.0.0-next.17...v2.0.0-next.18) (2021-04-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service,cli-plugin-eslint:** protected 'service' instance in PluginAPI ([53c834e](https://github.com/leapFE/luban/commit/53c834e337e0f0f25e6d4bfe1689e4a43d26eb21))
+
+
+
+
+
 # [2.0.0-next.17](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.17) (2021-04-21)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-stylelint

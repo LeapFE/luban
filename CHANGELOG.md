@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.18](https://github.com/LeapFE/luban/compare/v2.0.0-next.17...v2.0.0-next.18) (2021-04-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** add some types devDependencies ([3b8ff78](https://github.com/LeapFE/luban/commit/3b8ff78bb662dc42258cba8f8a4d1a9579ae2c91))
+* **cli-plugin-service:** modify prettierignore file(ignore 'src/.luban' dir) ([9450e8a](https://github.com/LeapFE/luban/commit/9450e8a67b9184ace34d4ddba0f2b03f7fc406ab))
+* **cli-plugin-service,cli-plugin-eslint:** protected 'service' instance in PluginAPI ([53c834e](https://github.com/LeapFE/luban/commit/53c834e337e0f0f25e6d4bfe1689e4a43d26eb21))
+
+
+### Features
+
+* **cli-plugin-service:** watch .env*、src/index.tsx、src/route.ts、luban.config.ts files ([6e528f3](https://github.com/LeapFE/luban/commit/6e528f3ed7178c9be673855a4337eb7980cb4f17))
+
+
+
+
+
 # [2.0.0-next.17](https://github.com/LeapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.17) (2021-04-21)
 
 

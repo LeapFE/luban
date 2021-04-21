@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.18](https://github.com/leapFE/luban/compare/v2.0.0-next.17...v2.0.0-next.18) (2021-04-21)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-eslint
+
+
+
+
+
 # [2.0.0-next.17](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.17) (2021-04-21)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-eslint
