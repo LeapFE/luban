@@ -10,14 +10,14 @@ import entry from "../";
 import { RootModel } from "../";
 <%_ } _%>
 
-
 <%_ if (useStore) { _%>
 export const store: RematchStore<RootModel> = init({
   models: entry?.models,
   redux: { initialState: window ? window.__INITIAL_STATE__ || {} : {} },
 });
+
 <%_ } else { _%>
-export const store: null = null;  
+export const store: null = null;
 <%_ }_%>
 
 export interface Config {
