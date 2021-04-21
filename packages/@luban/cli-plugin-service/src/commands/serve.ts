@@ -4,7 +4,7 @@ import portfinder from "portfinder";
 import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import chalk from "chalk";
-import { openBrowser, log, error, info } from "@luban-cli/cli-shared-utils";
+import { openBrowser, log, error, info, warn } from "@luban-cli/cli-shared-utils";
 import { pathExistsSync } from "fs-extra";
 import http from "http";
 import express from "express";
@@ -146,11 +146,19 @@ class Serve {
       https: this.protocol === "https",
       open: false,
       stats: {
-        version: true,
+        version: false,
         timings: true,
         colors: true,
         modules: false,
         children: false,
+        chunks: false,
+        assets: false,
+      },
+      watchOptions: {
+        ignored: [
+          `${this.pluginApi.getContext()}/src/index.tsx`,
+          `${this.pluginApi.getContext()}/src/route.ts`,
+        ],
       },
 
       ...this.clientSideServerOptions,
@@ -354,7 +362,7 @@ class Serve {
     });
 
     server.use([
-      function(err, _, res, _next) {
+      function (err, _, res, _next) {
         console.log(err.stack);
         error("Something broke!", "Server Side rendering");
 
@@ -424,10 +432,18 @@ class Serve {
     await Promise.all(queue.map((q) => q.call(this)));
 
     if (this.commandArgs.open || this.clientSideServerOptions.open) {
-      openBrowser(this.CSRUrlList?.localUrlForBrowser || "");
+      const openClientSide = openBrowser(this.CSRUrlList?.localUrlForBrowser || "");
+
+      if (!openClientSide) {
+        warn("open client side preview failed");
+      }
 
       if (this.projectConfig.ssr) {
-        openBrowser(this.SSRUrlList?.localUrlForBrowser || "");
+        const openServerSide = openBrowser(this.SSRUrlList?.localUrlForBrowser || "");
+
+        if (!openServerSide) {
+          warn("open server side preview failed");
+        }
       }
     }
 
