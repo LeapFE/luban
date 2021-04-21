@@ -362,7 +362,7 @@ class Serve {
     });
 
     server.use([
-      function (err, _, res, _next) {
+      function(err, _, res, _next) {
         console.log(err.stack);
         error("Something broke!", "Server Side rendering");
 

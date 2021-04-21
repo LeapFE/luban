@@ -3,7 +3,7 @@ import minimist from "minimist";
 import { Service } from "./Service";
 import { error } from "@luban-cli/cli-shared-utils";
 
-(async function () {
+(async function() {
   const rawArgv: string[] = process.argv.slice(2);
   const args = minimist(rawArgv);
 
