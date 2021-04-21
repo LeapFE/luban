@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.17](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.17) (2021-04-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** build server side deployed file when enable ssr ([5eda14f](https://github.com/leapFE/luban/commit/5eda14fb504bdbacb0d2daaf206cefb7a00be962))
+* **cli-plugin-service:** catch exception while clean dest files ([ef3b01d](https://github.com/leapFE/luban/commit/ef3b01db01c541278545d52d36769a5d32f39760))
+* **cli-plugin-service:** remove clean-webpack-plugin and manually delete dest fir ([19c2d57](https://github.com/leapFE/luban/commit/19c2d57010d5de0baa04b036687e4b1f2b74cdcd))
+
+
+### Features
+
+* **cli-plugin-service:** command plugin can add webpack config instance ([a087ec5](https://github.com/leapFE/luban/commit/a087ec580b664599820d23654b195da25ff5e022))
+
+
+
+
+
 # [2.0.0-next.16](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.16) (2021-04-20)
 
 

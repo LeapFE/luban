@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.17](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.17) (2021-04-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** remove clean-webpack-plugin and manually delete dest fir ([19c2d57](https://github.com/leapFE/luban/commit/19c2d57010d5de0baa04b036687e4b1f2b74cdcd))
+
+
+
+
+
 # [2.0.0-next.16](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.16) (2021-04-20)
 
 
