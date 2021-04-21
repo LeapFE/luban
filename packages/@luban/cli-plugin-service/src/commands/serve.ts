@@ -156,9 +156,10 @@ class Serve {
       ...this.clientSideServerOptions,
 
       before: (app: Application) => {
-        if (this.projectConfig.mock && this.pluginApi.service.mockConfig !== null) {
+        const mockConfig = this.pluginApi.getMockConfig();
+        if (this.projectConfig.mock && mockConfig !== null) {
           info("setup development mock server...\n");
-          setupMockServer(app, this.pluginApi.service.mockConfig || {});
+          setupMockServer(app, mockConfig || {});
         }
       },
     };
@@ -188,7 +189,7 @@ class Serve {
           console.log(`  - Network: ${chalk.cyan(networkUrl)}`);
           console.log();
 
-          if (this.projectConfig.mock && this.pluginApi.service.mockConfig !== null) {
+          if (this.projectConfig.mock && this.pluginApi.getMockConfig() !== null) {
             console.log("  Development mock server running at:");
             console.log(`  - Local:   ${chalk.cyan(this.CSRUrlList?.localUrlForTerminal || "")}`);
             console.log(`  - Network: ${chalk.cyan(networkUrl)}`);

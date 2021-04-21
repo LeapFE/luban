@@ -1,6 +1,5 @@
 import chalk from "chalk";
 
-import { CommandPluginAPI } from "../lib/PluginAPI";
 import {
   builtinServiceCommandName,
   CommandList,
@@ -23,10 +22,9 @@ function getPadLength(obj: Record<string, unknown>): number {
   return longest;
 }
 
-function logMainHelp(api: CommandPluginAPI): void {
+function logMainHelp(commands: Partial<CommandList>): void {
   console.log(`\n  Usage: luban-cli-service <command> [options]\n` + `\n  Commands:\n`);
 
-  const commands = api.service.commands;
   const padLength = getPadLength(commands);
 
   for (const name in commands) {
@@ -83,10 +81,12 @@ export default class Help implements CommandPluginInstance<{}> {
     api.registerCommand("help", () => {
       const commandName = args._[0] as builtinServiceCommandName;
 
+      const commands = api.getRegisteredCommands();
+
       if (!commandName) {
-        logMainHelp(api);
+        logMainHelp(commands);
       } else {
-        logHelpForCommand(commandName, (api.service.commands as CommandList)[commandName]);
+        logHelpForCommand(commandName, commands[commandName]);
       }
     });
   }

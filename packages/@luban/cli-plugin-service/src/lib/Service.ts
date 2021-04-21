@@ -30,23 +30,23 @@ import {
 import { ProjectConfig, MockConfig } from "../main";
 
 class Service {
-  public context: string;
-  public pkg: BasePkgFields;
-  public webpackConfigQueue: WebpackConfigQueue;
-  public commands: Partial<CommandList>;
-  public projectConfig: ProjectConfig;
+  private readonly _context: string;
+  public readonly pkg: BasePkgFields;
+  public readonly webpackConfigQueue: WebpackConfigQueue;
+  public readonly _commands: Partial<CommandList>;
+  private projectConfig: ProjectConfig;
   public configPlugins: ConfigPlugin[];
   public commandPlugins: CommandPlugin<CliArgs>[];
   public mode: string;
   public mockConfig: MockConfig | undefined;
-  private rootOptions: RootOptions;
+  private readonly rootOptions: RootOptions;
   private readonly PROJECT_CONFIG_FILE_NAME: string;
   private readonly PROJECT_MOCK_CONFIG_FILE_NAME: string;
 
   constructor(context: string) {
-    this.context = context;
+    this._context = context;
 
-    this.commands = {};
+    this._commands = {};
 
     this.pkg = resolvePkg(this.context);
 
@@ -141,9 +141,9 @@ class Service {
 
     // after init, all command registered
     args._ = args._ || [];
-    let command = (this.commands as CommandList)[name];
+    let command = (this._commands as CommandList)[name];
     if (!builtinServiceCommandNameList.has(name) || args.help) {
-      command = (this.commands as CommandList).help;
+      command = (this._commands as CommandList).help;
     } else {
       args._.shift();
       rawArgv.shift();
@@ -249,6 +249,14 @@ class Service {
       chainCallback: [],
       rawCallback: [],
     });
+  }
+
+  get context() {
+    return this._context;
+  }
+
+  get commands() {
+    return this._commands;
   }
 }
 

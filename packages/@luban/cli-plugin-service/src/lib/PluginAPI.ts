@@ -6,15 +6,14 @@ import {
   WebpackChainCallback,
   WebpackRawConfigCallback,
   CommandCallback,
-  PLUGIN_IDS,
   builtinServiceCommandName,
   WebpackConfiguration,
   WebpackConfigName,
 } from "../definitions";
 
 class PluginAPI {
-  public id: string;
-  public service: Service;
+  public readonly id: string;
+  protected service: Service;
 
   constructor(id: string, service: Service) {
     this.id = id;
@@ -29,19 +28,20 @@ class PluginAPI {
     return path.resolve(this.service.context, _path);
   }
 
-  public hasPlugin(id: PLUGIN_IDS): boolean {
-    const prefixRE = /^@luban-cli\/cli-plugin-/;
-    return this.service.configPlugins.some((p) => {
-      return p.id === id || p.id.replace(prefixRE, "") === id;
-    });
-  }
-
   public getClientSideEntryFile(): string {
-    return "src/.luban/client.entry.tsx";
+    return path.resolve(this.service.context, "src/.luban/client.entry.tsx");
   }
 
   public getServerSideClientEntryFile(): string {
-    return "src/.luban/server.entry.tsx";
+    return path.resolve(this.service.context, "src/.luban/server.entry.tsx");
+  }
+
+  public getMockConfig() {
+    return this.service.mockConfig;
+  }
+
+  public getRegisteredCommands() {
+    return this.service.commands;
   }
 }
 

@@ -16,7 +16,7 @@ export default class Stylelint implements ConfigPluginInstance {
           files: ["**/*.css", "**/*.less"],
           emitErrors: true,
           context: api.resolve("src"),
-          configFile: join(api.service.context, ".stylelintrc"),
+          configFile: join(api.getContext(), ".stylelintrc"),
         },
       ]);
     });

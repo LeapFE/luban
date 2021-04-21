@@ -7,17 +7,17 @@ class Entry implements ConfigPluginInstance {
 
     api.chainWebpack("server", (webpackConfig: Config) => {
       webpackConfig
-        .context(api.service.context)
+        .context(api.getContext())
         .entry("server")
-        .add(api.resolve("src/.luban/server.entry.tsx"))
+        .add(api.getServerSideClientEntryFile())
         .end();
     });
 
     api.chainWebpack("client", (webpackConfig) => {
       webpackConfig
-        .context(api.service.context)
+        .context(api.getContext())
         .entry("client")
-        .add(api.resolve("src/.luban/client.entry.tsx"))
+        .add(api.getClientSideEntryFile())
         .end();
     });
   }

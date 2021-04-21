@@ -63,7 +63,7 @@ class Build {
           return reject("Build failed with some Compilation errors occurred.");
         }
 
-        const targetDirShort = path.relative(this.api.service.context, this.outputDir);
+        const targetDirShort = path.relative(this.api.getContext(), this.outputDir);
         log(formatStats(stats, targetDirShort, this.api));
         console.log();
         done(
@@ -94,7 +94,7 @@ class Build {
           return;
         }
 
-        const targetDirShort = path.relative(this.api.service.context, this.outputDir);
+        const targetDirShort = path.relative(this.api.getContext(), this.outputDir);
 
         log(formatStats(stats, targetDirShort, this.api));
         console.log();

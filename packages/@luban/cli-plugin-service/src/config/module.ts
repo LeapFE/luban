@@ -18,7 +18,7 @@ class Module implements ConfigPluginInstance {
           options: {
             publicPath: projectConfig.publicPath,
             name: `${dir}/[name].[hash:8].[ext]`,
-            context: api.service.context,
+            context: api.getContext(),
           },
         },
       };
@@ -141,7 +141,7 @@ class Module implements ConfigPluginInstance {
             mode: "global",
             exportGlobals: true,
             localIdentName: "[name]__[local]__[hash:base64:5]",
-            context: api.service.context,
+            context: api.getContext(),
           },
           ...cssLoaderOptions,
         })
