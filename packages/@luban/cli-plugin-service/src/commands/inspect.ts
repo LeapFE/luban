@@ -33,6 +33,10 @@ export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
       () => {
         const webpackConfig = api.resolveWebpackConfig("client");
 
+        if (!webpackConfig) {
+          throw new Error("client side webpack config unable resolved; command [inspect]");
+        }
+
         const { _: paths } = args;
 
         let res:

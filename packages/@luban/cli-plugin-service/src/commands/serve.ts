@@ -25,6 +25,7 @@ import {
   ServerBundle,
   CommandPluginInstance,
   CommandPluginApplyCallbackArgs,
+  CommandPluginAddWebpackConfigCallbackArgs,
 } from "../definitions";
 import { ProjectConfig } from "../main";
 import { prepareUrls, UrlList } from "../utils/prepareURLs";
@@ -74,8 +75,8 @@ class Serve {
 
   private clientSideServerOptions: WebpackDevServer.Configuration;
 
-  private clientSideWebpackConfig: webpack.Configuration;
-  private serverSideWebpackConfig: webpack.Configuration;
+  private clientSideWebpackConfig: webpack.Configuration | undefined;
+  private serverSideWebpackConfig: webpack.Configuration | undefined;
 
   constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<ServeCliArgs>) {
     this.pluginApi = api;
@@ -87,7 +88,7 @@ class Serve {
     this.serverSideWebpackConfig = api.resolveWebpackConfig("server");
 
     this.clientSideServerOptions = Object.assign(
-      this.clientSideWebpackConfig.devServer || {},
+      this.clientSideWebpackConfig?.devServer || {},
       projectConfig.devServer,
     );
 
@@ -122,6 +123,10 @@ class Serve {
   }
 
   private async startClientSide() {
+    if (!this.clientSideWebpackConfig) {
+      throw new Error("client side webpack config unable resolved; command [serve]");
+    }
+
     const compiler = webpack(this.clientSideWebpackConfig);
 
     const webpackDevServerOptions: WebpackDevServer.Configuration = {
@@ -210,6 +215,10 @@ class Serve {
   }
 
   private startServerSide() {
+    if (!this.serverSideWebpackConfig) {
+      throw new Error("server side webpack config unable resolved; command [server]");
+    }
+
     const mfs = new MemoryFS();
 
     const server = express();
@@ -220,7 +229,12 @@ class Serve {
 
     let serverBundle: ServerBundle = { default: () => null, createStore: () => null };
 
-    compiler.watch({}, (error, stats) => {
+    const watchCallback = (error: Error, stats: webpack.Stats) => {
+      // never throw this error, just type narrow
+      if (!this.serverSideWebpackConfig) {
+        throw new Error("server side webpack config unable resolved; command [server]");
+      }
+
       if (error) {
         throw error;
       }
@@ -244,7 +258,9 @@ class Serve {
       const m = getModuleFromString(bundle, "server-entry.js");
 
       serverBundle = m.exports;
-    });
+    };
+
+    compiler.watch({}, watchCallback);
 
     // logger
     // TODO configure it open or close
@@ -447,6 +463,16 @@ class ServeWrapper implements CommandPluginInstance<ServeCliArgs> {
         await serve.start();
       },
     );
+  }
+
+  addWebpackConfig(params: CommandPluginAddWebpackConfigCallbackArgs) {
+    const { api, projectConfig } = params;
+
+    api.addWebpackConfig("client");
+
+    if (projectConfig.ssr) {
+      api.addWebpackConfig("server");
+    }
   }
 }
 export default ServeWrapper;

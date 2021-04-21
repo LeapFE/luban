@@ -15,6 +15,7 @@ import {
   ParsedArgs,
   CommandPluginInstance,
   CommandPluginApplyCallbackArgs,
+  CommandPluginAddWebpackConfigCallbackArgs,
 } from "../definitions";
 import { ProjectConfig } from "../main";
 
@@ -44,6 +45,11 @@ class Build {
     );
 
     return new Promise<void>((resolve, reject) => {
+      if (!webpackConfig) {
+        reject("client side webpack config unable resolved; command [build]");
+        return;
+      }
+
       webpack(webpackConfig, (err, stats) => {
         // Fatal webpack errors (wrong configuration, etc)
         if (err) {
@@ -77,6 +83,11 @@ class Build {
       this.api.resolveChainableWebpackConfig("server"),
     );
     return new Promise<void>((resolve, reject) => {
+      if (!webpackConfig) {
+        reject("server side webpack config unable resolved; command [build]");
+        return;
+      }
+
       webpack(webpackConfig, (err, stats) => {
         if (err || stats.hasErrors()) {
           reject();
@@ -215,5 +226,15 @@ export default class BuildWrapper implements CommandPluginInstance<BuildCliArgs>
         await build.start();
       },
     );
+  }
+
+  addWebpackConfig(params: CommandPluginAddWebpackConfigCallbackArgs) {
+    const { api, projectConfig } = params;
+
+    api.addWebpackConfig("server");
+
+    if (projectConfig.ssr) {
+      api.addWebpackConfig("server");
+    }
   }
 }

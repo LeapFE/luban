@@ -44,8 +44,14 @@ export type CommandPluginApplyCallback<Args extends CliArgs> = (
   options: CommandPluginApplyCallbackArgs<Args>,
 ) => void;
 
+export type CommandPluginAddWebpackConfigCallbackArgs = {
+  api: CommandPluginAPI;
+  projectConfig: ProjectConfig;
+};
+
 export interface CommandPluginInstance<Args extends CliArgs> {
   apply: CommandPluginApplyCallback<Args>;
+  addWebpackConfig?: (options: CommandPluginAddWebpackConfigCallbackArgs) => void;
 }
 
 export type CommandPlugin<Args extends CliArgs> = {
@@ -88,13 +94,18 @@ export type CommandList = Record<
   }
 >;
 
+export type BuiltinWebpackConfigName = "public";
 export type WebpackConfigName = "client" | "server";
 export type WebpackConfigItem = {
+  id: string;
   config: Config;
   chainCallback: WebpackChainCallback[];
   rawCallback: WebpackRawConfigCallback[];
 };
-export type WebpackConfigList = Record<WebpackConfigName, WebpackConfigItem>;
+export type WebpackConfigQueue = Map<
+  WebpackConfigName | BuiltinWebpackConfigName,
+  WebpackConfigItem
+>;
 
 export type ServeCliArgs = Partial<{
   entry: string;

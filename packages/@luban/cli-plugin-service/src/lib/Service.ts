@@ -22,7 +22,7 @@ import {
   WebpackConfiguration,
   CommandPlugin,
   ConfigPlugin,
-  WebpackConfigList,
+  WebpackConfigQueue,
   WebpackConfigName,
   ConfigPluginInstance,
   CliArgs,
@@ -32,7 +32,7 @@ import { ProjectConfig, MockConfig } from "../main";
 class Service {
   public context: string;
   public pkg: BasePkgFields;
-  public webpackConfigList: WebpackConfigList;
+  public webpackConfigQueue: WebpackConfigQueue;
   public commands: Partial<CommandList>;
   public projectConfig: ProjectConfig;
   public configPlugins: ConfigPlugin[];
@@ -56,18 +56,14 @@ class Service {
 
     this.PROJECT_MOCK_CONFIG_FILE_NAME = "mock/index.js";
 
-    this.webpackConfigList = {
-      client: {
-        config: new Config(),
-        chainCallback: [],
-        rawCallback: [],
-      },
-      server: {
-        config: new Config(),
-        chainCallback: [],
-        rawCallback: [],
-      },
-    };
+    this.webpackConfigQueue = new Map();
+
+    this.webpackConfigQueue.set("public", {
+      id: "public",
+      config: new Config(),
+      chainCallback: [],
+      rawCallback: [],
+    });
 
     this.mockConfig = undefined;
   }
@@ -82,13 +78,20 @@ class Service {
 
     loadAndSetEnv(this.mode, this.context, commandName);
 
-    this.configPlugins = await this.resolveConfigPlugins();
-
     this.commandPlugins = await this.resolveCommandPlugins();
+
+    this.configPlugins = await this.resolveConfigPlugins();
 
     const loadedProjectConfig = loadProjectOptions(this.context, this.PROJECT_CONFIG_FILE_NAME);
 
     this.projectConfig = mergeProjectOptions(loadedProjectConfig, this.rootOptions);
+
+    this.commandPlugins.forEach(({ id, instance }) => {
+      if (typeof instance.addWebpackConfig === "function") {
+        const _api = new CommandPluginAPI(id, this);
+        instance.addWebpackConfig({ api: _api, projectConfig: this.projectConfig });
+      }
+    });
 
     this.mockConfig = loadMockConfig(
       this.context,
@@ -205,32 +208,47 @@ class Service {
     return builtInConfigPlugins.concat(projectPlugins);
   }
 
-  public resolveChainableWebpackConfig(name: WebpackConfigName): Config {
-    this.webpackConfigList[name].chainCallback.forEach((fn) =>
-      fn(this.webpackConfigList[name].config),
-    );
+  public resolveChainableWebpackConfig(name: WebpackConfigName): Config | undefined {
+    const configQueue = this.webpackConfigQueue.get(name);
 
-    return this.webpackConfigList[name].config;
+    configQueue?.chainCallback.forEach((fn) => {
+      fn(configQueue.config);
+    });
+
+    return configQueue?.config;
   }
 
   public resolveWebpackConfig(
     name: WebpackConfigName,
     chainableConfig = this.resolveChainableWebpackConfig(name),
-  ): WebpackConfiguration {
-    let config = chainableConfig.toConfig();
+  ): WebpackConfiguration | undefined {
+    if (chainableConfig) {
+      let config = chainableConfig.toConfig();
 
-    this.webpackConfigList[name].rawCallback.forEach((fn) => {
-      if (typeof fn === "function") {
-        const result = fn(config);
-        if (result) {
-          config = merge(config, result);
+      const configQueue = this.webpackConfigQueue.get(name);
+
+      configQueue?.rawCallback.forEach((fn) => {
+        if (typeof fn === "function") {
+          const result = fn(config);
+          if (result) {
+            config = merge(config, result);
+          }
+        } else if (fn) {
+          config = merge(config, fn);
         }
-      } else if (fn) {
-        config = merge(config, fn);
-      }
-    });
+      });
 
-    return config;
+      return config;
+    }
+  }
+
+  public addWebpackConfigQueueItem(name: WebpackConfigName) {
+    this.webpackConfigQueue.set(name, {
+      id: name,
+      config: new Config(),
+      chainCallback: [],
+      rawCallback: [],
+    });
   }
 }
 

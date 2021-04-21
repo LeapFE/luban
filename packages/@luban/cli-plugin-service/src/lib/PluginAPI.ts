@@ -64,32 +64,43 @@ class CommandPluginAPI extends PluginAPI {
     }
   }
 
-  public resolveChainableWebpackConfig(name: WebpackConfigName): Config {
+  public addWebpackConfig(name: WebpackConfigName) {
+    this.service.addWebpackConfigQueueItem(name);
+  }
+
+  public resolveChainableWebpackConfig(name: WebpackConfigName): Config | undefined {
     return this.service.resolveChainableWebpackConfig(name);
   }
 
-  public resolveWebpackConfig(name: WebpackConfigName, config?: Config): WebpackConfiguration {
+  public resolveWebpackConfig(
+    name: WebpackConfigName,
+    config?: Config,
+  ): WebpackConfiguration | undefined {
     return this.service.resolveWebpackConfig(name, config);
   }
 }
 
 class ConfigPluginAPI extends PluginAPI {
   public chainWebpack(name: WebpackConfigName, fn: WebpackChainCallback): void {
-    this.service.webpackConfigList[name].chainCallback.push(fn);
+    const configQueue = this.service.webpackConfigQueue.get(name);
+    configQueue?.chainCallback.push(fn);
   }
 
   public configureWebpack(name: WebpackConfigName, fn: WebpackRawConfigCallback): void {
-    this.service.webpackConfigList[name].rawCallback.push(fn);
+    const configQueue = this.service.webpackConfigQueue.get(name);
+    configQueue?.rawCallback.push(fn);
   }
 
   public configureAllWebpack(fn: WebpackRawConfigCallback): void {
-    this.service.webpackConfigList["client"].rawCallback.push(fn);
-    this.service.webpackConfigList["server"].rawCallback.push(fn);
+    this.service.webpackConfigQueue.forEach((queue) => {
+      queue.rawCallback.push(fn);
+    });
   }
 
   public chainAllWebpack(fn: WebpackChainCallback): void {
-    this.service.webpackConfigList["client"].chainCallback.push(fn);
-    this.service.webpackConfigList["server"].chainCallback.push(fn);
+    this.service.webpackConfigQueue.forEach((queue) => {
+      queue.chainCallback.push(fn);
+    });
   }
 }
 
