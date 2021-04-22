@@ -45,13 +45,12 @@ const command = args._[0];
         ]);
 
         watcher.on("change", (filepath) => {
-          console.log();
+          clearConsole();
+
           info(filepath + " was changed");
 
           console.log();
           info("Try to restart server...");
-
-          clearConsole();
 
           serve.kill();
           serve = fork(forkServePath, process.argv);
