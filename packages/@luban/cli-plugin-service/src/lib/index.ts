@@ -1,12 +1,10 @@
 import minimist from "minimist";
 import chokidar from "chokidar";
-import { info } from "@luban-cli/cli-shared-utils";
+import { info, clearConsole } from "@luban-cli/cli-shared-utils";
 import { fork } from "child_process";
 
 import { Service } from "./Service";
 import { produce } from "./produce";
-
-// import { fork } from "./fork";
 
 const forkServePath = require.resolve("./forkServe.js");
 
@@ -52,6 +50,8 @@ const command = args._[0];
 
           console.log();
           info("Try to restart server...");
+
+          clearConsole();
 
           serve.kill();
           serve = fork(forkServePath, process.argv);
