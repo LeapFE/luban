@@ -31,7 +31,7 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
       "eslint-plugin-react": "^7.23.2",
       "eslint-plugin-react-hooks": "^4.2.0",
       "eslint-plugin-import": "^2.22.1",
-      "eslint-plugin-promise": "^4.3.1",
+      "eslint-plugin-promise": "^5.1.0",
       "@typescript-eslint/parser": "^4.22.0",
       "@typescript-eslint/eslint-plugin": "^4.22.0",
     },
