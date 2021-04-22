@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.19](https://github.com/LeapFE/luban/compare/v2.0.0-next.18...v2.0.0-next.19) (2021-04-22)
+
+
+### Features
+
+* **cli-plugin-service:** clear console down before restart dev server ([42e5020](https://github.com/LeapFE/luban/commit/42e5020c3d9617cb671abc1319aaea5126247713))
+
+
+
+
+
 # [2.0.0-next.18](https://github.com/LeapFE/luban/compare/v2.0.0-next.17...v2.0.0-next.18) (2021-04-21)
 
 
