@@ -16,7 +16,7 @@ luban init <project_name>
 在终端运行 `luban init <project_name>` 命令后，将会以默认的 preset 来创建项目。默认的 preset 如下：
 
 + 开发语言：<a-radio-group value='ts'><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
-+ [ESLint](https://eslint.org/) 配置方案：<a-radio checked value='leap'>[leap](https://www.npmjs.com/package/eslint-config-leap)</a-radio><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
++ [ESLint](https://eslint.org/) 配置方案：<a-radio checked value='leapfe'>[leap](https://www.npmjs.com/package/eslint-config-leapfe)</a-radio><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
 + 样式处理方案：<a-radio-group value='less'><a-radio checked value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 + 使用 <a-checkbox checked>[Stylelint](https://stylelint.io/)</a-checkbox>
 + 使用 <a-checkbox checked>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
@@ -29,7 +29,7 @@ luban init <project_name>
 手动选择的特性将包括：
 
 - 开发语言 <a-radio-group><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
-- [ESLint](https://eslint.org/) 配置方案 <a-radio value='leap'>[leap](https://www.npmjs.com/package/eslint-config-leap)</a-radio><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
+- [ESLint](https://eslint.org/) 配置方案 <a-radio value='leapfe'>[leap](https://www.npmjs.com/package/eslint-config-leapfe)</a-radio><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
 - 样式处理方案 <a-radio-group><a-radio value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 - 是否使用 <a-checkbox>[Stylelint](https://stylelint.io/)</a-checkbox>
 - 是否使用 <a-checkbox>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
