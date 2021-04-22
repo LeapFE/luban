@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.20](https://github.com/LeapFE/luban/compare/v2.0.0-next.19...v2.0.0-next.20) (2021-04-22)
+
+
+### Bug Fixes
+
+* **cli:** use 'console.log' instead of 'error', fix 'error is not defined' ([e6c05d2](https://github.com/LeapFE/luban/commit/e6c05d2d9873bf848308310f1d5c802072c7fb8c))
+* **eslint:** use 'eslint-webpack-plugin' instead 'eslint-loader' ([1a5ab86](https://github.com/LeapFE/luban/commit/1a5ab86cfc6564ce4fea76cd6c113a87cef70fd9))
+
+
+
+
+
 # [2.0.0-next.19](https://github.com/LeapFE/luban/compare/v2.0.0-next.18...v2.0.0-next.19) (2021-04-22)
 
 
