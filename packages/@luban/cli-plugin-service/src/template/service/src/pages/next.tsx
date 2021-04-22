@@ -3,7 +3,7 @@ import { EnhancedRouteComponentProps } from "@/.luban";
 
 import { Welcome } from "@/components/Welcome";
 
-class Next extends React.Component<EnhancedRouteComponentProps, {}> {
+class Next extends React.Component<EnhancedRouteComponentProps, unknown> {
   constructor(props: EnhancedRouteComponentProps) {
     super(props);
   }

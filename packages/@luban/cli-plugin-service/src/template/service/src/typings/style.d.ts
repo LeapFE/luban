@@ -1,4 +1,6 @@
-declare module "*.css";
-declare module "*.less";
-declare module "*.scss";
-declare module "*.sass";
+declare module "*.css" {
+  export default {} as Record<string, string>;
+}
+declare module "*.less" {
+  export default {} as Record<string, string>;
+}

@@ -75,14 +75,16 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
 
   api.extendPackage({
     devDependencies: {
-      eslint: "^6.8.0",
+      eslint: "^7.24.0",
       "eslint-webpack-plugin": "^2.5.4",
-      "eslint-config-prettier": "^6.15.0",
-      "eslint-plugin-react": "^7.22.0",
+      "eslint-config-prettier": "^8.2.0",
+      "eslint-plugin-react": "^7.23.2",
       "eslint-plugin-react-hooks": "^4.2.0",
       "eslint-plugin-import": "^2.22.1",
       "eslint-config-airbnb": "^18.2.1",
       "eslint-plugin-jsx-a11y": "^6.4.1",
+      "@typescript-eslint/parser": "^4.22.0",
+      "@typescript-eslint/eslint-plugin": "^4.22.0",
     },
   });
 
@@ -93,10 +95,6 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
       "format:ts": `prettier --write '${sourceDir}/**/*.{ts,tsx}'`,
       "format:check:ts": `prettier --check '${sourceDir}/**/*.{ts,tsx}'`,
     },
-    devDependencies: {
-      "@typescript-eslint/parser": "^2.30.0",
-      "@typescript-eslint/eslint-plugin": "^2.30.0",
-    },
   });
 
   eslintExtends.push(
@@ -105,8 +103,6 @@ export function eslintConfigAirbnb(api: GeneratorAPI, options: Required<RootOpti
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:import/typescript",
     "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
   );
 
   parserOptions.set("project", ["./tsconfig.json"]);
