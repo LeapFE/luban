@@ -36,6 +36,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "^2.0.0-next.19"
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.19",
+    "eslint-webpack-plugin": "^2.5.4"
   }
 }

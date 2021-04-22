@@ -70,7 +70,7 @@ export function eslintConfigStandard(api: GeneratorAPI, options: Required<RootOp
   api.extendPackage({
     devDependencies: {
       eslint: "^6.8.0",
-      "eslint-loader": "^4.0.2",
+      "eslint-webpack-plugin": "^2.5.4",
       "eslint-config-prettier": "^6.15.0",
       "eslint-plugin-react": "^7.22.0",
       "eslint-plugin-react-hooks": "^4.2.0",

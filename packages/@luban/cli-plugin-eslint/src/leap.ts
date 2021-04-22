@@ -26,7 +26,6 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
     },
     devDependencies: {
       eslint: "^6.8.0",
-      "eslint-loader": "^4.0.2",
       "eslint-config-leapfe": "^1.0.0",
       "eslint-config-prettier": "^6.15.0",
       "eslint-plugin-react": "^7.22.0",
@@ -37,6 +36,14 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
       "@typescript-eslint/eslint-plugin": "^2.30.0",
     },
   });
+
+  if (options.type === "web") {
+    api.extendPackage({
+      devDependencies: {
+        "eslint-webpack-plugin": "^2.5.4",
+      },
+    });
+  }
 
   api.render("./template/leap", {
     eslintExtends: JSON.stringify(eslintExtends),
