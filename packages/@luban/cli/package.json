@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli",
-  "version": "2.0.0-next.21",
+  "version": "2.0.0-next.22",
   "description": "a scaffold to create a react app",
   "bin": {
     "luban": "bin/index.js"
@@ -41,7 +41,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "dependencies": {
-    "@luban-cli/cli-shared-utils": "^2.0.0-next.21",
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.22",
     "chalk": "^3.0.0",
     "commander": "^6.2.0",
     "deepmerge": "^4.2.2",
@@ -65,7 +65,7 @@
     "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^2.0.0-next.21",
+    "@luban-cli/cli-shared-types": "^2.0.0-next.22",
     "@types/didyoumean": "^1.2.0",
     "@types/ejs": "^3.0.0",
     "@types/inquirer": "^6.5.0",
