@@ -196,7 +196,7 @@ function isUseStore(ast: type.File): boolean {
     ObjectProperty: (path) => {
       const key = path.node.key as type.Identifier;
 
-      if (key.name === "models" && type.isObjectExpression(path.node.value)) {
+      if (key.name === "models" && type.isIdentifier(path.node.value)) {
         useStore = true;
       }
     },

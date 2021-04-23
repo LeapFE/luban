@@ -1,6 +1,6 @@
 {
   // More tsconfig info see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/.luban/**/*"],
   "files": ["luban.config.ts"],
   "exclude": ["public", "node_modules", "dist", "build"],
 
