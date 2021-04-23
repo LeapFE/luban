@@ -14,7 +14,7 @@ export default class Eslint implements ConfigPluginInstance {
         .use(EslintWebpackPlugin, [
           {
             context: api.getContext(),
-            extensions: ["ts", ".tsx"],
+            extensions: ["ts", "tsx"],
             exclude: "node_modules",
           },
         ])
