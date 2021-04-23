@@ -28,6 +28,7 @@ import {
   CliArgs,
 } from "../definitions";
 import { ProjectConfig, MockConfig } from "../main";
+import { produce } from "./produce";
 
 class Service {
   private readonly _context: string;
@@ -136,6 +137,10 @@ class Service {
     }
 
     const mode: string = args.mode || (name === "build" ? "production" : "development");
+
+    if (name === "serve" || name === "build") {
+      await produce();
+    }
 
     await this.init(mode, name, args, rawArgv);
 

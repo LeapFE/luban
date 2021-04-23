@@ -95,9 +95,14 @@ export async function produceRoutesAndStore(context: string) {
   await produceEntry(useStore, context);
 }
 
-async function produce() {
+async function produce(force: boolean = false) {
   const context = process.cwd();
-  await produceBoilerplate(context);
+
+  const isLubanDirExists = fs.existsSync(context + "/src/.luban");
+
+  if (!isLubanDirExists || force) {
+    await produceBoilerplate(context);
+  }
 
   await produceRoutesAndStore(context);
 }

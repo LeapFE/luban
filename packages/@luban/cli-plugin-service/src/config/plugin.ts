@@ -62,7 +62,10 @@ class Plugin implements ConfigPluginInstance {
 
       const htmlPluginOptions: HtmlPluginOptions = {
         template: htmlPath,
-        templateParameters: resolveClientEnv(projectConfig.publicPath, true),
+        templateParameters: {
+          ...resolveClientEnv(projectConfig.publicPath, true),
+          title: projectConfig.ssr ? "[Client] React App" : "React App",
+        },
         minify: isProduction
           ? {
               removeComments: true,
@@ -148,16 +151,14 @@ class Plugin implements ConfigPluginInstance {
 
       if (isProduction) {
         if ((args as ParsedArgs<BuildCliArgs>).report) {
-          if (Array.isArray(webpackConfig.plugins)) {
-            webpackConfig.plugins.push(
-              new BundleAnalyzerPlugin({
-                logLevel: "error",
-                openAnalyzer: false,
-                analyzerMode: (args as ParsedArgs<BuildCliArgs>).report ? "static" : "disabled",
-                reportFilename: "report.html",
-              }),
-            );
-          }
+          webpackConfig.plugin("bundle-analyzer").use(BundleAnalyzerPlugin, [
+            {
+              logLevel: "error",
+              openAnalyzer: false,
+              analyzerMode: (args as ParsedArgs<BuildCliArgs>).report ? "static" : "disabled",
+              reportFilename: "report.html",
+            },
+          ]);
         }
       }
     });

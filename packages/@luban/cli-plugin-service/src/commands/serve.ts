@@ -5,7 +5,6 @@ import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import chalk from "chalk";
 import { openBrowser, log, error, info, warn } from "@luban-cli/cli-shared-utils";
-import { pathExistsSync } from "fs-extra";
 import http from "http";
 import express from "express";
 import Loadable from "react-loadable";
@@ -30,7 +29,6 @@ import {
 import { ProjectConfig } from "../main";
 import { prepareUrls, UrlList } from "../utils/prepareURLs";
 import { setupMockServer } from "../utils/setupMockServer";
-import { produceBoilerplate, produceRoutesAndStore } from "../lib/produce";
 import {
   delay,
   getModuleFromString,
@@ -410,14 +408,6 @@ class Serve {
     await cleanDest(context, this.pluginApi.resolve(this.projectConfig.outputDir));
 
     await this.init();
-
-    const isLubanDirExists = pathExistsSync(context + "/src/.luban");
-
-    if (!isLubanDirExists) {
-      await produceBoilerplate(context);
-    }
-
-    await produceRoutesAndStore(context);
 
     await delay(1000);
 

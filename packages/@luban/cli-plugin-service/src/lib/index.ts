@@ -18,7 +18,7 @@ const command = args._[0];
   try {
     switch (command) {
       case "produce":
-        await produce();
+        await produce(true);
         break;
       case "build":
       case "inspect":
@@ -49,7 +49,6 @@ const command = args._[0];
 
           info(filepath + " was changed");
 
-          console.log();
           info("Try to restart server...");
 
           serve.kill();

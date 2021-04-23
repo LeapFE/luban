@@ -2,13 +2,12 @@ import { log, done, info } from "@luban-cli/cli-shared-utils";
 import webpack = require("webpack");
 import path from "path";
 import chalk from "chalk";
-import fs from "fs-extra";
 
 import { formatStats, logStatsErrorsAndWarnings } from "../utils/formatStats";
 import { delay } from "../utils/serverRender";
 import { cleanDest } from "../utils/clean";
+import { buildServerSideDeployFIle } from "../utils/buildServerSideDeployFile";
 
-import { produceBoilerplate, produceRoutesAndStore } from "../lib/produce";
 import { CommandPluginAPI } from "../lib/PluginAPI";
 import {
   BuildCliArgs,
@@ -110,49 +109,12 @@ class Build {
     });
   }
 
-  private async buildDeploy() {
-    return new Promise<void>((resolve, reject) => {
-      const entry = path.join(this.outputDir, "/server.js");
-      webpack(
-        {
-          mode: "development",
-          entry,
-          target: "node",
-          output: {
-            path: this.outputDir,
-            filename: "server.js",
-            libraryTarget: "commonjs2",
-          },
-          optimization: {
-            splitChunks: false,
-          },
-        },
-        (err) => {
-          if (err) {
-            console.log(err);
-            reject();
-            return;
-          }
-
-          resolve();
-        },
-      );
-    });
-  }
-
   public async start() {
     const ctx = this.api.getContext();
 
     info(`clean dest files...`);
 
     await cleanDest(ctx, this.outputDir);
-
-    const isLubanDirExists = fs.pathExistsSync(ctx + "src/.luban");
-    if (!isLubanDirExists) {
-      await produceBoilerplate(ctx);
-    }
-
-    await produceRoutesAndStore(ctx);
 
     await delay(1000);
 
@@ -167,30 +129,9 @@ class Build {
     await Promise.all(queue.map((q) => q.call(this)));
 
     console.log();
-    info("generate server side deploy file");
-
-    const template = fs.readFileSync(this.outputDir + "/server.ejs", { encoding: "utf-8" });
-
-    fs.writeFileSync(
-      this.outputDir + "/server_template.js",
-      `module.exports = ${JSON.stringify(template)}`,
-      {
-        encoding: "utf-8",
-      },
-    );
 
     if (this.projectConfig.ssr) {
-      fs.copyFileSync(path.resolve(__dirname, "../utils/server.js"), this.outputDir + "/server.js");
-      fs.copyFileSync(
-        path.resolve(__dirname, "../utils/server.d.ts"),
-        this.outputDir + "/server.d.ts",
-      );
-
-      await this.buildDeploy();
-
-      fs.removeSync(this.outputDir + "/server_template.js");
-      fs.removeSync(this.outputDir + "/server-bundle.js");
-      fs.removeSync(this.outputDir + "/server.ejs");
+      await buildServerSideDeployFIle(this.outputDir);
     }
 
     console.log();
