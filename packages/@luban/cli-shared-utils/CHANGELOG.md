@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.24](https://github.com/leapFE/luban/compare/v2.0.0-next.23...v2.0.0-next.24) (2021-04-25)
+
+**Note:** Version bump only for package @luban-cli/cli-shared-utils
+
+
+
+
+
 # [2.0.0-next.23](https://github.com/leapFE/luban/compare/v2.0.0-next.22...v2.0.0-next.23) (2021-04-25)
 
 **Note:** Version bump only for package @luban-cli/cli-shared-utils

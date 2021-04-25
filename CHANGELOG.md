@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.24](https://github.com/LeapFE/luban/compare/v2.0.0-next.23...v2.0.0-next.24) (2021-04-25)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** correct generate template(index.html) ([e239571](https://github.com/LeapFE/luban/commit/e2395718e3d090bcd0ab059bcb68bbb5507b9f5f))
+
+
+
+
+
 # [2.0.0-next.23](https://github.com/LeapFE/luban/compare/v2.0.0-next.22...v2.0.0-next.23) (2021-04-25)
 
 
