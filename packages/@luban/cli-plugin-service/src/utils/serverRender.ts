@@ -5,12 +5,19 @@ import ejs, { Data, Options as EJSOptions } from "ejs";
 import fs from "fs";
 import path from "path";
 import globby from "globby";
+import https from "https";
 
 import { ServerBundle } from "../definitions";
 
+// https://github.com/node-fetch/node-fetch/issues/19
+const agent = new https.Agent({ rejectUnauthorized: false });
+
 export const getTemplate = (url: string): Promise<string> => {
+  const useHttps = url.startsWith("https://");
+  const options = useHttps ? { agent } : {};
+
   return new Promise((resolve, reject) => {
-    fetch(url)
+    fetch(url, options)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((response: any) => {
         if (response.status >= 400) {

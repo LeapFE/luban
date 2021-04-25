@@ -5,7 +5,6 @@ import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import chalk from "chalk";
 import { openBrowser, log, error, info, warn } from "@luban-cli/cli-shared-utils";
-import http from "http";
 import express from "express";
 import Loadable from "react-loadable";
 import MemoryFS from "memory-fs";
@@ -16,6 +15,8 @@ import ReactDOMServer from "react-dom/server";
 import ejs from "ejs";
 import Helmet from "react-helmet";
 import serialize from "serialize-javascript";
+import https from "https";
+import http from "http";
 
 import { CommandPluginAPI } from "../lib/PluginAPI";
 import {
@@ -36,19 +37,23 @@ import {
   generateInjectedTag,
 } from "../utils/serverRender";
 import { cleanDest } from "../utils/clean";
+import { getCertificate } from "../utils/getCertificate";
+
+type ServerSideHttpsOptions = { key?: Buffer; cert?: Buffer; spdy: { protocols: string[] } };
 
 const DEFAULT_HOST = "0.0.0.0";
+const DEFAULT_ENABLED_HTTPS = false;
 
 const defaultClientServerConfig = {
   host: DEFAULT_HOST,
   port: 8080,
-  https: false,
+  https: DEFAULT_ENABLED_HTTPS,
 };
 
 const defaultSSRServerConfig = {
   host: DEFAULT_HOST,
   port: 3000,
-  https: false,
+  https: DEFAULT_ENABLED_HTTPS,
 };
 
 class Serve {
@@ -59,7 +64,7 @@ class Serve {
   private CSRUrlList: UrlList | null;
   private SSRUrlList: UrlList | null;
   private csrServer: WebpackDevServer | null;
-  private ssrServer: http.Server | null;
+  private ssrServer: http.Server | https.Server | null;
 
   private clientSideHost: string;
   private clientSidePort: number;
@@ -69,12 +74,17 @@ class Serve {
 
   private publicUrl: string | null;
 
+  private useHttps: boolean;
   private protocol: "https" | "http";
 
   private clientSideServerOptions: WebpackDevServer.Configuration;
 
   private clientSideWebpackConfig: webpack.Configuration | undefined;
   private serverSideWebpackConfig: webpack.Configuration | undefined;
+
+  private serverSideApp: null | Application;
+  private serverSideHttpsOptions: ServerSideHttpsOptions;
+  private serverSideServer: https.Server | http.Server | null;
 
   constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<ServeCliArgs>) {
     this.pluginApi = api;
@@ -90,20 +100,48 @@ class Serve {
       projectConfig.devServer,
     );
 
-    const useHttps =
-      args.https || this.clientSideServerOptions.https || defaultClientServerConfig.https;
-    this.protocol = useHttps ? "https" : "http";
+    this.useHttps =
+      args.https ||
+      (this.clientSideServerOptions.https as boolean) ||
+      defaultClientServerConfig.https;
+
+    this.protocol = this.useHttps ? "https" : "http";
+
+    this.serverSideHttpsOptions = { spdy: { protocols: ["h2", "http/1.1"] } };
+
+    this.serverSideApp = null;
+    this.serverSideServer = null;
+  }
+
+  private preparePorts() {
+    const ports = [defaultClientServerConfig.port, defaultSSRServerConfig.port];
+
+    if (typeof this.commandArgs.port === "string") {
+      const commandPorts = this.commandArgs.port.split(" ");
+      if (typeof Number(commandPorts[0]) === "number") {
+        ports[0] = Number(commandPorts[0]);
+      }
+
+      if (typeof Number(commandPorts[1]) === "number") {
+        ports[1] = Number(commandPorts[1]) || defaultSSRServerConfig.port;
+      }
+    } else if (typeof this.commandArgs.port === "number") {
+      ports[0] = Number(this.commandArgs.port || defaultClientServerConfig.port);
+    }
+
+    return ports;
   }
 
   private async init() {
+    const ports = this.preparePorts();
+
     this.clientSideHost =
       this.commandArgs.host || this.clientSideServerOptions.host || defaultClientServerConfig.host;
 
-    const clientSidePort =
-      this.commandArgs.port || this.clientSideServerOptions.port || defaultClientServerConfig.port;
+    const clientSidePort = this.clientSideServerOptions.port || ports[0];
 
     this.serverSideHost = this.clientSideHost;
-    const serverSidePort = defaultSSRServerConfig.port;
+    const serverSidePort = ports[1];
 
     this.clientSidePort = await portfinder.getPortPromise({ port: Number(clientSidePort) });
     this.serverSidePort = await portfinder.getPortPromise({ port: Number(serverSidePort) });
@@ -118,6 +156,28 @@ class Serve {
     this.CSRUrlList = prepareUrls(this.protocol, this.clientSideHost, this.clientSidePort);
 
     this.SSRUrlList = prepareUrls(this.protocol, this.serverSideHost, this.serverSidePort);
+  }
+
+  private setupServerSideApp() {
+    this.serverSideApp = express();
+  }
+
+  private setupServerSideHttps() {
+    if (this.useHttps) {
+      const fakeCert = getCertificate(this.pluginApi.getContext());
+      this.serverSideHttpsOptions.key = fakeCert;
+      this.serverSideHttpsOptions.cert = fakeCert;
+    }
+  }
+
+  private createServerSideServer() {
+    if (this.serverSideApp) {
+      if (this.useHttps) {
+        this.serverSideServer = https.createServer(this.serverSideHttpsOptions, this.serverSideApp);
+      } else {
+        this.serverSideServer = http.createServer(this.serverSideApp);
+      }
+    }
   }
 
   private async startClientSide() {
@@ -226,9 +286,14 @@ class Serve {
       throw new Error("server side webpack config unable resolved; command [server]");
     }
 
+    this.setupServerSideApp();
+    this.setupServerSideHttps();
+    this.createServerSideServer();
+
     const mfs = new MemoryFS();
 
-    const server = express();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const server = this.serverSideApp!;
 
     const compiler = webpack(this.serverSideWebpackConfig);
 
@@ -287,6 +352,7 @@ class Serve {
       ws: true,
       target: this.CSRUrlList?.localUrlForBrowser,
       logLevel: "silent",
+      secure: false,
     });
 
     server.use(this.projectConfig.publicPath, assetsProxy);
@@ -360,7 +426,7 @@ class Serve {
     });
 
     server.use([
-      function(err, _, res, _next) {
+      function (err, _, res, _next) {
         console.log(err.stack);
         error("Something broke!", "Server Side rendering");
 
@@ -377,25 +443,33 @@ class Serve {
           });
           return;
         }
-
-        if (isFirstSSRCompile) {
-          isFirstSSRCompile = false;
-
-          console.log();
-          console.log(`  Server Side Rendering running at:`);
-          console.log(`  - Local:   ${chalk.cyan(this.SSRUrlList?.localUrlForTerminal || "")}`);
-          console.log(`  - Network: ${chalk.cyan(this.SSRUrlList?.lanUrlForTerminal || "")}`);
-          console.log();
-
-          resolve();
-        }
       });
 
       Loadable.preloadAll().then(() => {
-        this.ssrServer = server.listen(defaultSSRServerConfig.port, defaultSSRServerConfig.host);
+        if (this.serverSideServer) {
+          this.ssrServer = this.serverSideServer.listen(
+            this.serverSidePort,
+            this.serverSideHost,
+            () => {
+              if (isFirstSSRCompile) {
+                isFirstSSRCompile = false;
 
-        this.ssrServer.on("upgrade", assetsProxy.upgrade as (...args: unknown[]) => void);
-        this.ssrServer.on("error", (error) => reject(error));
+                console.log();
+                console.log(`  Server Side Rendering running at:`);
+                console.log(
+                  `  - Local:   ${chalk.cyan(this.SSRUrlList?.localUrlForTerminal || "")}`,
+                );
+                console.log(`  - Network: ${chalk.cyan(this.SSRUrlList?.lanUrlForTerminal || "")}`);
+                console.log();
+
+                resolve();
+              }
+            },
+          );
+
+          this.ssrServer.on("upgrade", assetsProxy.upgrade as (...args: unknown[]) => void);
+          this.ssrServer.on("error", (error) => reject(error));
+        }
       });
     });
   }
@@ -482,4 +556,5 @@ class ServeWrapper implements CommandPluginInstance<ServeCliArgs> {
     }
   }
 }
+
 export default ServeWrapper;

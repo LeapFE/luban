@@ -2,6 +2,7 @@ import { info } from "@luban-cli/cli-shared-utils";
 import path from "path";
 import fs from "fs-extra";
 import webpack = require("webpack");
+import nodeExternals from "webpack-node-externals";
 
 function buildDeployFile(outputDir: string) {
   return new Promise<void>((resolve, reject) => {
@@ -19,6 +20,7 @@ function buildDeployFile(outputDir: string) {
         optimization: {
           splitChunks: false,
         },
+        externals: [nodeExternals({ allowlist: /\.(css|less)$/ })],
       },
       (err) => {
         if (err) {

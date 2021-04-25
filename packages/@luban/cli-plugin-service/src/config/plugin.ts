@@ -29,11 +29,11 @@ class Plugin implements ConfigPluginInstance {
     const isProduction = process.env.NODE_ENV === "production";
 
     const filename = `${projectConfig.assetsDir.styles}/[name]${
-      isProduction ? ".[hash:8]" : ""
+      isProduction ? "-[hash:8]" : ""
     }.css`;
 
     const chunkFilename = `${projectConfig.assetsDir.styles}/[name]${
-      isProduction ? ".[hash:8]" : ""
+      isProduction ? "-[hash:8].chunk" : ""
     }.css`;
 
     const extractOptions = {
@@ -148,19 +148,6 @@ class Plugin implements ConfigPluginInstance {
           },
         ]);
       }
-
-      if (isProduction) {
-        if ((args as ParsedArgs<BuildCliArgs>).report) {
-          webpackConfig.plugin("bundle-analyzer").use(BundleAnalyzerPlugin, [
-            {
-              logLevel: "error",
-              openAnalyzer: false,
-              analyzerMode: (args as ParsedArgs<BuildCliArgs>).report ? "static" : "disabled",
-              reportFilename: "report.html",
-            },
-          ]);
-        }
-      }
     });
 
     api.chainWebpack("server", (webpackConfig) => {
@@ -175,11 +162,21 @@ class Plugin implements ConfigPluginInstance {
         .use(WebpackBar, [{ name: `[Server] ${options.projectName}`, color: "#41b883" }]);
     });
 
-    api.chainAllWebpack((webpackConfig) => {
-      webpackConfig
-        .plugin("extract-css")
-        .use(MiniCssExtractPlugin, [extractOptions])
-        .end();
+    api.chainAllWebpack((webpackConfig, id) => {
+      webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]).end();
+
+      if (isProduction) {
+        if ((args as ParsedArgs<BuildCliArgs>).report) {
+          webpackConfig.plugin("bundle-analyzer").use(BundleAnalyzerPlugin, [
+            {
+              logLevel: "error",
+              openAnalyzer: false,
+              analyzerMode: (args as ParsedArgs<BuildCliArgs>).report ? "static" : "disabled",
+              reportFilename: `report-${id}.html`,
+            },
+          ]);
+        }
+      }
 
       if (!isProduction) {
         webpackConfig.plugin("hmr").use(HotModuleReplacementPlugin);

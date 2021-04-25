@@ -31,6 +31,12 @@ class Optimization implements ConfigPluginInstance {
                 priority: -10,
                 enforce: true,
               },
+              styles: {
+                name: "styles",
+                test: /\.css$/,
+                chunks: "all",
+                enforce: true,
+              },
             },
           })
           .runtimeChunk("single")

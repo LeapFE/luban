@@ -78,10 +78,10 @@ export type WebpackConfiguration = webpack.Configuration & {
   devServer?: WebpackDevServer.Configuration;
 };
 
-export type WebpackChainCallback = (config: Config) => void;
+export type WebpackChainCallback = (config: Config, id: WebpackConfigName) => void;
 
 export type WebpackRawConfigCallback =
-  | ((config: webpack.Configuration) => webpack.Configuration | void)
+  | ((config: webpack.Configuration, id: WebpackConfigName) => webpack.Configuration | void)
   | webpack.Configuration;
 
 export type CommandCallback = () => void;
@@ -97,7 +97,7 @@ export type CommandList = Record<
 export type BuiltinWebpackConfigName = "public";
 export type WebpackConfigName = "client" | "server";
 export type WebpackConfigItem = {
-  id: string;
+  id: WebpackConfigName | BuiltinWebpackConfigName;
   config: Config;
   chainCallback: WebpackChainCallback[];
   rawCallback: WebpackRawConfigCallback[];

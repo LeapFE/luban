@@ -4,13 +4,24 @@ import {
   ConfigPluginInstance,
   ConfigPluginApplyCallbackArgs,
   UrlLoaderOptions,
+  WebpackConfigName,
 } from "../definitions";
 
 class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const { api, projectConfig } = args;
+    const isProduction = process.env.NODE_ENV === "production";
 
-    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
+    const {
+      css: { sourceMap, loaderOptions = {} },
+    } = projectConfig;
+
+    const cssLoaderOptions = {
+      sourceMap,
+      ...loaderOptions.css,
+    };
+
+    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
       return {
         limit: projectConfig.assetsLimit,
         fallback: {
@@ -24,21 +35,13 @@ class Module implements ConfigPluginInstance {
       };
     };
 
-    const isProduction = process.env.NODE_ENV === "production";
-
-    const {
-      css: { sourceMap, loaderOptions = {} },
-    } = projectConfig;
-
-    const miniCssOptions = {
-      hmr: !isProduction,
-      reloadAll: !isProduction,
-      ...loaderOptions.miniCss,
-    };
-
-    const cssLoaderOptions = {
-      sourceMap,
-      ...loaderOptions.css,
+    const getMiniCssOptions = (configId: WebpackConfigName) => {
+      return {
+        hmr: !isProduction,
+        reloadAll: !isProduction,
+        emit: configId === "client",
+        ...loaderOptions.miniCss,
+      };
     };
 
     api.chainWebpack("server", (webpackConfig) => {
@@ -69,7 +72,7 @@ class Module implements ConfigPluginInstance {
         .end();
     });
 
-    api.chainAllWebpack((webpackConfig) => {
+    api.chainAllWebpack((webpackConfig, id) => {
       webpackConfig.module
         .rule("images")
         .test(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/)
@@ -110,7 +113,7 @@ class Module implements ConfigPluginInstance {
         .test(/\.css$/)
         .use("extract-css")
         .loader(MiniCssExtractPlugin.loader)
-        .options(miniCssOptions)
+        .options(getMiniCssOptions(id))
         .end();
 
       cssRule
@@ -129,7 +132,7 @@ class Module implements ConfigPluginInstance {
         .test(/\.less$/)
         .use("extract-css")
         .loader(MiniCssExtractPlugin.loader)
-        .options(miniCssOptions)
+        .options(getMiniCssOptions(id))
         .end();
 
       lessRule

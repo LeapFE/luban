@@ -217,7 +217,11 @@ class Service {
     const configQueue = this.webpackConfigQueue.get(name);
 
     configQueue?.chainCallback.forEach((fn) => {
-      fn(configQueue.config);
+      if (configQueue?.id === "public") {
+        return;
+      }
+
+      fn(configQueue.config, configQueue.id);
     });
 
     return configQueue?.config;
@@ -233,8 +237,12 @@ class Service {
       const configQueue = this.webpackConfigQueue.get(name);
 
       configQueue?.rawCallback.forEach((fn) => {
+        if (configQueue?.id === "public") {
+          return;
+        }
+
         if (typeof fn === "function") {
-          const result = fn(config);
+          const result = fn(config, configQueue.id);
           if (result) {
             config = merge(config, result);
           }
