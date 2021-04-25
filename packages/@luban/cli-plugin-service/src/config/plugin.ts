@@ -84,12 +84,20 @@ class Plugin implements ConfigPluginInstance {
 
       webpackConfig.plugin("client-html").use(HtmlWebpackPlugin, [htmlPluginOptions]);
 
-      webpackConfig.plugin("server-html").use(HtmlWebpackPlugin, [
-        {
-          filename: "server.ejs",
-          template: path.resolve(__dirname, "../template/dynamic/server.template.ejs"),
-        },
-      ]);
+      if (projectConfig.ssr) {
+        webpackConfig.plugin("server-html").use(HtmlWebpackPlugin, [
+          {
+            filename: "server.ejs",
+            template: path.resolve(__dirname, "../template/dynamic/server.template.ejs"),
+          },
+        ]);
+
+        webpackConfig
+          .plugin("manifest")
+          .use(WebpackManifestPlugin, [
+            { fileName: "asset-manifest.json", publicPath: projectConfig.publicPath },
+          ]);
+      }
 
       const publicDir = api.resolve("public");
       if (fs.pathExistsSync(publicDir)) {
@@ -110,12 +118,6 @@ class Plugin implements ConfigPluginInstance {
           },
         ]);
       }
-
-      webpackConfig
-        .plugin("manifest")
-        .use(WebpackManifestPlugin, [
-          { fileName: "asset-manifest.json", publicPath: projectConfig.publicPath },
-        ]);
 
       webpackConfig
         .plugin("webpack-bar")
@@ -163,7 +165,10 @@ class Plugin implements ConfigPluginInstance {
     });
 
     api.chainAllWebpack((webpackConfig, id) => {
-      webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]).end();
+      webpackConfig
+        .plugin("extract-css")
+        .use(MiniCssExtractPlugin, [extractOptions])
+        .end();
 
       if (isProduction) {
         if ((args as ParsedArgs<BuildCliArgs>).report) {
