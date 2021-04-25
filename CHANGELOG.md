@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.23](https://github.com/LeapFE/luban/compare/v2.0.0-next.22...v2.0.0-next.23) (2021-04-25)
+
+
+### Bug Fixes
+
+* **eslint:** fix 'EslintWebpackPlugin' extensions config option ([432569a](https://github.com/LeapFE/luban/commit/432569ab0907290beb331d5077029ec87db8150e))
+
+
+### Features
+
+* **cli-plugin-service:** produce (store/router/boilerplate)files before resolve plugins ([4dbf97d](https://github.com/LeapFE/luban/commit/4dbf97deb4797aa61de0abeedfc1e4648b7150c4))
+* **cli-plugin-service:** support https when enable ssr ([78b0a96](https://github.com/LeapFE/luban/commit/78b0a96501a2ff7953610c1e3da1f765825a93f3))
+
+
+
+
+
 # [2.0.0-next.22](https://github.com/LeapFE/luban/compare/v2.0.0-next.21...v2.0.0-next.22) (2021-04-22)
 
 
