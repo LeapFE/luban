@@ -10,8 +10,6 @@ import {
 class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const { api, projectConfig } = args;
-    const isProduction = process.env.NODE_ENV === "production";
-
     const {
       css: { sourceMap, loaderOptions = {} },
     } = projectConfig;
@@ -21,7 +19,7 @@ class Module implements ConfigPluginInstance {
       ...loaderOptions.css,
     };
 
-    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
+    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
       return {
         limit: projectConfig.assetsLimit,
         fallback: {
@@ -37,8 +35,6 @@ class Module implements ConfigPluginInstance {
 
     const getMiniCssOptions = (configId: WebpackConfigName) => {
       return {
-        hmr: !isProduction,
-        reloadAll: !isProduction,
         emit: configId === "client",
         ...loaderOptions.miniCss,
       };
