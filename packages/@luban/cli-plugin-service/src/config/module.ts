@@ -6,6 +6,7 @@ import {
   UrlLoaderOptions,
   WebpackConfigName,
 } from "../definitions";
+import { cleanAssetPath } from "../utils/cleanAssetPath";
 
 class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
@@ -26,7 +27,7 @@ class Module implements ConfigPluginInstance {
           loader: "file-loader",
           options: {
             publicPath: projectConfig.publicPath,
-            name: `${dir}/[name].[hash:8].[ext]`,
+            name: cleanAssetPath(`${dir}/[name].[hash:8].[ext]`),
             context: api.getContext(),
           },
         },

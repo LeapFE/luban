@@ -36,7 +36,7 @@ import {
   getTemplate,
   generateInjectedTag,
 } from "../utils/serverRender";
-import { cleanDest } from "../utils/clean";
+import { cleanDest } from "../utils/cleanDest";
 import { getCertificate } from "../utils/getCertificate";
 
 type ServerSideHttpsOptions = { key?: Buffer; cert?: Buffer; spdy: { protocols: string[] } };
@@ -476,8 +476,6 @@ class Serve {
 
   public async start() {
     const context = this.pluginApi.getContext();
-
-    info(`clean dest files...`);
 
     await cleanDest(context, this.pluginApi.resolve(this.projectConfig.outputDir));
 

@@ -21,6 +21,7 @@ import {
   BuildCliArgs,
   ParsedArgs,
 } from "../definitions";
+import { cleanAssetPath } from "../utils/cleanAssetPath";
 
 class Plugin implements ConfigPluginInstance {
   apply(params: ConfigPluginApplyCallbackArgs) {
@@ -37,8 +38,8 @@ class Plugin implements ConfigPluginInstance {
     }.css`;
 
     const extractOptions = {
-      filename,
-      chunkFilename,
+      filename: cleanAssetPath(filename),
+      chunkFilename: cleanAssetPath(chunkFilename),
     };
 
     const outputDir = api.resolve(projectConfig.outputDir);

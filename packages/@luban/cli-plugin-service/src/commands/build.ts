@@ -5,7 +5,7 @@ import chalk from "chalk";
 
 import { formatStats, logStatsErrorsAndWarnings } from "../utils/formatStats";
 import { delay } from "../utils/serverRender";
-import { cleanDest } from "../utils/clean";
+import { cleanDest } from "../utils/cleanDest";
 import { buildServerSideDeployFIle } from "../utils/buildServerSideDeployFile";
 
 import { CommandPluginAPI } from "../lib/PluginAPI";
@@ -52,14 +52,16 @@ class Build {
       webpack(webpackConfig, (err, stats) => {
         // Fatal webpack errors (wrong configuration, etc)
         if (err) {
-          return reject(err);
+          reject(err);
+          return;
         }
 
         logStatsErrorsAndWarnings(stats);
 
         // Compilation errors (missing modules, syntax errors, eslint-errors. etc)
         if (stats.hasErrors()) {
-          return reject("Build failed with some Compilation errors occurred.");
+          reject("Build failed with some Compilation errors occurred.");
+          return;
         }
 
         const targetDirShort = path.relative(this.api.getContext(), this.outputDir);
@@ -88,20 +90,18 @@ class Build {
       }
 
       webpack(webpackConfig, (err, stats) => {
-        if (err || stats.hasErrors()) {
-          reject();
+        if (err) {
+          reject(err);
           return;
         }
 
-        const targetDirShort = path.relative(this.api.getContext(), this.outputDir);
+        if (stats.hasErrors()) {
+          reject("Build failed with some Compilation errors occurred.");
+          return;
+        }
 
-        log(formatStats(stats, targetDirShort, this.api));
         console.log();
-        done(
-          `Server Build complete. The file ${chalk.cyan(
-            `${targetDirShort}/server.js`,
-          )} is ready to be deployed.`,
-        );
+        done("Server side Build complete");
         console.log();
 
         resolve();
@@ -111,8 +111,6 @@ class Build {
 
   public async start() {
     const ctx = this.api.getContext();
-
-    info(`clean dest files...`);
 
     await cleanDest(ctx, this.outputDir);
 
@@ -135,7 +133,7 @@ class Build {
     }
 
     console.log();
-    info("Done 🎉");
+    done("Build Done 🎉");
 
     ["SIGINT", "SIGTERM"].forEach((signal) => {
       process.on(signal, () => {

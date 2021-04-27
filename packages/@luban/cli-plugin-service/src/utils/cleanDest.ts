@@ -1,8 +1,10 @@
 import fs from "fs-extra";
 import path from "path";
-import { error } from "@luban-cli/cli-shared-utils";
+import { error, info } from "@luban-cli/cli-shared-utils";
 
 export async function cleanDest(context: string, outputDir: string) {
+  info(`clean dest files...`);
+
   const _path = path.resolve(context, outputDir);
 
   try {

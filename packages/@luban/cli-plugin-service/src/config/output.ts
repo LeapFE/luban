@@ -1,13 +1,5 @@
 import { ConfigPluginInstance, ConfigPluginApplyCallbackArgs } from "../definitions";
-
-function getScriptsDir(dir: string = ""): string {
-  const adaptedDir = dir.replace(/^\/|\/$|\s+/g, "");
-  if (adaptedDir === "") {
-    return "";
-  }
-
-  return `${adaptedDir}/`;
-}
+import { cleanAssetPath } from "../utils/cleanAssetPath";
 
 class Output implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
@@ -15,13 +7,17 @@ class Output implements ConfigPluginInstance {
 
     const outputDir = api.resolve(projectConfig.outputDir);
 
-    const scriptsDir = getScriptsDir(projectConfig.assetsDir.scripts);
+    const scriptsDir = projectConfig.assetsDir.scripts;
 
     const baseFilename = "[name]-[hash:8].js";
-    const filename = commandName === "build" ? `${scriptsDir}${baseFilename}` : baseFilename;
+    const filename =
+      commandName === "build" ? cleanAssetPath(`${scriptsDir}/${baseFilename}`) : baseFilename;
+
     const baseChunkFilename = "[name]-[hash:8].chunk.js";
     const chunkFilename =
-      commandName === "build" ? `${scriptsDir}${baseChunkFilename}` : baseChunkFilename;
+      commandName === "build"
+        ? cleanAssetPath(`${scriptsDir}/${baseChunkFilename}`)
+        : baseChunkFilename;
 
     api.chainWebpack("server", (webpackConfig) => {
       webpackConfig.output

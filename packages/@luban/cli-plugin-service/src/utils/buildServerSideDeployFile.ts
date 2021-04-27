@@ -36,7 +36,7 @@ function buildDeployFile(outputDir: string) {
 }
 
 export async function buildServerSideDeployFIle(outputDir: string) {
-  info("generate server side deploy file");
+  info("Building server side deploy file...");
 
   const template = fs.readFileSync(outputDir + "/server.ejs", { encoding: "utf-8" });
 
