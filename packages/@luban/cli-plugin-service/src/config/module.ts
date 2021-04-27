@@ -12,12 +12,11 @@ class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const { api, projectConfig } = args;
     const {
-      css: { sourceMap, loaderOptions = {} },
+      css: { sourceMap },
     } = projectConfig;
 
     const cssLoaderOptions = {
       sourceMap,
-      ...loaderOptions.css,
     };
 
     const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
@@ -37,7 +36,6 @@ class Module implements ConfigPluginInstance {
     const getMiniCssOptions = (configId: WebpackConfigName) => {
       return {
         emit: configId === "client",
-        ...loaderOptions.miniCss,
       };
     };
 
@@ -120,7 +118,7 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("postcss")
         .loader("postcss-loader")
-        .options({ sourceMap, ident: "postcss", ...loaderOptions.postcss })
+        .options({ sourceMap, ident: "postcss" })
         .end();
 
       const lessRule = webpackConfig.module.rule("less");
@@ -148,11 +146,11 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("postcss-loader")
         .loader("postcss-loader")
-        .options({ sourceMap, ident: "postcss", ...loaderOptions.postcss })
+        .options({ sourceMap, ident: "postcss" })
         .end()
         .use("less-loader")
         .loader("less-loader")
-        .options({ sourceMap, noIeCompat: true, ...loaderOptions.less })
+        .options({ sourceMap, noIeCompat: true })
         .end();
     });
   }

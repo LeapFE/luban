@@ -4,6 +4,7 @@ import webpackDevServer = require("webpack-dev-server");
 import { Request, Response, NextFunction } from "express";
 import { Parser, Stringifier, Syntax, Plugin } from "postcss/lib/postcss";
 import "less";
+// import { WebpackConfigName } from "./definitions";
 
 type CssLoaderOptions = {
   url: boolean | ((url: string, path: string) => boolean);
@@ -63,7 +64,7 @@ type AssetsDir = {
 
 type CssConfig = {
   /**
-   * @description 是否为 CSS 开启 source map
+   * @description 是否为 CSS/Less 开启 source map
    *
    * @default process.env.NODE_ENV === "development"
    */
@@ -71,6 +72,7 @@ type CssConfig = {
 
   /**
    * @description 一些处理 css 的 loader 的配置项
+   * @deprecated since 2.0
    */
   loaderOptions: Partial<OptionsOfCssLoader>;
 };
@@ -127,16 +129,17 @@ export type ProjectConfig = {
 
   /**
    * @description webpack 配置
-   * 如果这个值是一个对象，则会通过 `webpack-merge` 合并到最终的配置中
-   * 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数及可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
+   * 这个值是一个函数，接收被解析的配置和配置名称作为参数。该函数可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
    *
-   * @type {Object | Function | undefined}
+   * @type {Function | undefined}
    *
    * @default {() => undefined}
+   * TODO deprecated this options
    */
-  // configureWebpack:
-  //   | webpack.Configuration
-  //   | ((config: webpack.Configuration) => webpack.Configuration | void);
+  // configureWebpack: (
+  //   config: webpack.Configuration,
+  //   id: WebpackConfigName,
+  // ) => webpack.Configuration | void;
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
@@ -153,6 +156,7 @@ export type ProjectConfig = {
 
   /**
    * @description webpack-dev-server 的配置项
+   * @deprecated since 2.0
    */
   devServer: webpackDevServer.Configuration;
 

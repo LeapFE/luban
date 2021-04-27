@@ -95,10 +95,7 @@ class Serve {
 
     this.serverSideWebpackConfig = api.resolveWebpackConfig("server");
 
-    this.clientSideServerOptions = Object.assign(
-      this.clientSideWebpackConfig?.devServer || {},
-      projectConfig.devServer,
-    );
+    this.clientSideServerOptions = Object.assign(this.clientSideWebpackConfig?.devServer || {});
 
     this.useHttps =
       args.https ||

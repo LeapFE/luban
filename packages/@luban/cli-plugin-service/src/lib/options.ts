@@ -18,19 +18,12 @@ const schema = createSchema((joi) =>
     }),
     productionSourceMap: joi.boolean(),
     css: joi.object({
-      extract: joi.boolean(),
       sourceMap: joi.boolean(),
-      loaderOptions: joi.object({
-        less: joi.object(),
-        css: joi.object(),
-        miniCss: joi.object(),
-        postcss: joi.object(),
-      }),
     }),
-    devServer: joi.object(),
     alias: joi.object(),
     assetsLimit: joi.number(),
     mock: joi.boolean(),
+    // configureWebpack: joi.function(),
     // chainWebpack: joi.function(),
   }),
 );
@@ -54,17 +47,6 @@ const defaultsProjectConfig: Partial<ProjectConfig> = {
   productionSourceMap: false,
   assetsLimit: 4096,
   alias: {},
-  devServer: {
-    /*
-    open: process.platform === 'darwin',
-    host: '0.0.0.0',
-    port: 8080,
-    https: false,
-    hotOnly: false,
-    proxy: { "/api": "https://example.com/api" },
-    before: app => {}
-  */
-  },
 };
 
 export function mergeProjectOptions(
@@ -76,17 +58,10 @@ export function mergeProjectOptions(
   return defaultsDeep(projectOptions, {
     ...defaultsProjectConfig,
     css: {
-      extract: isProduction,
       sourceMap: !isProduction,
-      loaderOptions: {
-        css: {},
-        less: {},
-        miniCss: {},
-        postcss: {},
-      },
     },
     mock: rootOptions.fetch || false,
+    configureWebpack: () => undefined,
     // chainWebpack: () => undefined,
-    // configureWebpack: () => undefined,
   });
 }

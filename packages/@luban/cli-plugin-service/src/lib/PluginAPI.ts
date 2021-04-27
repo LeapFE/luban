@@ -81,11 +81,6 @@ class CommandPluginAPI extends PluginAPI {
 }
 
 class ConfigPluginAPI extends PluginAPI {
-  public chainWebpack(name: WebpackConfigName, fn: WebpackChainCallback): void {
-    const configQueue = this.service.webpackConfigQueue.get(name);
-    configQueue?.chainCallback.push(fn);
-  }
-
   public configureWebpack(name: WebpackConfigName, fn: WebpackRawConfigCallback): void {
     const configQueue = this.service.webpackConfigQueue.get(name);
     configQueue?.rawCallback.push(fn);
@@ -95,6 +90,11 @@ class ConfigPluginAPI extends PluginAPI {
     this.service.webpackConfigQueue.forEach((queue) => {
       queue.rawCallback.push(fn);
     });
+  }
+
+  public chainWebpack(name: WebpackConfigName, fn: WebpackChainCallback): void {
+    const configQueue = this.service.webpackConfigQueue.get(name);
+    configQueue?.chainCallback.push(fn);
   }
 
   public chainAllWebpack(fn: WebpackChainCallback): void {
