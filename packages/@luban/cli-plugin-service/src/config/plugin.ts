@@ -11,6 +11,7 @@ import WebpackBar = require("webpackbar");
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import PreloadWebpackPlugin = require("preload-webpack-plugin");
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 import { resolveClientEnv } from "../utils/resolveClientEnv";
 import { MovePlugin } from "./../utils/movePlugin";
@@ -124,6 +125,18 @@ class Plugin implements ConfigPluginInstance {
         .plugin("webpack-bar")
         .use(WebpackBar, [{ name: `[Client] ${options.projectName}`, color: "#41b883" }]);
 
+      webpackConfig.plugin("fork-ts-checker").use(ForkTsCheckerWebpackPlugin, [
+        {
+          typescript: {
+            diagnosticOptions: {
+              semantic: true,
+              syntactic: true,
+            },
+            mode: "write-references",
+          },
+        },
+      ]);
+
       if (isProduction) {
         if (projectConfig.indexPath !== "index.html") {
           webpackConfig
@@ -133,9 +146,7 @@ class Plugin implements ConfigPluginInstance {
               path.resolve(`${outputDir}/${projectConfig.indexPath}`),
             ]);
         }
-      }
 
-      if (isProduction) {
         webpackConfig.plugin("preload").use(PreloadWebpackPlugin, [
           {
             rel: "preload",
