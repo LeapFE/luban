@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.25](https://github.com/LeapFE/luban/compare/v2.0.0-next.24...v2.0.0-next.25) (2021-04-27)
+
+
+### Bug Fixes
+
+* **cli-lib-service,cli-plugin-service:** updte mini-css-extract-plugin version(1.4.1) ([63018a6](https://github.com/LeapFE/luban/commit/63018a61c7d2d6d1f72cb44a975053403b4329af))
+* **cli-plugin-service:** adjust clinet side webpack config ([ac2d342](https://github.com/LeapFE/luban/commit/ac2d342f80b0d2837bbfeeeda1574c38802f7191))
+* **cli-plugin-service:** clear asset dir ([5979ee7](https://github.com/LeapFE/luban/commit/5979ee717b7a0e0bae302019719bba88b9c806e3))
+
+
+
+
+
 # [2.0.0-next.24](https://github.com/LeapFE/luban/compare/v2.0.0-next.23...v2.0.0-next.24) (2021-04-25)
 
 
