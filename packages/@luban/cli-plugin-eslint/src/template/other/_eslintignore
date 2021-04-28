@@ -25,6 +25,7 @@ jest.config.js
 babel.config.js
 commitlint.config.js
 doczrc.js
+postcss.config.js
 
 # auto generated api files
 src/service/api
