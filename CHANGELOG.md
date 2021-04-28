@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.27](https://github.com/LeapFE/luban/compare/v2.0.0-next.26...v2.0.0-next.27) (2021-04-28)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** correctly inspect webpack config in each mode ([1d1c3b0](https://github.com/LeapFE/luban/commit/1d1c3b01d99fb16f086e067bed79761337d93b23))
+* **cli-plugin-service:** clean 'publicPath' and 'outputDir' in project config file ([665824d](https://github.com/LeapFE/luban/commit/665824dadcca65f76e157d7627dbad366a880852))
+* **cli-plugin-service:** correct inspect plugins in webpack config ([e836506](https://github.com/LeapFE/luban/commit/e83650686246ff025081088ee228c61114b8acd3))
+* **cli-plugin-service:** correctly load 'configureWebpack' option in project config file ([56409ac](https://github.com/LeapFE/luban/commit/56409ac0ead12a8624769ffc074ad19bf6c20ed4))
+* **cli-plugin-service:** update some dependencies ([8950b8f](https://github.com/LeapFE/luban/commit/8950b8f15acc5d5be7c4a169ba69756e2ac9f385))
+
+
+
+
+
 # [2.0.0-next.26](https://github.com/LeapFE/luban/compare/v2.0.0-next.25...v2.0.0-next.26) (2021-04-28)
 
 
