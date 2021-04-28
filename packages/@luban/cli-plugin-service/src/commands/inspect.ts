@@ -9,7 +9,10 @@ import {
   WebpackConfiguration,
   CommandPluginInstance,
   CommandPluginApplyCallbackArgs,
+  WebpackConfigName,
 } from "../definitions";
+
+const accessWebpackConfigName: Array<WebpackConfigName> = ["client", "server"];
 
 export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
   apply(params: CommandPluginApplyCallbackArgs<InspectCliArgs>) {
@@ -22,6 +25,7 @@ export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
         usage: "luban-cli-service inspect [options] [...paths]",
         options: {
           "--mode": "specify env mode (default: development)",
+          "--name": "specify webpack config side name (default: client)",
           "--config": "specify config file",
           "--rule <ruleName>": "inspect a specific module rule",
           "--plugin <pluginName>": "inspect a specific plugin",
@@ -31,10 +35,15 @@ export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
         },
       },
       () => {
-        const webpackConfig = api.resolveWebpackConfig("client");
+        let name: WebpackConfigName = "client";
+        if (args.name && accessWebpackConfigName.includes(args.name)) {
+          name = args.name;
+        }
+
+        const webpackConfig = api.resolveWebpackConfig(name);
 
         if (!webpackConfig) {
-          throw new Error("client side webpack config unable resolved; command [inspect]");
+          throw new Error(`${name} side webpack config unable resolved; command [inspect]`);
         }
 
         const { _: paths } = args;

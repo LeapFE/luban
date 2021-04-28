@@ -129,6 +129,7 @@ export type BuildCliArgs = Partial<{
 }>;
 
 export type InspectCliArgs = Partial<{
+  name: WebpackConfigName;
   mode: string;
   config: string;
   rule: string;
