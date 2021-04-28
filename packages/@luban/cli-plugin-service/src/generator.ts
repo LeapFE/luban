@@ -17,6 +17,7 @@ export default function(api: GeneratorAPI): void {
   api.extendPackage({
     dependencies: {
       react: "^16.14.0",
+      "react-dom": "^16.14.0",
       "react-router-dom": "^5.2.0",
       "lodash.clonedeepwith": "^4.5.0",
       "path-to-regexp": "^6.2.0",
@@ -31,10 +32,11 @@ export default function(api: GeneratorAPI): void {
       "postcss-loader": "^3.0.0",
       "url-loader": "^3.0.0",
       "style-loader": "^1.1.3",
-      typescript: "^3.8.3",
-      "@types/react-router-dom": "^5.1.7",
+      typescript: "3.9.9",
       "@types/lodash.clonedeepwith": "^4.5.6",
-      "@types/react-dom": "^17.0.3",
+      "@types/react": "^16.14.5",
+      "@types/react-dom": "^16.9.12",
+      "@types/react-router-dom": "^5.1.7",
       "@types/react-loadable": "^5.5.5",
     },
   });
