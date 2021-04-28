@@ -3,9 +3,7 @@ import { Route, RouteComponentProps, Redirect, RedirectProps } from "react-route
 
 import { mountProps } from "./mountProps";
 
-import { Role, CustomCheckAuthority, RouteComponent, BasicRouterItem } from "./definitions";
-
-import { checkAuthority } from "./util";
+import { RouteComponent, BasicRouterItem } from "./definitions";
 
 function generateRedirectRouteProps(
   route: BasicRouterItem,
@@ -33,62 +31,33 @@ function generateRedirectRouteProps(
 function renderRouteComponent(
   route: BasicRouterItem,
   props: RouteComponentProps,
-  authorityChecker: CustomCheckAuthority,
-  role?: Role,
 ): ReactElement {
-  const { component: Component, authority, unAuthorityPath, meta, redirect, path, name } = route;
+  const { component: Component, meta, redirect, name } = route;
 
-  let defaultUnAuthorityPath = "/404";
+  const defaultUnAuthorityPath = "/404";
 
-  if (typeof role === "undefined") {
-    if (Component === undefined || typeof redirect === "string") {
-      return <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />;
-    }
-
-    const C = mountProps(Component);
-    return <C {...props} meta={meta} name={name} />;
+  if (Component === undefined || typeof redirect === "string") {
+    return <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />;
   }
 
-  if (authorityChecker(role, authority)) {
-    if (Component === undefined || typeof redirect === "string") {
-      return <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />;
-    }
-
-    const C = mountProps(Component);
-    return <C {...props} meta={meta} name={name}  />;
-  }
-
-  if (typeof unAuthorityPath === "string") {
-    defaultUnAuthorityPath = unAuthorityPath;
-  }
-
-  if (typeof unAuthorityPath === "function") {
-    defaultUnAuthorityPath = unAuthorityPath(role);
-  }
-
-  return (
-    <Redirect key={`${path}-${defaultUnAuthorityPath}`} from={path} to={defaultUnAuthorityPath} />
-  );
+  const C = mountProps(Component);
+  return <C {...props} meta={meta} name={name} />;
 }
 
 type createRouterTableOptions = {
-  role?: Role;
   NotFound?: RouteComponent;
-  customCheckAuthority?: CustomCheckAuthority;
 };
 
 function createRouterTable(
   routes: Array<BasicRouterItem>,
   options: createRouterTableOptions,
 ): Array<ReactElement> {
-  const { role, NotFound, customCheckAuthority } = options;
+  const { NotFound } = options;
 
   const table: ReactElement[] = [];
 
   const reversedRoutes: Array<BasicRouterItem> = Array.from(routes).reverse();
 
-  const authorityChecker =
-    typeof customCheckAuthority === "function" ? customCheckAuthority : checkAuthority;
 
   reversedRoutes.forEach((route) => {
     const { path, component: Component, exact = true, strict = true } = route;
@@ -112,7 +81,7 @@ function createRouterTable(
         path={path}
         strict={strict}
         render={(props: RouteComponentProps): ReactElement => {
-          return renderRouteComponent(route, props, authorityChecker, role);
+          return renderRouteComponent(route, props);
         }}
       />
     );

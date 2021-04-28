@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Switch, BrowserRouter, HashRouter, HashRouterProps, useLocation } from "react-router-dom";
 import { pathToRegexp } from "path-to-regexp";
 
-import { filterUnPermissionRoute } from "./util";
 import { createRouterTable } from "./createRouterTable";
 import { DefaultNotFound } from "./defaultNotfound";
 
@@ -10,10 +9,7 @@ import {
   LubanRouterProps,
   RouteComponent,
   BasicRouterItem,
-  Role,
   MatchedRouterItem,
-  CustomCheckAuthority,
-  NestedRouteItem,
 } from "./definitions";
 
 function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
@@ -66,37 +62,25 @@ function findNotFoundComponent(
 interface RouterTableProps {
   flattenRouteList: Array<BasicRouterItem>;
   notFoundComponent: RouteComponent;
-  role?: Role;
   customRender?: LubanRouterProps["children"];
-  customCheckAuthority?: CustomCheckAuthority;
 }
 const RouterTable: FunctionComponent<RouterTableProps> = ({
   flattenRouteList,
   notFoundComponent,
-  role,
   customRender,
-  customCheckAuthority,
 }) => {
   const routerTable = createRouterTable(flattenRouteList, {
-    role,
     NotFound: notFoundComponent,
-    customCheckAuthority,
   });
 
   const matchedRouteList = useMatchedRouteList(flattenRouteList);
 
   let appRouter = <Switch>{routerTable}</Switch>;
 
-  let permissionRouteList: Array<NestedRouteItem> = flattenRouteList;
-  if (role) {
-    permissionRouteList = filterUnPermissionRoute(flattenRouteList, role);
-  }
-
   if (typeof customRender === "function") {
     appRouter = customRender({
-      renderedTable: <Switch>{routerTable}</Switch>,
+      rendered: <Switch>{routerTable}</Switch>,
       matchedRouteList,
-      permissionRouteList,
     });
   }
 
@@ -105,9 +89,7 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
 
 const LubanRouter: FunctionComponent<LubanRouterProps> = ({
   config,
-  role,
   children,
-  customCheckAuthority,
 }) => {
   const { routes, basename = "/", hashType = "slash" } = config;
 
@@ -127,9 +109,7 @@ const LubanRouter: FunctionComponent<LubanRouterProps> = ({
   const RouteTableProps: RouterTableProps = {
     flattenRouteList: routes,
     customRender: children,
-    role,
     notFoundComponent,
-    customCheckAuthority,
   };
 
   return _mode === "browser" ? (

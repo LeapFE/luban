@@ -74,13 +74,18 @@ export async function produceRoutesAndStore(context: string) {
   info("produce route files ...");
 
   const targetPath = `${context}/src/.luban`;
-  const routesFiles: Record<string, string> = { "dynamicRoutes.ts": "", "staticRoutes.ts": "" };
+  const routesFiles: Record<string, string> = {
+    "originRoutes.ts": "",
+    "dynamicRoutes.ts": "",
+    "staticRoutes.ts": "",
+  };
 
-  const { dynamicRouteCode, staticRouteCode, useStore } = await generateRoutes(
+  const { originRouteCode, dynamicRouteCode, staticRouteCode, useStore } = await generateRoutes(
     context + "/src/index.tsx",
     context + "/src/route.ts",
   );
 
+  routesFiles["originRoutes.ts"] = originRouteCode;
   routesFiles["dynamicRoutes.ts"] = dynamicRouteCode;
   routesFiles["staticRoutes.ts"] = staticRouteCode;
 

@@ -32,13 +32,6 @@ export type RouteMode = "browser" | "hash";
  */
 export type HashType = "slash" | "noslash" | "hashbang";
 
-/**
- * @description user role of application
- */
-export type Role = string | number | Array<string | number>;
-
-export type Authority = Array<string | number>;
-
 export interface RouteConfig {
   /**
    * @description uses the HTML5 history API or uses the hash portion of the URL
@@ -120,23 +113,6 @@ export interface BasicRouterItem {
   component?: RouteComponent;
 
   /**
-   * @description roles that can access this route
-   * if this value is undefined, mean all role can access this route
-   * if this value is empty array, mean any role can't access this route
-   *
-   * @type {Array<string | number>}
-   * @default {Array} []
-   */
-  authority?: Authority;
-
-  /**
-   * @description redirect path when access no authority route
-   * if this value is undefined, will redirect to 404 page when access route
-   * @type {string | Function}
-   */
-  unAuthorityPath?: string | ((role: Role) => string);
-
-  /**
    * @description this route's icon
    * @type {string}
    */
@@ -167,36 +143,28 @@ export interface MatchedRouterItem extends BasicRouterItem {
   active: boolean;
 }
 
-type customRendererParams = {
+export interface CustomRendererParams {
   /**
    * @description rendered router table, can use it directly
    */
-  renderedTable: ReactElement;
+  rendered: ReactElement;
   /**
    * @description route list that matched with current path
    */
   matchedRouteList: Array<MatchedRouterItem>;
-  /**
-   * @description route list that current role can visit
-   */
-  permissionRouteList: Array<NestedRouteItem>;
 };
 
-export interface CustomRenderer {
-  (params: customRendererParams): ReactElement;
+export interface WrapperProps extends CustomRendererParams {
+  originRouteList: Array<OriginNestedRouteItem>;
 }
 
-export interface CustomCheckAuthority {
-  (role: Role, authority?: Authority | undefined): boolean;
+export interface CustomRenderer {
+  (params: CustomRendererParams): ReactElement;
 }
 
 export interface LubanRouterProps {
   // route config
   config: RouteConfig;
-  // role of app
-  role?: Role;
   // custom render callback. implement app layout、nav、breadcrumbs and so on
   children?: CustomRenderer;
-  // custom authority checker
-  customCheckAuthority?: CustomCheckAuthority;
 }

@@ -9,13 +9,48 @@ import { Provider } from "react-redux";
 import { DefaultNotFound } from "./defaultNotfound";
 import { warn } from "./log";
 import { flattenRoutes } from "./util";
+import { BasicRouterItem, MatchedRouterItem } from "./definitions";
 
 import entry from "../";
 import staticRoute from "./staticRoutes";
+import originRoutes from "./originRoutes";
 
-const Root = entry.wrapper || (({ children }) => <>{children}</>);
+const Root = entry.wrapper || ((props) => <>{props.rendered}</>);
 
 const _routes = flattenRoutes(staticRoute);
+
+function useMatchedRouteList(pathname: string, routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
+  let pathSnippets = pathname.split("/").filter((p) => !!p);
+
+  if (pathname !== "/") {
+    pathSnippets = pathname.split("/").filter((i) => i);
+  }
+
+  const matchedRouteList: Array<MatchedRouterItem> = [];
+
+  pathSnippets.forEach((_, index) => {
+    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+
+    const targetRoute = routeList.find((route) => {
+      return pathToRegexp(route.path, [], { strict: false }).test(url);
+    });
+
+    if (targetRoute) {
+      matchedRouteList.push({
+        name: targetRoute.name,
+        path: targetRoute.path,
+        active: pathname === url,
+        component: targetRoute.component,
+        strict: targetRoute.strict,
+        redirect: targetRoute.redirect,
+        icon: targetRoute.icon,
+        meta: targetRoute.meta,
+      });
+    }
+  });
+
+  return matchedRouteList;
+}
 
 async function serverRender(
   context: { path: string; initProps: {}; initState: {} },
@@ -36,18 +71,15 @@ async function serverRender(
   if (["/favicon.ico", "/sockjs-node/info"].includes(context.path)) {
     // do nothing
   } else {
-    const activityRoute = _routes.find((routeItem) => {
-      return pathToRegexp(routeItem.path, [], { strict: true }).test(context.path);
-    });
+    const matchedRouteList = useMatchedRouteList(context.path, _routes);
+    const activityRoute = matchedRouteList[matchedRouteList.length - 1];
 
     if (!activityRoute) {
       warn(`Not found activity route item; path: ${context.path}`);
 
       App = (
         <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-          <Root>
-            <DefaultNotFound />
-          </Root>
+          <Root matchedRouteList={matchedRouteList} rendered={<DefaultNotFound />} originRouteList={originRoutes} />
         </StaticRouter>
       );
     } else {
@@ -61,9 +93,7 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root>
-              <Redirect from={context.path} to={redirectPath} />
-            </Root>
+            <Root matchedRouteList={matchedRouteList} rendered={<Redirect from={context.path} to={redirectPath} />} originRouteList={originRoutes} />
           </StaticRouter>
         );
       } else {
@@ -80,9 +110,7 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root>
-              <ActivityComponent {...initProps} />
-            </Root>
+            <Root matchedRouteList={matchedRouteList} rendered={<ActivityComponent {...initProps} />} originRouteList={originRoutes} />
           </StaticRouter>
         );
       }

@@ -19,6 +19,43 @@ async function getAst(sourceFile: string) {
   return result?.ast;
 }
 
+function produceOriginRoute(ast: type.File): type.Node {
+  let originRouteNode = null;
+
+  traverse(ast, {
+    ObjectProperty(path) {
+      const key = path.node.key as type.Identifier;
+
+      if (key.name === "routes" && type.isArrayExpression(path.node.value)) {
+        originRouteNode = path.node.value;
+      }
+    },
+  });
+
+  const staticRouteNodeDeclaration = type.variableDeclaration("const", [
+    type.variableDeclarator(type.identifier("originRoute"), originRouteNode),
+  ]);
+
+  const exportDefaultDeclaration = type.exportDefaultDeclaration(type.identifier("originRoute"));
+
+  const _ast: type.Program = {
+    type: "Program",
+    body: [staticRouteNodeDeclaration, exportDefaultDeclaration],
+    directives: [],
+    sourceFile: "",
+    sourceType: "module",
+    leadingComments: null,
+    innerComments: null,
+    trailingComments: null,
+    loc: null,
+    start: null,
+    end: null,
+    interpreter: null,
+  };
+
+  return _ast;
+}
+
 function produceStaticRoute(ast: type.File): type.Node {
   let staticRouteNode = null;
 
@@ -208,9 +245,11 @@ function isUseStore(ast: type.File): boolean {
 export async function generateRoutes(entryFile: string, routesFile: string) {
   const entryAst = await getAst(entryFile);
 
+  const routesAstForDynamic = await getAst(routesFile);
+  const routesAstForStatic = await getAst(routesFile);
   const routesAst = await getAst(routesFile);
-  const originRoutesAst = await getAst(routesFile);
 
+  let originRouteCode = "";
   let dynamicRouteCode = "";
   let staticRouteCode = "";
   let useStore = false;
@@ -220,16 +259,20 @@ export async function generateRoutes(entryFile: string, routesFile: string) {
   }
 
   if (routesAst) {
-    const dynamicRouteAst = produceDynamicRoute(routesAst);
+    originRouteCode = generator(produceOriginRoute(routesAst)).code;
+  }
+
+  if (routesAstForDynamic) {
+    const dynamicRouteAst = produceDynamicRoute(routesAstForDynamic);
 
     dynamicRouteCode = generator(dynamicRouteAst).code;
   }
 
-  if (originRoutesAst) {
-    const staticRouteAst = produceStaticRoute(originRoutesAst);
+  if (routesAstForStatic) {
+    const staticRouteAst = produceStaticRoute(routesAstForStatic);
 
     staticRouteCode = generator(staticRouteAst).code;
   }
 
-  return { dynamicRouteCode, staticRouteCode, useStore };
+  return { originRouteCode, dynamicRouteCode, staticRouteCode, useStore };
 }

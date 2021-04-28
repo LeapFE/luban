@@ -1,22 +1,23 @@
+import { WrapperProps } from "@/.luban/definitions";
 import React, { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
 
 import styles from "./index.less";
 
-const Nav: FunctionComponent = (props) => {
+const Nav: FunctionComponent<WrapperProps> = (props) => {
   return (
     <div className={styles["app-wrapper"]}>
       <div className="nav-wrapper">
-        <NavLink to="/prev" activeClassName="activity" exact>
-          Prev
-        </NavLink>
-        &nbsp;&nbsp;&nbsp;
-        <NavLink to="/next" activeClassName="activity" exact>
-          Next
-        </NavLink>
+        {props.originRouteList.map((item) => {
+          return (
+            <NavLink to={item.path} activeClassName="activity" exact={item.exact} key={item.path}>
+              {item.name}
+            </NavLink>
+          );
+        })}
       </div>
 
-      <div>{props.children}</div>
+      <div>{props.rendered}</div>
     </div>
   );
 };

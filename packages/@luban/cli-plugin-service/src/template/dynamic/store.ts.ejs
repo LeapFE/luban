@@ -1,7 +1,9 @@
+// @ts-ignore
 import { ReactNode } from "react";
 // @ts-ignore
 import { init, RematchStore, InitConfig } from "@rematch/core";
-import { OriginRouteConfig } from "./definitions";
+// @ts-ignore
+import { OriginRouteConfig, WrapperProps } from "./definitions";
 
 // @ts-ignore
 import entry from "../";
@@ -22,7 +24,7 @@ export const store: null = null;
 
 export interface Config {
   root?: string;
-  wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
+  wrapper?: (params: WrapperProps) => JSX.Element;
   route: OriginRouteConfig;
   <%_ if (useStore) { _%>
   models?: InitConfig<RootModel>["models"];

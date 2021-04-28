@@ -12,13 +12,14 @@ import { flattenRoutes } from "./util";
 
 import entry from "../";
 import dynamicRoute from "./dynamicRoutes";
+import originRoutes from "./originRoutes";
 import { BasicRouterItem } from "./definitions";
 
 <%_ if (useStore) { _%>
 import { store } from "./store";
 <%_ } _%>
 
-const Root = entry.wrapper || (({ children }) => <>{children}</>);
+const Root = entry.wrapper || ((props) => <>{props.rendered}</>);
 const root = document.getElementById(entry.root || "root");
 
 const _routes = flattenRoutes(dynamicRoute);
@@ -43,8 +44,8 @@ async function preloadComponent(routes: BasicRouterItem[]): Promise<BasicRouterI
 function App(props: { routes: BasicRouterItem[] }) {
   let Container = (
     <LubanRouter config={{ ...entry.route, routes: props.routes }}>
-      {({ renderedTable }) => {
-        return <Root>{renderedTable}</Root>;
+      {(props) => {
+        return <Root { ...props} originRouteList={originRoutes} />;
       }}
     </LubanRouter>
   );
