@@ -72,11 +72,8 @@ class CommandPluginAPI extends PluginAPI {
     return this.service.resolveChainableWebpackConfig(name);
   }
 
-  public resolveWebpackConfig(
-    name: WebpackConfigName,
-    config?: Config,
-  ): WebpackConfiguration | undefined {
-    return this.service.resolveWebpackConfig(name, config);
+  public resolveWebpackConfig(name: WebpackConfigName): WebpackConfiguration | undefined {
+    return this.service.resolveWebpackConfig(name);
   }
 }
 

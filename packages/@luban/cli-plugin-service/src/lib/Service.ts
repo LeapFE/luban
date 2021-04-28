@@ -233,10 +233,9 @@ class Service {
     return configQueue?.config;
   }
 
-  public resolveWebpackConfig(
-    name: WebpackConfigName,
-    chainableConfig = this.resolveChainableWebpackConfig(name),
-  ): WebpackConfiguration | undefined {
+  public resolveWebpackConfig(name: WebpackConfigName): WebpackConfiguration | undefined {
+    const chainableConfig = this.resolveChainableWebpackConfig(name);
+
     if (chainableConfig) {
       let config = chainableConfig.toConfig();
 

@@ -38,10 +38,7 @@ class Build {
   }
 
   private async buildClient() {
-    const webpackConfig = this.api.resolveWebpackConfig(
-      "client",
-      this.api.resolveChainableWebpackConfig("client"),
-    );
+    const webpackConfig = this.api.resolveWebpackConfig("client");
 
     return new Promise<void>((resolve, reject) => {
       if (!webpackConfig) {
@@ -79,10 +76,7 @@ class Build {
   }
 
   private async buildServer() {
-    const webpackConfig = this.api.resolveWebpackConfig(
-      "server",
-      this.api.resolveChainableWebpackConfig("server"),
-    );
+    const webpackConfig = this.api.resolveWebpackConfig("server");
     return new Promise<void>((resolve, reject) => {
       if (!webpackConfig) {
         reject("server side webpack config unable resolved; command [build]");

@@ -12,6 +12,8 @@ import {
   WebpackConfigName,
 } from "../definitions";
 
+type InspectResult = WebpackConfiguration | webpack.Plugin | webpack.RuleSetRule | string[];
+
 const accessWebpackConfigName: Array<WebpackConfigName> = ["client", "server"];
 
 export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
@@ -46,13 +48,10 @@ export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
           throw new Error(`${name} side webpack config unable resolved; command [inspect]`);
         }
 
+        // paths is webpack config key, eg. entry, plugins and module
         const { _: paths } = args;
 
-        let res:
-          | WebpackConfiguration
-          | webpack.Plugin
-          | webpack.RuleSetRule
-          | string[] = webpackConfig;
+        let res: InspectResult = webpackConfig;
 
         let hasUnnamedRule: boolean = false;
 
@@ -64,11 +63,14 @@ export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
 
         if (args.plugin) {
           res = webpackConfig.plugins
-            ? webpackConfig.plugins.find((p) => (p as any).__pluginName === args.plugin) || {}
+            ? webpackConfig.plugins.find(
+                (p) => ((p as any).__pluginName || p.constructor.name) === args.plugin,
+              ) || {}
             : {};
         }
 
         if (args.rules) {
+          // string[]
           res = webpackConfig.module
             ? webpackConfig.module.rules.map((r) => {
                 const name = (r as any).__ruleNames
@@ -79,13 +81,14 @@ export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
 
                 return name;
               })
-            : {};
+            : [];
         }
 
         if (args.plugins) {
+          // string[]
           res = webpackConfig.plugins
             ? webpackConfig.plugins.map((p) => (p as any).__pluginName || p.constructor.name)
-            : {};
+            : [];
         }
 
         if (paths.length > 1) {
