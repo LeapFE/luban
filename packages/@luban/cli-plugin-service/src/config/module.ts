@@ -15,10 +15,6 @@ class Module implements ConfigPluginInstance {
       css: { sourceMap },
     } = projectConfig;
 
-    const cssLoaderOptions = {
-      sourceMap,
-    };
-
     const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
       return {
         limit: projectConfig.assetsLimit,
@@ -102,35 +98,29 @@ class Module implements ConfigPluginInstance {
         })
         .end();
 
-      const cssRule = webpackConfig.module.rule("css");
-
-      cssRule
+      webpackConfig.module
+        .rule("css")
         .test(/\.css$/)
         .use("extract-css")
         .loader(MiniCssExtractPlugin.loader)
         .options(getMiniCssOptions(id))
-        .end();
-
-      cssRule
+        .end()
         .use("css-loader")
         .loader("css-loader")
-        .options({ importLoaders: 1, ...cssLoaderOptions })
+        .options({ importLoaders: 1, sourceMap })
         .end()
         .use("postcss")
         .loader("postcss-loader")
         .options({ sourceMap, ident: "postcss" })
         .end();
 
-      const lessRule = webpackConfig.module.rule("less");
-
-      lessRule
+      webpackConfig.module
+        .rule("less")
         .test(/\.less$/)
         .use("extract-css")
         .loader(MiniCssExtractPlugin.loader)
         .options(getMiniCssOptions(id))
-        .end();
-
-      lessRule
+        .end()
         .use("css-loader")
         .loader("css-loader")
         .options({
@@ -141,7 +131,7 @@ class Module implements ConfigPluginInstance {
             localIdentName: "[name]__[local]__[hash:base64:5]",
             context: api.getContext(),
           },
-          ...cssLoaderOptions,
+          sourceMap,
         })
         .end()
         .use("postcss-loader")

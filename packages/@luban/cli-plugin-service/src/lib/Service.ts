@@ -87,6 +87,12 @@ class Service {
 
     this.projectConfig = mergeProjectOptions(loadedProjectConfig, this.rootOptions);
 
+    if (typeof this.projectConfig.configureWebpack === "function") {
+      this.webpackConfigQueue.forEach((q) => {
+        q.rawCallback.push(this.projectConfig.configureWebpack);
+      });
+    }
+
     this.commandPlugins.forEach(({ id, instance }) => {
       if (typeof instance.addWebpackConfig === "function") {
         const _api = new CommandPluginAPI(id, this);

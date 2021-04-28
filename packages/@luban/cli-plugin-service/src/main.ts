@@ -4,7 +4,7 @@ import webpackDevServer = require("webpack-dev-server");
 import { Request, Response, NextFunction } from "express";
 import { Parser, Stringifier, Syntax, Plugin } from "postcss/lib/postcss";
 import "less";
-// import { WebpackConfigName } from "./definitions";
+import { WebpackConfigName } from "./definitions";
 
 type CssLoaderOptions = {
   url: boolean | ((url: string, path: string) => boolean);
@@ -134,18 +134,18 @@ export type ProjectConfig = {
    * @type {Function | undefined}
    *
    * @default {() => undefined}
-   * TODO deprecated this options
    */
-  // configureWebpack: (
-  //   config: webpack.Configuration,
-  //   id: WebpackConfigName,
-  // ) => webpack.Configuration | void;
+  configureWebpack: (
+    config: webpack.Configuration,
+    id: WebpackConfigName,
+  ) => webpack.Configuration | void;
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
    * 允许对内部的 webpack 配置进行更细粒度的修改
    *
    * @default {() => undefined}
+   * TODO deprecated this options
    */
   // chainWebpack: (config: Config) => void;
 
