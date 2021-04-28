@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.26](https://github.com/leapFE/luban/compare/v2.0.0-next.25...v2.0.0-next.26) (2021-04-28)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-stylelint
+
+
+
+
+
 # [2.0.0-next.25](https://github.com/leapFE/luban/compare/v2.0.0-next.24...v2.0.0-next.25) (2021-04-27)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-stylelint

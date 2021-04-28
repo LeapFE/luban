@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.26](https://github.com/leapFE/luban/compare/v2.0.0-next.25...v2.0.0-next.26) (2021-04-28)
+
+
+### Features
+
+* **cli-plugin-service:** enable "configureWebpack" opiton in project config file ([82daf1f](https://github.com/leapFE/luban/commit/82daf1fdb6f0630f256307d9be0b754b98fb4da9))
+* **cli-plugin-service:** enable inspect both client and server side webpack config ([22ce5e6](https://github.com/leapFE/luban/commit/22ce5e6f15d9c0cd384c2caa56d4b61b87e10e23))
+* **plugin-service:** add fork-ts-checker plugin ([ff0152c](https://github.com/leapFE/luban/commit/ff0152cb3592dc5bde73b58898c3e4c4f3db8b83))
+
+
+
+
+
 # [2.0.0-next.25](https://github.com/leapFE/luban/compare/v2.0.0-next.24...v2.0.0-next.25) (2021-04-27)
 
 
