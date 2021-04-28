@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.29](https://github.com/LeapFE/luban/compare/v2.0.0-next.28...v2.0.0-next.29) (2021-04-28)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** correct generate dynamic and static route ([1ac4eeb](https://github.com/LeapFE/luban/commit/1ac4eeb2cf3c657bf4fe0c1beae0d6ea098da289))
+* **cli-plugin-service:** correctly find activity route on server side ([774c67b](https://github.com/LeapFE/luban/commit/774c67bdb497f2038b50debb13924f5d1c9f7c62))
+
+
+
+
+
 # [2.0.0-next.28](https://github.com/LeapFE/luban/compare/v2.0.0-next.27...v2.0.0-next.28) (2021-04-28)
 
 
