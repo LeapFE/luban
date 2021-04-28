@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { transformFileSync } from "@babel/core";
 import generator from "@babel/generator";
 import traverse from "@babel/traverse";
@@ -118,10 +119,20 @@ function produceDynamicRoute(ast: type.File): type.Program {
   traverse(ast, {
     ObjectProperty(path) {
       const key = path.node.key as type.Identifier;
+
       if (key.name === "component" && type.isStringLiteral(path.node.value)) {
-        const _path = path.node.value.value;
-        const pathItem = path.node.value.value.split("/");
-        const name = pathItem[pathItem.length - 1];
+        const componentPath = path.node.value.value;
+        let routePath = "";
+
+        if (Array.isArray(path.container)) {
+          // @ts-ignore
+          const node = path.container.find((c) => c.key.name === "path");
+          // @ts-ignore
+          routePath = node.value.value;
+        }
+
+        const pathSnippets = routePath.split("/");
+        const chunkName = pathSnippets.join("-");
 
         const callLoadableExpression = type.callExpression(type.identifier("Loadable"), [
           type.objectExpression([
@@ -131,9 +142,9 @@ function produceDynamicRoute(ast: type.File): type.Program {
                 [],
                 type.callExpression(type.identifier("import"), [
                   type.addComment(
-                    type.stringLiteral(`${_path}`),
+                    type.stringLiteral(`${componentPath}`),
                     "leading",
-                    `webpackChunkName: "page-${name}"`,
+                    `webpackChunkName: "page${chunkName}"`,
                   ),
                 ]),
               ),
@@ -141,7 +152,7 @@ function produceDynamicRoute(ast: type.File): type.Program {
             type.objectProperty(type.identifier("loading"), type.identifier("DefaultFallback")),
             type.objectProperty(
               type.identifier("modules"),
-              type.arrayExpression([type.stringLiteral(`${_path}`)]),
+              type.arrayExpression([type.stringLiteral(`${componentPath}`)]),
             ),
             type.objectProperty(
               type.identifier("webpack"),
@@ -149,7 +160,7 @@ function produceDynamicRoute(ast: type.File): type.Program {
                 [],
                 type.arrayExpression([
                   type.callExpression(type.identifier("require.resolveWeak"), [
-                    type.stringLiteral(`${_path}`),
+                    type.stringLiteral(`${componentPath}`),
                   ]),
                 ]),
               ),
@@ -161,7 +172,7 @@ function produceDynamicRoute(ast: type.File): type.Program {
           type.identifier("__IS_BROWSER__"),
           callLoadableExpression,
           type.memberExpression(
-            type.callExpression(type.identifier("require"), [type.stringLiteral(_path)]),
+            type.callExpression(type.identifier("require"), [type.stringLiteral(componentPath)]),
             type.identifier("default"),
           ),
         );

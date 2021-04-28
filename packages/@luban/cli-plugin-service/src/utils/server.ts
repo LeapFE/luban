@@ -15,7 +15,8 @@ function generateInjectedTag(assetsManifest: Record<string, string>, path: strin
   const injectedStyles: string[] = [];
   const injectedScripts: string[] = [];
 
-  const noSlashPath = path.replace(/^\/|\/$/g, "");
+  const noSlashPath = path.split("/").join("-");
+
   Object.keys(assetsManifest).forEach((item) => {
     const ext = item.substring(item.lastIndexOf("."));
     if (item.includes(noSlashPath)) {
