@@ -22,7 +22,7 @@ function requireSpecifiedConfigFile<T>(
 
   try {
     const tscBinPath = `${context}/node_modules/typescript/bin/tsc`;
-    const compileArgs = `--module commonjs --skipLibCheck --outDir ${configTempDir}`;
+    const compileArgs = `--module commonjs --skipLibCheck --esModuleInterop --outDir ${configTempDir}`;
     const { code } = shell.exec(`${tscBinPath} ${filePath} ${compileArgs}`);
 
     if (code !== 0) {

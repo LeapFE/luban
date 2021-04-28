@@ -87,18 +87,18 @@ class Service {
 
     this.projectConfig = mergeProjectOptions(loadedProjectConfig, this.rootOptions);
 
-    if (typeof this.projectConfig.configureWebpack === "function") {
-      this.webpackConfigQueue.forEach((q) => {
-        q.rawCallback.push(this.projectConfig.configureWebpack);
-      });
-    }
-
     this.commandPlugins.forEach(({ id, instance }) => {
       if (typeof instance.addWebpackConfig === "function") {
         const _api = new CommandPluginAPI(id, this);
         instance.addWebpackConfig({ api: _api, projectConfig: this.projectConfig });
       }
     });
+
+    if (typeof this.projectConfig.configureWebpack === "function") {
+      this.webpackConfigQueue.forEach((q) => {
+        q.rawCallback.push(this.projectConfig.configureWebpack);
+      });
+    }
 
     this.mockConfig = loadMockConfig(
       this.context,
@@ -252,8 +252,6 @@ class Service {
           if (result) {
             config = merge(config, result);
           }
-        } else if (fn) {
-          config = merge(config, fn);
         }
       });
 
