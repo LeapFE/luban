@@ -26,13 +26,17 @@ function useMatchedRouteList(pathname: string, routeList: Array<BasicRouterItem>
     pathSnippets = pathname.split("/").filter((i) => i);
   }
 
+  if (pathSnippets.length === 0) {
+    pathSnippets = [pathname];
+  }
+
   const matchedRouteList: Array<MatchedRouterItem> = [];
 
   pathSnippets.forEach((_, index) => {
-    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`.replace(/^\/{2}/g, "/");
 
     const targetRoute = routeList.find((route) => {
-      return pathToRegexp(route.path, [], { strict: false }).test(url);
+      return pathToRegexp(route.path, [], { strict: true }).test(url);
     });
 
     if (targetRoute) {
