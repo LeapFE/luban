@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.28](https://github.com/LeapFE/luban/compare/v2.0.0-next.27...v2.0.0-next.28) (2021-04-28)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** adjust 'boilerplate' and server/client side entry file ([d658e9c](https://github.com/LeapFE/luban/commit/d658e9c1dbe4422262f43a1da79a3b58d5f5a54d))
+
+
+
+
+
 # [2.0.0-next.27](https://github.com/LeapFE/luban/compare/v2.0.0-next.26...v2.0.0-next.27) (2021-04-28)
 
 
