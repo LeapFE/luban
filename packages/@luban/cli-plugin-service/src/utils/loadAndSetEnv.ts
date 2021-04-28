@@ -43,7 +43,7 @@ export function loadAndSetEnv(
   };
 
   if (mode && commandName === "inspect") {
-    const _mode = mode === "build" ? "production" : "development";
+    const _mode = mode === "development" ? "development" : "production";
     writeEnv("NODE_ENV", _mode);
     writeEnv("BABEL_ENV", _mode);
   }
