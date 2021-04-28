@@ -8,6 +8,7 @@ import { isObject } from "../commands/help";
 import { validateProjectConfig } from "../lib/options";
 
 import { ProjectConfig } from "../main";
+import { padTailSlash, cleanAssetPath } from "./cleanAssetPath";
 
 function requireSpecifiedConfigFile<T>(
   filePath: string,
@@ -83,11 +84,9 @@ export function loadProjectOptions(
   }
 
   resolved.publicPath = resolved.publicPath
-    ? resolved.publicPath.replace(/([^/])$/, "$1/")
+    ? padTailSlash(resolved.publicPath)
     : resolved.publicPath;
-  resolved.outputDir = resolved.outputDir
-    ? resolved.outputDir.replace(/^\/|\/$/g, "")
-    : resolved.outputDir;
+  resolved.outputDir = resolved.outputDir ? cleanAssetPath(resolved.outputDir) : resolved.outputDir;
 
   validateProjectConfig(resolved, (msg) => {
     error(`Invalid options in ${chalk.bold(configFilename)}: ${msg}`);
