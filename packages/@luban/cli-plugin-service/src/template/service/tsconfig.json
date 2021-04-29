@@ -8,7 +8,7 @@
     /* Project Options */
     "declaration": false,
     "jsx": "react",
-    "target": "ES6",
+    "target": "ESNext",
     "module": "ESNext",
     "removeComments": true,
     "rootDir": "./",

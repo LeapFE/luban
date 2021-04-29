@@ -2,6 +2,7 @@
   "include": ["components/**/*"],
   "exclude": ["lib", "es"],
   "compilerOptions": {
+    "target": "ESNext",
     "module": "ESNext",
     "removeComments": true,
     "jsx": "react",
