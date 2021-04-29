@@ -83,7 +83,7 @@ class TopProgress {
     this.hide();
 
     if (this.progressBar.style["transition"] !== undefined) {
-      this.progressBar.addEventListener("transitionend", function (e) {
+      this.progressBar.addEventListener("transitionend", function(e) {
         that.reset();
 
         that.progressBar.removeEventListener(e.type, () => {

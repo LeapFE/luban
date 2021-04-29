@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { DefaultRouteProps } from "./definitions";
-import { ComponentType  } from "./index"
+import { ComponentType } from "./index";
 
 import { store } from "./store";
 
@@ -25,10 +25,9 @@ function handlePopState() {
 }
 
 export function mountProps(
-  WrappedComponent: ComponentType,
+  WrappedComponent: ComponentType<any>,
 ): React.ComponentClass<DefaultRouteProps, MountPropsComponentState> {
-  class MountPropsInnerComponent
-    extends Component<DefaultRouteProps, MountPropsComponentState, {}>
+  class MountPropsInnerComponent extends Component<DefaultRouteProps, MountPropsComponentState, {}>
     implements MountPropsComponent {
     constructor(props: DefaultRouteProps) {
       super(props);
@@ -58,8 +57,17 @@ export function mountProps(
         WrappedComponent = (await WrappedComponent.preload()).default;
       }
 
+      const searchParams = new URLSearchParams(this.props.location.search);
+      const query = Object.fromEntries(searchParams.entries());
+
       const extraProps = WrappedComponent.getInitialProps
-        ? await WrappedComponent.getInitialProps({ path: this.props.location.pathname, store })
+        ? await WrappedComponent.getInitialProps({
+            path: this.props.match.path,
+            store,
+            params: this.props.match.params,
+            query,
+            url: this.props.location.pathname,
+          })
         : {};
 
       this.setState({

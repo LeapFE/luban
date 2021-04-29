@@ -34,10 +34,17 @@ function generateInjectedTag(assetsManifest: Record<string, string>, path: strin
 
 interface RenderOptions {
   path?: string;
+  query?: Record<string, string>;
 }
 
 export async function render(options: RenderOptions) {
-  const context = { path: options.path || "/", initProps: {}, initState: {} };
+  const context = {
+    path: options.path || "/",
+    initProps: {},
+    initState: {},
+    query: options.query || {},
+  };
+
   const staticRouterContext: StaticRouterContext = {};
 
   const store = typeof serverBundle.createStore === "function" ? serverBundle.createStore() : null;

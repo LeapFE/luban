@@ -28,10 +28,7 @@ function generateRedirectRouteProps(
   };
 }
 
-function renderRouteComponent(
-  route: BasicRouterItem,
-  props: RouteComponentProps,
-): ReactElement {
+function renderRouteComponent(route: BasicRouterItem, props: RouteComponentProps): ReactElement {
   const { component: Component, meta, redirect, name } = route;
 
   const defaultUnAuthorityPath = "/404";
@@ -57,7 +54,6 @@ function createRouterTable(
   const table: ReactElement[] = [];
 
   const reversedRoutes: Array<BasicRouterItem> = Array.from(routes).reverse();
-
 
   reversedRoutes.forEach((route) => {
     const { path, component: Component, exact = true, strict = true } = route;

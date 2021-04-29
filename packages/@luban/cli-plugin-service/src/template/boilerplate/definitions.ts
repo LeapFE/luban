@@ -1,18 +1,7 @@
 import { ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { StaticContext } from "react-router";
 
 import { ComponentType } from "./index";
-
-export interface EnhancedRouteComponentProps<
-  M extends Record<PropertyKey, unknown> = {},
-  Params extends { [K in keyof Params]?: string } = {},
-  C extends StaticContext = StaticContext
-> extends RouteComponentProps<Params, C> {
-  meta?: M;
-  name?: string;
-}
 
 export type RouteMetaData = Record<string | number | symbol, unknown>;
 
@@ -152,10 +141,11 @@ export interface CustomRendererParams {
    * @description route list that matched with current path
    */
   matchedRouteList: Array<MatchedRouterItem>;
-};
+}
 
-export interface WrapperProps extends CustomRendererParams {
+export interface WrapperProps extends Omit<CustomRendererParams, "rendered"> {
   originRouteList: Array<OriginNestedRouteItem>;
+  children: ReactElement;
 }
 
 export interface CustomRenderer {

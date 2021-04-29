@@ -375,7 +375,7 @@ class Serve {
           assetsManifestJsonUrl.replace(/(\d+)[(^/)](\/)+/, "$1$2"),
         );
 
-        const context = { path: req.path, initProps: {}, initState: {} };
+        const context = { path: req.path, query: req.query, initProps: {}, initState: {} };
         const staticRouterContext: StaticRouterContext = {};
 
         const store =

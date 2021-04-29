@@ -32,8 +32,7 @@ function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRo
 
     if (targetRoute) {
       matchedRouteList.push({
-        name: targetRoute.name,
-        path: targetRoute.path,
+        ...targetRoute,
         active: pathname === url,
       });
     }
@@ -87,10 +86,7 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
   return appRouter;
 };
 
-const LubanRouter: FunctionComponent<LubanRouterProps> = ({
-  config,
-  children,
-}) => {
+const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, children }) => {
   const { routes, basename = "/", hashType = "slash" } = config;
 
   let _mode = config.mode || "browser";

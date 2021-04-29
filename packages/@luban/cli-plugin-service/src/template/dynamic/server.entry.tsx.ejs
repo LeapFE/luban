@@ -1,6 +1,6 @@
 import React from "react";
-import { StaticRouter, Redirect } from "react-router-dom";
-import { pathToRegexp } from "path-to-regexp";
+import { StaticRouter, Redirect, Route } from "react-router-dom";
+import { pathToRegexp, match } from "path-to-regexp";
 import { StaticRouterContext, StaticRouterProps } from "react-router";
 <%_ if (useStore) { _%>
 import { init, RematchStore } from "@rematch/core";
@@ -15,11 +15,14 @@ import entry from "../";
 import staticRoute from "./staticRoutes";
 import originRoutes from "./originRoutes";
 
-const Root = entry.wrapper || ((props) => <>{props.rendered}</>);
+const Root = entry.wrapper || ((props) => <>{props.children}</>);
 
 const _routes = flattenRoutes(staticRoute);
 
-function useMatchedRouteList(pathname: string, routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
+function useMatchedRouteList(
+  pathname: string,
+  routeList: Array<BasicRouterItem>,
+): { matchedRouteList: Array<MatchedRouterItem>; activityRoute: BasicRouterItem | null } {
   let pathSnippets = pathname.split("/").filter((p) => !!p);
 
   if (pathname !== "/") {
@@ -31,6 +34,7 @@ function useMatchedRouteList(pathname: string, routeList: Array<BasicRouterItem>
   }
 
   const matchedRouteList: Array<MatchedRouterItem> = [];
+  let activityRoute: BasicRouterItem | null = null;
 
   pathSnippets.forEach((_, index) => {
     const url = `/${pathSnippets.slice(0, index + 1).join("/")}`.replace(/^\/{2}/g, "/");
@@ -40,24 +44,22 @@ function useMatchedRouteList(pathname: string, routeList: Array<BasicRouterItem>
     });
 
     if (targetRoute) {
+      if (pathname === url) {
+        activityRoute = targetRoute;
+      }
+
       matchedRouteList.push({
-        name: targetRoute.name,
-        path: targetRoute.path,
+        ...targetRoute,
         active: pathname === url,
-        component: targetRoute.component,
-        strict: targetRoute.strict,
-        redirect: targetRoute.redirect,
-        icon: targetRoute.icon,
-        meta: targetRoute.meta,
       });
     }
   });
 
-  return matchedRouteList;
+  return { matchedRouteList, activityRoute };
 }
 
 async function serverRender(
-  context: { path: string; initProps: {}; initState: {} },
+  context: { path: string; initProps: {}; initState: {}; query: any },
   staticRouterContext: StaticRouterContext,
   <%_ if (useStore) { _%>
   store: RematchStore | null,
@@ -75,15 +77,16 @@ async function serverRender(
   if (["/favicon.ico", "/sockjs-node/info"].includes(context.path)) {
     // do nothing
   } else {
-    const matchedRouteList = useMatchedRouteList(context.path, _routes);
-    const activityRoute = matchedRouteList[matchedRouteList.length - 1];
+    const { matchedRouteList, activityRoute } = useMatchedRouteList(context.path, _routes);
 
     if (!activityRoute) {
       warn(`Not found activity route item; path: ${context.path}`);
 
       App = (
         <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-          <Root matchedRouteList={matchedRouteList} rendered={<DefaultNotFound />} originRouteList={originRoutes} />
+          <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
+            <DefaultNotFound />
+          </Root>
         </StaticRouter>
       );
     } else {
@@ -97,14 +100,28 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root matchedRouteList={matchedRouteList} rendered={<Redirect from={context.path} to={redirectPath} />} originRouteList={originRoutes} />
+            <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
+              <Redirect from={context.path} to={redirectPath} />
+            </Root>
           </StaticRouter>
         );
       } else {
+        const matcher = match(activityRoute.path, { decode: decodeURIComponent });
+        const matchResult = matcher(context.path);
+        let _params = {};
+        if (typeof matchResult !== "boolean") {
+          _params = matchResult.params;
+        }
+
         let initProps = {};
         if (typeof ActivityComponent.getInitialProps === "function") {
-          // @ts-ignore
-          initProps = await ActivityComponent.getInitialProps({ path: context.path, store });
+          initProps = await ActivityComponent.getInitialProps({
+            url: context.path,
+            path: activityRoute.path,
+            params: _params,
+            store,
+            query: context.query,
+          });
         }
 
         context.initProps = initProps;
@@ -114,7 +131,9 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root matchedRouteList={matchedRouteList} rendered={<ActivityComponent {...initProps} />} originRouteList={originRoutes} />
+            <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
+              <Route path={activityRoute.path} component={ActivityComponent} />
+            </Root>
           </StaticRouter>
         );
       }

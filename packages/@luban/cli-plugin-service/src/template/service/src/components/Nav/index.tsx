@@ -17,7 +17,7 @@ const Nav: FunctionComponent<WrapperProps> = (props) => {
         })}
       </div>
 
-      <div>{props.rendered}</div>
+      <>{props.children}</>
     </div>
   );
 };

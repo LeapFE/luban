@@ -19,7 +19,7 @@ import { BasicRouterItem } from "./definitions";
 import { store } from "./store";
 <%_ } _%>
 
-const Root = entry.wrapper || ((props) => <>{props.rendered}</>);
+const Root = entry.wrapper || ((props) => <>{props.children}</>);
 const root = document.getElementById(entry.root || "root");
 
 const _routes = flattenRoutes(dynamicRoute);
@@ -45,7 +45,11 @@ function App(props: { routes: BasicRouterItem[] }) {
   let Container = (
     <LubanRouter config={{ ...entry.route, routes: props.routes }}>
       {(props) => {
-        return <Root { ...props} originRouteList={originRoutes} />;
+        return (
+          <Root matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>
+            {props.rendered}
+          </Root>
+        );
       }}
     </LubanRouter>
   );
