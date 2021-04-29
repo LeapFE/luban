@@ -7,6 +7,7 @@ import { store } from "./store";
 
 interface MountPropsComponentState {
   extraProps: Record<string, unknown>;
+  loading: boolean | null;
 }
 
 interface MountPropsComponent extends Component<DefaultRouteProps, MountPropsComponentState, {}> {
@@ -34,6 +35,7 @@ export function mountProps(
 
       this.state = {
         extraProps: {},
+        loading: null,
       };
 
       if (!routerChanged) {
@@ -46,13 +48,17 @@ export function mountProps(
       }
     }
 
-    async componentDidMount() {
+    async UNSAFE_componentWillMount() {
+      this.setState({ loading: null });
+
       if ((this.props.history && this.props.history.action !== "POP") || !window.__USE_SSR__) {
         await this.getInitialProps();
       }
     }
 
     async getInitialProps() {
+      this.setState({ loading: true });
+
       if (WrappedComponent.preload) {
         WrappedComponent = (await WrappedComponent.preload()).default;
       }
@@ -72,15 +78,20 @@ export function mountProps(
 
       this.setState({
         extraProps,
+        loading: false,
       });
     }
 
     render() {
-      const { extraProps } = this.state;
+      const { extraProps, loading } = this.state;
 
       const initData = routerChanged ? {} : window.__INITIAL_DATA__;
       const initState = routerChanged ? {} : window.__INITIAL_STATE__;
       const finalProps = { ...this.props, ...initData, ...extraProps, ...initState };
+
+      if (loading) {
+        return null;
+      }
 
       return <WrappedComponent {...finalProps} />;
     }
