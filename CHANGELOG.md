@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.30](https://github.com/LeapFE/luban/compare/v2.0.0-next.29...v2.0.0-next.30) (2021-04-29)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** wrapper activity component with route component ([b5859b9](https://github.com/LeapFE/luban/commit/b5859b96421bfec6afcd8289893b6798fb3d8adf))
+* **cli-plugin-service,cli-lib-service:** modify 'target' field in tsconfig.json ([abbf3ee](https://github.com/LeapFE/luban/commit/abbf3eee24ad445fb2fcb2559d5b119c86b0f29f))
+
+
+
+
+
 # [2.0.0-next.29](https://github.com/LeapFE/luban/compare/v2.0.0-next.28...v2.0.0-next.29) (2021-04-28)
 
 
