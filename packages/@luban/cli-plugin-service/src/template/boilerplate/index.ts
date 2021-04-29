@@ -10,6 +10,7 @@ export interface EnhancedRouteComponentProps<
 > extends RouteComponentProps<Params, C> {
   meta?: M;
   name?: string;
+  initialing: boolean | null;
 }
 
 export interface Context extends _Context {}

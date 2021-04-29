@@ -89,11 +89,7 @@ export function mountProps(
       const initState = routerChanged ? {} : window.__INITIAL_STATE__;
       const finalProps = { ...this.props, ...initData, ...extraProps, ...initState };
 
-      if (loading) {
-        return null;
-      }
-
-      return <WrappedComponent {...finalProps} />;
+      return <WrappedComponent {...finalProps} initialing={loading} />;
     }
   }
 
