@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.31](https://github.com/LeapFE/luban/compare/v2.0.0-next.30...v2.0.0-next.31) (2021-04-29)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** pass 'initProps' to activity component ([8238bc6](https://github.com/LeapFE/luban/commit/8238bc6f0594159a848320e280e44ee2067fd011))
+* **cli-plugin-service:** return 'null' while invoke 'getInitialProps' page component ([9a735f6](https://github.com/LeapFE/luban/commit/9a735f6ec80e9d094f1daa112aeb65da338eb6a1))
+
+
+
+
+
 # [2.0.0-next.30](https://github.com/LeapFE/luban/compare/v2.0.0-next.29...v2.0.0-next.30) (2021-04-29)
 
 
