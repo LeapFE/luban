@@ -132,7 +132,10 @@ async function serverRender(
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
             <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
-              <Route path={activityRoute.path} component={ActivityComponent} />
+              <Route
+                path={activityRoute.path}
+                render={() => <ActivityComponent {...initProps} />}
+              />
             </Root>
           </StaticRouter>
         );
