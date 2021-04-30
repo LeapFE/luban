@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.32](https://github.com/LeapFE/luban/compare/v2.0.0-next.31...v2.0.0-next.32) (2021-04-30)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** pass 'initialing' state to activity component ([9e8bfba](https://github.com/LeapFE/luban/commit/9e8bfba1f40fc4c72965928d18e56ab04238d6c1))
+
+
+
+
+
 # [2.0.0-next.31](https://github.com/LeapFE/luban/compare/v2.0.0-next.30...v2.0.0-next.31) (2021-04-29)
 
 
