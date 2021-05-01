@@ -2,6 +2,8 @@ declare module "preload-webpack-plugin";
 
 declare module "cliui";
 
+declare module "ansi-html";
+
 declare module "webpack/lib/HashedModuleIdsPlugin" {
   import webpack from "webpack";
 

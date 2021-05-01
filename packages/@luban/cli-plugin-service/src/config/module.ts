@@ -10,6 +10,7 @@ import { cleanAssetPath } from "../utils/cleanAssetPath";
 
 class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
+    const isDevelopment = process.env.NODE_ENV !== "production";
     const { api, projectConfig } = args;
     const {
       css: { sourceMap },
@@ -46,7 +47,7 @@ class Module implements ConfigPluginInstance {
         .options({
           cacheDirectory: true,
           presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
-          plugins: [],
+          plugins: [isDevelopment && require.resolve("react-refresh/babel")].filter(Boolean),
         })
         .end();
     });

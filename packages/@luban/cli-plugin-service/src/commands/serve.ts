@@ -38,8 +38,11 @@ import {
 } from "../utils/serverRender";
 import { cleanDest } from "../utils/cleanDest";
 import { getCertificate } from "../utils/getCertificate";
+import { CompileErrorTrace } from "../utils/formatCompileError";
 
 type ServerSideHttpsOptions = { key?: Buffer; cert?: Buffer; spdy: { protocols: string[] } };
+
+const DEFAULT_SERVER_BUNDLE: ServerBundle = { default: () => null, createStore: () => null };
 
 const DEFAULT_HOST = "0.0.0.0";
 const DEFAULT_ENABLED_HTTPS = false;
@@ -197,7 +200,7 @@ class Serve {
       hot: true,
       compress: true,
       publicPath: this.projectConfig.publicPath,
-      overlay: { warnings: false, errors: true },
+      overlay: false,
       https: this.protocol === "https",
       open: false,
       stats: {
@@ -296,13 +299,18 @@ class Serve {
 
     compiler.outputFileSystem = mfs;
 
-    let serverBundle: ServerBundle = { default: () => null, createStore: () => null };
+    let serverBundle: ServerBundle = DEFAULT_SERVER_BUNDLE;
+
+    let isModuleCompileException = false;
+    let ModuleCompileMessage: Error | null = null;
 
     const watchCallback = (error: Error, stats: webpack.Stats) => {
       // never throw this error, just type narrow
       if (!this.serverSideWebpackConfig) {
         throw new Error("server side webpack config unable resolved; command [server]");
       }
+
+      isModuleCompileException = false;
 
       if (error) {
         throw error;
@@ -324,9 +332,17 @@ class Serve {
 
       const bundle = mfs.readFileSync(bundlePath, "utf-8");
 
-      const m = getModuleFromString(bundle, "server-entry.js");
+      let _module: { exports: ServerBundle } = { exports: DEFAULT_SERVER_BUNDLE };
+      try {
+        _module = getModuleFromString(bundle, "server-entry.js", {
+          exports: DEFAULT_SERVER_BUNDLE,
+        });
+      } catch (ignored) {
+        ModuleCompileMessage = ignored;
+        isModuleCompileException = true;
+      }
 
-      serverBundle = m.exports;
+      serverBundle = _module.exports;
     };
 
     compiler.watch({}, watchCallback);
@@ -358,7 +374,12 @@ class Serve {
 
     server.use(async (req, res, next) => {
       if (!serverBundle) {
-        res.send("waiting for server side building...");
+        res.send("WAITING FOR SERVER SIDE BUILDING...");
+        return;
+      }
+
+      if (isModuleCompileException) {
+        res.send(CompileErrorTrace(ModuleCompileMessage?.message || "MODULE COMPILE EXCEPTION"));
         return;
       }
 

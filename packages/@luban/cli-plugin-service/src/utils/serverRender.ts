@@ -31,10 +31,12 @@ export const getTemplate = (url: string): Promise<string> => {
   });
 };
 
-export const getModuleFromString = (bundle: string, filename: string) => {
-  const m: { exports: ServerBundle } = {
-    exports: { default: () => null, createStore: () => null },
-  };
+export const getModuleFromString = (
+  bundle: string,
+  filename: string,
+  initModule: { exports: ServerBundle },
+) => {
+  const _module: { exports: ServerBundle } = initModule;
 
   const wrapper = NativeModule.wrap(bundle);
 
@@ -45,9 +47,13 @@ export const getModuleFromString = (bundle: string, filename: string) => {
 
   const result = script.runInThisContext();
 
-  result.call(m.exports, m.exports, require, m);
+  try {
+    result.call(_module.exports, _module.exports, require, _module);
+  } catch (ignored) {
+    throw new Error(ignored);
+  }
 
-  return m;
+  return _module;
 };
 
 export function renderFile(name: string, data: Data, ejsOptions: EJSOptions = {}): string {
