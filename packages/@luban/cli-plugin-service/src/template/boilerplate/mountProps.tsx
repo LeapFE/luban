@@ -48,7 +48,7 @@ export function mountProps(
       }
     }
 
-    async UNSAFE_componentWillMount() {
+    async componentDidMount() {
       this.setState({ loading: null });
 
       if ((this.props.history && this.props.history.action !== "POP") || !window.__USE_SSR__) {
