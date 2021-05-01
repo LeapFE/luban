@@ -402,7 +402,12 @@ class Serve {
         const store =
           typeof serverBundle.createStore === "function" ? serverBundle.createStore() : null;
 
-        const App = await serverBundle.default(context, staticRouterContext, store);
+        let App = null;
+        try {
+          App = await serverBundle.default(context, staticRouterContext, store);
+        } catch (err) {
+          error(`Execute server side entry exception: ${err}`, "Server side rendering");
+        }
 
         const { injectedScripts, injectedStyles } = generateInjectedTag(
           JSON.parse(assetsManifestJson),
