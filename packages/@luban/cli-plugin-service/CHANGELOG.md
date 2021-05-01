@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.34](https://github.com/leapFE/luban/compare/v2.0.0-next.33...v2.0.0-next.34) (2021-05-01)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** catch execute server side entry function exception ([7ed7d79](https://github.com/leapFE/luban/commit/7ed7d796cc0feb9da9a9ad454101a08863ba2f3c))
+* **cli-plugin-service:** use 'componentDidMount' instead of 'UNSAFE_componentWillMount' ([5749372](https://github.com/leapFE/luban/commit/5749372193c37ec2233d3783602001f89cf435be))
+
+
+
+
+
 # [2.0.0-next.33](https://github.com/leapFE/luban/compare/v2.0.0-next.32...v2.0.0-next.33) (2021-05-01)
 
 
