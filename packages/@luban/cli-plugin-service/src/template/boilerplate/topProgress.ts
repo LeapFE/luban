@@ -31,6 +31,7 @@ class TopProgress {
       backgroundColor: "#0a7f9e",
       height: "4px",
       width: "0%",
+      zIndex: "999",
       transition: "width " + 0.6 + "s" + ", opacity " + 0.6 * 3 + "s",
     });
 
