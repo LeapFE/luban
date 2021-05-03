@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.36](https://github.com/leapFE/luban/compare/v2.0.0-next.35...v2.0.0-next.36) (2021-05-03)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** ignore 'store' type error in server side entry file ([153a049](https://github.com/leapFE/luban/commit/153a04906be48d6c16eefef9a01579e10a0dd1fb))
+
+
+
+
+
 # [2.0.0-next.35](https://github.com/leapFE/luban/compare/v2.0.0-next.34...v2.0.0-next.35) (2021-05-01)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-service
