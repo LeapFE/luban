@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.38](https://github.com/LeapFE/luban/compare/v2.0.0-next.37...v2.0.0-next.38) (2021-05-04)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** enable javascript in less loader options ([a955767](https://github.com/LeapFE/luban/commit/a9557675a44896c82770bc585ba290f6cb1a313d))
+* **cli-plugin-service:** given a DOM context when excute client side code in server side ([0230088](https://github.com/LeapFE/luban/commit/0230088c0cc1ef13e9be18dda3ccdda62f05d6b4))
+
+
+
+
+
 # [2.0.0-next.37](https://github.com/LeapFE/luban/compare/v2.0.0-next.36...v2.0.0-next.37) (2021-05-04)
 
 
