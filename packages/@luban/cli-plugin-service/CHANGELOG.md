@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.37](https://github.com/leapFE/luban/compare/v2.0.0-next.36...v2.0.0-next.37) (2021-05-04)
+
+
+### Bug Fixes
+
+* **cli-plugin-server:** top progress bar style ([5366fb1](https://github.com/leapFE/luban/commit/5366fb1c5ed9ec89f5604324ea5fd58e1e66db3c))
+
+
+
+
+
 # [2.0.0-next.36](https://github.com/leapFE/luban/compare/v2.0.0-next.35...v2.0.0-next.36) (2021-05-03)
 
 
