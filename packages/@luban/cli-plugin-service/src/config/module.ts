@@ -16,7 +16,7 @@ class Module implements ConfigPluginInstance {
       css: { sourceMap },
     } = projectConfig;
 
-    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
+    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
       return {
         limit: projectConfig.assetsLimit,
         fallback: {
@@ -141,7 +141,7 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("less-loader")
         .loader("less-loader")
-        .options({ sourceMap, noIeCompat: true })
+        .options({ sourceMap, noIeCompat: true, javascriptEnabled: true })
         .end();
     });
   }
