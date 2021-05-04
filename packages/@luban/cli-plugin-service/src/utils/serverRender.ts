@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import globby from "globby";
 import https from "https";
+import { JSDOM } from "jsdom";
 
 import { ServerBundle } from "../definitions";
 
@@ -44,8 +45,9 @@ export const getModuleFromString = (
     filename,
     displayErrors: false,
   });
+  const context = new JSDOM();
 
-  const result = script.runInThisContext();
+  const result = script.runInNewContext({ document: context.window.document });
 
   try {
     result.call(_module.exports, _module.exports, require, _module);

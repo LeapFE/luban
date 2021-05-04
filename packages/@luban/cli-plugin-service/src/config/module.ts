@@ -16,7 +16,7 @@ class Module implements ConfigPluginInstance {
       css: { sourceMap },
     } = projectConfig;
 
-    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function (dir) {
+    const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
       return {
         limit: projectConfig.assetsLimit,
         fallback: {
