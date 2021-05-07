@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.40](https://github.com/LeapFE/luban/compare/v2.0.0-next.39...v2.0.0-next.40) (2021-05-07)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** add CaseSensitivePathsPlugin ([1185527](https://github.com/LeapFE/luban/commit/1185527ee83e9fe96aef0f99faf4754977671392))
+
+
+
+
+
 # [2.0.0-next.39](https://github.com/LeapFE/luban/compare/v2.0.0-next.38...v2.0.0-next.39) (2021-05-05)
 
 **Note:** Version bump only for package luban
