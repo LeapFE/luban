@@ -89,6 +89,8 @@ class Build {
           return;
         }
 
+        logStatsErrorsAndWarnings(stats);
+
         if (stats.hasErrors()) {
           reject("Build failed with some Compilation errors occurred.");
           return;

@@ -12,6 +12,7 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import PreloadWebpackPlugin = require("preload-webpack-plugin");
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+import CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 
 import { resolveClientEnv } from "../utils/resolveClientEnv";
 import { MovePlugin } from "./../utils/movePlugin";
@@ -177,10 +178,9 @@ class Plugin implements ConfigPluginInstance {
     });
 
     api.chainAllWebpack((webpackConfig, id) => {
-      webpackConfig
-        .plugin("extract-css")
-        .use(MiniCssExtractPlugin, [extractOptions])
-        .end();
+      webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]).end();
+
+      webpackConfig.plugin("case-sensitive-path").use(CaseSensitivePathsPlugin).end();
 
       if (isProduction) {
         if ((args as ParsedArgs<BuildCliArgs>).report) {
