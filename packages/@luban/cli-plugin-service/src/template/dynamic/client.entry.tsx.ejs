@@ -43,7 +43,7 @@ async function preloadComponent(routes: BasicRouterItem[]): Promise<BasicRouterI
 
 function App(props: { routes: BasicRouterItem[] }) {
   let Container = (
-    <LubanRouter config={{ ...entry.route, routes: props.routes }}>
+    <LubanRouter config={{ ...entry.route, routes: props.routes }} originRouteList={originRoutes}>
       {(props) => {
         return (
           <Root matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>

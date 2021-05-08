@@ -3,7 +3,7 @@ import { Route, RouteComponentProps, Redirect, RedirectProps } from "react-route
 
 import { mountProps } from "./mountProps";
 
-import { RouteComponent, BasicRouterItem } from "./definitions";
+import { RouteComponent, BasicRouterItem, ExtraPageProps } from "./definitions";
 
 function generateRedirectRouteProps(
   route: BasicRouterItem,
@@ -28,7 +28,7 @@ function generateRedirectRouteProps(
   };
 }
 
-function renderRouteComponent(route: BasicRouterItem, props: RouteComponentProps): ReactElement {
+function renderRouteComponent(route: BasicRouterItem, props: RouteComponentProps & ExtraPageProps): ReactElement {
   const { component: Component, meta, redirect, name } = route;
 
   const defaultUnAuthorityPath = "/404";
@@ -41,7 +41,7 @@ function renderRouteComponent(route: BasicRouterItem, props: RouteComponentProps
   return <C {...props} meta={meta} name={name} />;
 }
 
-type createRouterTableOptions = {
+interface createRouterTableOptions extends ExtraPageProps {
   NotFound?: RouteComponent;
 };
 
@@ -49,7 +49,7 @@ function createRouterTable(
   routes: Array<BasicRouterItem>,
   options: createRouterTableOptions,
 ): Array<ReactElement> {
-  const { NotFound } = options;
+  const { NotFound, matchedRouteList, originRouteList } = options;
 
   const table: ReactElement[] = [];
 
@@ -77,7 +77,7 @@ function createRouterTable(
         path={path}
         strict={strict}
         render={(props: RouteComponentProps): ReactElement => {
-          return renderRouteComponent(route, props);
+          return renderRouteComponent(route, { ...props, matchedRouteList, originRouteList });
         }}
       />
     );

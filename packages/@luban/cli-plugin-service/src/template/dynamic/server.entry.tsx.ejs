@@ -49,7 +49,13 @@ function useMatchedRouteList(
       }
 
       matchedRouteList.push({
-        ...targetRoute,
+        name: targetRoute.name,
+        path: targetRoute.path,
+        redirect: targetRoute.redirect,
+        exact: targetRoute.exact,
+        strict: targetRoute.strict,
+        icon: targetRoute.icon,
+        meta: targetRoute.meta,
         active: pathname === url,
       });
     }
@@ -136,7 +142,13 @@ async function serverRender(
             <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
               <Route
                 path={activityRoute.path}
-                render={() => <ActivityComponent {...initProps} />}
+                render={() => (
+                  <ActivityComponent
+                    {...initProps}
+                    matchedRouteList={matchedRouteList}
+                    originRouteList={originRoutes}
+                  />
+                )}
               />
             </Root>
           </StaticRouter>

@@ -1,13 +1,13 @@
 import { RouteComponentProps } from "react-router-dom";
 import { StaticContext } from "react-router";
 import { Config, Context as _Context } from "./store";
-import { OriginRouteConfig } from "./definitions";
+import { OriginRouteConfig, ExtraPageProps } from "./definitions";
 
 export interface EnhancedRouteComponentProps<
   M extends Record<PropertyKey, unknown> = {},
   Params extends { [K in keyof Params]?: string } = {},
   C extends StaticContext = StaticContext
-> extends RouteComponentProps<Params, C> {
+> extends RouteComponentProps<Params, C>, ExtraPageProps {
   meta?: M;
   name?: string;
   initialing: boolean | null;

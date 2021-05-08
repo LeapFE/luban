@@ -141,7 +141,14 @@ export interface CustomRendererParams {
    * @description route list that matched with current path
    */
   matchedRouteList: Array<MatchedRouterItem>;
+
 }
+
+export interface ExtraPageProps {
+  matchedRouteList: Array<MatchedRouterItem>;
+  originRouteList: Array<OriginNestedRouteItem>;
+}
+
 
 export interface WrapperProps extends Omit<CustomRendererParams, "rendered"> {
   originRouteList: Array<OriginNestedRouteItem>;
@@ -155,6 +162,7 @@ export interface CustomRenderer {
 export interface LubanRouterProps {
   // route config
   config: RouteConfig;
+  originRouteList: Array<OriginNestedRouteItem>;
   // custom render callback. implement app layout、nav、breadcrumbs and so on
   children?: CustomRenderer;
 }

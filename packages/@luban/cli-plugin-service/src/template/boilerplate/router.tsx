@@ -10,6 +10,7 @@ import {
   RouteComponent,
   BasicRouterItem,
   MatchedRouterItem,
+  OriginNestedRouteItem,
 } from "./definitions";
 
 function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
@@ -21,18 +22,28 @@ function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRo
     pathSnippets = pathname.split("/").filter((i) => i);
   }
 
+  if (pathSnippets.length === 0) {
+    pathSnippets = [pathname];
+  }
+
   const matchedRouteList: Array<MatchedRouterItem> = [];
 
   pathSnippets.forEach((_, index) => {
-    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`.replace(/^\/{2}/g, "/");
 
     const targetRoute = routeList.find((route) => {
-      return pathToRegexp(route.path, [], { strict: false }).test(url);
+      return pathToRegexp(route.path, [], { strict: route.strict }).test(url);
     });
 
     if (targetRoute) {
       matchedRouteList.push({
-        ...targetRoute,
+        name: targetRoute.name,
+        path: targetRoute.path,
+        redirect: targetRoute.redirect,
+        exact: targetRoute.exact,
+        strict: targetRoute.strict,
+        icon: targetRoute.icon,
+        meta: targetRoute.meta,
         active: pathname === url,
       });
     }
@@ -61,18 +72,23 @@ function findNotFoundComponent(
 interface RouterTableProps {
   flattenRouteList: Array<BasicRouterItem>;
   notFoundComponent: RouteComponent;
+  originRouteList: Array<OriginNestedRouteItem>;
   customRender?: LubanRouterProps["children"];
 }
 const RouterTable: FunctionComponent<RouterTableProps> = ({
   flattenRouteList,
   notFoundComponent,
   customRender,
+  originRouteList,
 }) => {
+  const matchedRouteList = useMatchedRouteList(flattenRouteList);
+
   const routerTable = createRouterTable(flattenRouteList, {
     NotFound: notFoundComponent,
+    matchedRouteList,
+    originRouteList,
   });
 
-  const matchedRouteList = useMatchedRouteList(flattenRouteList);
 
   let appRouter = <Switch>{routerTable}</Switch>;
 
@@ -86,7 +102,7 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
   return appRouter;
 };
 
-const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, children }) => {
+const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, children, originRouteList }) => {
   const { routes, basename = "/", hashType = "slash" } = config;
 
   let _mode = config.mode || "browser";
@@ -106,6 +122,7 @@ const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, children }) 
     flattenRouteList: routes,
     customRender: children,
     notFoundComponent,
+    originRouteList,
   };
 
   return _mode === "browser" ? (
