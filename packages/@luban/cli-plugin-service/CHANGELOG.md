@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.41](https://github.com/leapFE/luban/compare/v2.0.0-next.40...v2.0.0-next.41) (2021-05-08)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** use 'runInThisContext' instead of 'runInNewContext' ([20c4ded](https://github.com/leapFE/luban/commit/20c4ded624f6c3515d090d811777150b33094108))
+
+
+### Features
+
+* **cli-plugin-service:** pass 'originRouteList' and 'matchedRouteList' to route component ([fdf3f35](https://github.com/leapFE/luban/commit/fdf3f350bb886c52f6b45df372f97dd640c273b8))
+
+
+
+
+
 # [2.0.0-next.40](https://github.com/leapFE/luban/compare/v2.0.0-next.39...v2.0.0-next.40) (2021-05-07)
 
 
