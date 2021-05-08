@@ -45,7 +45,7 @@ export const getModuleFromString = (
     displayErrors: false,
   });
 
-  const result = script.runInNewContext();
+  const result = script.runInThisContext();
 
   try {
     result.call(_module.exports, _module.exports, require, _module);

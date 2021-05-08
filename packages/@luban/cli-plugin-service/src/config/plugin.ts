@@ -178,9 +178,15 @@ class Plugin implements ConfigPluginInstance {
     });
 
     api.chainAllWebpack((webpackConfig, id) => {
-      webpackConfig.plugin("extract-css").use(MiniCssExtractPlugin, [extractOptions]).end();
+      webpackConfig
+        .plugin("extract-css")
+        .use(MiniCssExtractPlugin, [extractOptions])
+        .end();
 
-      webpackConfig.plugin("case-sensitive-path").use(CaseSensitivePathsPlugin).end();
+      webpackConfig
+        .plugin("case-sensitive-path")
+        .use(CaseSensitivePathsPlugin)
+        .end();
 
       if (isProduction) {
         if ((args as ParsedArgs<BuildCliArgs>).report) {
