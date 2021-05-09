@@ -55,12 +55,13 @@ function App(props: { routes: BasicRouterItem[] }) {
     <LubanRouter config={{ ...entry.route, routes: props.routes }} originRouteList={originRoutes}>
       {(props) => {
         <%_ if (isSpecifyWrapper) { _%>
-          const Repparw = mountProps(Wrapper, {
-            matchedRouteList: props.matchedRouteList,
-            originRouteList: originRoutes,
-          }, true);
+        const Repparw = mountProps(Wrapper, true);
+        return (
           // @ts-ignore
-          return <Repparw>{props.rendered}</Repparw>;
+          <Repparw matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>
+            {props.rendered}
+          </Repparw>
+        );
         <%_ } else { _%>
         return (
           <Root matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>
