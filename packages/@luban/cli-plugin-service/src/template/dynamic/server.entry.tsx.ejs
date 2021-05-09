@@ -16,7 +16,13 @@ import entry from "../";
 import staticRoute from "./staticRoutes";
 import originRoutes from "./originRoutes";
 
-const Root = entry.wrapper || ((props) => <>{props.children}</>);
+<%_ if (isSpecifyWrapper) { _%>
+import Wrapper from "<%= wrapperPath %>";
+<%_ } else { _%>
+const Wrapper = ((props) => <>{props.children}</>);
+<%_ } _%>
+
+const Root = Wrapper;
 
 const _routes = flattenRoutes(staticRoute);
 
@@ -85,6 +91,26 @@ async function serverRender(
   if (["/favicon.ico", "/sockjs-node/info"].includes(context.path)) {
     // do nothing
   } else {
+    let wrapperInitProps = {};
+    <%_ if (isSpecifyWrapper) { _%>
+    if (typeof Wrapper.getInitialProps === "function") {
+      wrapperInitProps = await Wrapper.getInitialProps(
+        {
+          url: context.url,
+          path: context.path,
+          // NOTE may ignore store type error
+          // @ts-ignore
+          store,
+          params: {},
+          query: context.query,
+        },
+        shared,
+      );
+      context.initProps = wrapperInitProps;
+      context.initState = store?.getState() || {};
+    }
+    <%_ } _%>
+
     const { matchedRouteList, activityRoute } = useMatchedRouteList(context.path, _routes);
 
     if (!activityRoute) {
@@ -92,7 +118,13 @@ async function serverRender(
 
       App = (
         <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-          <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
+          <Root
+            {...wrapperInitProps}
+            // @ts-ignore
+            location={staticRouterContext.location}
+            matchedRouteList={matchedRouteList}
+            originRouteList={originRoutes}
+          >
             <DefaultNotFound />
           </Root>
         </StaticRouter>
@@ -108,7 +140,13 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
+            <Root
+              {...wrapperInitProps}
+              // @ts-ignore
+              location={staticRouterContext.location}
+              matchedRouteList={matchedRouteList}
+              originRouteList={originRoutes}
+            >
               <Redirect from={context.path} to={redirectPath} />
             </Root>
           </StaticRouter>
@@ -141,7 +179,13 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
+            <Root
+              {...wrapperInitProps}
+              // @ts-ignore
+              location={staticRouterContext.location}
+              matchedRouteList={matchedRouteList}
+              originRouteList={originRoutes}
+            >
               <Route
                 path={activityRoute.path}
                 render={(props) => (

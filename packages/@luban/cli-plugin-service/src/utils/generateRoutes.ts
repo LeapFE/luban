@@ -261,6 +261,23 @@ function isUseStore(ast: type.File): boolean {
   return useStore;
 }
 
+function getWrapperPath(ast: type.File): string {
+  let wrapperPath = "";
+
+  // @ts-ignore
+  traverse(ast, {
+    ObjectProperty: (path) => {
+      const key = path.node.key as type.Identifier;
+
+      if (key.name === "wrapper" && type.isStringLiteral(path.node.value)) {
+        wrapperPath = path.node.value.value;
+      }
+    },
+  });
+
+  return wrapperPath;
+}
+
 export async function generateRoutes(entryFile: string, routesFile: string) {
   const entryAst = await getAst(entryFile);
 
@@ -272,10 +289,13 @@ export async function generateRoutes(entryFile: string, routesFile: string) {
   let dynamicRouteCode = "";
   let staticRouteCode = "";
   let useStore = false;
+  let wrapperPath = "";
 
   if (entryAst) {
     // @ts-ignore
     useStore = isUseStore(entryAst);
+    // @ts-ignore
+    wrapperPath = getWrapperPath(entryAst);
   }
 
   if (routesAst) {
@@ -299,5 +319,5 @@ export async function generateRoutes(entryFile: string, routesFile: string) {
     staticRouteCode = generator(staticRouteAst).code;
   }
 
-  return { originRouteCode, dynamicRouteCode, staticRouteCode, useStore };
+  return { originRouteCode, dynamicRouteCode, staticRouteCode, useStore, wrapperPath };
 }

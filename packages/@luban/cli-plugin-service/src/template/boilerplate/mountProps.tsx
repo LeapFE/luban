@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import { DefaultRouteProps } from "./definitions";
 import { ComponentType } from "./index";
@@ -29,6 +30,8 @@ function handlePopState() {
 
 export function mountProps(
   WrappedComponent: ComponentType<any>,
+  props?: any,
+  _withRouter: boolean = false,
 ): React.ComponentClass<DefaultRouteProps, MountPropsComponentState> {
   class MountPropsInnerComponent extends Component<DefaultRouteProps, MountPropsComponentState, {}>
     implements MountPropsComponent {
@@ -90,11 +93,12 @@ export function mountProps(
 
       const initData = routerChanged ? {} : window.__INITIAL_DATA__;
       const initState = routerChanged ? {} : window.__INITIAL_STATE__;
-      const finalProps = { ...this.props, ...initData, ...extraProps, ...initState };
+      const finalProps = { ...this.props, ...initData, ...extraProps, ...initState, ...props };
 
       return <WrappedComponent {...finalProps} initialing={loading} />;
     }
   }
 
-  return MountPropsInnerComponent;
+  // @ts-ignore
+  return _withRouter ? withRouter(MountPropsInnerComponent) : MountPropsInnerComponent;
 }

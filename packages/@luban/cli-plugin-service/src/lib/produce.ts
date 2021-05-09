@@ -36,7 +36,7 @@ async function produceStore(useStore: boolean, context: string) {
   fs.writeFileSync(targetPath, fileContent);
 }
 
-async function produceEntry(useStore: boolean, context: string) {
+async function produceEntry(useStore: boolean, context: string, wrapperPath: string) {
   info("produce entry files ...");
 
   const clientEntryTemplatePath = path.resolve(
@@ -59,12 +59,21 @@ async function produceEntry(useStore: boolean, context: string) {
     fs.removeSync(targetServerEntryPath);
   }
 
-  const clientContent = await renderFile(clientEntryTemplatePath, { useStore });
+  const isSpecifyWrapper = !!wrapperPath;
+  const clientContent = await renderFile(clientEntryTemplatePath, {
+    useStore,
+    isSpecifyWrapper,
+    wrapperPath,
+  });
 
   fs.ensureDirSync(path.dirname(targetClientEntryPath));
   fs.writeFileSync(targetClientEntryPath, clientContent);
 
-  const serverContent = await renderFile(serverEntryTemplatePath, { useStore });
+  const serverContent = await renderFile(serverEntryTemplatePath, {
+    useStore,
+    isSpecifyWrapper,
+    wrapperPath,
+  });
 
   fs.ensureDirSync(path.dirname(targetServerEntryPath));
   fs.writeFileSync(targetServerEntryPath, serverContent);
@@ -80,10 +89,13 @@ export async function produceRoutesAndStore(context: string) {
     "staticRoutes.ts": "",
   };
 
-  const { originRouteCode, dynamicRouteCode, staticRouteCode, useStore } = await generateRoutes(
-    context + "/src/index.tsx",
-    context + "/src/route.ts",
-  );
+  const {
+    originRouteCode,
+    dynamicRouteCode,
+    staticRouteCode,
+    useStore,
+    wrapperPath,
+  } = await generateRoutes(context + "/src/index.tsx", context + "/src/route.ts");
 
   routesFiles["originRoutes.ts"] = originRouteCode;
   routesFiles["dynamicRoutes.ts"] = dynamicRouteCode;
@@ -97,7 +109,7 @@ export async function produceRoutesAndStore(context: string) {
 
   await produceStore(useStore, context);
 
-  await produceEntry(useStore, context);
+  await produceEntry(useStore, context, wrapperPath);
 }
 
 async function produce(force: boolean = false) {

@@ -407,7 +407,9 @@ class Serve {
           initProps: {},
           initState: {},
         };
-        const staticRouterContext: StaticRouterContext = { location: cachedLocation };
+        const staticRouterContext: StaticRouterContext = {
+          location: { pathname: req.path, ...cachedLocation },
+        };
 
         const store =
           typeof serverBundle.createStore === "function"
