@@ -29,12 +29,28 @@ interface Preload {
 
 export interface ClassComponent<OWN_PROPS = {}, INIT_PROPS = {}>
   extends React.ComponentClass<OWN_PROPS & INIT_PROPS> {
-  getInitialProps?(context: Context): INIT_PROPS | Promise<INIT_PROPS>;
+  /**
+   * @description initial props for this component, return or resolve data will inject this component by props
+   * @param context you can access path, store, query and so on through context
+   * @param shared you can mutate this object that can shared it in each page
+   */
+  getInitialProps?(
+    context: Context,
+    shared: Record<PropertyKey, unknown>,
+  ): INIT_PROPS | Promise<INIT_PROPS>;
   preload?: () => Promise<Preload>;
 }
 export interface FunctionComponent<OWN_PROPS = {}, INIT_PROPS = {}>
   extends React.FunctionComponent<OWN_PROPS & INIT_PROPS> {
-  getInitialProps?(context: Context): INIT_PROPS | Promise<INIT_PROPS>;
+  /**
+   * @description initial props for this component, return or resolve data will inject this component by props
+   * @param context you can access path, store, query and so on through context
+   * @param shared you can mutate this object that can shared it in each page
+   */
+  getInitialProps?(
+    context: Context,
+    shared: Record<PropertyKey, unknown>,
+  ): INIT_PROPS | Promise<INIT_PROPS>;
   preload?: () => Promise<Preload>;
 }
 

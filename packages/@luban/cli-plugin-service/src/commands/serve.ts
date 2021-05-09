@@ -370,6 +370,10 @@ class Serve {
 
     server.use(this.projectConfig.publicPath, assetsProxy);
 
+    let cachedState: Record<PropertyKey, unknown> = {};
+    let cachedLocation: object = {};
+    const shared: Record<PropertyKey, unknown> = {};
+
     // TODO handle /favicon.ico
 
     server.use(async (req, res, next) => {
@@ -396,15 +400,23 @@ class Serve {
           assetsManifestJsonUrl.replace(/(\d+)[(^/)](\/)+/, "$1$2"),
         );
 
-        const context = { path: req.path, query: req.query, initProps: {}, initState: {} };
-        const staticRouterContext: StaticRouterContext = {};
+        const context = {
+          url: req.url,
+          path: req.path,
+          query: req.query,
+          initProps: {},
+          initState: {},
+        };
+        const staticRouterContext: StaticRouterContext = { location: cachedLocation };
 
         const store =
-          typeof serverBundle.createStore === "function" ? serverBundle.createStore() : null;
+          typeof serverBundle.createStore === "function"
+            ? serverBundle.createStore(cachedState)
+            : null;
 
         let App = null;
         try {
-          App = await serverBundle.default(context, staticRouterContext, store);
+          App = await serverBundle.default(context, staticRouterContext, store, shared);
         } catch (err) {
           error(`Execute server side entry exception: ${err}`, "Server side rendering");
         }
@@ -416,6 +428,8 @@ class Serve {
 
         let document = "";
         if (App) {
+          cachedState = context.initState;
+
           const content = ReactDOMServer.renderToString(App);
 
           const helmet = Helmet.renderStatic();
@@ -436,10 +450,13 @@ class Serve {
         }
 
         if (staticRouterContext.url) {
+          cachedLocation = staticRouterContext.location || {};
           res.status(302);
           res.setHeader("Location", staticRouterContext.url);
           res.end();
           return;
+        } else {
+          cachedLocation = {};
         }
 
         res.send(document);

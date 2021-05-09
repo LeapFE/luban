@@ -17,6 +17,8 @@ interface MountPropsComponent extends Component<DefaultRouteProps, MountPropsCom
 let mountPropsComponent: MountPropsComponent | null = null;
 let routerChanged = false;
 
+const shared : Record<PropertyKey, unknown> = {};
+
 function handlePopState() {
   routerChanged = true;
 
@@ -30,6 +32,7 @@ export function mountProps(
 ): React.ComponentClass<DefaultRouteProps, MountPropsComponentState> {
   class MountPropsInnerComponent extends Component<DefaultRouteProps, MountPropsComponentState, {}>
     implements MountPropsComponent {
+
     constructor(props: DefaultRouteProps) {
       super(props);
 
@@ -73,7 +76,7 @@ export function mountProps(
             params: this.props.match.params,
             query,
             url: this.props.location.pathname,
-          })
+          }, shared)
         : {};
 
       this.setState({

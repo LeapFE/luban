@@ -39,7 +39,7 @@ export interface Context {
   params: Record<string, string>;
   query: Record<string, string>;
   <%_ if (useStore) { _%>
-  store: RematchStore<RootModel> 
+  store: RematchStore<RootModel>;
   <%_ } else { _%>
   store: null;
   <%_ }_%>

@@ -163,12 +163,16 @@ export type UrlLoaderOptions = {
     };
   };
 };
-export type Context = { path: string; initProps: {} };
+export type Context = { url: string; path: string; query: {}; initProps: {}; initState: {} };
 
 export type ServerEntry = (
   req: Context,
   staticRouterContext: StaticRouterContext,
   store: RematchStore | null,
+  shared: Record<PropertyKey, unknown>,
 ) => null | Promise<JSX.Element>;
 
-export type ServerBundle = { default: ServerEntry; createStore?: () => RematchStore | null };
+export type ServerBundle = {
+  default: ServerEntry;
+  createStore?: (initState: Record<PropertyKey, unknown>) => RematchStore | null;
+};

@@ -10,6 +10,7 @@ import { DefaultNotFound } from "./defaultNotfound";
 import { warn } from "./log";
 import { flattenRoutes } from "./util";
 import { BasicRouterItem, MatchedRouterItem } from "./definitions";
+import { Context } from "@luban-cli/cli-plugin-service/dist/definitions";
 
 import entry from "../";
 import staticRoute from "./staticRoutes";
@@ -65,16 +66,17 @@ function useMatchedRouteList(
 }
 
 async function serverRender(
-  context: { path: string; initProps: {}; initState: {}; query: any },
+  context: Context,
   staticRouterContext: StaticRouterContext,
   <%_ if (useStore) { _%>
   store: RematchStore | null,
   <%_ } else { _%>
   store: null,
   <%_ } _%>
+  shared: Record<PropertyKey, unknown>,
 ) {
   const staticRouterProps: StaticRouterProps = {
-    location: context.path,
+    location: staticRouterContext.location,
     basename: entry.route.basename,
   };
 
@@ -122,14 +124,14 @@ async function serverRender(
         let initProps = {};
         if (typeof ActivityComponent.getInitialProps === "function") {
           initProps = await ActivityComponent.getInitialProps({
-            url: context.path,
+            url: context.url,
             path: activityRoute.path,
             params: _params,
             // NOTE may ignore store type error
             // @ts-ignore
             store,
             query: context.query,
-          });
+          }, shared);
         }
 
         context.initProps = initProps;
@@ -142,9 +144,10 @@ async function serverRender(
             <Root matchedRouteList={matchedRouteList} originRouteList={originRoutes}>
               <Route
                 path={activityRoute.path}
-                render={() => (
+                render={(props) => (
                   <ActivityComponent
                     {...initProps}
+                    location={staticRouterContext.location || props.location}
                     matchedRouteList={matchedRouteList}
                     originRouteList={originRoutes}
                   />

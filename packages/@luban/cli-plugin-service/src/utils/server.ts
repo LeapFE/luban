@@ -33,12 +33,16 @@ function generateInjectedTag(assetsManifest: Record<string, string>, path: strin
 }
 
 interface RenderOptions {
+  url?: string;
   path?: string;
   query?: Record<string, string>;
+  cachedState?: Record<PropertyKey, unknown>;
+  shared?: Record<PropertyKey, unknown>;
 }
 
 export async function render(options: RenderOptions) {
   const context = {
+    url: options.url || "/",
     path: options.path || "/",
     initProps: {},
     initState: {},
@@ -47,9 +51,12 @@ export async function render(options: RenderOptions) {
 
   const staticRouterContext: StaticRouterContext = {};
 
-  const store = typeof serverBundle.createStore === "function" ? serverBundle.createStore() : null;
+  const store =
+    typeof serverBundle.createStore === "function"
+      ? serverBundle.createStore(options.cachedState || {})
+      : null;
 
-  const App = await serverBundle.default(context, staticRouterContext, store);
+  const App = await serverBundle.default(context, staticRouterContext, store, options.shared || {});
 
   const { injectedStyles, injectedScripts } = generateInjectedTag(
     assetsManifestJson,
