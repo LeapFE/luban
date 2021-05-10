@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-lib-service",
-  "version": "2.0.0-next.42",
+  "version": "2.0.0-next.43",
   "description": "A development runtime environment dependency for lib",
   "keywords": [
     "webpack",
@@ -57,7 +57,7 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@luban-cli/cli-shared-utils": "^2.0.0-next.42",
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.43",
     "autoprefixer": "^10.2.3",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.2.2",
@@ -110,7 +110,7 @@
     "webpackbar": "^4.0.0"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^2.0.0-next.42",
+    "@luban-cli/cli-shared-types": "^2.0.0-next.43",
     "@types/babel__core": "^7.1.14",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.4",
     "@types/css-minimizer-webpack-plugin": "^1.1.1",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.43](https://github.com/leapFE/luban/compare/v2.0.0-next.42...v2.0.0-next.43) (2021-05-10)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** remove redundant parameters(props) ([fcc6ecb](https://github.com/leapFE/luban/commit/fcc6ecb117a0520cdf9ebde8ef3043c5d901a481))
+
+
+
+
+
 # [2.0.0-next.42](https://github.com/leapFE/luban/compare/v2.0.0-next.41...v2.0.0-next.42) (2021-05-10)
 
 
