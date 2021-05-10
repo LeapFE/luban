@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.42](https://github.com/LeapFE/luban/compare/v2.0.0-next.41...v2.0.0-next.42) (2021-05-10)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** cache data for each request in server side ([15dcf5a](https://github.com/LeapFE/luban/commit/15dcf5a2039b1cf399bf33760abacfd25af0c8a4))
+
+
+### Features
+
+* **cli-plugin-service:** support 'wrapper' component get initial props ([6393ef4](https://github.com/LeapFE/luban/commit/6393ef49dcfe4fa7b417d12b7a8084cfa66e2ee0))
+
+
+
+
+
 # [2.0.0-next.41](https://github.com/LeapFE/luban/compare/v2.0.0-next.40...v2.0.0-next.41) (2021-05-08)
 
 
