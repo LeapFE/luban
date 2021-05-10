@@ -30,7 +30,6 @@ function handlePopState() {
 
 export function mountProps(
   WrappedComponent: ComponentType<any>,
-  props?: any,
   _withRouter: boolean = false,
 ): React.ComponentClass<DefaultRouteProps, MountPropsComponentState> {
   class MountPropsInnerComponent extends Component<DefaultRouteProps, MountPropsComponentState, {}>
@@ -93,7 +92,7 @@ export function mountProps(
 
       const initData = routerChanged ? {} : window.__INITIAL_DATA__;
       const initState = routerChanged ? {} : window.__INITIAL_STATE__;
-      const finalProps = { ...this.props, ...initData, ...extraProps, ...initState, ...props };
+      const finalProps = { ...this.props, ...initData, ...extraProps, ...initState };
 
       return <WrappedComponent {...finalProps} initialing={loading} />;
     }
