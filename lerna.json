@@ -4,7 +4,7 @@
   ],
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
-  "version": "2.0.0-next.43",
+  "version": "2.0.0-next.44",
   "useWorkspaces": true,
   "command": {
     "publish": {

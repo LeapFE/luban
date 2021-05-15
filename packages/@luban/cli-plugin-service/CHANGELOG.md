@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.44](https://github.com/leapFE/luban/compare/v2.0.0-next.43...v2.0.0-next.44) (2021-05-15)
+
+
+### Features
+
+* support 'preparer' component to do something before create route table ([923a86e](https://github.com/leapFE/luban/commit/923a86eb28f6242398e998bfacf164f44fe2854f))
+
+
+
+
+
 # [2.0.0-next.43](https://github.com/leapFE/luban/compare/v2.0.0-next.42...v2.0.0-next.43) (2021-05-10)
 
 
