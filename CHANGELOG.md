@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.46](https://github.com/LeapFE/luban/compare/v2.0.0-next.45...v2.0.0-next.46) (2021-05-15)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** set initProps and initState from 'preparer' component 'getInitialProps' ([82d3c25](https://github.com/LeapFE/luban/commit/82d3c252de230a9f5d60cf5399ae5d63a1ff648c))
+
+
+
+
+
 # [2.0.0-next.45](https://github.com/LeapFE/luban/compare/v2.0.0-next.44...v2.0.0-next.45) (2021-05-15)
 
 
