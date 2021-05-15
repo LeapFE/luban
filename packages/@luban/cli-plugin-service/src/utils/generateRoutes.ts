@@ -266,7 +266,7 @@ function getPreparerComponentPath(ast: type.File): string {
     ObjectProperty: (path) => {
       const key = path.node.key as type.Identifier;
 
-      if (key.name === "wrapper" && type.isStringLiteral(path.node.value)) {
+      if (key.name === "preparer" && type.isStringLiteral(path.node.value)) {
         preparerComponentPath = path.node.value.value;
       }
     },
