@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.45](https://github.com/LeapFE/luban/compare/v2.0.0-next.44...v2.0.0-next.45) (2021-05-15)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** correctly get preparer component path ([4f5d77c](https://github.com/LeapFE/luban/commit/4f5d77cfe0d0414bd6da73c43234335df0c69419))
+* pass shared data params to 'getInitailProps' ([b0e1cd7](https://github.com/LeapFE/luban/commit/b0e1cd718465e792dc983e388c974b632a7691d9))
+
+
+
+
+
 # [2.0.0-next.44](https://github.com/LeapFE/luban/compare/v2.0.0-next.43...v2.0.0-next.44) (2021-05-15)
 
 

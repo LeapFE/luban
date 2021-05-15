@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-service",
-  "version": "2.0.0-next.44",
+  "version": "2.0.0-next.45",
   "description": "A development runtime environment dependency",
   "keywords": [
     "webpack",
@@ -45,7 +45,7 @@
     "@babel/generator": "7.14.2",
     "@babel/traverse": "7.14.2",
     "@babel/types": "7.14.2",
-    "@luban-cli/cli-shared-utils": "^2.0.0-next.44",
+    "@luban-cli/cli-shared-utils": "^2.0.0-next.45",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/less": "3.0.1",
     "@types/webpack": "4.41.27",
@@ -98,7 +98,7 @@
     "webpackbar": "^4.0.0"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^2.0.0-next.44",
+    "@luban-cli/cli-shared-types": "^2.0.0-next.45",
     "@rematch/core": "^2.0.1",
     "@types/babel__core": "^7.1.14",
     "@types/babel__generator": "7.6.2",
