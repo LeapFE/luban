@@ -108,6 +108,10 @@ async function serverRender(
         query: context.query,
       }, shared);
     }
+    context.initProps = preparerProps;
+    <%_ if (useStore) { _%>
+    context.initState = store?.getState() || {};
+    <%_ } _%>
     <%_ } _%>
 
     const { matchedRouteList, activityRoute } = useMatchedRouteList(context.path, _routes);
