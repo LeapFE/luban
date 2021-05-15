@@ -24,7 +24,8 @@ export const store: null = null;
 
 export interface Config {
   root?: string;
-  wrapper?: string;
+  layout?: (params: LayoutProps) => JSX.Element;
+  preparer?: string;
   route: OriginRouteConfig;
   <%_ if (useStore) { _%>
   models?: InitConfig<RootModel>["models"];

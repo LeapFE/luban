@@ -36,7 +36,7 @@ async function produceStore(useStore: boolean, context: string) {
   fs.writeFileSync(targetPath, fileContent);
 }
 
-async function produceEntry(useStore: boolean, context: string, wrapperPath: string) {
+async function produceEntry(useStore: boolean, context: string, preparerComponentPath: string) {
   info("produce entry files ...");
 
   const clientEntryTemplatePath = path.resolve(
@@ -59,11 +59,11 @@ async function produceEntry(useStore: boolean, context: string, wrapperPath: str
     fs.removeSync(targetServerEntryPath);
   }
 
-  const isSpecifyWrapper = !!wrapperPath;
+  const isSpecifyPreparer = !!preparerComponentPath;
   const clientContent = await renderFile(clientEntryTemplatePath, {
     useStore,
-    isSpecifyWrapper,
-    wrapperPath,
+    isSpecifyPreparer,
+    preparerComponentPath,
   });
 
   fs.ensureDirSync(path.dirname(targetClientEntryPath));
@@ -71,8 +71,8 @@ async function produceEntry(useStore: boolean, context: string, wrapperPath: str
 
   const serverContent = await renderFile(serverEntryTemplatePath, {
     useStore,
-    isSpecifyWrapper,
-    wrapperPath,
+    isSpecifyPreparer,
+    preparerComponentPath,
   });
 
   fs.ensureDirSync(path.dirname(targetServerEntryPath));
@@ -94,7 +94,7 @@ export async function produceRoutesAndStore(context: string) {
     dynamicRouteCode,
     staticRouteCode,
     useStore,
-    wrapperPath,
+    preparerComponentPath,
   } = await generateRoutes(context + "/src/index.tsx", context + "/src/route.ts");
 
   routesFiles["originRoutes.ts"] = originRouteCode;
@@ -109,7 +109,7 @@ export async function produceRoutesAndStore(context: string) {
 
   await produceStore(useStore, context);
 
-  await produceEntry(useStore, context, wrapperPath);
+  await produceEntry(useStore, context, preparerComponentPath);
 }
 
 async function produce(force: boolean = false) {

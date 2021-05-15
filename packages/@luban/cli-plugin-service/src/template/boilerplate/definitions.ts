@@ -150,7 +150,7 @@ export interface ExtraPageProps {
 }
 
 
-export interface WrapperProps extends Omit<CustomRendererParams, "rendered"> {
+export interface LayoutProps extends Omit<CustomRendererParams, "rendered"> {
   originRouteList: Array<OriginNestedRouteItem>;
   children: ReactElement;
 }

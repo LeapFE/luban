@@ -1,10 +1,10 @@
-import { WrapperProps } from "@/.luban/definitions";
+import { LayoutProps } from "@/.luban/definitions";
 import React, { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
 
-import styles from "./index.less";
+import styles from "./layout.less";
 
-const Nav: FunctionComponent<WrapperProps> = (props) => {
+const Layout: FunctionComponent<LayoutProps> = (props) => {
   return (
     <div className={styles["app-wrapper"]}>
       <div className="nav-wrapper">
@@ -22,4 +22,4 @@ const Nav: FunctionComponent<WrapperProps> = (props) => {
   );
 };
 
-export { Nav };
+export { Layout };

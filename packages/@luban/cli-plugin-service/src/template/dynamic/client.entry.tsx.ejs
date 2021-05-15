@@ -15,20 +15,21 @@ import dynamicRoute from "./dynamicRoutes";
 import originRoutes from "./originRoutes";
 import { BasicRouterItem } from "./definitions";
 // @ts-ignore
-import { mountProps } from "./mountProps";
+import { injectPreparerComponentProps } from "./injectPreparerProps";
 
 <%_ if (useStore) { _%>
 import { store } from "./store";
 <%_ } _%>
 
-<%_ if (isSpecifyWrapper) { _%>
-import Wrapper from "<%= wrapperPath %>";
+<%_ if (isSpecifyPreparer) { _%>
+import Preparer from "<%= preparerComponentPath %>";
 <%_ } else { _%>
-const Wrapper = ((props) => <>{props.children}</>);
+// @ts-ignore
+const Preparer = ((props) => <>{props.children}</>);
 <%_ } _%>
 
 // @ts-ignore
-const Root = Wrapper;
+const Layout = entry.layout || ((props) => <>{props.children}</>);
 const root = document.getElementById(entry.root || "root");
 
 const _routes = flattenRoutes(dynamicRoute);
@@ -54,24 +55,21 @@ function App(props: { routes: BasicRouterItem[] }) {
   let Container = (
     <LubanRouter config={{ ...entry.route, routes: props.routes }} originRouteList={originRoutes}>
       {(props) => {
-        <%_ if (isSpecifyWrapper) { _%>
-        const Repparw = mountProps(Wrapper, true);
         return (
-          // @ts-ignore
-          <Repparw matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>
+          <Layout matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>
             {props.rendered}
-          </Repparw>
+          </Layout>
         );
-        <%_ } else { _%>
-        return (
-          <Root matchedRouteList={props.matchedRouteList} originRouteList={originRoutes}>
-            {props.rendered}
-          </Root>
-        );
-        <%_ } _%>
       }}
     </LubanRouter>
   );
+
+  <%_ if (isSpecifyPreparer) { _%>
+  if (Preparer) {
+    const Reraperp = injectPreparerComponentProps(Preparer);
+    Container = <Reraperp>{Container}</Reraperp>
+  }
+  <%_ } _%>
 
   <%_ if (useStore) { _%>
   if (store) {

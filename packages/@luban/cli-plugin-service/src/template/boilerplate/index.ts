@@ -13,6 +13,10 @@ export interface EnhancedRouteComponentProps<
   initialing: boolean | null;
 }
 
+export interface PreparerProps {
+  initialing: boolean | null;
+}
+
 export interface Context extends _Context {}
 
 export function run(config: Config) {

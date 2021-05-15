@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { transformFileSync } from "@babel/core";
 import generator from "@babel/generator";
 import traverse from "@babel/traverse";
 import type = require("@babel/types");
-
-// TODO review type error
 
 async function getAst(sourceFile: string) {
   let result = null;
@@ -25,7 +22,6 @@ async function getAst(sourceFile: string) {
 function produceOriginRoute(ast: type.File): type.Node {
   let originRouteNode = null;
 
-  // @ts-ignore
   traverse(ast, {
     ObjectProperty(path) {
       const key = path.node.key as type.Identifier;
@@ -60,12 +56,11 @@ function produceOriginRoute(ast: type.File): type.Node {
   return _ast;
 }
 
-function produceStaticRoute(ast: type.File): type.Node {
+function produceStaticRoute(ast: type.Node): type.Node {
   let staticRouteNode = null;
 
   const importComponentDeclaration: type.ImportDeclaration[] = [];
 
-  // @ts-ignore
   traverse(ast, {
     ObjectProperty(path) {
       const key = path.node.key as type.Identifier;
@@ -75,7 +70,6 @@ function produceStaticRoute(ast: type.File): type.Node {
         const pathItem = path.node.value.value.split("/");
         const name = pathItem[pathItem.length - 1].toUpperCase();
 
-        // @ts-ignore
         path.node.value = type.identifier(name);
 
         importComponentDeclaration.push(
@@ -121,7 +115,6 @@ function produceDynamicRoute(ast: type.File): type.Program {
   let declareFallbackOption = false;
   let userFallbackPath = "";
 
-  // @ts-ignore
   traverse(ast, {
     ObjectProperty(path) {
       const key = path.node.key as type.Identifier;
@@ -131,10 +124,17 @@ function produceDynamicRoute(ast: type.File): type.Program {
         let routePath = "";
 
         if (Array.isArray(path.container)) {
-          // @ts-ignore
-          const node = path.container.find((c) => c.key.name === "path");
-          // @ts-ignore
-          routePath = node.value.value;
+          const node = path.container.find((c) => {
+            if (type.isObjectProperty(c)) {
+              if (type.isIdentifier(c.key)) {
+                return c.key.name === "path";
+              }
+            }
+          });
+
+          if (type.isObjectProperty(node)) {
+            routePath = (node.value as type.StringLiteral).value;
+          }
         }
 
         const pathSnippets = routePath.split("/");
@@ -174,7 +174,6 @@ function produceDynamicRoute(ast: type.File): type.Program {
           ]),
         ]);
 
-        // @ts-ignore
         path.node.value = type.conditionalExpression(
           type.identifier("__IS_BROWSER__"),
           callLoadableExpression,
@@ -247,7 +246,6 @@ function produceDynamicRoute(ast: type.File): type.Program {
 function isUseStore(ast: type.File): boolean {
   let useStore = false;
 
-  // @ts-ignore
   traverse(ast, {
     ObjectProperty: (path) => {
       const key = path.node.key as type.Identifier;
@@ -261,21 +259,20 @@ function isUseStore(ast: type.File): boolean {
   return useStore;
 }
 
-function getWrapperPath(ast: type.File): string {
-  let wrapperPath = "";
+function getPreparerComponentPath(ast: type.File): string {
+  let preparerComponentPath = "";
 
-  // @ts-ignore
   traverse(ast, {
     ObjectProperty: (path) => {
       const key = path.node.key as type.Identifier;
 
       if (key.name === "wrapper" && type.isStringLiteral(path.node.value)) {
-        wrapperPath = path.node.value.value;
+        preparerComponentPath = path.node.value.value;
       }
     },
   });
 
-  return wrapperPath;
+  return preparerComponentPath;
 }
 
 export async function generateRoutes(entryFile: string, routesFile: string) {
@@ -289,35 +286,29 @@ export async function generateRoutes(entryFile: string, routesFile: string) {
   let dynamicRouteCode = "";
   let staticRouteCode = "";
   let useStore = false;
-  let wrapperPath = "";
+  let preparerComponentPath = "";
 
   if (entryAst) {
-    // @ts-ignore
     useStore = isUseStore(entryAst);
-    // @ts-ignore
-    wrapperPath = getWrapperPath(entryAst);
+
+    preparerComponentPath = getPreparerComponentPath(entryAst);
   }
 
   if (routesAst) {
-    // @ts-ignore
     originRouteCode = generator(produceOriginRoute(routesAst)).code;
   }
 
   if (routesAstForDynamic) {
-    // @ts-ignore
     const dynamicRouteAst = produceDynamicRoute(routesAstForDynamic);
 
-    // @ts-ignore
     dynamicRouteCode = generator(dynamicRouteAst).code;
   }
 
   if (routesAstForStatic) {
-    // @ts-ignore
     const staticRouteAst = produceStaticRoute(routesAstForStatic);
 
-    // @ts-ignore
     staticRouteCode = generator(staticRouteAst).code;
   }
 
-  return { originRouteCode, dynamicRouteCode, staticRouteCode, useStore, wrapperPath };
+  return { originRouteCode, dynamicRouteCode, staticRouteCode, useStore, preparerComponentPath };
 }

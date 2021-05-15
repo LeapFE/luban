@@ -16,13 +16,15 @@ import entry from "../";
 import staticRoute from "./staticRoutes";
 import originRoutes from "./originRoutes";
 
-<%_ if (isSpecifyWrapper) { _%>
-import Wrapper from "<%= wrapperPath %>";
+<%_ if (isSpecifyPreparer) { _%>
+import Preparer from "<%= preparerComponentPath %>";
 <%_ } else { _%>
-const Wrapper = ((props) => <>{props.children}</>);
+// @ts-ignore
+const Preparer = ((props) => <>{props.children}</>);
 <%_ } _%>
 
-const Root = Wrapper;
+// @ts-ignore
+const Layout = entry.layout || ((props) => <>{props.children}</>);
 
 const _routes = flattenRoutes(staticRoute);
 
@@ -86,28 +88,24 @@ async function serverRender(
     basename: entry.route.basename,
   };
 
+  let preparerProps = {};
+
   let App = <StaticRouter {...staticRouterProps} context={staticRouterContext} />;
 
   if (["/favicon.ico", "/sockjs-node/info"].includes(context.path)) {
     // do nothing
   } else {
-    let wrapperInitProps = {};
-    <%_ if (isSpecifyWrapper) { _%>
-    if (typeof Wrapper.getInitialProps === "function") {
-      wrapperInitProps = await Wrapper.getInitialProps(
-        {
-          url: context.url,
-          path: context.path,
-          // NOTE may ignore store type error
-          // @ts-ignore
-          store,
-          params: {},
-          query: context.query,
-        },
-        shared,
-      );
-      context.initProps = wrapperInitProps;
-      context.initState = store?.getState() || {};
+    <%_ if (isSpecifyPreparer) { _%>
+    if (typeof Preparer.getInitialProps === "function") {
+      preparerProps = await Preparer.getInitialProps({
+        url: context.url,
+        path: context.path,
+        params: {},
+        // NOTE may ignore store type error
+        // @ts-ignore
+        store,
+        query: context.query,
+      });
     }
     <%_ } _%>
 
@@ -118,7 +116,7 @@ async function serverRender(
 
       App = (
         <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-          <Root
+          <Layout
             {...wrapperInitProps}
             // @ts-ignore
             location={staticRouterContext.location}
@@ -126,7 +124,7 @@ async function serverRender(
             originRouteList={originRoutes}
           >
             <DefaultNotFound />
-          </Root>
+          </Layout>
         </StaticRouter>
       );
     } else {
@@ -140,7 +138,7 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root
+            <Layout
               {...wrapperInitProps}
               // @ts-ignore
               location={staticRouterContext.location}
@@ -148,7 +146,7 @@ async function serverRender(
               originRouteList={originRoutes}
             >
               <Redirect from={context.path} to={redirectPath} />
-            </Root>
+            </Layout>
           </StaticRouter>
         );
       } else {
@@ -179,7 +177,7 @@ async function serverRender(
 
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
-            <Root
+            <Layout
               {...wrapperInitProps}
               // @ts-ignore
               location={staticRouterContext.location}
@@ -197,19 +195,32 @@ async function serverRender(
                   />
                 )}
               />
-            </Root>
+            </Layout>
           </StaticRouter>
         );
       }
     }
   }
-  <%_ if (useStore) { _%>
-  if (entry.models && store) {
-    return <Provider store={store}>{App}</Provider>;
+
+  let Container = App;
+
+  <%_ if (isSpecifyPreparer) { _%>
+  if (Preparer) {
+    Container = (
+      <Preparer {...preparerProps} initialing={null}>
+        {App}
+      </Preparer>
+    );
   }
   <%_ } _%>
 
-  return App;
+  <%_ if (useStore) { _%>
+  if (entry.models && store) {
+    Container = <Provider store={store}>{Container}</Provider>;
+  }
+  <%_ } _%>
+
+  return Container;
 }
 
 <%_ if (useStore) { _%>

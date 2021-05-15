@@ -82,8 +82,12 @@ class Serve {
 
   private clientSideServerOptions: WebpackDevServer.Configuration;
 
-  private clientSideWebpackConfig: webpack.Configuration | undefined;
-  private serverSideWebpackConfig: webpack.Configuration | undefined;
+  private clientSideWebpackConfig:
+    | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
+    | undefined;
+  private serverSideWebpackConfig:
+    | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
+    | undefined;
 
   private serverSideApp: null | Application;
   private serverSideHttpsOptions: ServerSideHttpsOptions;
