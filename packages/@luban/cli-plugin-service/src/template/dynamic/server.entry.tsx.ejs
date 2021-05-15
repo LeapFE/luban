@@ -88,6 +88,7 @@ async function serverRender(
     basename: entry.route.basename,
   };
 
+  // @ts-ignore
   let preparerProps = {};
 
   let App = <StaticRouter {...staticRouterProps} context={staticRouterContext} />;
@@ -105,7 +106,7 @@ async function serverRender(
         // @ts-ignore
         store,
         query: context.query,
-      });
+      }, shared);
     }
     <%_ } _%>
 
@@ -117,7 +118,6 @@ async function serverRender(
       App = (
         <StaticRouter {...staticRouterProps} context={staticRouterContext}>
           <Layout
-            {...wrapperInitProps}
             // @ts-ignore
             location={staticRouterContext.location}
             matchedRouteList={matchedRouteList}
@@ -139,7 +139,6 @@ async function serverRender(
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
             <Layout
-              {...wrapperInitProps}
               // @ts-ignore
               location={staticRouterContext.location}
               matchedRouteList={matchedRouteList}
@@ -178,7 +177,7 @@ async function serverRender(
         App = (
           <StaticRouter {...staticRouterProps} context={staticRouterContext}>
             <Layout
-              {...wrapperInitProps}
+              {...initProps}
               // @ts-ignore
               location={staticRouterContext.location}
               matchedRouteList={matchedRouteList}

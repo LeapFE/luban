@@ -49,6 +49,7 @@ export function injectRouteComponentProps(
     }
 
     async componentDidMount() {
+      window.__SHARED_DATA__ = {};
       this.setState({ loading: null });
 
       if ((this.props.history && this.props.history.action !== "POP") || !window.__USE_SSR__) {
@@ -73,7 +74,7 @@ export function injectRouteComponentProps(
             params: this.props.match.params,
             query,
             url: this.props.location.pathname,
-          })
+          }, window.__SHARED_DATA__)
         : {};
 
       this.setState({

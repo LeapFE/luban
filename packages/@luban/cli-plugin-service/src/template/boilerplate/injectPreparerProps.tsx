@@ -42,6 +42,7 @@ export function injectPreparerComponentProps(WrappedComponent: ComponentType<any
     }
 
     async componentDidMount() {
+      window.__SHARED_DATA__ = window.__SHARED_DATA__ || {};
       this.setState({ loading: null });
 
       if (!window.__USE_SSR__) {
@@ -62,7 +63,7 @@ export function injectPreparerComponentProps(WrappedComponent: ComponentType<any
             params: {},
             query: query,
             url: window.location.pathname,
-          })
+          }, window.__SHARED_DATA__)
         : {};
 
       this.setState({
