@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.47](https://github.com/leapFE/luban/compare/v2.0.0-next.46...v2.0.0-next.47) (2021-05-16)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** allow cache state and location in server side deploy file ([de91bcb](https://github.com/leapFE/luban/commit/de91bcb38507f0bcb6dbfcc4a772feb154e55d29))
+
+
+
+
+
 # [2.0.0-next.46](https://github.com/leapFE/luban/compare/v2.0.0-next.45...v2.0.0-next.46) (2021-05-15)
 
 
