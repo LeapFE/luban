@@ -37,6 +37,7 @@ interface RenderOptions {
   path?: string;
   query?: Record<string, string>;
   cachedState?: Record<PropertyKey, unknown>;
+  cachedLocation?: Record<PropertyKey, unknown>;
   shared?: Record<PropertyKey, unknown>;
 }
 
@@ -49,7 +50,9 @@ export async function render(options: RenderOptions) {
     query: options.query || {},
   };
 
-  const staticRouterContext: StaticRouterContext = {};
+  const staticRouterContext: StaticRouterContext = {
+    location: { pathname: options.path || "/", ...(options.cachedLocation || {}) },
+  };
 
   const store =
     typeof serverBundle.createStore === "function"
@@ -65,6 +68,8 @@ export async function render(options: RenderOptions) {
 
   let document = "";
   if (App) {
+    options.cachedState = context.initState;
+
     const content = ReactDOMServer.renderToString(App);
 
     const helmet = Helmet.renderStatic();
