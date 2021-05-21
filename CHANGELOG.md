@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.49](https://github.com/LeapFE/luban/compare/v2.0.0-next.48...v2.0.0-next.49) (2021-05-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** enable source map and bundle node modules while build deploy file ([2d0f62c](https://github.com/LeapFE/luban/commit/2d0f62c81eb91384295d567bbddd5a2a9111e5a6))
+
+
+
+
+
 # [2.0.0-next.48](https://github.com/LeapFE/luban/compare/v2.0.0-next.46...v2.0.0-next.48) (2021-05-16)
 
 
