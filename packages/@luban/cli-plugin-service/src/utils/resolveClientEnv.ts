@@ -2,7 +2,7 @@ const allowInjectedEnvNamePrefixReg = /^APP_/;
 
 export function resolveClientEnv(
   publicPath: string,
-  raw?: boolean,
+  raw = false,
 ): Record<"process.env", Record<string, string>> | Record<string, string> {
   const env: Record<string, string> = {};
 

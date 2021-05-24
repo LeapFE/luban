@@ -1,2 +1,2 @@
 APP_SERVER=http://localhost:8080
-APP_PUBLIC_PATH=/
+APP_PUBLIC_PATH=/assets/

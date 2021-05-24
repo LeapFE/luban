@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "env": {
     "commonjs": true,
     "es6": true,
@@ -11,7 +11,10 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "babelOptions": {
+      "configFile": "./babel.config.json"
+    }
   },
   "rules": {
     "indent": ["error", 2],

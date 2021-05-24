@@ -6,23 +6,21 @@ import {
   WebpackChainCallback,
   WebpackRawConfigCallback,
   CommandCallback,
-  PLUGIN_IDS,
-  CliArgs,
   builtinServiceCommandName,
-  RootOptions,
   WebpackConfiguration,
+  WebpackConfigName,
 } from "../definitions";
 
 class PluginAPI {
-  public id: string;
-  public service: Service;
+  public readonly id: string;
+  protected service: Service;
 
   constructor(id: string, service: Service) {
     this.id = id;
     this.service = service;
   }
 
-  public getCwd(): string {
+  public getContext(): string {
     return this.service.context;
   }
 
@@ -30,32 +28,28 @@ class PluginAPI {
     return path.resolve(this.service.context, _path);
   }
 
-  public hasPlugin(id: PLUGIN_IDS): boolean {
-    const prefixRE = /^@luban-cli\/cli-plugin-/;
-    return this.service.plugins.some((p) => {
-      return p.id === id || p.id.replace(prefixRE, "") === id;
-    });
+  public getClientSideEntryFile(): string {
+    return path.resolve(this.service.context, "src/.luban/client.entry.tsx");
   }
 
-  public resolveInitConfig(): Required<RootOptions> {
-    return this.service.resolveLubanConfig();
+  public getServerSideClientEntryFile(): string {
+    return path.resolve(this.service.context, "src/.luban/server.entry.tsx");
   }
 
-  public getEntryFile(): string {
-    return "index.tsx";
+  public getMockConfig() {
+    return this.service.mockConfig;
   }
 
-  // set project mode.
-  // this should be called by any registered command as early as possible.
-  public setMode(mode: string, commandName: builtinServiceCommandName): void {
-    process.env.LUBAN_CLI_SERVICE_MODE = mode;
-    this.service.loadAndSetEnv(mode, commandName);
+  public getRegisteredCommands() {
+    return this.service.commands;
   }
+}
 
+class CommandPluginAPI extends PluginAPI {
   public registerCommand(
     name: builtinServiceCommandName,
-    opts: Record<string, unknown> | CommandCallback<CliArgs>,
-    callback?: CommandCallback<CliArgs>,
+    opts: Record<string, unknown> | CommandCallback,
+    callback?: CommandCallback,
   ): void {
     let commandCallback = callback;
 
@@ -70,26 +64,41 @@ class PluginAPI {
     }
   }
 
-  public chainWebpack(fn: WebpackChainCallback): void {
-    this.service.webpackChainCallback.push(fn);
+  public addWebpackConfig(name: WebpackConfigName) {
+    this.service.addWebpackConfigQueueItem(name);
   }
 
-  public configureWebpack(fn: WebpackRawConfigCallback): void {
-    this.service.webpackRawConfigCallback.push(fn);
+  public resolveChainableWebpackConfig(name: WebpackConfigName): Config | undefined {
+    return this.service.resolveChainableWebpackConfig(name);
   }
 
-  public resolveChainableWebpackConfig(): Config {
-    return this.service.resolveChainableWebpackConfig();
+  public resolveWebpackConfig(name: WebpackConfigName): WebpackConfiguration | undefined {
+    return this.service.resolveWebpackConfig(name);
   }
-
-  public resolveWebpackConfig(config?: Config): WebpackConfiguration {
-    return this.service.resolveWebpackConfig(config);
-  }
-
-  // TODO supported use function to config devServer
-  // public configureDevServer(fn: WebpackDevServerConfigCallback): void {
-  //   this.service.webpackDevServerConfigCallback.push(fn);
-  // }
 }
 
-export { PluginAPI };
+class ConfigPluginAPI extends PluginAPI {
+  public configureWebpack(name: WebpackConfigName, fn: WebpackRawConfigCallback): void {
+    const configQueue = this.service.webpackConfigQueue.get(name);
+    configQueue?.rawCallback.push(fn);
+  }
+
+  public configureAllWebpack(fn: WebpackRawConfigCallback): void {
+    this.service.webpackConfigQueue.forEach((queue) => {
+      queue.rawCallback.push(fn);
+    });
+  }
+
+  public chainWebpack(name: WebpackConfigName, fn: WebpackChainCallback): void {
+    const configQueue = this.service.webpackConfigQueue.get(name);
+    configQueue?.chainCallback.push(fn);
+  }
+
+  public chainAllWebpack(fn: WebpackChainCallback): void {
+    this.service.webpackConfigQueue.forEach((queue) => {
+      queue.chainCallback.push(fn);
+    });
+  }
+}
+
+export { CommandPluginAPI, ConfigPluginAPI };

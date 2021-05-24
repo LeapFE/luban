@@ -186,7 +186,7 @@ class Creator extends BaseCreator {
       ${chalk.yellow("npm start")}
     `);
     log();
-    log(`🔗  More documentation to visit ${chalk.underline("https://luban.now.sh")}`);
+    log(`🔗  More documentation to visit ${chalk.underline("https://luban.vercel.app")}`);
     log();
     log(chalk.redBright("👩‍💻  Happy coding"));
 
@@ -247,7 +247,6 @@ class Creator extends BaseCreator {
     const preset: Preset = {
       plugins: {
         "@luban-cli/cli-plugin-service": { projectName: "" },
-        "@luban-cli/cli-plugin-typescript": {},
       },
     };
 

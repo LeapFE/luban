@@ -24,6 +24,7 @@ module.exports = {
         link: "https://github.com/leapFE/luban",
       },
       {
+        // TODO read lerna.json `version` field on branch master
         text: "1.4.2",
         link: "https://www.npmjs.com/package/@luban-cli/cli",
       },

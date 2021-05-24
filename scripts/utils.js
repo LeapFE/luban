@@ -46,22 +46,22 @@ module.exports = {
       }
     }
 
-    streams.forEach(function(stream) {
+    streams.forEach(function (stream) {
       // Count drained streams now, but monitor non-drained streams.
       if (stream.bufferSize === 0) {
         drainCount++;
       } else {
-        stream.write("", "utf-8", function() {
+        stream.write("", "utf-8", function () {
           drainCount++;
           tryToExit();
         });
       }
-      stream.write = function() {};
+      stream.write = function () {};
     });
 
     tryToExit();
 
-    process.on("exit", function() {
+    process.on("exit", function () {
       process.exit(exitCode);
     });
   },

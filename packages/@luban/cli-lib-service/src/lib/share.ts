@@ -73,14 +73,14 @@ export function injectRequire() {
   const Module = require("module");
 
   const oriRequire = Module.prototype.require;
-  Module.prototype.require = function(...args: any[]) {
+  Module.prototype.require = function(...args: unknown[]) {
     const moduleName = args[0];
     try {
       return oriRequire.apply(this, args);
     } catch (err) {
       const newArgs = [...args];
-      if (moduleName[0] !== "/") {
-        newArgs[0] = getProjectPath("node_modules", moduleName);
+      if (Array.isArray(moduleName) && moduleName[0] !== "/") {
+        newArgs[0] = getProjectPath("node_modules", moduleName[0]);
       }
       return oriRequire.apply(this, newArgs);
     }

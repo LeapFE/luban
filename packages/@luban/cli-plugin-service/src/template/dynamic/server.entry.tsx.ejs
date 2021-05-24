@@ -1,0 +1,243 @@
+import React from "react";
+import { StaticRouter, Redirect, Route } from "react-router-dom";
+import { pathToRegexp, match } from "path-to-regexp";
+import { StaticRouterContext, StaticRouterProps } from "react-router";
+<%_ if (useStore) { _%>
+import { init, RematchStore } from "@rematch/core";
+import { Provider } from "react-redux";
+<%_ } _%>
+import { DefaultNotFound } from "./defaultNotfound";
+import { warn } from "./log";
+import { flattenRoutes } from "./util";
+import { BasicRouterItem, MatchedRouterItem } from "./definitions";
+import { Context } from "@luban-cli/cli-plugin-service/dist/definitions";
+
+import entry from "../";
+import staticRoute from "./staticRoutes";
+import originRoutes from "./originRoutes";
+
+<%_ if (isSpecifyPreparer) { _%>
+import Preparer from "<%= preparerComponentPath %>";
+<%_ } else { _%>
+// @ts-ignore
+const Preparer = ((props) => <>{props.children}</>);
+<%_ } _%>
+
+// @ts-ignore
+const Layout = entry.layout || ((props) => <>{props.children}</>);
+
+const _routes = flattenRoutes(staticRoute);
+
+function useMatchedRouteList(
+  pathname: string,
+  routeList: Array<BasicRouterItem>,
+): { matchedRouteList: Array<MatchedRouterItem>; activityRoute: BasicRouterItem | null } {
+  let pathSnippets = pathname.split("/").filter((p) => !!p);
+
+  if (pathname !== "/") {
+    pathSnippets = pathname.split("/").filter((i) => i);
+  }
+
+  if (pathSnippets.length === 0) {
+    pathSnippets = [pathname];
+  }
+
+  const matchedRouteList: Array<MatchedRouterItem> = [];
+  let activityRoute: BasicRouterItem | null = null;
+
+  pathSnippets.forEach((_, index) => {
+    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`.replace(/^\/{2}/g, "/");
+
+    const targetRoute = routeList.find((route) => {
+      return pathToRegexp(route.path, [], { strict: true }).test(url);
+    });
+
+    if (targetRoute) {
+      if (pathname === url) {
+        activityRoute = targetRoute;
+      }
+
+      matchedRouteList.push({
+        name: targetRoute.name,
+        path: targetRoute.path,
+        redirect: targetRoute.redirect,
+        exact: targetRoute.exact,
+        strict: targetRoute.strict,
+        icon: targetRoute.icon,
+        meta: targetRoute.meta,
+        active: pathname === url,
+      });
+    }
+  });
+
+  return { matchedRouteList, activityRoute };
+}
+
+async function serverRender(
+  context: Context,
+  staticRouterContext: StaticRouterContext,
+  <%_ if (useStore) { _%>
+  store: RematchStore | null,
+  <%_ } else { _%>
+  store: null,
+  <%_ } _%>
+  shared: Record<PropertyKey, unknown>,
+) {
+  const staticRouterProps: StaticRouterProps = {
+    location: staticRouterContext.location,
+    basename: entry.route.basename,
+  };
+
+  // @ts-ignore
+  let preparerProps = {};
+
+  let App = <StaticRouter {...staticRouterProps} context={staticRouterContext} />;
+
+  if (["/favicon.ico", "/sockjs-node/info"].includes(context.path)) {
+    // do nothing
+  } else {
+    <%_ if (isSpecifyPreparer) { _%>
+    if (typeof Preparer.getInitialProps === "function") {
+      preparerProps = await Preparer.getInitialProps({
+        url: context.url,
+        path: context.path,
+        params: {},
+        // NOTE may ignore store type error
+        // @ts-ignore
+        store,
+        query: context.query,
+      }, shared);
+    }
+    context.initProps = preparerProps;
+    <%_ if (useStore) { _%>
+    context.initState = store?.getState() || {};
+    <%_ } _%>
+    <%_ } _%>
+
+    const { matchedRouteList, activityRoute } = useMatchedRouteList(context.path, _routes);
+
+    if (!activityRoute) {
+      warn(`Not found activity route item; path: ${context.path}`);
+
+      App = (
+        <StaticRouter {...staticRouterProps} context={staticRouterContext}>
+          <Layout
+            // @ts-ignore
+            location={staticRouterContext.location}
+            matchedRouteList={matchedRouteList}
+            originRouteList={originRoutes}
+          >
+            <DefaultNotFound />
+          </Layout>
+        </StaticRouter>
+      );
+    } else {
+      const ActivityComponent = activityRoute.component;
+
+      if (!ActivityComponent) {
+        const redirectPath = activityRoute.redirect || "/";
+        warn(`Not config route component; path: ${context.path}, redirect: ${redirectPath}`);
+
+        staticRouterContext.statusCode = 302;
+
+        App = (
+          <StaticRouter {...staticRouterProps} context={staticRouterContext}>
+            <Layout
+              // @ts-ignore
+              location={staticRouterContext.location}
+              matchedRouteList={matchedRouteList}
+              originRouteList={originRoutes}
+            >
+              <Redirect from={context.path} to={redirectPath} />
+            </Layout>
+          </StaticRouter>
+        );
+      } else {
+        const matcher = match(activityRoute.path, { decode: decodeURIComponent });
+        const matchResult = matcher(context.path);
+        let _params = {};
+        if (typeof matchResult !== "boolean") {
+          _params = matchResult.params;
+        }
+
+        let initProps = {};
+        if (typeof ActivityComponent.getInitialProps === "function") {
+          initProps = await ActivityComponent.getInitialProps({
+            url: context.url,
+            path: activityRoute.path,
+            params: _params,
+            // NOTE may ignore store type error
+            // @ts-ignore
+            store,
+            query: context.query,
+          }, shared);
+        }
+
+        context.initProps = initProps;
+        <%_ if (useStore) { _%>
+        context.initState = store?.getState() || {};
+        <%_ } _%>
+
+        App = (
+          <StaticRouter {...staticRouterProps} context={staticRouterContext}>
+            <Layout
+              {...initProps}
+              // @ts-ignore
+              location={staticRouterContext.location}
+              matchedRouteList={matchedRouteList}
+              originRouteList={originRoutes}
+            >
+              <Route
+                path={activityRoute.path}
+                render={(props) => (
+                  <ActivityComponent
+                    {...initProps}
+                    location={staticRouterContext.location || props.location}
+                    matchedRouteList={matchedRouteList}
+                    originRouteList={originRoutes}
+                  />
+                )}
+              />
+            </Layout>
+          </StaticRouter>
+        );
+      }
+    }
+  }
+
+  let Container = App;
+
+  <%_ if (isSpecifyPreparer) { _%>
+  if (Preparer) {
+    Container = (
+      <Preparer {...preparerProps} initialing={null}>
+        {App}
+      </Preparer>
+    );
+  }
+  <%_ } _%>
+
+  <%_ if (useStore) { _%>
+  if (entry.models && store) {
+    Container = <Provider store={store}>{Container}</Provider>;
+  }
+  <%_ } _%>
+
+  return Container;
+}
+
+<%_ if (useStore) { _%>
+export function createStore(initState: any) {
+  if (entry.models) {
+    return init({
+      models: entry.models,
+      redux: {
+        initialState: initState,
+      },
+    });
+  }
+
+  return null;
+}
+<%_ } _%>
+export default serverRender;

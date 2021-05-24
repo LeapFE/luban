@@ -26,7 +26,7 @@ ESLint 的规则会与 Prettier 的规则产生冲突，具体可以查阅 [esli
 ## ESLinter
 
 可以修改 *.eslintrc* 来配置 ESLint 的行为，支持三种 ESLint 配置：
-+ [eslint-config-leap](https://www.npmjs.com/package/eslint-config-leap)
++ [eslint-config-leapfe](https://www.npmjs.com/package/eslint-config-leapfe)
 + [eslint-config-airbnb](https://github.com/airbnb/javascript)
 + [eslint-config-standard](https://github.com/standard/eslint-config-standard)
 

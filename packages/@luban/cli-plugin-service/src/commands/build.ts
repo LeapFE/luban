@@ -1,97 +1,175 @@
-import { Spinner, log, done, error } from "@luban-cli/cli-shared-utils";
+import { log, done, info } from "@luban-cli/cli-shared-utils";
 import webpack = require("webpack");
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import path from "path";
 import chalk from "chalk";
-import { formatStats, logStatsErrorsAndWarnings } from "./../utils/formatStats";
-import { existsSync } from "fs";
 
-import { PluginAPI } from "./../lib/PluginAPI";
-import { BuildCliArgs, ParsedArgs } from "./../definitions";
-import { ProjectConfig } from "./../main";
+import { formatStats, logStatsErrorsAndWarnings } from "../utils/formatStats";
+import { delay } from "../utils/serverRender";
+import { cleanDest } from "../utils/cleanDest";
+import { buildServerSideDeployFIle } from "../utils/buildServerSideDeployFile";
 
-async function build(
-  args: ParsedArgs<BuildCliArgs>,
-  api: PluginAPI,
-  options: ProjectConfig,
-): Promise<void> {
-  const spinner = new Spinner();
-  spinner.logWithSpinner("Build bundle... \n");
+import { CommandPluginAPI } from "../lib/PluginAPI";
+import {
+  BuildCliArgs,
+  ParsedArgs,
+  CommandPluginInstance,
+  CommandPluginApplyCallbackArgs,
+  CommandPluginAddWebpackConfigCallbackArgs,
+} from "../definitions";
+import { ProjectConfig } from "../main";
 
-  const defaultEntryFile = api.getEntryFile();
-  const entryFile = args.entry || `src/${defaultEntryFile}`;
+class Build {
+  private api: CommandPluginAPI;
+  private projectConfig: ProjectConfig;
 
-  if (!existsSync(api.resolve(entryFile))) {
-    error(`The entry file ${entryFile} not exit, please check it`);
-    process.exit();
-  }
+  private outputDir: string;
 
-  if (args.dest) {
-    options.outputDir = args.dest;
-  }
+  constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<BuildCliArgs>) {
+    this.api = api;
+    this.projectConfig = projectConfig;
 
-  const targetDir = api.resolve(options.outputDir);
+    let output = projectConfig.outputDir;
 
-  const webpackConfig = api.resolveWebpackConfig(api.resolveChainableWebpackConfig());
-
-  webpackConfig.entry = {
-    app: api.resolve(entryFile),
-  };
-
-  if (args.report) {
-    if (Array.isArray(webpackConfig.plugins)) {
-      webpackConfig.plugins.push(
-        new BundleAnalyzerPlugin({
-          logLevel: "error",
-          openAnalyzer: false,
-          analyzerMode: args.report ? "static" : "disabled",
-          reportFilename: "report.html",
-        }),
-      );
+    if (args.dest) {
+      output = args.dest;
     }
+
+    this.outputDir = api.resolve(output);
   }
 
-  return new Promise<void>((resolve, reject) => {
-    webpack(webpackConfig, (err, stats) => {
-      spinner.stopSpinner();
+  private async buildClient() {
+    const webpackConfig = this.api.resolveWebpackConfig("client");
 
-      // Fatal webpack errors (wrong configuration, etc)
-      if (err) {
-        return reject(err);
+    return new Promise<void>((resolve, reject) => {
+      if (!webpackConfig) {
+        reject("client side webpack config unable resolved; command [build]");
+        return;
       }
 
-      logStatsErrorsAndWarnings(stats);
+      webpack(webpackConfig, (err, stats) => {
+        // Fatal webpack errors (wrong configuration, etc)
+        if (err) {
+          reject(err);
+          return;
+        }
 
-      // Compilation errors (missing modules, syntax errors, eslint-errors. etc)
-      if (stats.hasErrors()) {
-        return reject("Build failed with some Compilation errors occurred.");
-      }
+        logStatsErrorsAndWarnings(stats);
 
-      const targetDirShort = path.relative(api.service.context, targetDir);
-      log(formatStats(stats, targetDirShort, api));
-      done(`Build complete. The ${chalk.cyan(targetDirShort)} directory is ready to be deployed.`);
+        // Compilation errors (missing modules, syntax errors, eslint-errors. etc)
+        if (stats.hasErrors()) {
+          reject("Build failed with some Compilation errors occurred.");
+          return;
+        }
 
-      resolve();
+        const targetDirShort = path.relative(this.api.getContext(), this.outputDir);
+        log(formatStats(stats, targetDirShort, this.api));
+        console.log();
+        done(
+          `Client Build complete. The ${chalk.cyan(
+            targetDirShort,
+          )} directory is ready to be deployed.`,
+        );
+
+        resolve();
+      });
     });
-  });
+  }
+
+  private async buildServer() {
+    const webpackConfig = this.api.resolveWebpackConfig("server");
+    return new Promise<void>((resolve, reject) => {
+      if (!webpackConfig) {
+        reject("server side webpack config unable resolved; command [build]");
+        return;
+      }
+
+      webpack(webpackConfig, (err, stats) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        logStatsErrorsAndWarnings(stats);
+
+        if (stats.hasErrors()) {
+          reject("Build failed with some Compilation errors occurred.");
+          return;
+        }
+
+        console.log();
+        done("Server side Build complete");
+        console.log();
+
+        resolve();
+      });
+    });
+  }
+
+  public async start() {
+    const ctx = this.api.getContext();
+
+    await cleanDest(ctx, this.outputDir);
+
+    await delay(1000);
+
+    console.log();
+
+    const queue = [this.buildClient];
+
+    if (this.projectConfig.ssr) {
+      queue.push(this.buildServer);
+    }
+
+    await Promise.all(queue.map((q) => q.call(this)));
+
+    console.log();
+
+    if (this.projectConfig.ssr) {
+      await buildServerSideDeployFIle(this.outputDir);
+    }
+
+    console.log();
+    done("Build Done 🎉");
+
+    ["SIGINT", "SIGTERM"].forEach((signal) => {
+      process.on(signal, () => {
+        process.exit();
+      });
+    });
+  }
 }
 
-export default function(api: PluginAPI, options: ProjectConfig): void {
-  api.registerCommand(
-    "build",
-    {
-      description: "build for production",
-      usage: "luban-cli-service build [options]",
-      options: {
-        "--entry": "specify entry file",
-        "--config": "specify config file",
-        "--mode": "specify env mode (default: production)",
-        "--dest": "specify output directory (default: ${options.outputDir})",
-        "--report": "generate report.html to help analyze bundle content",
+export default class BuildWrapper implements CommandPluginInstance<BuildCliArgs> {
+  apply(params: CommandPluginApplyCallbackArgs<BuildCliArgs>) {
+    const { api, projectConfig, args } = params;
+
+    api.registerCommand(
+      "build",
+      {
+        description: "build for production",
+        usage: "luban-cli-service build [options]",
+        options: {
+          "--mode": "specify env mode (default: production)",
+          "--dest": `specify output directory (default: ${projectConfig.outputDir})`,
+          "--report": "generate report.html to help analyze bundle content",
+        },
       },
-    },
-    async (args: ParsedArgs<BuildCliArgs>) => {
-      await build(args, api, options);
-    },
-  );
+      async () => {
+        info("Building... \n");
+
+        const build = new Build(api, projectConfig, args);
+        await build.start();
+      },
+    );
+  }
+
+  addWebpackConfig(params: CommandPluginAddWebpackConfigCallbackArgs) {
+    const { api, projectConfig } = params;
+
+    api.addWebpackConfig("server");
+
+    if (projectConfig.ssr) {
+      api.addWebpackConfig("server");
+    }
+  }
 }

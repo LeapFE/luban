@@ -1,99 +1,125 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PluginAPI } from "./../lib/PluginAPI";
-import { InspectCliArgs, ParsedArgs, WebpackConfiguration } from "./../definitions";
-
 import Config = require("webpack-chain");
 import { highlight } from "cli-highlight";
 import chalk from "chalk";
 import webpack from "webpack";
 
-export default function(api: PluginAPI): void {
-  api.registerCommand(
-    "inspect",
-    {
-      description: "inspect internal webpack config",
-      usage: "luban-cli-service inspect [options] [...paths]",
-      options: {
-        "--mode": "specify env mode (default: development)",
-        "--config": "specify config file",
-        "--rule <ruleName>": "inspect a specific module rule",
-        "--plugin <pluginName>": "inspect a specific plugin",
-        "--rules": "list all module rule names",
-        "--plugins": "list all plugin names",
-        "--verbose": "show full function definitions in output",
+import {
+  InspectCliArgs,
+  WebpackConfiguration,
+  CommandPluginInstance,
+  CommandPluginApplyCallbackArgs,
+  WebpackConfigName,
+} from "../definitions";
+
+type InspectResult = WebpackConfiguration | webpack.Plugin | webpack.RuleSetRule | string[];
+
+const accessWebpackConfigName: Array<WebpackConfigName> = ["client", "server"];
+
+export default class Inspect implements CommandPluginInstance<InspectCliArgs> {
+  apply(params: CommandPluginApplyCallbackArgs<InspectCliArgs>) {
+    const { api, args } = params;
+
+    api.registerCommand(
+      "inspect",
+      {
+        description: "inspect internal webpack config",
+        usage: "luban-cli-service inspect [options] [...paths]",
+        options: {
+          "--mode": "specify env mode (default: development)",
+          "--name": "specify webpack config side name (default: client)",
+          "--config": "specify config file",
+          "--rule <ruleName>": "inspect a specific module rule",
+          "--plugin <pluginName>": "inspect a specific plugin",
+          "--rules": "list all module rule names",
+          "--plugins": "list all plugin names",
+          "--verbose": "show full function definitions in output",
+        },
       },
-    },
-    (args: ParsedArgs<InspectCliArgs>) => {
-      const webpackConfig = api.resolveWebpackConfig();
+      () => {
+        let name: WebpackConfigName = "client";
+        if (args.name && accessWebpackConfigName.includes(args.name)) {
+          name = args.name;
+        }
 
-      const { _: paths } = args;
+        const webpackConfig = api.resolveWebpackConfig(name);
 
-      let res:
-        | WebpackConfiguration
-        | webpack.Plugin
-        | webpack.RuleSetRule
-        | string[] = webpackConfig;
+        if (!webpackConfig) {
+          throw new Error(`${name} side webpack config unable resolved; command [inspect]`);
+        }
 
-      let hasUnnamedRule: boolean = false;
+        // paths is webpack config key, eg. entry, plugins and module
+        const { _: paths } = args;
 
-      if (args.rule) {
-        res = webpackConfig.module
-          ? webpackConfig.module.rules.find((r) => (r as any).__ruleNames[0] === args.rule) || {}
-          : {};
-      }
+        let res: InspectResult = webpackConfig;
 
-      if (args.plugin) {
-        res = webpackConfig.plugins
-          ? webpackConfig.plugins.find((p) => (p as any).__pluginName === args.plugin) || {}
-          : {};
-      }
+        let hasUnnamedRule: boolean = false;
 
-      if (args.rules) {
-        res = webpackConfig.module
-          ? webpackConfig.module.rules.map((r) => {
-              const name = (r as any).__ruleNames ? (r as any).__ruleNames[0] : "Nameless Rule (*)";
+        if (args.rule) {
+          res = webpackConfig.module
+            ? webpackConfig.module.rules.find((r) => (r as any).__ruleNames[0] === args.rule) || {}
+            : {};
+        }
 
-              hasUnnamedRule = hasUnnamedRule || !(r as any).__ruleNames;
+        if (args.plugin) {
+          res = webpackConfig.plugins
+            ? webpackConfig.plugins.find(
+                (p) => ((p as any).__pluginName || p.constructor.name) === args.plugin,
+              ) || {}
+            : {};
+        }
 
-              return name;
-            })
-          : {};
-      }
+        if (args.rules) {
+          // string[]
+          res = webpackConfig.module
+            ? webpackConfig.module.rules.map((r) => {
+                const name = (r as any).__ruleNames
+                  ? (r as any).__ruleNames[0]
+                  : "Nameless Rule (*)";
 
-      if (args.plugins) {
-        res = webpackConfig.plugins
-          ? webpackConfig.plugins.map((p) => (p as any).__pluginName || p.constructor.name)
-          : {};
-      }
+                hasUnnamedRule = hasUnnamedRule || !(r as any).__ruleNames;
 
-      if (paths.length > 1) {
-        res = {};
-        paths.forEach((path: string) => {
-          res[path] = webpackConfig[path];
-        });
-      }
+                return name;
+              })
+            : [];
+        }
 
-      if (paths.length === 1) {
-        res = webpackConfig[paths[0]];
-      }
+        if (args.plugins) {
+          // string[]
+          res = webpackConfig.plugins
+            ? webpackConfig.plugins.map((p) => (p as any).__pluginName || p.constructor.name)
+            : [];
+        }
 
-      // class `Config` override `Function.toString`
-      // see https://github.com/neutrinojs/webpack-chain/blob/master/src/Config.js#L47
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      const output = Config.toString(res, { verbose: args.verbose });
-      console.log(highlight(output, { language: "js" }));
+        if (paths.length > 1) {
+          res = {};
+          paths.forEach((path: string) => {
+            res[path] = webpackConfig[path];
+          });
+        }
 
-      // Log explanation for Nameless Rules
-      if (hasUnnamedRule) {
-        console.log(`--- ${chalk.green("Footnotes")} ---`);
-        console.log(`*: ${chalk.green("Nameless Rules")} were added through the ${chalk.green(
-          "configureWebpack()",
-        )} API (possibly by a plugin) instead of ${chalk.green("chainWebpack()")} (recommended).
-    You can run ${chalk.green(
-      "luban-cli-service inspect",
-    )} without any arguments to inspect the full config and read these rules' config.`);
-      }
-    },
-  );
+        if (paths.length === 1) {
+          res = webpackConfig[paths[0]];
+        }
+
+        // class `Config` override `Function.toString`
+        // see https://github.com/neutrinojs/webpack-chain/blob/master/src/Config.js#L47
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const output = Config.toString(res, { verbose: args.verbose });
+        console.log(highlight(output, { language: "js" }));
+
+        // Log explanation for Nameless Rules
+        if (hasUnnamedRule) {
+          console.log(`--- ${chalk.green("Footnotes")} ---`);
+          console.log(`*: ${chalk.green("Nameless Rules")} were added through the ${chalk.green(
+            "configureWebpack()",
+          )} API (possibly by a plugin) instead of ${chalk.green("chainWebpack()")} (recommended).
+      You can run ${chalk.green(
+        "luban-cli-service inspect",
+      )} without any arguments to inspect the full config and read these rules' config.`);
+        }
+      },
+    );
+  }
 }

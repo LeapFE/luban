@@ -219,8 +219,7 @@ class LibCreator extends BaseCreator {
     const answers = await inquirer.prompt<CreateLibFinalAnswers>(this.injectedPrompts);
 
     const preset: Preset = {
-      isLib: true,
-      cssSolution: "less",
+      type: "lib",
       plugins: {
         "@luban-cli/cli-lib-service": { projectName: "" },
         "@luban-cli/cli-plugin-eslint": {},

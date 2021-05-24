@@ -1,7 +1,11 @@
 import chalk from "chalk";
 
-import { PluginAPI } from "./../lib/PluginAPI";
-import { builtinServiceCommandName, CommandList } from "./../definitions";
+import {
+  builtinServiceCommandName,
+  CommandList,
+  CommandPluginInstance,
+  CommandPluginApplyCallbackArgs,
+} from "../definitions";
 
 export function isObject(value: unknown): value is Record<string, unknown> {
   return Object.prototype.toString.call(value) === "[object Object]";
@@ -18,10 +22,9 @@ function getPadLength(obj: Record<string, unknown>): number {
   return longest;
 }
 
-function logMainHelp(api: PluginAPI): void {
+function logMainHelp(commands: Partial<CommandList>): void {
   console.log(`\n  Usage: luban-cli-service <command> [options]\n` + `\n  Commands:\n`);
 
-  const commands = api.service.commands;
   const padLength = getPadLength(commands);
 
   for (const name in commands) {
@@ -38,7 +41,7 @@ function logMainHelp(api: PluginAPI): void {
 
 function logHelpForCommand(
   name: builtinServiceCommandName,
-  command?: CommandList<{}>[builtinServiceCommandName],
+  command?: CommandList[builtinServiceCommandName],
 ): void {
   if (!command) {
     console.log(chalk.red(`\n  command "${name}" unregistered.`));
@@ -71,14 +74,20 @@ function logHelpForCommand(
   }
 }
 
-export default function(api: PluginAPI): void {
-  api.registerCommand("help", (args) => {
-    const commandName = args._[0] as builtinServiceCommandName;
+export default class Help implements CommandPluginInstance<{}> {
+  apply(params: CommandPluginApplyCallbackArgs<{}>) {
+    const { api, args } = params;
 
-    if (!commandName) {
-      logMainHelp(api);
-    } else {
-      logHelpForCommand(commandName, (api.service.commands as CommandList<{}>)[commandName]);
-    }
-  });
+    api.registerCommand("help", () => {
+      const commandName = args._[0] as builtinServiceCommandName;
+
+      const commands = api.getRegisteredCommands();
+
+      if (!commandName) {
+        logMainHelp(commands);
+      } else {
+        logHelpForCommand(commandName, commands[commandName]);
+      }
+    });
+  }
 }

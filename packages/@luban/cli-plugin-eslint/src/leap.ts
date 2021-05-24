@@ -4,7 +4,7 @@ import { RootOptions } from "@luban-cli/cli-shared-types/dist/shared";
 import { SimpleMapPolyfill } from "@luban-cli/cli-shared-utils";
 
 export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOptions>): void {
-  const sourceDir = options.isLib ? "components" : "src";
+  const sourceDir = options.type === "lib" ? "components" : "src";
 
   const eslintParser = "@typescript-eslint/parser";
 
@@ -13,7 +13,7 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
     string | number | Record<string, unknown> | Array<string | Record<string, unknown>>
   >([["project", ["./tsconfig.json"]]]);
 
-  const eslintExtends = ["leap"];
+  const eslintExtends = ["leapfe"];
 
   const eslintEnv = new SimpleMapPolyfill<string, boolean>([["es2017", true]]);
 
@@ -25,18 +25,25 @@ export function eslintConfigLeap(api: GeneratorAPI, options: Required<RootOption
       "format:check:ts": `prettier --check '${sourceDir}/**/*.{ts,tsx}'`,
     },
     devDependencies: {
-      eslint: "^6.8.0",
-      "eslint-loader": "^4.0.2",
-      "eslint-config-leap": "^1.0.1",
-      "eslint-config-prettier": "^6.15.0",
-      "eslint-plugin-react": "^7.22.0",
+      eslint: "^7.24.0",
+      "eslint-config-leapfe": "^2.0.4",
+      "eslint-config-prettier": "^8.2.0",
+      "eslint-plugin-react": "^7.23.2",
       "eslint-plugin-react-hooks": "^4.2.0",
       "eslint-plugin-import": "^2.22.1",
-      "eslint-plugin-promise": "^4.3.1",
-      "@typescript-eslint/parser": "^2.30.0",
-      "@typescript-eslint/eslint-plugin": "^2.30.0",
+      "eslint-plugin-promise": "^5.1.0",
+      "@typescript-eslint/parser": "^4.22.0",
+      "@typescript-eslint/eslint-plugin": "^4.22.0",
     },
   });
+
+  if (options.type === "web") {
+    api.extendPackage({
+      devDependencies: {
+        "eslint-webpack-plugin": "^2.5.4",
+      },
+    });
+  }
 
   api.render("./template/leap", {
     eslintExtends: JSON.stringify(eslintExtends),

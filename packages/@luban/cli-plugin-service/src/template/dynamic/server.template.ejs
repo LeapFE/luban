@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>[Server] React App</title>
+
+  <%% INJECTED_STYLES.forEach(function(path){ %%>
+    <%%- path %%>
+  <%% }); %%>
+
+  <%% INJECTED_SCRIPTS.forEach(function(path){ %%>
+    <%%- path %%>
+  <%% }); %%>
+
+  <%%- link %>
+  <%%- meta %>
+  <%%- script %>
+  <%%- style %>
+	<%%- title %>
+</head>
+
+<body>
+  <div id="root"><%%- CONTENT %%></div>
+  <script>
+    Object.defineProperty(window, "__USE_SSR__", {
+      value: <%%- __USE_SSR__ %%>,
+      writable: false,
+      configurable: false,
+      enumerable: true,
+    });
+    Object.defineProperty(window, "__INITIAL_DATA__", {
+      value: <%%- __INITIAL_DATA__ %%>,
+      writable: false,
+      configurable: false,
+      enumerable: true,
+    });
+    Object.defineProperty(window, "__INITIAL_STATE__", {
+      value: <%%- __INITIAL_STATE__ %%>,
+      writable: false,
+      configurable: false,
+      enumerable: true,
+    });
+  </script>
+</body>
+
+</html>

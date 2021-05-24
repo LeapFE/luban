@@ -1,0 +1,48 @@
+// @ts-ignore
+import { ReactNode } from "react";
+// @ts-ignore
+import { init, RematchStore, InitConfig } from "@rematch/core";
+// @ts-ignore
+import { OriginRouteConfig, LayoutProps } from "./definitions";
+
+// @ts-ignore
+import entry from "../";
+
+<%_ if (useStore) { _%>
+import { RootModel } from "@/models/index";
+<%_ } _%>
+
+<%_ if (useStore) { _%>
+export const store: RematchStore<RootModel> = init({
+  models: entry?.models,
+  redux: { initialState: window ? window.__INITIAL_STATE__ || {} : {} },
+});
+
+<%_ } else { _%>
+export const store: null = null;
+<%_ }_%>
+
+export interface Config {
+  root?: string;
+  layout?: (params: LayoutProps) => JSX.Element;
+  preparer?: string;
+  route: OriginRouteConfig;
+  <%_ if (useStore) { _%>
+  models?: InitConfig<RootModel>["models"];
+  <%_ } else { _%>
+  models?: InitConfig["models"];
+  <%_ }_%>
+}
+
+export interface Context {
+  path: string;
+  url: string;
+  params: Record<string, string>;
+  query: Record<string, string>;
+  <%_ if (useStore) { _%>
+  store: RematchStore<RootModel>;
+  <%_ } else { _%>
+  store: null;
+  <%_ }_%>
+  [k: string]: unknown;
+}

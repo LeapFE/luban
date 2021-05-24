@@ -8,7 +8,7 @@ import { sortObject } from "../utils/sortObject";
 
 import { confirmUseDefaultPresetMsg } from "../constants";
 
-import { ResolvedPlugin, ApplyFn, CliOptions, PLUGIN_ID } from "../definitions";
+import { ResolvedPlugin, ApplyFn, CliOptions, PLUGIN_ID, RawPlugin } from "../definitions";
 import { Preset } from "@luban-cli/cli-shared-types/dist/shared";
 
 class BaseCreator {
@@ -31,7 +31,7 @@ class BaseCreator {
     return !hasProjectGit(path);
   }
 
-  public async resolvePlugins<T extends Record<string, any>>(
+  public async resolvePlugins<T extends RawPlugin>(
     rawPlugins: T,
     context: string,
   ): Promise<ResolvedPlugin[]> {

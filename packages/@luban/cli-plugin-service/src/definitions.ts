@@ -1,8 +1,8 @@
 import Config = require("webpack-chain");
 import webpack = require("webpack");
-import webpackDevServer = require("webpack-dev-server");
-import { Application } from "express";
 import WebpackDevServer from "webpack-dev-server";
+import { StaticRouterContext } from "react-router";
+import { RematchStore } from "@rematch/core";
 
 import {
   RootOptions as rootOptions,
@@ -11,7 +11,7 @@ import {
   BasePkgFields as basePkgFields,
 } from "@luban-cli/cli-shared-types/dist/shared";
 
-import { PluginAPI } from "./lib/PluginAPI";
+import { CommandPluginAPI, ConfigPluginAPI } from "./lib/PluginAPI";
 import { ProjectConfig } from "./main";
 
 export type builtinServiceCommandName = "serve" | "build" | "inspect" | "help";
@@ -27,42 +27,84 @@ export type RawPlugin = rawPlugin;
  */
 export type BasePkgFields = basePkgFields;
 
-export type PluginApplyCallback = (api: PluginAPI, options: ProjectConfig) => void;
-
-export type InlinePlugin = {
-  id: string;
-  apply: PluginApplyCallback;
+export type CommonFields<Args extends CliArgs> = {
+  projectConfig: ProjectConfig;
+  options: rootOptions;
+  mode: string;
+  commandName: builtinServiceCommandName;
+  args: ParsedArgs<Args>;
+  rawArgv: string[];
 };
 
-export type ServicePlugin = InlinePlugin;
+export type CommandPluginApplyCallbackArgs<Args extends CliArgs> = {
+  api: CommandPluginAPI;
+} & CommonFields<Args>;
+
+export type CommandPluginApplyCallback<Args extends CliArgs> = (
+  options: CommandPluginApplyCallbackArgs<Args>,
+) => void;
+
+export type CommandPluginAddWebpackConfigCallbackArgs = {
+  api: CommandPluginAPI;
+  projectConfig: ProjectConfig;
+};
+
+export interface CommandPluginInstance<Args extends CliArgs> {
+  apply: CommandPluginApplyCallback<Args>;
+  addWebpackConfig?: (options: CommandPluginAddWebpackConfigCallbackArgs) => void;
+}
+
+export type CommandPlugin<Args extends CliArgs> = {
+  id: string;
+  instance: CommandPluginInstance<Args>;
+};
+export type ConfigPluginApplyCallbackArgs<Args extends CliArgs = CliArgs> = {
+  api: ConfigPluginAPI;
+} & CommonFields<Args>;
+export type ConfigPluginApplyCallback<Args extends CliArgs = CliArgs> = (
+  options: ConfigPluginApplyCallbackArgs<Args>,
+) => void;
+
+export interface ConfigPluginInstance<Args extends CliArgs = CliArgs> {
+  apply: ConfigPluginApplyCallback<Args>;
+}
+
+export type ConfigPlugin<Args extends CliArgs = CliArgs> = {
+  id: string;
+  instance: ConfigPluginInstance<Args>;
+};
 
 export type WebpackConfiguration = webpack.Configuration & {
   devServer?: WebpackDevServer.Configuration;
 };
 
-export type WebpackChainCallback = (config: Config) => void;
+export type WebpackChainCallback = (config: Config, id: WebpackConfigName) => void;
 
 export type WebpackRawConfigCallback =
-  | ((config: webpack.Configuration) => webpack.Configuration | void)
+  | ((config: webpack.Configuration, id: WebpackConfigName) => webpack.Configuration | void)
   | webpack.Configuration;
 
-/**
- * @deprecated
- */
-// TODO supported use function to config devServer
-export type WebpackDevServerConfigCallback = (app: Application, server: webpackDevServer) => void;
+export type CommandCallback = () => void;
 
-export type CommandCallback<P extends Record<string | number, unknown>> = (
-  args: ParsedArgs<P>,
-  rawArgv: string[],
-) => void;
-
-export type CommandList<P extends Record<string | number, unknown>> = Record<
+export type CommandList = Record<
   builtinServiceCommandName,
   {
-    commandCallback: CommandCallback<P>;
-    opts: Record<string, unknown> | CommandCallback<P>;
+    commandCallback: CommandCallback;
+    opts: Record<string, unknown> | CommandCallback;
   }
+>;
+
+export type BuiltinWebpackConfigName = "public";
+export type WebpackConfigName = "client" | "server";
+export type WebpackConfigItem = {
+  id: WebpackConfigName | BuiltinWebpackConfigName;
+  config: Config;
+  chainCallback: WebpackChainCallback[];
+  rawCallback: WebpackRawConfigCallback[];
+};
+export type WebpackConfigQueue = Map<
+  WebpackConfigName | BuiltinWebpackConfigName,
+  WebpackConfigItem
 >;
 
 export type ServeCliArgs = Partial<{
@@ -87,6 +129,7 @@ export type BuildCliArgs = Partial<{
 }>;
 
 export type InspectCliArgs = Partial<{
+  name: WebpackConfigName;
   mode: string;
   config: string;
   rule: string;
@@ -119,4 +162,17 @@ export type UrlLoaderOptions = {
       name: string;
     };
   };
+};
+export type Context = { url: string; path: string; query: {}; initProps: {}; initState: {} };
+
+export type ServerEntry = (
+  req: Context,
+  staticRouterContext: StaticRouterContext,
+  store: RematchStore | null,
+  shared: Record<PropertyKey, unknown>,
+) => null | Promise<JSX.Element>;
+
+export type ServerBundle = {
+  default: ServerEntry;
+  createStore?: (initState: Record<PropertyKey, unknown>) => RematchStore | null;
 };

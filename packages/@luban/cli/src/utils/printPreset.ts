@@ -36,7 +36,7 @@ export function printDefaultPreset(preset: Required<Preset>): void {
       return;
     }
 
-    if (key === "isLib") {
+    if (key === "type") {
       return;
     }
 

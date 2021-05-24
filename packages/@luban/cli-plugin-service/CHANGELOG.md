@@ -3,6 +3,436 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.49](https://github.com/leapFE/luban/compare/v2.0.0-next.48...v2.0.0-next.49) (2021-05-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** enable source map and bundle node modules while build deploy file ([2d0f62c](https://github.com/leapFE/luban/commit/2d0f62c81eb91384295d567bbddd5a2a9111e5a6))
+
+
+
+
+
+# [2.0.0-next.48](https://github.com/leapFE/luban/compare/v2.0.0-next.46...v2.0.0-next.48) (2021-05-16)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** allow cache state and location in server side deploy file ([de91bcb](https://github.com/leapFE/luban/commit/de91bcb38507f0bcb6dbfcc4a772feb154e55d29))
+
+
+
+
+
+# [2.0.0-next.47](https://github.com/leapFE/luban/compare/v2.0.0-next.46...v2.0.0-next.47) (2021-05-16)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** allow cache state and location in server side deploy file ([de91bcb](https://github.com/leapFE/luban/commit/de91bcb38507f0bcb6dbfcc4a772feb154e55d29))
+
+
+
+
+
+# [2.0.0-next.46](https://github.com/leapFE/luban/compare/v2.0.0-next.45...v2.0.0-next.46) (2021-05-15)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** set initProps and initState from 'preparer' component 'getInitialProps' ([82d3c25](https://github.com/leapFE/luban/commit/82d3c252de230a9f5d60cf5399ae5d63a1ff648c))
+
+
+
+
+
+# [2.0.0-next.45](https://github.com/leapFE/luban/compare/v2.0.0-next.44...v2.0.0-next.45) (2021-05-15)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** correctly get preparer component path ([4f5d77c](https://github.com/leapFE/luban/commit/4f5d77cfe0d0414bd6da73c43234335df0c69419))
+* pass shared data params to 'getInitailProps' ([b0e1cd7](https://github.com/leapFE/luban/commit/b0e1cd718465e792dc983e388c974b632a7691d9))
+
+
+
+
+
+# [2.0.0-next.44](https://github.com/leapFE/luban/compare/v2.0.0-next.43...v2.0.0-next.44) (2021-05-15)
+
+
+### Features
+
+* support 'preparer' component to do something before create route table ([923a86e](https://github.com/leapFE/luban/commit/923a86eb28f6242398e998bfacf164f44fe2854f))
+
+
+
+
+
+# [2.0.0-next.43](https://github.com/leapFE/luban/compare/v2.0.0-next.42...v2.0.0-next.43) (2021-05-10)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** remove redundant parameters(props) ([fcc6ecb](https://github.com/leapFE/luban/commit/fcc6ecb117a0520cdf9ebde8ef3043c5d901a481))
+
+
+
+
+
+# [2.0.0-next.42](https://github.com/leapFE/luban/compare/v2.0.0-next.41...v2.0.0-next.42) (2021-05-10)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** cache data for each request in server side ([15dcf5a](https://github.com/leapFE/luban/commit/15dcf5a2039b1cf399bf33760abacfd25af0c8a4))
+
+
+### Features
+
+* **cli-plugin-service:** support 'wrapper' component get initial props ([6393ef4](https://github.com/leapFE/luban/commit/6393ef49dcfe4fa7b417d12b7a8084cfa66e2ee0))
+
+
+
+
+
+# [2.0.0-next.41](https://github.com/leapFE/luban/compare/v2.0.0-next.40...v2.0.0-next.41) (2021-05-08)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** use 'runInThisContext' instead of 'runInNewContext' ([20c4ded](https://github.com/leapFE/luban/commit/20c4ded624f6c3515d090d811777150b33094108))
+
+
+### Features
+
+* **cli-plugin-service:** pass 'originRouteList' and 'matchedRouteList' to route component ([fdf3f35](https://github.com/leapFE/luban/commit/fdf3f350bb886c52f6b45df372f97dd640c273b8))
+
+
+
+
+
+# [2.0.0-next.40](https://github.com/leapFE/luban/compare/v2.0.0-next.39...v2.0.0-next.40) (2021-05-07)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** add CaseSensitivePathsPlugin ([1185527](https://github.com/leapFE/luban/commit/1185527ee83e9fe96aef0f99faf4754977671392))
+
+
+
+
+
+# [2.0.0-next.39](https://github.com/leapFE/luban/compare/v2.0.0-next.38...v2.0.0-next.39) (2021-05-05)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-service
+
+
+
+
+
+# [2.0.0-next.38](https://github.com/leapFE/luban/compare/v2.0.0-next.37...v2.0.0-next.38) (2021-05-04)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** enable javascript in less loader options ([a955767](https://github.com/leapFE/luban/commit/a9557675a44896c82770bc585ba290f6cb1a313d))
+* **cli-plugin-service:** given a DOM context when excute client side code in server side ([0230088](https://github.com/leapFE/luban/commit/0230088c0cc1ef13e9be18dda3ccdda62f05d6b4))
+
+
+
+
+
+# [2.0.0-next.37](https://github.com/leapFE/luban/compare/v2.0.0-next.36...v2.0.0-next.37) (2021-05-04)
+
+
+### Bug Fixes
+
+* **cli-plugin-server:** top progress bar style ([5366fb1](https://github.com/leapFE/luban/commit/5366fb1c5ed9ec89f5604324ea5fd58e1e66db3c))
+
+
+
+
+
+# [2.0.0-next.36](https://github.com/leapFE/luban/compare/v2.0.0-next.35...v2.0.0-next.36) (2021-05-03)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** ignore 'store' type error in server side entry file ([153a049](https://github.com/leapFE/luban/commit/153a04906be48d6c16eefef9a01579e10a0dd1fb))
+
+
+
+
+
+# [2.0.0-next.35](https://github.com/leapFE/luban/compare/v2.0.0-next.34...v2.0.0-next.35) (2021-05-01)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-service
+
+
+
+
+
+# [2.0.0-next.34](https://github.com/leapFE/luban/compare/v2.0.0-next.33...v2.0.0-next.34) (2021-05-01)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** catch execute server side entry function exception ([7ed7d79](https://github.com/leapFE/luban/commit/7ed7d796cc0feb9da9a9ad454101a08863ba2f3c))
+* **cli-plugin-service:** use 'componentDidMount' instead of 'UNSAFE_componentWillMount' ([5749372](https://github.com/leapFE/luban/commit/5749372193c37ec2233d3783602001f89cf435be))
+
+
+
+
+
+# [2.0.0-next.33](https://github.com/leapFE/luban/compare/v2.0.0-next.32...v2.0.0-next.33) (2021-05-01)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** catch compile error and firendly display it on server side ([d7f3d90](https://github.com/leapFE/luban/commit/d7f3d904fd503620726619d65655fe4eb5040b98))
+
+
+
+
+
+# [2.0.0-next.32](https://github.com/leapFE/luban/compare/v2.0.0-next.31...v2.0.0-next.32) (2021-04-30)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** pass 'initialing' state to activity component ([9e8bfba](https://github.com/leapFE/luban/commit/9e8bfba1f40fc4c72965928d18e56ab04238d6c1))
+
+
+
+
+
+# [2.0.0-next.31](https://github.com/leapFE/luban/compare/v2.0.0-next.30...v2.0.0-next.31) (2021-04-29)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** pass 'initProps' to activity component ([8238bc6](https://github.com/leapFE/luban/commit/8238bc6f0594159a848320e280e44ee2067fd011))
+* **cli-plugin-service:** return 'null' while invoke 'getInitialProps' page component ([9a735f6](https://github.com/leapFE/luban/commit/9a735f6ec80e9d094f1daa112aeb65da338eb6a1))
+
+
+
+
+
+# [2.0.0-next.30](https://github.com/leapFE/luban/compare/v2.0.0-next.29...v2.0.0-next.30) (2021-04-29)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** wrapper activity component with route component ([b5859b9](https://github.com/leapFE/luban/commit/b5859b96421bfec6afcd8289893b6798fb3d8adf))
+* **cli-plugin-service,cli-lib-service:** modify 'target' field in tsconfig.json ([abbf3ee](https://github.com/leapFE/luban/commit/abbf3eee24ad445fb2fcb2559d5b119c86b0f29f))
+
+
+
+
+
+# [2.0.0-next.29](https://github.com/leapFE/luban/compare/v2.0.0-next.28...v2.0.0-next.29) (2021-04-28)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** correct generate dynamic and static route ([1ac4eeb](https://github.com/leapFE/luban/commit/1ac4eeb2cf3c657bf4fe0c1beae0d6ea098da289))
+* **cli-plugin-service:** correctly find activity route on server side ([774c67b](https://github.com/leapFE/luban/commit/774c67bdb497f2038b50debb13924f5d1c9f7c62))
+
+
+
+
+
+# [2.0.0-next.28](https://github.com/leapFE/luban/compare/v2.0.0-next.27...v2.0.0-next.28) (2021-04-28)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** adjust 'boilerplate' and server/client side entry file ([d658e9c](https://github.com/leapFE/luban/commit/d658e9c1dbe4422262f43a1da79a3b58d5f5a54d))
+
+
+
+
+
+# [2.0.0-next.27](https://github.com/leapFE/luban/compare/v2.0.0-next.26...v2.0.0-next.27) (2021-04-28)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** correctly inspect webpack config in each mode ([1d1c3b0](https://github.com/leapFE/luban/commit/1d1c3b01d99fb16f086e067bed79761337d93b23))
+* **cli-plugin-service:** clean 'publicPath' and 'outputDir' in project config file ([665824d](https://github.com/leapFE/luban/commit/665824dadcca65f76e157d7627dbad366a880852))
+* **cli-plugin-service:** correct inspect plugins in webpack config ([e836506](https://github.com/leapFE/luban/commit/e83650686246ff025081088ee228c61114b8acd3))
+* **cli-plugin-service:** correctly load 'configureWebpack' option in project config file ([56409ac](https://github.com/leapFE/luban/commit/56409ac0ead12a8624769ffc074ad19bf6c20ed4))
+* **cli-plugin-service:** update some dependencies ([8950b8f](https://github.com/leapFE/luban/commit/8950b8f15acc5d5be7c4a169ba69756e2ac9f385))
+
+
+
+
+
+# [2.0.0-next.26](https://github.com/leapFE/luban/compare/v2.0.0-next.25...v2.0.0-next.26) (2021-04-28)
+
+
+### Features
+
+* **cli-plugin-service:** enable "configureWebpack" opiton in project config file ([82daf1f](https://github.com/leapFE/luban/commit/82daf1fdb6f0630f256307d9be0b754b98fb4da9))
+* **cli-plugin-service:** enable inspect both client and server side webpack config ([22ce5e6](https://github.com/leapFE/luban/commit/22ce5e6f15d9c0cd384c2caa56d4b61b87e10e23))
+* **plugin-service:** add fork-ts-checker plugin ([ff0152c](https://github.com/leapFE/luban/commit/ff0152cb3592dc5bde73b58898c3e4c4f3db8b83))
+
+
+
+
+
+# [2.0.0-next.25](https://github.com/leapFE/luban/compare/v2.0.0-next.24...v2.0.0-next.25) (2021-04-27)
+
+
+### Bug Fixes
+
+* **cli-lib-service,cli-plugin-service:** updte mini-css-extract-plugin version(1.4.1) ([63018a6](https://github.com/leapFE/luban/commit/63018a61c7d2d6d1f72cb44a975053403b4329af))
+* **cli-plugin-service:** adjust clinet side webpack config ([ac2d342](https://github.com/leapFE/luban/commit/ac2d342f80b0d2837bbfeeeda1574c38802f7191))
+* **cli-plugin-service:** clear asset dir ([5979ee7](https://github.com/leapFE/luban/commit/5979ee717b7a0e0bae302019719bba88b9c806e3))
+
+
+
+
+
+# [2.0.0-next.24](https://github.com/leapFE/luban/compare/v2.0.0-next.23...v2.0.0-next.24) (2021-04-25)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** correct generate template(index.html) ([e239571](https://github.com/leapFE/luban/commit/e2395718e3d090bcd0ab059bcb68bbb5507b9f5f))
+
+
+
+
+
+# [2.0.0-next.23](https://github.com/leapFE/luban/compare/v2.0.0-next.22...v2.0.0-next.23) (2021-04-25)
+
+
+### Features
+
+* **cli-plugin-service:** produce (store/router/boilerplate)files before resolve plugins ([4dbf97d](https://github.com/leapFE/luban/commit/4dbf97deb4797aa61de0abeedfc1e4648b7150c4))
+* **cli-plugin-service:** support https when enable ssr ([78b0a96](https://github.com/leapFE/luban/commit/78b0a96501a2ff7953610c1e3da1f765825a93f3))
+
+
+
+
+
+# [2.0.0-next.22](https://github.com/leapFE/luban/compare/v2.0.0-next.21...v2.0.0-next.22) (2021-04-22)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-service
+
+
+
+
+
+# [2.0.0-next.21](https://github.com/leapFE/luban/compare/v2.0.0-next.20...v2.0.0-next.21) (2021-04-22)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-service
+
+
+
+
+
+# [2.0.0-next.20](https://github.com/leapFE/luban/compare/v2.0.0-next.19...v2.0.0-next.20) (2021-04-22)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-service
+
+
+
+
+
+# [2.0.0-next.19](https://github.com/leapFE/luban/compare/v2.0.0-next.18...v2.0.0-next.19) (2021-04-22)
+
+
+### Features
+
+* **cli-plugin-service:** clear console down before restart dev server ([42e5020](https://github.com/leapFE/luban/commit/42e5020c3d9617cb671abc1319aaea5126247713))
+
+
+
+
+
+# [2.0.0-next.18](https://github.com/leapFE/luban/compare/v2.0.0-next.17...v2.0.0-next.18) (2021-04-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** add some types devDependencies ([3b8ff78](https://github.com/leapFE/luban/commit/3b8ff78bb662dc42258cba8f8a4d1a9579ae2c91))
+* **cli-plugin-service:** modify prettierignore file(ignore 'src/.luban' dir) ([9450e8a](https://github.com/leapFE/luban/commit/9450e8a67b9184ace34d4ddba0f2b03f7fc406ab))
+* **cli-plugin-service,cli-plugin-eslint:** protected 'service' instance in PluginAPI ([53c834e](https://github.com/leapFE/luban/commit/53c834e337e0f0f25e6d4bfe1689e4a43d26eb21))
+
+
+### Features
+
+* **cli-plugin-service:** watch .env*、src/index.tsx、src/route.ts、luban.config.ts files ([6e528f3](https://github.com/leapFE/luban/commit/6e528f3ed7178c9be673855a4337eb7980cb4f17))
+
+
+
+
+
+# [2.0.0-next.17](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.17) (2021-04-21)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** build server side deployed file when enable ssr ([5eda14f](https://github.com/leapFE/luban/commit/5eda14fb504bdbacb0d2daaf206cefb7a00be962))
+* **cli-plugin-service:** catch exception while clean dest files ([ef3b01d](https://github.com/leapFE/luban/commit/ef3b01db01c541278545d52d36769a5d32f39760))
+* **cli-plugin-service:** remove clean-webpack-plugin and manually delete dest fir ([19c2d57](https://github.com/leapFE/luban/commit/19c2d57010d5de0baa04b036687e4b1f2b74cdcd))
+
+
+### Features
+
+* **cli-plugin-service:** command plugin can add webpack config instance ([a087ec5](https://github.com/leapFE/luban/commit/a087ec580b664599820d23654b195da25ff5e022))
+
+
+
+
+
+# [2.0.0-next.16](https://github.com/leapFE/luban/compare/v2.0.0-next.15...v2.0.0-next.16) (2021-04-20)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** remove clean-webpack-plugin and manually delete dest fir ([19c2d57](https://github.com/leapFE/luban/commit/19c2d57010d5de0baa04b036687e4b1f2b74cdcd))
+
+
+
+
+
+# [2.0.0-next.15](https://github.com/leapFE/luban/compare/v2.0.0-next.14...v2.0.0-next.15) (2021-04-20)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** after load and set env and load command and config plugin ([630644b](https://github.com/leapFE/luban/commit/630644b05c9e17c41a5e022bfa65f1465a44d331))
+
+
+
+
+
+# [2.0.0-next.14](https://github.com/leapFE/luban/compare/v2.0.0-next.13...v2.0.0-next.14) (2021-04-20)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** modify 'APP_PUBLIC_PATH' in .env.development ([58dcb62](https://github.com/leapFE/luban/commit/58dcb62fd4f582230c7490a1532bc5d804c3b757))
+
+
+### Features
+
+* **cli-plugin-service:** produce boilerplate ([3b41f71](https://github.com/leapFE/luban/commit/3b41f71c724dd2d4f52e8d760ffb6c1c17268e86))
+* **cli-plugin-service:** refact command plugin ([20c026a](https://github.com/leapFE/luban/commit/20c026a82b01b8678c4a99d3722903bd15cd4a59))
+* **cli-plugin-service:** refact config plugin ([a243efa](https://github.com/leapFE/luban/commit/a243efa2b1f883b7017815a6e65b76cb7ef9bd0a))
+* **cli-plugin-service:** refact service plugin ([4f8283a](https://github.com/leapFE/luban/commit/4f8283ae204e6c5f9b877e953114a2d32a85e92b))
+* **cli-plugin-service:** server side render for local develop ([b6a6288](https://github.com/leapFE/luban/commit/b6a6288b42f3632c1818422b29d63e2b2d529543))
+* **store,router,typescript:** remove plugin(store, router, typescript) ([26216ca](https://github.com/leapFE/luban/commit/26216ca1771983063216b83495fbb242c4b37d38))
+
+
+
+
+
 # [2.0.0-next.13](https://github.com/leapFE/luban/compare/v2.0.0-next.12...v2.0.0-next.13) (2021-03-22)
 
 
