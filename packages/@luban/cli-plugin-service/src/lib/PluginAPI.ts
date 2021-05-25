@@ -1,5 +1,4 @@
 import path from "path";
-import Config = require("webpack-chain");
 
 import { Service } from "./Service";
 import {
@@ -66,10 +65,6 @@ class CommandPluginAPI extends PluginAPI {
 
   public addWebpackConfig(name: WebpackConfigName) {
     this.service.addWebpackConfigQueueItem(name);
-  }
-
-  public resolveChainableWebpackConfig(name: WebpackConfigName): Config | undefined {
-    return this.service.resolveChainableWebpackConfig(name);
   }
 
   public resolveWebpackConfig(name: WebpackConfigName): WebpackConfiguration | undefined {

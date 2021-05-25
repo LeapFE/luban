@@ -247,6 +247,8 @@ class Service {
         }
 
         if (typeof fn === "function") {
+          // we pass whole config object, so user can modify parsed webpack config
+          // but in 'luban.config.ts' just allow modify ‘module’ 'plugins' 'externals', because we have type check
           const result = fn(config, configQueue.id);
           if (result) {
             config = merge(config, result);
@@ -259,9 +261,12 @@ class Service {
   }
 
   public addWebpackConfigQueueItem(name: WebpackConfigName) {
+    const config = new Config();
+    config.name(name);
+
     this.webpackConfigQueue.set(name, {
       id: name,
-      config: new Config(),
+      config,
       chainCallback: [],
       rawCallback: [],
     });

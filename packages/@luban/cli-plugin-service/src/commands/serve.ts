@@ -98,6 +98,7 @@ class Serve {
     this.projectConfig = projectConfig;
     this.commandArgs = args;
 
+    //TODO separate logic that prepare client side and server side
     this.clientSideWebpackConfig = api.resolveWebpackConfig("client");
 
     this.serverSideWebpackConfig = api.resolveWebpackConfig("server");
@@ -118,6 +119,7 @@ class Serve {
   }
 
   private preparePorts() {
+    //TODO separate logic that prepare client side and server side
     const ports = [defaultClientServerConfig.port, defaultSSRServerConfig.port];
 
     if (typeof this.commandArgs.port === "string") {
@@ -137,6 +139,7 @@ class Serve {
   }
 
   private async init() {
+    //TODO separate logic that prepare client side and server side
     const ports = this.preparePorts();
 
     this.clientSideHost =
