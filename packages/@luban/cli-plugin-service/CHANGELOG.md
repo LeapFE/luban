@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.50](https://github.com/leapFE/luban/compare/v2.0.0-next.49...v2.0.0-next.50) (2021-05-25)
+
+
+### Features
+
+* **cli-plugin-service:** allow modify webpack config in luban.config.ts by 'configureWebpack' ([991c80c](https://github.com/leapFE/luban/commit/991c80c3b8e853141862aa501767298c1b612e78))
+* **cli-plugin-service:** not clear compiled file 'luban.config.js' ([48cac0a](https://github.com/leapFE/luban/commit/48cac0aa5b5e209513eab7fd0e16b03621b41db1))
+
+
+
+
+
 # [2.0.0-next.49](https://github.com/leapFE/luban/compare/v2.0.0-next.48...v2.0.0-next.49) (2021-05-21)
 
 

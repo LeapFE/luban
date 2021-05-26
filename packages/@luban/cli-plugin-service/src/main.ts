@@ -1,10 +1,9 @@
 import webpack = require("webpack");
-// import Config = require("webpack-chain");
 import webpackDevServer = require("webpack-dev-server");
 import { Request, Response, NextFunction } from "express";
 import { Parser, Stringifier, Syntax, Plugin } from "postcss/lib/postcss";
 import "less";
-import { WebpackConfigName } from "./definitions";
+import { WebpackConfigName, WebpackRawConfigCallbackConfiguration } from "./definitions";
 
 type CssLoaderOptions = {
   url: boolean | ((url: string, path: string) => boolean);
@@ -129,16 +128,22 @@ export type ProjectConfig = {
 
   /**
    * @description webpack 配置
-   * 这个值是一个函数，接收被解析的配置和配置名称作为参数。该函数可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
+   * 这个值是一个函数，接收被解析的配置和配置名称作为参数。
+   * 该函数可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
+   * 被解析的配置只包括 ‘module’ 'plugins' 'externals', 同时也只能返回这三个配置项
+   *
+   * 即通过 `configureWebpack` 只允许修改 ‘module’ 'plugins' 'externals' 这三个配置项
+   *
+   * **不允许直接返回 `config` 参数**
    *
    * @type {Function | undefined}
    *
    * @default {() => undefined}
    */
   configureWebpack: (
-    config: webpack.Configuration,
+    config: WebpackRawConfigCallbackConfiguration,
     id: WebpackConfigName,
-  ) => webpack.Configuration | void;
+  ) => WebpackRawConfigCallbackConfiguration | void;
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
