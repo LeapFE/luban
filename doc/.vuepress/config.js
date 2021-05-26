@@ -43,7 +43,7 @@ module.exports = {
           title: "开发指南",
           collapsable: true,
           children: [
-            "/document/structure",
+            // "/document/structure",
             "/document/css",
             "/document/mode-and-env",
             "/document/ui-library",
