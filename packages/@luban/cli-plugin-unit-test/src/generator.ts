@@ -62,7 +62,11 @@ export default function(api: GeneratorAPI, options: Required<RootOptions>): void
     collectCoverageFrom.push(`src/**/*.${testFileSuffix}`);
   }
 
-  api.render("./template", {
+  if (options.type === "web") {
+    api.render("./template/web-app");
+  }
+
+  api.render("./template/common", {
     coveragePathIgnorePatterns: JSON.stringify(coveragePathIgnorePatterns),
     testRegex,
     collectCoverageFrom: JSON.stringify(collectCoverageFrom),
