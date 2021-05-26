@@ -80,9 +80,17 @@ export type WebpackConfiguration = webpack.Configuration & {
 
 export type WebpackChainCallback = (config: Config, id: WebpackConfigName) => void;
 
+export type WebpackRawConfigCallbackConfiguration = {
+  module?: webpack.Module;
+  plugins?: webpack.Plugin[];
+  externals?: webpack.ExternalsElement[] | webpack.ExternalsElement;
+};
 export type WebpackRawConfigCallback =
-  | ((config: webpack.Configuration, id: WebpackConfigName) => webpack.Configuration | void)
-  | webpack.Configuration;
+  | ((
+      config: WebpackRawConfigCallbackConfiguration,
+      id: WebpackConfigName,
+    ) => WebpackRawConfigCallbackConfiguration | void)
+  | WebpackRawConfigCallbackConfiguration;
 
 export type CommandCallback = () => void;
 

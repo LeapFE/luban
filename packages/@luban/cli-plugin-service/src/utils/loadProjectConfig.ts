@@ -18,7 +18,7 @@ function requireSpecifiedConfigFile<T>(
   const spinner = new Spinner();
   spinner.logWithSpinner(`compiling ${chalk.green(configFilename)} ... \n`);
 
-  const configTempDir = path.resolve(context, ".config");
+  const configTempDir = path.resolve(context, "node_modules/@luban-cli/cli-plugin-service/temp");
   const configTempDirPath = path.resolve(`${configTempDir}/${configFilename}`);
 
   try {
@@ -36,7 +36,6 @@ function requireSpecifiedConfigFile<T>(
 
   try {
     configModule = loadFile<T>(`${configTempDirPath.replace(/(.+)(\.ts)/gi, "$1.js")}`);
-    fs.removeSync(configTempDir);
   } catch (e) {
     spinner.stopSpinner();
   }
