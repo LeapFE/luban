@@ -1,211 +1,208 @@
-# 路由系统
+# 路由和布局
 
-Luban 内置使用 [luban-router](https://github.com/leapFE/luban-router) 来构建整个应用的路由系统。==luban-router== 是一个基于
-[react-router](https://reacttraining.com/react-router/web/guides/quick-start) 静态路由管理器，并额外提供了以下功能：
+Luban 内置了一个基于[react-router](https://reacttraining.com/react-router/web/guides/quick-start) 静态路由管理器来构建整个应用的路由系统。并额外提供了以下功能：
 
 - 📄 中心化的配置式路由
-- 🚥 路由鉴权
-- 🚏 菜单导航
-
-::: tip 🙋
-==luban-router== 创建的路由均为静态路由，所以若是有创建动态路由的需求，==luban-router== 并不适合。另外在路由配置中提到的 **子路由** 或者 **路由嵌套** 也是一个伪概念，只是表示一种菜单导航上的层级关系。在内部实现时，最终会将这种嵌套结构扁平化。 
-:::
+- 🧩 自动的 [code-split](https://webpack.js.org/guides/code-splitting/#root)
+- 🚏 布局和导航
 
 ## 如何使用
 
-#### 1. 安装
-```shell
-npm i luban-router --save
-```
-
-#### 2. 添加配置
-```typescript
-// config.ts
-import { RouteConfig } from "luban-router/lib/definitions";
-
-// import your component
-// ...
-
-export const config: RouteConfig = {
-  routes: [
-    {
-      name: "首页",
-      path: "/",
-      component: Index,
-      children: [
-        {
-          name: "列表",
-          path: "/list",
-          component: List,
-        },
-      ],
-    },
-    {
-      name: "用户中心",
-      path: "/user",
-      authority: [66, 88, 99],
-      component: User,
-    },
-    // path 为 404 的路由将作为整个应用的 404 回退页面
-    {
-      path: "404",
-      component: NotFound,
-    },
-  ],
-};
-```
-
-#### 3. 在应用中使用 ` <LubanRouter /> `
+*src/route.ts* 是配置整个应用路由的位置：
 ```tsx
-import React from "react";
-import ReactDOM from "react-dom";
-import { LubanRouter } from "luban-router";
+/**
+ * DO NOT MOVE THIS FILE ELSEWHERE
+ */
 
-import { config } from "./config";
-const root = document.getElementById("root");
-ReactDOM.render(<LubanRouter config={config} />, root);
-```
+import { route } from "@/.luban";
 
-更多路由相关类型定义请查阅 [这里](https://github.com/leapFE/luban-router/blob/master/src/definitions.ts)。
-
-## 路由元信息
-
-定义路由的时候可以使用 `meta` 字段：
-```typescript
-// config.ts
-import { RouteConfig } from "luban-router/lib/definitions";
-
-// import your component
-// ...
-
-export const config: RouteConfig = {
+export default route({
+  mode: "hash",
   routes: [
-    {
-      name: "首页",
-      path: "/",
-      component: Index,
-      meta: { nav: true, name: "home page" }
-    },
+    // you routes ...
   ],
-};
+});
 ```
 
-这个 `meta` 字段会在创建路由的时候将会作为 `props` 原模原样的传递给对应的组件。
+可以在这个 `route` 方法参数中配置应用路由是使用 `HashRouter` 还是 `BrowserRouter`，404 页面，["Loading..." Component](https://github.com/jamiebuilds/react-loadable#creating-a-great-loading-component)等。
 
 ::: tip 🙋
-当给某一个路由项定义了 `meta` 字段，在具体组件中消费时，应该使用 ==luban-router== 导出的 `EnhancedRouteComponentProps` 约束组件的 `Props` 类型：
+在开启服务端渲染后，`mode` 参数只能配置为 `browser`，即 `BrowserRouter`，若是使用了 `HashRouter`，Luban 会默认使用 `BrowserRouter`。
+:::
 
-```tsx 
-import React, { FunctionComponent } from "react";
-import { EnhancedRouteComponentProps } from "luban-router/es/definitions";
+###  添加一个路由
 
-const Home: FunctionComponent<EnhancedRouteComponentProps<{ nav: boolean, name: string }>> = ({ meta }) => {
-  return <div>{meta?.name}</div>;
-};
+在 `routes` 数组中添加一个路由，并配置 `path` 和 `component`:
 
-export { Home };
+```typescript{4,5,6,7}
+export default route({
+  routes: [
+    // other routes ...
+    {
+      path: "/example",
+      component: "@/pages/example",
+    },
+  ],
+});
+```
+
+::: tip 每个路由项支持的详细配置如下：
+```ts
+// 路由名称，将会作为 props 传递给对应的组件
+name?: string;
+
+// 路由路径
+path: string;
+
+// 重定向路径
+redirect?: string;
+
+// 是否与 `location.pathname` 严格匹配；默认 true
+exact?: boolean;
+
+// 是否与 `location.pathname` 严格匹配路径中尾斜杆；默认 false
+strict?: boolean;
+
+// 匹配到改路径时要渲染的组件；是一个路径；当 `redirect` 和 `component` 配置同时存在，将忽略该配置
+component?: string;
+
+// 路由元信息；将会作为 `props` 原模原样的传递给对应的组件
+meta?: RouteMetaData;
 ```
 :::
 
-同样这个字段在创建应用导航菜单是也很有用。详细见下面 [导航菜单](#导航菜单)。
+然后在 *pages* 目录下添加 *example.tsx*:
+```tsx
+import React from "react";
+import { EnhancedRouteComponentProps, Page } from "@/.luban";
 
+const Example: Page<EnhancedRouteComponentProps> = ({ name }) => {
+  return <h1>{name}</h1>;
+};
 
-## 路由鉴权
-当给 `<LubanRouter />` 设置了 `role` 参数，在创建路由的时候就会检查每一个路由项是否能被当前 `role` 访问；
-```typescript
-<LubanRouter config={config} role={66} />
+export default Example;
 ```
 
-也可以传递一个数组：
-```typescript
-<LubanRouter config={config} role={[66, 88, 99]} />
+当然也可以使用 class component:
+```tsx
+import React from "react";
+import { EnhancedRouteComponentProps } from "@/.luban";
+
+class Example extends React.Component<EnhancedRouteComponentProps, unknown> {
+  constructor(props: EnhancedRouteComponentProps) {
+    super(props);
+  }
+
+  render(): JSX.Element {
+    return <h1>{this.props.name}</h1>;;
+  }
+}
+
+export default Example;
 ```
 
-默认的检查策略是求 `role` 与路由项 `authority` 的交集。
+::: tip 有三点需要注意：
++ 路由组件为函数式组件时应使用 `Page` 来注解组件的类型和使用 `EnhancedRouteComponentProps` 来约束改组件的 `props` 类型。
++ 路由组件为类组件时，同样使用 `EnhancedRouteComponentProps` 来约束改组件的 `props` 类型。
++ 使用默认导出导出组件。
+:::
 
-比如当前角色为 `66`，路由配置中某一个路由项的 authority 为 `[66, 55, 77]`，那个这个路由项就可以被访问到，当角色变为 `88`，则不能被访问到。
+## 布局
 
+在入口文件 *src/index.tsx* 配置 `layout` 参数可以实现对应用的自定义布局：
 
-## 路由赖加载
-在构建时，JavaScript 包会变得非常大，影响页面加载时间。这个时候我们希望按路由将打包后的代码进行分割，然后在当前路由被访问时才去加载对应的代码块文件。
+```typescript{9}
+import React from "react";
+import { run } from "@/.luban";
 
-结合 [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy) API 和 [webpack](https://webpack.js.org/guides/code-splitting/#root) 的代码分割功能，可以轻松的实现路由的赖加载。
+import { Layout } from "./layout";
 
-第一步，通过 `React.lazy` 和 [动态import](https://webpack.js.org/guides/code-splitting/#dynamic-imports) 引入组件:
+import route from "@/route";
 
-```typescript
-const Index = React.lazy(() => import("./Index"));
+export default run({
+  layout: (props) => <Layout {...props} />,
+  route,
+});
 ```
 
-第二步，在 *config.ts* 中不用做任何改变，像之前一样使用它:
-```typescript
-// config.ts
-import { RouteConfig } from "luban-router/lib/definitions";
+`Layout` 组件接收三个参数：
++ 已经渲染好的路由表，可以直接使用(`props.children`)
++ 原始的路由配置，即 *route.ts* 中的 `routes` 参数(`props.originRouteList`)
++ 与 `location.pathname` 匹配到的路由项列表(`props.matchedRouteList`)
 
-// import your component
+根据这些参数，可以实现对应用的自定义布局。
 
-export const config: RouteConfig = {
+```tsx
+import { LayoutProps } from "@/.luban/definitions";
+import React, { FunctionComponent } from "react";
+
+const Layout: FunctionComponent<LayoutProps> = (props) => {
+  return (
+    <div>
+      // props.originRouteList
+      // props.matchedRouteList
+      <>{props.children}</>
+    </div>
+  );
+};
+
+export { Layout };
+```
+
+## 配置 Prepare
+在 *src/index.tsx* 中的 `run` 方法接收的参数对象有一个 `prepare` 字段，可以指定一个组件的具体路径，该组件会在创建应用路由之前被优先渲染。
+
+可以在创建应用路由之前做一些事情或者根据某些条件决定渲染什么：
+```ts
+import React from "react";
+import { Page, PreparerProps } from "@/.luban";
+
+const Preparer: Page<PreparerProps> = (props) => {
+  // do something, data fetch or get localStorage data
+
+  if (firstCondition) {
+    return <div>render something</div>;
+  }
+
+  if (secondCondition) {
+    // render router table
+    return <>{props.children}</>;
+  }
+
+  // final render
+  return <div>final render something</div>;
+};
+
+export default Preparer;
+```
+
+其中 `props.children` 为将要渲染的应用路由，可以在合适的条件下渲染它。
+
+## 代码分割
+Luban 会为每个路由项自动的进行代码分割，所以不必手动的动态导入组件。同时 Luban 内置了一个["Loading..." Component](https://github.com/jamiebuilds/react-loadable#creating-a-great-loading-component)，配置 `fallback` 参数指定自己的 "Loading..." 组件：
+```ts{6}
+// src/route.ts
+export default route({
+  routes: [
+    // routes ...
+  ],
+  fallback: "@/MyFallback";
+});
+```
+
+关于如何编写 "Loading" 组件可以查阅 [Creating a great "Loading..." Component](https://github.com/jamiebuilds/react-loadable#creating-a-great-loading-component)。
+
+## 404 路由
+
+`path` 为 **404** 的路由项将作为整个应用的 404 回退路由。当 `location.pathname` 匹配不到任何一个路由时，将会渲染 **404** 路由对应的组件：
+```ts{4,5,6,7}
+// src/route.ts
+export default route({
   routes: [
     {
-      name: "首页",
-      path: "/",
-      component: Index,
-    },
+      path: "404",
+      component: "@/pages/NotFound"
+    }
   ],
-};
-```
-
-同时，也可以对路由进行分组，指定一个 [chunk name](https://webpack.js.org/api/module-methods/#magic-comments)，将一组路由组件打包到一个 chunk 中：
-```typescript
-const Index = React.lazy(() => import(/* webpackChunkName: "group-index" */  "./Index"));
-const User = React.lazy(() => import(/* webpackChunkName: "group-user" */  "./User"));
-const About = React.lazy(() => import(/* webpackChunkName: "group-about" */  "./About"));
-```
-
-
-## 页面布局
-
-==luban-router== 默认不带有任何的布局方案，可以通过下面这种方式来实现自定义布局：
-```typescript
- <LubanRouter config={config} role={66}>
-  {({ renderedTable, matchedRouteList, permissionRouteList }) => {
-    return (
-        <div>
-        // 渲染侧边栏导航
-        // 渲染面包屑导航
-        // ...
-        </div>
-    );
-  }}
-</LubanRouter>
-```
-
-`<LubanRouter />` 除了接收 `config` 和 `role` 参数外，还可以传递 `children` 参数，该回调函数接收三个参数。
-
-其中，第一个参数是已经渲染好的路由表，可以直接使用，第二个参数是与当前路径匹配的路由列表，第三个参数是当前角色可有权访问的路由表（这个路由表是嵌套结构的）。其中第二个参数的路由列表的路由项会追加一个 `active` 字段，表示当前活跃的路由项，可以很方便的实现面包屑导航。更多路由项定义请查阅 [这里](https://github.com/leapFE/luban-router/blob/master/src/definitions.ts)。
-
-需要注意的是，当赖加载一些组件后，`luban-router` 会将渲染好的路由表用 <React.Suspense /> 包裹起来，同时还设置了一个默认的 `fallback` 内容，可以向 `luban-router` 传递 `fallback` 参数来自定义 `fallback` 内容：
-```typescript
-<LubanRouter config={config} fallback={<span>my chunk loading...</span>} />
-
-// 或者不显示任何 `fallback` 信息
-<LubanRouter config={config} fallback={null} />
-```
-
-**同样的，实现自定义布局时，也需要将渲染好的路由表用 <React.Suspense /> 包裹起来：**
-```typescript
-import React, { Suspense } from "react";
-
-<LubanRouter config={config} role={66}>
-  {({ renderedTable, matchedRouteList, permissionRouteList }) => {
-    return (
-        <div>
-          // 渲染侧边栏导航
-          // 渲染面包屑导航
-          // ...
-          <Suspense fallback={<span>my chunk loading...</span>}>{renderedTable}</Suspense>
-        </div>
-    );
-  }}
-</LubanRouter>
+});
 ```
