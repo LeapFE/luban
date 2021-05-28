@@ -1,6 +1,6 @@
 # 状态管理
 
-Luban 默认使用 ==rematch== 来管理全局的状态，rematch 是一个构建在 redux 之上的优秀的状态管理工具。
+Luban 默认使用 [rematch](https://rematchjs.org/) 来管理全局的状态，==rematch== 是一个构建在 redux 之上的优秀的状态管理工具。
 
 ### 启用状态管理
 配置 *src/index.tsx* `run` 方法参数对象的 `models` 字段就可以开启状态管理，不过在开启之前，需要先创建一些 models。
@@ -65,7 +65,7 @@ export default run({
 ```
 
 ::: tip
-当修改了 *src/index.tsx* 后，本都服务会自动重启，重启后就可以在组件中更新和使用这些全局状态了。
+当修改了 *src/index.tsx* 后，本地服务会自动重启，重启后就可以在组件中更新和使用这些全局状态了。
 :::
 
 5. 在组件中使用

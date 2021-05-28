@@ -33,11 +33,14 @@ module.exports = {
     sidebar: {
       "/document": [
         "/document/",
-        "/document/installation",
         {
           title: "开始",
           collapsable: false,
-          children: ["/document/create-web-app", "/document/create-component-lib"],
+          children: [
+            "/document/installation",
+            "/document/create-web-app",
+            "/document/create-component-lib",
+          ],
         },
         {
           title: "开发指南",
@@ -49,6 +52,7 @@ module.exports = {
             "/document/css",
             "/document/mode-and-env",
             "/document/data-fetch",
+            "/document/ssr",
           ],
         },
         {

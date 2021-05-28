@@ -1,6 +1,6 @@
 # 路由和布局
 
-Luban 内置了一个基于[react-router](https://reacttraining.com/react-router/web/guides/quick-start) 静态路由管理器来构建整个应用的路由系统。并额外提供了以下功能：
+Luban 内置了一个基于 [react-router](https://reacttraining.com/react-router/web/guides/quick-start) 的静态路由管理器来构建整个应用的路由系统。提供了以下功能：
 
 - 📄 中心化的配置式路由
 - 🧩 自动的 [code-split](https://webpack.js.org/guides/code-splitting/#root)

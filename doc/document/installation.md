@@ -26,3 +26,5 @@ npm install -g @luban-cli/cli
 ```bash
 luban --version
 ```
+
+之后，就可以创建项目了：[创建Web App](/document/create-web-app.md) 或者 [创建Component Library](/document/create-component-lib.md)
