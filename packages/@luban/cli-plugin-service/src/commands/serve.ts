@@ -77,20 +77,20 @@ class Serve {
 
   private publicUrl: string | null;
 
-  private useHttps: boolean;
-  private protocol: "https" | "http";
+  private readonly useHttps: boolean;
+  private readonly protocol: "https" | "http";
 
-  private clientSideServerOptions: WebpackDevServer.Configuration;
+  private readonly clientSideServerOptions: WebpackDevServer.Configuration;
 
-  private clientSideWebpackConfig:
+  private readonly clientSideWebpackConfig:
     | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
     | undefined;
-  private serverSideWebpackConfig:
+  private readonly serverSideWebpackConfig:
     | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
     | undefined;
 
   private serverSideApp: null | Application;
-  private serverSideHttpsOptions: ServerSideHttpsOptions;
+  private readonly serverSideHttpsOptions: ServerSideHttpsOptions;
   private serverSideServer: https.Server | http.Server | null;
 
   constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<ServeCliArgs>) {

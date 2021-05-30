@@ -121,7 +121,7 @@ export type ServeCliArgs = Partial<{
   open: boolean;
   mode: string;
   host: string;
-  port: string;
+  port: string | number;
   https: boolean;
   public: string;
   help: boolean;
