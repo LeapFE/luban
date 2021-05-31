@@ -154,6 +154,47 @@ export default Demo;
 
 之后便可以在 `context` 对象上访问 `store` 对象。然后组件中连接 `store` 并更新和消费状态。
 
+### 全局数据获取
+
+在 [路由和布局](./router-layout.md) 章节中，介绍了 `prepare` 组件，若是该组件上配置了 `getInitialProps` 方法，会优先执行这个函数：
+
+``` tsx
+import React from "react";
+import { Page, PreparerProps } from "@/.luban";
+
+interface PreparerInitProps {
+  authSuccess: boolean;
+  authing: boolean;
+}
+const Preparer: Page<PreparerProps> = (props) => {
+  // do something, data fetch or get localStorage data
+
+  if (props.authing) {
+    return <div>authing</div>;
+  }
+
+  if (props.authSuccess) {
+    // render router table
+    return <>{props.children}</>;
+  }
+
+  // final render
+  return <div>unauthorized</div>;
+};
+
+Preparer.getInitialProps = async () => {
+  const response = await userAuth();
+
+  return Promise.resolve({ authing: false, authSuccess: true });
+};
+
+export default Preparer;
+```
+
+可以在这个组件的 `getInitialProps` 方法中做一些鉴权 、用户信息获取等一些全局的事情。
+
+**因为这个组件是在创建应用路由之前被渲染的，所以不可以使用 [\<Redirect /\>](https://reactrouter.com/web/api/Redirect) 或者 [history.push](https://reactrouter.com/web/api/history) 等做路由跳转**。
+
 ## 页面 meta 标签
 在有 SEO 需求的情况下，需要向页面动态设置 meta 标签或者其他的标签，首先需要安装 [react-helmet](https://github.com/nfl/react-helmet):
 ```shell
@@ -162,7 +203,7 @@ npm install @types/react-helmet@6.1.1 --save-dev
 ```
 
 在某一个路由组件中：
-```ts{3,8,9,10,11,12,13,14,15,16}
+```ts {3,8,9,10,11,12,13,14,15,16}
 import React from "react";
 import { EnhancedRouteComponentProps, Page } from "@/.luban";
 import { Helmet } from "react-helmet";
@@ -250,7 +291,7 @@ interface RenderOptions {
   cachedState?: Record<PropertyKey, unknown>;
   // 缓存 Location，当路由组件有路径跳转时需要用到
   cachedLocation?: Record<PropertyKey, unknown>;
-  // 多个路由组件之间进行数据共享时会用到（未开启全局状态管理的情况下）
+  // 多个路由组件之间进行数据共享时会用到
   shared?: Record<PropertyKey, unknown>;
 }
 
@@ -269,6 +310,8 @@ export function render(options: RenderOptions): Promise<{
 ## FAQ
 ### 访问 Window, document 等对象时报错？
 服务端渲染模式下运行客户端侧的代码需要创建一个 [v8虚拟机](https://nodejs.org/docs/latest/api/vm.html#vm_vm_executing_javascript) 并在[当前上下文](https://nodejs.org/docs/latest/api/vm.html#vm_script_runinthiscontext_options)(并不是[一个新的上下文](https://nodejs.org/docs/latest/api/vm.html#vm_script_runinnewcontext_contextobject_options)运行客户端代码，在这个上下文环境中并没有浏览器才有的 DOM API，所以首次在服务端侧渲染时会报错，应该在特定生命周期函数访问这些 API：
+
+类组件使用 `componentDidMount`：
 
 ```tsx {9,10,11}
 import React from "react";
@@ -302,7 +345,7 @@ const Example: Page<EnhancedRouteComponentProps> = ({ name }) => {
     console.info(document.body.clientWidth);
   }, []);
     
-    return <div>{name}</div>;
+  return <div>{name}</div>;
 };
 
 export default Example;
@@ -338,6 +381,8 @@ module.exports = {
 };
 ```
 
+可以通过 [configureWebpack](./webpack.md#简单的配置方式) 或者 [chainWebpack](./webpack.md#链式操作) 修改 `externals` 配置。
+
 ### 如何判断代码是在哪端执行？
 
 直接访问 `__IS_BROWSER__` 可以判断代码是在那端执行：
@@ -352,7 +397,7 @@ if (__IS_BROWSER__) {
 不论是在组件中或者在 `getInitialProps` 函数中都可以访问 `__IS_BROWSER__`。
 
 ::: tip
-不过需要注意的是，不可以通过 `__IS_BROWSER__` 来渲染不同的内容：
+不过需要注意的是，**不可以通过 `__IS_BROWSER__` 来渲染不同的内容**：
 
 ```tsx
 if (__IS_BROWSER__) {
@@ -365,7 +410,103 @@ if (__IS_BROWSER__) {
 这样的条件渲染在单纯的客户端渲染模式下没有任何问题，但是在服务端渲染模式下会造成两端渲染结果不一致，==React== 会对渲染过程中的不匹配进行警告。
 :::
 
-
 ### 如何重定向？
 
+在某一个理由组件中使用 [\<Redirect /\>](https://reactrouter.com/web/api/Redirect) 或者 [history.push](https://reactrouter.com/web/api/history)：
+
+```tsx {3,8,10,11,12,13}
+import React from "react";
+import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { useHistory } from "react-router-dom";
+
+import { Welcome } from "@/components/Welcome";
+
+const Prev: Page<EnhancedRouteComponentProps> = ({ name }) => {
+  const history = useHistory();
+  
+  const toNextPage = () => {
+    const history = useHistory();
+    history.push("/next");
+  };
+
+  return <button onClick={toNextPage}>Next Page</button>;
+};
+
+export default Prev;
+```
+
+上面的例子和单纯的客户端渲染模式下的写法并没有什么区别。重点是在服务端侧的处理：
+
+```js {10,12,13,14,15,16,17}
+const express = require("express");
+const { render } = require("./dist/server");
+
+const app = express();
+
+app.use("/assets/", express.static("dist"));
+
+app.use(async (req, res) => {
+  try {
+    const { document, staticRouterContext } = await render({ path: req.path });
+    
+    if (staticRouterContext.url) {
+      res.status(302);
+      res.setHeader("Location", staticRouterContext.url);
+      res.end();
+      return;
+    }
+    
+    res.send(document);
+  } catch (e) {
+    console.log(e);
+    res.send(`something wrong ${e}`);
+  }
+});
+
+app.listen(3000, () => {
+  console.log("server listening up at: 3000");
+});
+```
+
+这样，当点击按钮「Next Page」时，服务端侧设置响应状态码为 302，告诉用户代理，即浏览器，地址被临时重定向，可以访问另一个地址(响应头 Location)，自然的跳转到了 */next* 页面。详细查阅 ==React-Router== 关于 [server-rendering](https://reactrouter.com/web/guides/server-rendering) 的指南。
+
 ### `getInitialProps` 参数 `context` 对象的 `params` 和 `query` 有什么区别？
+
+根据 [WHATWG 关于 URL 的标准定义](https://url.spec.whatwg.org)，一个 URL 通常有以下部分组成：
+
+```text
+┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                              href                                              │
+├──────────┬──┬─────────────────────┬────────────────────────┬───────────────────────────┬───────┤
+│ protocol │  │        auth         │          host          │           path            │ hash  │
+│          │  │                     ├─────────────────┬──────┼──────────┬────────────────┤       │
+│          │  │                     │    hostname     │ port │ pathname │     search     │       │
+│          │  │                     │                 │      │          ├─┬──────────────┤       │
+│          │  │                     │                 │      │          │ │    query     │       │
+"  https:   //    user   :   pass   @ sub.example.com : 8080   /p/a/t/h  ?  query=string   #hash "
+│          │  │          │          │    hostname     │ port │          │                │       │
+│          │  │          │          ├─────────────────┴──────┤          │                │       │
+│ protocol │  │ username │ password │          host          │          │                │       │
+├──────────┴──┼──────────┴──────────┼────────────────────────┤          │                │       │
+│   origin    │                     │         origin         │ pathname │     search     │ hash  │
+├─────────────┴─────────────────────┴────────────────────────┴──────────┴────────────────┴───────┤
+│                                              href                                              │
+└────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+其中 `search` 会被解析为对象赋值给 `context.query`。
+
+[React-Router](https://reactrouter.com/web/api/Route/path-string-string) 使用了[path-to-regexp](https://github.com/pillarjs/path-to-regexp) 将类似于 `/user/:id` 这样 path 解析为正则表达式。例如将某一个路由项配置为 `/prev/:id`，那么当访问 */prev/123* 时，`context.params` 就会记录这个 "id":
+
+```ts
+// ...
+Prev.getInitialProps = (context) => {
+  console.log(context.params);
+  // { id: "123" }
+};
+
+export default Prev;
+```
+
+
+

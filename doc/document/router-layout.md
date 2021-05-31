@@ -149,7 +149,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
 export { Layout };
 ```
 
-## 配置 Prepare
+## 配置 prepare
 在 *src/index.tsx* 中的 `run` 方法接收的参数对象有一个 `prepare` 字段，可以指定一个组件的具体路径，该组件会在创建应用路由之前被优先渲染。
 
 可以在创建应用路由之前做一些事情或者根据某些条件决定渲染什么：
@@ -195,6 +195,7 @@ export default route({
 ## 404 路由
 
 `path` 为 **404** 的路由项将作为整个应用的 404 回退路由。当 `location.pathname` 匹配不到任何一个路由时，将会渲染 **404** 路由对应的组件：
+
 ```ts{4,5,6,7}
 // src/route.ts
 export default route({
@@ -206,3 +207,4 @@ export default route({
   ],
 });
 ```
+
