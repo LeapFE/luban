@@ -1,5 +1,5 @@
 {
-  "include": ["components/**/*"],
+  "include": ["components/**/*", "types/**/*"],
   "exclude": ["lib", "es"],
   "compilerOptions": {
     "target": "ESNext",
