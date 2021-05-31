@@ -254,7 +254,7 @@ interface RenderOptions {
   shared?: Record<PropertyKey, unknown>;
 }
 
-function render(options: RenderOptions): Promise<{
+export function render(options: RenderOptions): Promise<{
   // HTML 文档内容
   document: string;
   // 静态路由信息
