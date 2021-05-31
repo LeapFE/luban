@@ -19,6 +19,11 @@ const schema = createSchema((joi) =>
     productionSourceMap: joi.boolean(),
     css: joi.object({
       sourceMap: joi.boolean(),
+      loaderOptions: joi.object({
+        less: joi.object(),
+        css: joi.object(),
+        miniCss: joi.object(),
+      }),
     }),
     alias: joi.object(),
     assetsLimit: joi.number(),
@@ -59,6 +64,11 @@ export function mergeProjectOptions(
     ...defaultsProjectConfig,
     css: {
       sourceMap: !isProduction,
+      loaderOptions: {
+        css: {},
+        less: {},
+        miniCss: {},
+      },
     },
     mock: rootOptions.fetch || false,
     configureWebpack: () => undefined,

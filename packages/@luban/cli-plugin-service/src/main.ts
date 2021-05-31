@@ -9,7 +9,7 @@ import {
   UserConfig,
 } from "./definitions";
 
-type CssLoaderOptions = {
+export type CssLoaderOptions = Partial<{
   url: boolean | ((url: string, path: string) => boolean);
   import: boolean | ((url: string, media: string, path: string) => boolean);
   modules:
@@ -27,9 +27,9 @@ type CssLoaderOptions = {
   localsConvention: string;
   onlyLocals: boolean;
   esModule: boolean;
-};
+}>;
 
-type PostcssLoaderOptions = {
+export type PostcssLoaderOptions = Partial<{
   exec: boolean;
   parser: boolean | Parser;
   syntax: boolean | Syntax;
@@ -42,18 +42,19 @@ type PostcssLoaderOptions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   plugins: Plugin<any>[] | ((loader: webpack.loader.LoaderContext) => Plugin<any>[]);
   sourceMap: boolean | string;
-};
+}>;
 
-type MiniCSSLoaderOptions = {
+export type MiniCSSLoaderOptions = Partial<{
   publicPath: string | ((url: string, path: string) => string);
-  hmr: boolean;
-  reloadAll: boolean;
-};
+  emit: boolean;
+  esModule: boolean;
+}>;
+
+export type LessLoaderOptions = Partial<Less.Options & { sourceMap?: boolean }>;
 
 type OptionsOfCssLoader = {
   css: Partial<CssLoaderOptions>;
-  less: Partial<Less.Options>;
-  postcss: Partial<PostcssLoaderOptions>;
+  less: LessLoaderOptions;
   miniCss: Partial<MiniCSSLoaderOptions>;
 };
 
@@ -75,7 +76,12 @@ type CssConfig = {
 
   /**
    * @description 一些处理 css 的 loader 的配置项
-   * @deprecated since 2.0
+   * 支持的 loader 有:
+   * [css-loader](https://www.npmjs.com/package/css-loader/v/3.4.0)
+   * [less-loader](https://www.npmjs.com/package/less-loader/v/5.0.0)
+   * [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin/v/1.4.1#publicPath)
+   *
+   * postcss-loader 可以配置 postcss.config.js
    */
   loaderOptions: Partial<OptionsOfCssLoader>;
 };
