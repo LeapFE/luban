@@ -74,7 +74,7 @@ class Serve {
   private readonly useHttps: boolean;
   private readonly protocol: "https" | "http";
 
-  private readonly clientSideServerOptions: WebpackDevServer.Configuration;
+  // private readonly clientSideServerOptions: WebpackDevServer.Configuration;
 
   private readonly clientSideWebpackConfig:
     | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
@@ -97,12 +97,7 @@ class Serve {
 
     this.serverSideWebpackConfig = api.resolveWebpackConfig("server");
 
-    this.clientSideServerOptions = Object.assign(this.clientSideWebpackConfig?.devServer || {});
-
-    this.useHttps =
-      args.https ||
-      (this.clientSideServerOptions.https as boolean) ||
-      defaultClientServerConfig.https;
+    this.useHttps = args.https || defaultClientServerConfig.https;
 
     this.protocol = this.useHttps ? "https" : "http";
 
@@ -136,10 +131,9 @@ class Serve {
     //TODO separate logic that prepare client side and server side
     const ports = this.preparePorts();
 
-    this.clientSideHost =
-      this.commandArgs.host || this.clientSideServerOptions.host || defaultClientServerConfig.host;
+    this.clientSideHost = this.commandArgs.host || defaultClientServerConfig.host;
 
-    const clientSidePort = this.clientSideServerOptions.port || ports[0];
+    const clientSidePort = ports[0];
 
     this.serverSideHost = this.clientSideHost;
     const serverSidePort = ports[1];
@@ -147,7 +141,7 @@ class Serve {
     this.clientSidePort = await portfinder.getPortPromise({ port: Number(clientSidePort) });
     this.serverSidePort = await portfinder.getPortPromise({ port: Number(serverSidePort) });
 
-    const rawPublicUrl = this.commandArgs.public || this.clientSideServerOptions.public;
+    const rawPublicUrl = this.commandArgs.public;
     this.publicUrl = rawPublicUrl
       ? /^[a-zA-Z]+:\/\//.test(rawPublicUrl)
         ? rawPublicUrl
@@ -219,9 +213,6 @@ class Serve {
           `${this.pluginApi.getContext()}/src/route.ts`,
         ],
       },
-
-      ...this.clientSideServerOptions,
-
       before: (app: Application) => {
         const mockConfig = this.pluginApi.getMockConfig();
         if (this.projectConfig.mock && mockConfig !== null) {
@@ -515,7 +506,7 @@ class Serve {
 
     await Promise.all(queue.map((q) => q.call(this)));
 
-    if (this.commandArgs.open || this.clientSideServerOptions.open) {
+    if (this.commandArgs.open) {
       const openClientSide = openBrowser(this.CSRUrlList?.localUrlForBrowser || "");
 
       if (!openClientSide) {

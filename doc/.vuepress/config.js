@@ -65,6 +65,7 @@ module.exports = {
             "/document/html-and-static-assets",
             "/document/unittest",
             "/document/deployment",
+            "/document/ssr-deployment-guide",
           ],
         },
       ],

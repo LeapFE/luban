@@ -28,6 +28,7 @@ const schema = createSchema((joi) =>
     alias: joi.object(),
     assetsLimit: joi.number(),
     mock: joi.boolean(),
+    ssr: joi.boolean(),
     configureWebpack: joi.function(),
     chainWebpack: joi.function(),
   }),
@@ -71,6 +72,7 @@ export function mergeProjectOptions(
       },
     },
     mock: rootOptions.fetch || false,
+    ssr: false,
     configureWebpack: () => undefined,
     chainWebpack: () => undefined,
   });
