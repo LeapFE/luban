@@ -19,10 +19,10 @@ import {
 import { ProjectConfig } from "../main";
 
 class Build {
-  private api: CommandPluginAPI;
+  private readonly api: CommandPluginAPI;
   private projectConfig: ProjectConfig;
 
-  private outputDir: string;
+  private readonly outputDir: string;
 
   constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<BuildCliArgs>) {
     this.api = api;

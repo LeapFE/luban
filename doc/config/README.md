@@ -4,32 +4,9 @@ sidebar: auto
 
 # ⚙ 配置参考
 
-## luban.config.ts | luban.config.js
+## luban.config.ts
 
-*luban.config.ts* 或者 *luban.config.js* 是一个可选的配置文件，如果项目的 (和 *package.json* 同级的) 根目录中存在这个文件，
-那么它会被 <mark>@luban-cli/cli--plugin-service</mark> 自动识别加载。
-
-另外，该配置文件的扩展名应该与创建项目时选择的开发语言保持一致。文档中其他地方也将以 *luban.config.ts* 进行举例说明。具体类型见下方 [配置文件](#配置文件)。
-
-使用 <mark>@luban-cli/cli--plugin-service</mark> 提供的 `createProjectConfig` 来导出配置选项可以获得很好的配置提示：
-
-```javascript
-// luban.config.js
-const { createProjectConfig } = require("@luban-cli/cli-plugin-service");
-
-module.exports = createProjectConfig({
-  // 选项...
-});
-```
-
-```ts
-// luban.config.ts
-import { createProjectConfig } from "@luban-cli/cli-plugin-service";
-
-export default createProjectConfig({
-  // 选项...
-});
-```
+*luban.config.ts* 是一个可选的配置文件，它会被 <mark>@luban-cli/cli--plugin-service</mark> 自动识别加载。
 
 ### publicPath
 

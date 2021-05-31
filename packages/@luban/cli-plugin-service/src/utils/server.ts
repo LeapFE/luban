@@ -1,36 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StaticRouterContext } from "react-router";
-import ReactDOMServer from "react-dom/server";
-import Helmet from "react-helmet";
-import ejs from "ejs";
-import serialize from "serialize-javascript";
 
+import { generateInjectedTag } from "./generateInjectedHtmlTag";
 import { ServerBundle } from "../definitions";
+import { generateDocument } from "./generateDocument";
 
 const serverBundle: ServerBundle = require("./server-bundle.js");
 const template: string = require("./server_template.js");
 const assetsManifestJson: Record<string, string> = require("./asset-manifest.json");
-
-function generateInjectedTag(assetsManifest: Record<string, string>, path: string) {
-  const injectedStyles: string[] = [];
-  const injectedScripts: string[] = [];
-
-  const noSlashPath = path.split("/").join("-");
-
-  Object.keys(assetsManifest).forEach((item) => {
-    const ext = item.substring(item.lastIndexOf("."));
-    if (item.includes(noSlashPath)) {
-      if (ext === ".js") {
-        injectedScripts.push(`<script src="${assetsManifest[item]}"></script>`);
-      }
-      if (ext === ".css") {
-        injectedStyles.push(`<link href="${assetsManifest[item]}" rel="stylesheet">`);
-      }
-    }
-  });
-
-  return { injectedStyles, injectedScripts };
-}
 
 interface RenderOptions {
   url?: string;
@@ -66,28 +43,7 @@ export async function render(options: RenderOptions) {
     options.path || "/",
   );
 
-  let document = "";
-  if (App) {
-    options.cachedState = context.initState;
-
-    const content = ReactDOMServer.renderToString(App);
-
-    const helmet = Helmet.renderStatic();
-
-    document = ejs.render(template, {
-      CONTENT: content,
-      __INITIAL_DATA__: serialize(context.initProps),
-      __USE_SSR__: true,
-      __INITIAL_STATE__: serialize(context.initState),
-      INJECTED_STYLES: injectedStyles,
-      INJECTED_SCRIPTS: injectedScripts,
-      link: helmet.link.toString(),
-      meta: helmet.meta.toString(),
-      script: helmet.script.toString(),
-      style: helmet.style.toString(),
-      title: helmet.title.toString(),
-    });
-  }
+  const document = generateDocument(template, context, App, injectedScripts, injectedStyles);
 
   return { document, staticRouterContext };
 }
