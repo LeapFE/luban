@@ -23,8 +23,8 @@ const schema = createSchema((joi) =>
     alias: joi.object(),
     assetsLimit: joi.number(),
     mock: joi.boolean(),
-    // configureWebpack: joi.function(),
-    // chainWebpack: joi.function(),
+    configureWebpack: joi.function(),
+    chainWebpack: joi.function(),
   }),
 );
 
@@ -62,6 +62,6 @@ export function mergeProjectOptions(
     },
     mock: rootOptions.fetch || false,
     configureWebpack: () => undefined,
-    // chainWebpack: () => undefined,
+    chainWebpack: () => undefined,
   });
 }

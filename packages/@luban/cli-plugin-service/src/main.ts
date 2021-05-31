@@ -3,7 +3,11 @@ import webpackDevServer = require("webpack-dev-server");
 import { Request, Response, NextFunction } from "express";
 import { Parser, Stringifier, Syntax, Plugin } from "postcss/lib/postcss";
 import "less";
-import { WebpackConfigName, WebpackRawConfigCallbackConfiguration } from "./definitions";
+import {
+  WebpackConfigName,
+  WebpackRawConfigCallbackConfiguration,
+  UserConfig,
+} from "./definitions";
 
 type CssLoaderOptions = {
   url: boolean | ((url: string, path: string) => boolean);
@@ -148,11 +152,11 @@ export type ProjectConfig = {
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
    * 允许对内部的 webpack 配置进行更细粒度的修改
+   * 通过 `chainWebpack` 只允许修改 ‘module’ 'plugins' 'externals' 这三个配置项
    *
    * @default {() => undefined}
-   * TODO deprecated this options
    */
-  // chainWebpack: (config: Config) => void;
+  chainWebpack: (config: UserConfig, id: WebpackConfigName) => void;
 
   /**
    * @description 一些解析 css 的配置选项
