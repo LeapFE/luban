@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.52](https://github.com/leapFE/luban/compare/v2.0.0-next.51...v2.0.0-next.52) (2021-06-01)
+
+
+### Bug Fixes
+
+* **cli-lib-service:** add 'types' dir in tsconfig.json ([5d961c5](https://github.com/leapFE/luban/commit/5d961c5071a04bc8cb312f51834d9c87bc3d7bfb))
+
+
+
+
+
 # [2.0.0-next.51](https://github.com/leapFE/luban/compare/v2.0.0-next.50...v2.0.0-next.51) (2021-05-26)
 
 **Note:** Version bump only for package @luban-cli/cli-lib-service
