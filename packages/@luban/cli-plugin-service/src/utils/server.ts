@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { StaticRouterContext } from "react-router";
-
-import { generateInjectedTag } from "./generateInjectedHtmlTag";
 import { ServerBundle } from "../definitions";
-import { generateDocument } from "./generateDocument";
+import { GenerateDocument } from "./generateDocument";
+import { GenerateInjectedTag } from "./generateInjectedHtmlTag";
 
+const generateInjectedTag: GenerateInjectedTag = require("./generateInjectedHtmlTag.js");
+const generateDocument: GenerateDocument = require("./generateDocument.js");
 const serverBundle: ServerBundle = require("./server-bundle.js");
 const template: string = require("./server_template.js");
 const assetsManifestJson: Record<string, string> = require("./asset-manifest.json");

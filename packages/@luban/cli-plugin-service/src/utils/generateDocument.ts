@@ -5,6 +5,16 @@ import serialize from "serialize-javascript";
 
 import { Context } from "../definitions";
 
+export interface GenerateDocument {
+  (
+    template: string,
+    context: Context,
+    App: JSX.Element | null,
+    injectedScripts: string[],
+    injectedStyles: string[],
+  ): string;
+}
+
 /**
  * generate html document
  * @param template
@@ -13,13 +23,13 @@ import { Context } from "../definitions";
  * @param injectedScripts
  * @param injectedStyles
  */
-export function generateDocument(
-  template: string,
-  context: Context,
-  App: JSX.Element | null,
-  injectedScripts: string[],
-  injectedStyles: string[],
-) {
+export const generateDocument: GenerateDocument = (
+  template,
+  context,
+  App,
+  injectedScripts,
+  injectedStyles,
+) => {
   let document = "";
 
   if (App) {
@@ -43,4 +53,4 @@ export function generateDocument(
   }
 
   return document;
-}
+};

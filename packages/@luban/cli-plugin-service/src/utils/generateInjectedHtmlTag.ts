@@ -1,4 +1,10 @@
-export function generateInjectedTag(assetsManifest: Record<string, string>, path: string) {
+export interface GenerateInjectedTag {
+  (assetsManifest: Record<string, string>, path: string): {
+    injectedStyles: string[];
+    injectedScripts: string[];
+  };
+}
+export const generateInjectedTag: GenerateInjectedTag = (assetsManifest, path) => {
   const injectedStyles: string[] = [];
   const injectedScripts: string[] = [];
 
@@ -19,4 +25,4 @@ export function generateInjectedTag(assetsManifest: Record<string, string>, path
   });
 
   return { injectedStyles, injectedScripts };
-}
+};
