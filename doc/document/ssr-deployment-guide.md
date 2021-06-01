@@ -33,6 +33,7 @@ pm2 start start.js --name <app_name> --watch
 
 这样应用会监听宿主机的 3000 端口，不过服务器一般不会向外网暴露 3000 端口，可以使用 [nginx](http://nginx.org/) 这样的具有反向代理功能的 http 服务将请求转发给 Nodejs 服务。
 以下为精简过的 nginx 配置：
+
 ```text
 http {
     # ...
@@ -59,7 +60,7 @@ http {
 [docker](https://docs.docker.com/) 是一款可用于开发、搬用和运行容器应用的开放平台。利用 docker 可以应用构建为镜像，再将镜像以容器的形式启动，可以获得一致的运行环境和快速的部署、交付软件能力。
 
 1. 创建服务端侧工作目录
-  如果使用 [Express](https://expressjs.com/) 来构建服务，那么服务端侧的启动只有三部分依赖：Express 和客户端侧静态文件以及提供生成文档的 *server.js*，所以为了保持依赖最少，需要一个服务端侧工作空间：
+    如果使用 [Express](https://expressjs.com/) 来构建服务，那么服务端侧的启动只有三部分依赖：Express 和客户端侧静态文件以及提供生成文档的 *server.js*，所以为了保持依赖最少，需要一个服务端侧工作空间：
 
   ```shell
   server
@@ -112,7 +113,7 @@ RUN npm install && npm run build
 :::
 
 3. 构建镜像
-  构建镜像很简单，只需要指定一下镜像标签和版本：
+    构建镜像很简单，只需要指定一下镜像标签和版本：
 
   ```shell
   docker build --file "Dockerfile" --tag my-ssr-app:v1 "."
@@ -121,7 +122,7 @@ RUN npm install && npm run build
 这样一个名叫 "my-ssr-app:v1" 的镜像就构建好了。
 
 4. 运行镜像
-  将镜像运行为容器需要执行 `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]` 命令，并附带一些参数：
+    将镜像运行为容器需要执行 `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]` 命令，并附带一些参数：
 
   ```shell
   docker run --detach --env PORT=3000 --expose 3000 --name my-ssr-app --publish 3000:3000 my-ssr-app:v1 node index.js
@@ -163,9 +164,21 @@ RUN npm install && npm run build
 
 终端执行 `docker ps -a` 就会发现一个名叫 'my-ssr-app' 的容器已经运行起来了:
 
-TODO
+![image-20210601145323002](https://i.loli.net/2021/06/01/8GeouZndSrMfQcI.png)
 
 同样的，使用 nginx 可以将指定域名的请求转发到宿主机的 3000 端口，从而让 Nodejs 应用真正的对外提供服务。
+
+## 使用 Traefik
+
+>[Traefik](https://doc.traefik.io/traefik/) 是一款开源的边缘路由器，和 [nginx](http://nginx.org/) 一样，traefik 接收系统的请求然后找到合适的服务去处理请求。它具有以下特点：
+>
+>1. 热更新。配置文件更新无需重启 traefik
+>2. 服务发现和负载均衡
+>3. 支持 [Docker](https://docs.docker.com)、[Kubernetes](https://kubernetes.io/)、[Http](https://developer.mozilla.org/zh-CN/docs/Web/HTTP) 和 [Redis](https://redis.io/) 等多种基础设施组件
+
+<img src="https://doc.traefik.io/traefik/assets/img/traefik-architecture.png" alt="traefik" style="zoom:30%;" />
+
+
 
 
 
