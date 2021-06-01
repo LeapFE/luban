@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.53](https://github.com/LeapFE/luban/compare/v2.0.0-next.52...v2.0.0-next.53) (2021-06-01)
+
+
+### Bug Fixes
+
+* correct require 'generateDocument' and 'generateInjectedHtmlTag' ([00ff655](https://github.com/LeapFE/luban/commit/00ff655796416f7d3f45c386feb9e6b148bb053a))
+
+
+
+
+
 # [2.0.0-next.52](https://github.com/LeapFE/luban/compare/v2.0.0-next.51...v2.0.0-next.52) (2021-06-01)
 
 
