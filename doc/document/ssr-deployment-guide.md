@@ -19,7 +19,6 @@ app.use(async (req, res) => {
     console.log(e);
     res.send("some thing wrong");
   }
-  
 });
 
 app.listen(3000, () => {
@@ -41,7 +40,7 @@ http {
         listen       80;
         # 注意将 server_name 替换为真实的域名
         server_name  your.servername.com;
-    
+
         location / {
             proxy_set_header X_Real_IP $remote_addr;
             proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
@@ -60,44 +59,48 @@ http {
 [docker](https://docs.docker.com/) 是一款可用于开发、搬用和运行容器应用的开放平台。利用 docker 可以应用构建为镜像，再将镜像以容器的形式启动，可以获得一致的运行环境和快速的部署、交付软件能力。
 
 1. 创建服务端侧工作目录
-如果使用 [Express](https://expressjs.com/) 来构建服务，那么服务端侧的启动只有三部分依赖：Express 和客户端侧静态文件以及提供生成文档的 *server.js*，所以为了保持依赖最少，需要一个服务端侧工作空间：
-```shell
-server
-  ├── package.json
-  ├── package-lock.json
-  ├── index.js
-```
-在项目根目录新建目录 *server*，并安装 Express，*index.js* 文件的内容和[使用PM2]一节的 *start.js* 文件内容一样。
+  如果使用 [Express](https://expressjs.com/) 来构建服务，那么服务端侧的启动只有三部分依赖：Express 和客户端侧静态文件以及提供生成文档的 *server.js*，所以为了保持依赖最少，需要一个服务端侧工作空间：
+
+  ```shell
+  server
+    ├── package.json
+    ├── package-lock.json
+    ├── index.js
+  ```
+
+在项目根目录新建目录 *server*，并安装 Express，*index.js* 文件的内容和[使用PM2](#使用-pm2)一节的 *start.js* 文件内容一样。
 
 2. 创建 Dockerfile 文件
-```dockerfile
-FROM node:10-alpine as client_builder
-WORKDIR /client
-COPY package.json package-lock.json /client/
-RUN npm install --ignore-scripts
-COPY . /client/
-RUN npm run build
 
-FROM node:10-alpine as server_builder
-WORKDIR /server
-COPY server/package.json server/package-lock.json /server/
-RUN npm install
-
-FROM node:10-alpine
-WORKDIR /app
-COPY server/index.js /app/index.js
-COPY --from=client_builder client/dist /app/dist
-COPY --from=server_builder server/node_modules /app/node_modules
-```
+   ```dockerfile
+   FROM node:10-alpine as client_builder
+   WORKDIR /client
+   COPY package.json package-lock.json /client/
+   RUN npm install --ignore-scripts
+   COPY . /client/
+   RUN npm run build
+   
+   FROM node:10-alpine as server_builder
+   WORKDIR /server
+   COPY server/package.json server/package-lock.json /server/
+   RUN npm install
+   
+   FROM node:10-alpine
+   WORKDIR /app
+   COPY server/index.js /app/index.js
+   COPY --from=client_builder client/dist /app/dist
+   COPY --from=server_builder server/node_modules /app/node_modules
+   ```
 
 这里采用的 docker@17.05 支持的新特性：[多阶段构建](https://docs.docker.com/develop/develop-images/multistage-build/)来构建应用的镜像。
 
-需要注意的是，第3行和第4行，先将 *package.json* 和 *package-lock.json* 进行复制，然后再安装依赖并忽略执行依赖包中指定的脚本，比如 'postinstall'，这样可以将 *node_modules* 进行缓存，大大缩小下次构建的时间。
+需要注意的是，第3行和第4行，先将 *package.json* 和 *package-lock.json* 进行复制，然后再安装依赖并忽略执行依赖包中指定的脚本([--ignore-scripts](https://docs.npmjs.com/cli/v7/commands/npm-install#ignore-scripts))，比如 'postinstall'，这样可以将 *node_modules* 进行缓存，大大缩小下次构建的时间。
 
 最后，从 `client_builder` 复制客户端静态资源文件 *dist* 目录，从 `server_builder` 复制 *node_modules*，从构建上下文复制启动文件 *index.js*，这样启动应用的所有依赖就都准备好了。
 
 ::: tip
 上面 *Dockerfile* 中第3行到地6行其实可以合并为两行：
+
 ```dockerfile
 # ...
 COPY . /client/
@@ -109,20 +112,60 @@ RUN npm install && npm run build
 :::
 
 3. 构建镜像
-构建镜像很简单，只需要指定一下镜像标签和版本：
-```shell
-docker build --file "Dockerfile" --tag my-ssr-app:v1 "."
-```
+  构建镜像很简单，只需要指定一下镜像标签和版本：
+
+  ```shell
+  docker build --file "Dockerfile" --tag my-ssr-app:v1 "."
+  ```
+
 这样一个名叫 "my-ssr-app:v1" 的镜像就构建好了。
 
 4. 运行镜像
-将镜像运行为容器需要执行 `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]` 命令，并附带一些参数：
-```shell
-docker run --detach --env PORT=3000 --expose 3000 --name my-ssr-app --publish 3000:3000 my-ssr-app:v1 node index.js
-```
+  将镜像运行为容器需要执行 `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]` 命令，并附带一些参数：
+
+  ```shell
+  docker run --detach --env PORT=3000 --expose 3000 --name my-ssr-app --publish 3000:3000 my-ssr-app:v1 node index.js
+  ```
 
 上面这个命令的意思是：以 *my-ssr-app:v1* 为镜像启动一个名叫 *my-ssr-app* 的容器，并在后台运行这个容器，同时开放容器的 3000 端口并把宿主机的 3000 端口映射到容器的 3000 端口，最后在容器内执行 `node index.js` 命令，这个 Nodejs 应用就会监听容器的 3000 端口从而对外提供服务。
 
 如果使用 nginx 做反向代理，就可以将指定域名的请求转发到宿主机的 3000 端口，从而让 Nodejs 应用真正的对外提供服务。
 
 ### 使用 docker-compose
+[docker-compose](https://docs.docker.com/compose/) 是一个可以定义和运行多个 docker 应用的工具，通过一个 yml 格式的配置文件配置应用的服务，最后只需一个命令(极少的参数)就可以启动、停止容器应用。
+
+1. 创建 *docker-compose.yml* 文件
+
+   ```yml
+   version: "3.3"
+   
+   services:
+   	my-ssr-app:
+       build: .
+       container_name: my-ssr-app
+       ports:
+         - "3000:3000"
+       expose:
+         - "3000"
+       environment:
+         - "PORT=3000"
+         - "NODE_ENV=production"
+       command: node index.js
+   ```
+
+在这个文件中定义了一个名叫 'my-ssr-app' 的服务，启动该服务时，会在当前目录下寻找到 *Dockerfile* 构建镜像，然后启动一个名叫 'my-ssr-app' 的容器，暴露容器的 3000 端口，把宿主机的 3000 端口映射到容器的 3000 端口，设置了一些环境变量，最后在容器内运行 `node index.js`，启动 Nodejs 应用。
+
+2. 运行服务
+
+   ```shell
+   docker-compose -f docker-compose.yml up -d --build
+   ```
+
+终端执行 `docker ps -a` 就会发现一个名叫 'my-ssr-app' 的容器已经运行起来了:
+
+TODO
+
+同样的，使用 nginx 可以将指定域名的请求转发到宿主机的 3000 端口，从而让 Nodejs 应用真正的对外提供服务。
+
+
+
