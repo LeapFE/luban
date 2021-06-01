@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: 开始 →
-actionLink: /document/creating-project
+actionLink: /document/installation
 footer: Open-source MIT Licensed | Copyright © 2020-present | front-end-captain
 editLink: false
 ---

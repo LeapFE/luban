@@ -96,7 +96,9 @@ class Service {
 
     if (typeof this.projectConfig.configureWebpack === "function") {
       this.webpackConfigQueue.forEach((q) => {
-        q.rawCallback.push(this.projectConfig.configureWebpack);
+        if (q.id !== "public") {
+          q.rawCallback.push(this.projectConfig.configureWebpack);
+        }
       });
     }
 
@@ -130,6 +132,14 @@ class Service {
         ...commonParams,
       });
     });
+
+    if (typeof this.projectConfig.chainWebpack === "function") {
+      this.webpackConfigQueue.forEach((q) => {
+        if (q.id !== "public") {
+          q.chainCallback.push(this.projectConfig.chainWebpack);
+        }
+      });
+    }
   }
 
   public async run(

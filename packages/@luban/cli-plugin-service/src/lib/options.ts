@@ -19,12 +19,18 @@ const schema = createSchema((joi) =>
     productionSourceMap: joi.boolean(),
     css: joi.object({
       sourceMap: joi.boolean(),
+      loaderOptions: joi.object({
+        less: joi.object(),
+        css: joi.object(),
+        miniCss: joi.object(),
+      }),
     }),
     alias: joi.object(),
     assetsLimit: joi.number(),
     mock: joi.boolean(),
-    // configureWebpack: joi.function(),
-    // chainWebpack: joi.function(),
+    ssr: joi.boolean(),
+    configureWebpack: joi.function(),
+    chainWebpack: joi.function(),
   }),
 );
 
@@ -59,9 +65,15 @@ export function mergeProjectOptions(
     ...defaultsProjectConfig,
     css: {
       sourceMap: !isProduction,
+      loaderOptions: {
+        css: {},
+        less: {},
+        miniCss: {},
+      },
     },
     mock: rootOptions.fetch || false,
+    ssr: false,
     configureWebpack: () => undefined,
-    // chainWebpack: () => undefined,
+    chainWebpack: () => undefined,
   });
 }

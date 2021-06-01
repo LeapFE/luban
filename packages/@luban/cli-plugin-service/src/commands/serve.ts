@@ -11,10 +11,6 @@ import MemoryFS from "memory-fs";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import BodyParser from "body-parser";
 import { StaticRouterContext } from "react-router";
-import ReactDOMServer from "react-dom/server";
-import ejs from "ejs";
-import Helmet from "react-helmet";
-import serialize from "serialize-javascript";
 import https from "https";
 import http from "http";
 
@@ -26,19 +22,17 @@ import {
   CommandPluginInstance,
   CommandPluginApplyCallbackArgs,
   CommandPluginAddWebpackConfigCallbackArgs,
+  Context,
 } from "../definitions";
 import { ProjectConfig } from "../main";
 import { prepareUrls, UrlList } from "../utils/prepareURLs";
 import { setupMockServer } from "../utils/setupMockServer";
-import {
-  delay,
-  getModuleFromString,
-  getTemplate,
-  generateInjectedTag,
-} from "../utils/serverRender";
+import { delay, getModuleFromString, getTemplate } from "../utils/serverRender";
+import { generateInjectedTag } from "../utils/generateInjectedHtmlTag";
 import { cleanDest } from "../utils/cleanDest";
 import { getCertificate } from "../utils/getCertificate";
 import { CompileErrorTrace } from "../utils/formatCompileError";
+import { generateDocument } from "../utils/generateDocument";
 
 type ServerSideHttpsOptions = { key?: Buffer; cert?: Buffer; spdy: { protocols: string[] } };
 
@@ -77,20 +71,20 @@ class Serve {
 
   private publicUrl: string | null;
 
-  private useHttps: boolean;
-  private protocol: "https" | "http";
+  private readonly useHttps: boolean;
+  private readonly protocol: "https" | "http";
 
-  private clientSideServerOptions: WebpackDevServer.Configuration;
+  // private readonly clientSideServerOptions: WebpackDevServer.Configuration;
 
-  private clientSideWebpackConfig:
+  private readonly clientSideWebpackConfig:
     | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
     | undefined;
-  private serverSideWebpackConfig:
+  private readonly serverSideWebpackConfig:
     | (webpack.Configuration & { devServer?: WebpackDevServer.Configuration })
     | undefined;
 
   private serverSideApp: null | Application;
-  private serverSideHttpsOptions: ServerSideHttpsOptions;
+  private readonly serverSideHttpsOptions: ServerSideHttpsOptions;
   private serverSideServer: https.Server | http.Server | null;
 
   constructor(api: CommandPluginAPI, projectConfig: ProjectConfig, args: ParsedArgs<ServeCliArgs>) {
@@ -103,12 +97,7 @@ class Serve {
 
     this.serverSideWebpackConfig = api.resolveWebpackConfig("server");
 
-    this.clientSideServerOptions = Object.assign(this.clientSideWebpackConfig?.devServer || {});
-
-    this.useHttps =
-      args.https ||
-      (this.clientSideServerOptions.https as boolean) ||
-      defaultClientServerConfig.https;
+    this.useHttps = args.https || defaultClientServerConfig.https;
 
     this.protocol = this.useHttps ? "https" : "http";
 
@@ -142,10 +131,9 @@ class Serve {
     //TODO separate logic that prepare client side and server side
     const ports = this.preparePorts();
 
-    this.clientSideHost =
-      this.commandArgs.host || this.clientSideServerOptions.host || defaultClientServerConfig.host;
+    this.clientSideHost = this.commandArgs.host || defaultClientServerConfig.host;
 
-    const clientSidePort = this.clientSideServerOptions.port || ports[0];
+    const clientSidePort = ports[0];
 
     this.serverSideHost = this.clientSideHost;
     const serverSidePort = ports[1];
@@ -153,7 +141,7 @@ class Serve {
     this.clientSidePort = await portfinder.getPortPromise({ port: Number(clientSidePort) });
     this.serverSidePort = await portfinder.getPortPromise({ port: Number(serverSidePort) });
 
-    const rawPublicUrl = this.commandArgs.public || this.clientSideServerOptions.public;
+    const rawPublicUrl = this.commandArgs.public;
     this.publicUrl = rawPublicUrl
       ? /^[a-zA-Z]+:\/\//.test(rawPublicUrl)
         ? rawPublicUrl
@@ -225,9 +213,6 @@ class Serve {
           `${this.pluginApi.getContext()}/src/route.ts`,
         ],
       },
-
-      ...this.clientSideServerOptions,
-
       before: (app: Application) => {
         const mockConfig = this.pluginApi.getMockConfig();
         if (this.projectConfig.mock && mockConfig !== null) {
@@ -377,7 +362,7 @@ class Serve {
 
     server.use(this.projectConfig.publicPath, assetsProxy);
 
-    let cachedState: Record<PropertyKey, unknown> = {};
+    const cachedState: Record<PropertyKey, unknown> = {};
     let cachedLocation: object = {};
     const shared: Record<PropertyKey, unknown> = {};
 
@@ -407,7 +392,7 @@ class Serve {
           assetsManifestJsonUrl.replace(/(\d+)[(^/)](\/)+/, "$1$2"),
         );
 
-        const context = {
+        const context: Context = {
           url: req.url,
           path: req.path,
           query: req.query,
@@ -435,28 +420,7 @@ class Serve {
           req.path,
         );
 
-        let document = "";
-        if (App) {
-          cachedState = context.initState;
-
-          const content = ReactDOMServer.renderToString(App);
-
-          const helmet = Helmet.renderStatic();
-
-          document = ejs.render(template, {
-            CONTENT: content,
-            __INITIAL_DATA__: serialize(context.initProps),
-            __USE_SSR__: true,
-            __INITIAL_STATE__: serialize(context.initState),
-            INJECTED_STYLES: injectedStyles,
-            INJECTED_SCRIPTS: injectedScripts,
-            link: helmet.link.toString(),
-            meta: helmet.meta.toString(),
-            script: helmet.script.toString(),
-            style: helmet.style.toString(),
-            title: helmet.title.toString(),
-          });
-        }
+        const document = generateDocument(template, context, App, injectedScripts, injectedStyles);
 
         if (staticRouterContext.url) {
           cachedLocation = staticRouterContext.location || {};
@@ -542,7 +506,7 @@ class Serve {
 
     await Promise.all(queue.map((q) => q.call(this)));
 
-    if (this.commandArgs.open || this.clientSideServerOptions.open) {
+    if (this.commandArgs.open) {
       const openClientSide = openBrowser(this.CSRUrlList?.localUrlForBrowser || "");
 
       if (!openClientSide) {

@@ -78,6 +78,12 @@ export type WebpackConfiguration = webpack.Configuration & {
   devServer?: WebpackDevServer.Configuration;
 };
 
+export declare class UserConfig extends Config.ChainedMap<void> {
+  externals(value: webpack.ExternalsElement | webpack.ExternalsElement[]): this;
+  module: Config.Module;
+  plugins: Config.Plugins<this, webpack.Plugin>;
+}
+
 export type WebpackChainCallback = (config: Config, id: WebpackConfigName) => void;
 
 export type WebpackRawConfigCallbackConfiguration = {
@@ -92,7 +98,7 @@ export type WebpackRawConfigCallback =
     ) => WebpackRawConfigCallbackConfiguration | void)
   | WebpackRawConfigCallbackConfiguration;
 
-export type CommandCallback = () => void;
+export type CommandCallback = () => void | Promise<void>;
 
 export type CommandList = Record<
   builtinServiceCommandName,
@@ -121,7 +127,7 @@ export type ServeCliArgs = Partial<{
   open: boolean;
   mode: string;
   host: string;
-  port: string;
+  port: string | number;
   https: boolean;
   public: string;
   help: boolean;

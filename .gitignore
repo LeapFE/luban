@@ -19,6 +19,7 @@ pids
 .docz
 .temp
 .now
+.DS_Store
 build
 dist
 _site

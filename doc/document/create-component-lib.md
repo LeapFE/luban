@@ -1,4 +1,4 @@
-# 创建一个项目
+# 创建一个 Component Library 
 
 ```shell
 luban init <project_name>
@@ -13,29 +13,22 @@ luban init <project_name>
 
 ### `luban init` 命令
 
-在终端运行 `luban init <project_name>` 命令后，将会以默认的 preset 来创建项目。默认的 preset 如下：
+在终端运行 `luban init <project_name>` 命令后，选择 **React Component Library** ：
 
-+ 开发语言：<a-radio-group value='ts'><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
+![image-20210526150744092](https://i.loli.net/2021/05/26/nXGPruFVIq3Le2A.png)
+
+选择创建 React Component Library 类型的项目后，同样将会以一个默认的预设创建项目，默认的预设如下：
+
 + [ESLint](https://eslint.org/) 配置方案：<a-radio checked value='leapfe'>[leap](https://www.npmjs.com/package/eslint-config-leapfe)</a-radio><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
-+ 样式处理方案：<a-radio-group value='less'><a-radio checked value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 + 使用 <a-checkbox checked>[Stylelint](https://stylelint.io/)</a-checkbox>
-+ 使用 <a-checkbox checked>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
-+ 使用 <a-checkbox checked>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
-+ 使用 <a-checkbox checked>数据获取([Axios](https://github.com/axios/axios) + [use-request](https://www.npmjs.com/package/@luban-hooks/use-request))</a-checkbox>
 + 使用 <a-checkbox checked>[commitizen](https://github.com/commitizen/cz-cli) + [commitlint](https://commitlint.js.org/#/) 提交代码</a-checkbox>
 
 可以加上 `-m` 或 `--manual` 参数，即 `luban init <project_name> -m` 来手动的选择决定项目将会有哪些特性。
 
 手动选择的特性将包括：
 
-- 开发语言 <a-radio-group><a-radio value='ts'>[TypeScript](http://www.typescriptlang.org/)</a-radio><a-radio value='js'>[JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)</a-radio></a-radio-group>
 - [ESLint](https://eslint.org/) 配置方案 <a-radio value='leapfe'>[leap](https://www.npmjs.com/package/eslint-config-leapfe)</a-radio><a-radio value='airbnb'>[airbnb](https://www.npmjs.com/package/eslint-config-airbnb)</a-radio><a-radio value='standard'>[standard](https://www.npmjs.com/package/eslint-config-standard)</a-radio></a-radio-group>
-- 样式处理方案 <a-radio-group><a-radio value='less'>[Less](http://lesscss.org/)</a-radio><a-radio value='sc'>[Styled-Components](https://styled-components.com/)</a-radio></a-radio-group>
 - 是否使用 <a-checkbox>[Stylelint](https://stylelint.io/)</a-checkbox>
-- 是否使用 <a-checkbox>路由([Luban-Router](https://www.npmjs.com/package/luban-router))</a-checkbox>
-- 是否使用 <a-checkbox>状态管理 ([rematch](https://rematch.github.io/rematch/#/))</a-checkbox>
-- 是否使用 <a-checkbox>单元测试([Jest](https://jestjs.io/) 和 [Enzyme](https://enzymejs.github.io/enzyme/))</a-checkbox>
-- 是否使用 <a-checkbox>数据获取([Axios](https://github.com/axios/axios) + [use-request](https://www.npmjs.com/package/@luban-hooks/use-request))</a-checkbox>
 - 是否使用 <a-checkbox>[commitizen](https://github.com/commitizen/cz-cli) + [commitlint](https://commitlint.js.org/#/) 提交代码</a-checkbox>
 
 `luban init` 命令将提供一些可选选项，可以运行下面的命令来获取这些选项
@@ -56,3 +49,55 @@ luban init --help
 -h, --help 输出使用帮助信息
 -i, --info 输出一些环境信息，比如系统，CPU，Node 版本，NPM 版本
 ```
+
+### `cli-lib-service` 命令
+
+项目创建完成后，<mark>@luban-cli/cli-lib-service</mark> 会提供 `luban-lib-service` 命令。
+
+可以在 npm scripts 中以 `luban-lib-service` 或者从终端中以 `./node_modules/.bin/luban-lib-service` 访问这个命令。
+
+同时在 *package.json* 文件的 `scripts` 字段会添加以下几个脚本：
+
+```json
+{
+  "scripts": {
+    "serve": "docz dev",
+    "build": "luban-lib-service build",
+    "release:next": "luban-lib-service publish prerelease --tag next --run-scripts 'test eslint build' --allow-any-branch",
+    "release": "luban-lib-service publish --tag latest --run-scripts 'test eslint build' --branch main"
+  }
+}
+```
+
+可以通过 npm 来执行这些 `scripts`:
+
+```shell
+npm run serve
+```
+
+### luban-cli-service build
+
+```json
+用法：luban-cli-service build
+```
+
+该脚本命令会构建出支持 ESModule、CommonJS 和 UMD 模块系统的产物代码。
+
+其中 ESModule 模块代码输出到 *es* 目录，CommonJS 模块代码输出到 *lib* 目录，UMD 模块代码输出到到 *dist* 目录。
+
+### luban-cli-service publish
+
+```json
+用法：luban-cli-service publish [options]
+
+选项：
+
+  -V, --version            指定版本号
+  --tag <tag>              指定 dist-tag, 默认 'latest'
+  --allow-any-branch       允许发布任何分支, 默认 'false'
+  --branch <branch>        指定允许发布的分支
+  --run-scripts <scripts>  指定发布前要运行的脚本命令, 例如 --run-scripts 'test build'
+  --clean                  删除 node_modules 并重新安装, default 'false'
+```
+
+该命令将会把构建后的产物发布到指定的仓库（默认 https://registry.npmjs.org/）。

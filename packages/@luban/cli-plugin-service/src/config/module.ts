@@ -7,14 +7,26 @@ import {
   WebpackConfigName,
 } from "../definitions";
 import { cleanAssetPath } from "../utils/cleanAssetPath";
+import { CssLoaderOptions, LessLoaderOptions } from "../main";
 
 class Module implements ConfigPluginInstance {
   apply(args: ConfigPluginApplyCallbackArgs) {
     const isDevelopment = process.env.NODE_ENV !== "production";
     const { api, projectConfig } = args;
     const {
-      css: { sourceMap },
+      css: { sourceMap, loaderOptions },
     } = projectConfig;
+
+    const cssLoaderOptions: CssLoaderOptions = {
+      importLoaders: 1,
+      sourceMap,
+      ...(loaderOptions?.css || {}),
+    };
+    const lessLoaderOptions: LessLoaderOptions = {
+      sourceMap,
+      javascriptEnabled: true,
+      ...(loaderOptions?.less || {}),
+    };
 
     const genUrlLoaderOptions: (dir?: string) => UrlLoaderOptions = function(dir) {
       return {
@@ -32,6 +44,7 @@ class Module implements ConfigPluginInstance {
 
     const getMiniCssOptions = (configId: WebpackConfigName) => {
       return {
+        ...(loaderOptions?.miniCss || {}),
         emit: configId === "client",
       };
     };
@@ -108,11 +121,11 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("css-loader")
         .loader("css-loader")
-        .options({ importLoaders: 1, sourceMap })
+        .options(cssLoaderOptions)
         .end()
         .use("postcss")
         .loader("postcss-loader")
-        .options({ sourceMap, ident: "postcss" })
+        .options({ sourceMap })
         .end();
 
       webpackConfig.module
@@ -125,23 +138,22 @@ class Module implements ConfigPluginInstance {
         .use("css-loader")
         .loader("css-loader")
         .options({
-          importLoaders: 1,
           modules: {
             mode: "global",
             exportGlobals: true,
-            localIdentName: "[name]__[local]__[hash:base64:5]",
+            localIdentName: "[name]_[local]_[hash:base64:5]",
             context: api.getContext(),
           },
-          sourceMap,
+          ...cssLoaderOptions,
         })
         .end()
         .use("postcss-loader")
         .loader("postcss-loader")
-        .options({ sourceMap, ident: "postcss" })
+        .options({ sourceMap })
         .end()
         .use("less-loader")
         .loader("less-loader")
-        .options({ sourceMap, noIeCompat: true, javascriptEnabled: true })
+        .options(lessLoaderOptions)
         .end();
     });
   }

@@ -1,35 +1,13 @@
 ---
+
 sidebar: auto
 ---
 
 # ⚙ 配置参考
 
-## luban.config.ts | luban.config.js
+## luban.config.ts
 
-*luban.config.ts* 或者 *luban.config.js* 是一个可选的配置文件，如果项目的 (和 *package.json* 同级的) 根目录中存在这个文件，
-那么它会被 <mark>@luban-cli/cli--plugin-service</mark> 自动识别加载。
-
-另外，该配置文件的扩展名应该与创建项目时选择的开发语言保持一致。文档中其他地方也将以 *luban.config.ts* 进行举例说明。具体类型见下方 [配置文件](#配置文件)。
-
-使用 <mark>@luban-cli/cli--plugin-service</mark> 提供的 `createProjectConfig` 来导出配置选项可以获得很好的配置提示：
-
-```javascript
-// luban.config.js
-const { createProjectConfig } = require("@luban-cli/cli-plugin-service");
-
-module.exports = createProjectConfig({
-  // 选项...
-});
-```
-
-```ts
-// luban.config.ts
-import { createProjectConfig } from "@luban-cli/cli-plugin-service";
-
-export default createProjectConfig({
-  // 选项...
-});
-```
+*luban.config.ts* 是一个必选的配置文件，它会被 <mark>@luban-cli/cli--plugin-service</mark> 自动识别加载。
 
 ### publicPath
 
@@ -45,7 +23,7 @@ export default createProjectConfig({
   ```ts
   // luban.config.ts
   import { createProjectConfig } from "@luban-cli/cli-plugin-service";
-
+  
   export default createProjectConfig({
     publicPath: process.env.NODE_ENV === "production" ? "https://www.example.com/" : "/",
   });
@@ -60,10 +38,6 @@ export default createProjectConfig({
 
   当运行 `luban-cli-service build` 时生成的生产环境构建文件的目录。注意目标目录在构建之前会被清除。
 
-::: warning ⚠️
-请始终使用 `outputDir` 而不要修改 webpack 的 `output.path`。
-:::
-
 ### assetsDir
 - Type: `Object`
 - Default: `{ scripts: "scripts",  styles: "styles",  images: "images", fonts: "fonts", media: "media" }`
@@ -77,7 +51,7 @@ export default createProjectConfig({
   ```ts
   // luban.config.ts
   import { createProjectConfig } from "@luban-cli/cli-plugin-service";
-
+  
   export default createProjectConfig({
     assetsDir: {
       scripts: "",
@@ -118,6 +92,12 @@ export default createProjectConfig({
 
   如果这个值是一个函数，则会接收被解析的配置作为参数。该函数既可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。
 
+  被解析的配置只包括 'module' 'plugins' 'externals', 同时也只能返回这三个配置项
+
+  即通过 `configureWebpack` 只允许修改 'module' 'plugins' 'externals' 这三个配置项
+
+  **不允许直接返回 `config` 参数**
+
   更多细节可查阅：[配合 webpack > 简单的配置方式](../document/webpack.md#简单的配置方式)
 
 ### chainWebpack
@@ -127,16 +107,9 @@ export default createProjectConfig({
   是一个函数，会接收一个基于 [webpack-chain](https://github.com/mozilla-neutrino/webpack-chain) 的
   `ChainableConfig` 实例。允许对内部的 webpack 配置进行更细粒度的修改。
 
+  通过 `chainWebpack` 只允许修改 'module' 'plugins' 'externals' 这三个配置项
+
   更多细节可查阅：[配合 webpack > 链式操作](../document/webpack.md#链式操作)
-
-### css.extract
-
-- Type: `boolean`
-- Default: 生产环境下是 `true`，开发环境下是 `false`
-
-  是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。
-
-  提取 CSS 在开发环境模式下是默认不开启的。你仍然可以将这个值设置为 `true` 在所有情况下都强制提取。
 
 ### css.sourceMap
 
@@ -172,69 +145,15 @@ export default createProjectConfig({
 
   支持的 loader 有：
 
-  - [css-loader](https://github.com/webpack-contrib/css-loader)
-  - [postcss-loader](https://github.com/postcss/postcss-loader)
-  - [less-loader](https://github.com/webpack-contrib/less-loader)
-  - [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)
+ - [css-loader](https://www.npmjs.com/package/css-loader/v/3.4.0)
+ - [less-loader](https://www.npmjs.com/package/less-loader/v/5.0.0)
+ - [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin/v/1.4.1#publicPath)
 
-  更多细节可查阅：[向预处理器 Loader 传递选项](../document/css.html#向预处理器-loader-传递选项)
+更多细节可查阅：[向预处理器 Loader 传递选项](../document/css.html#向预处理器-loader-传递选项)
 
 ::: tip 🙋‍♂️
 相比于使用 `chainWebpack` 手动指定 loader 更推荐上面这样做，因为这些选项需要应用在使用了相应 loader 的多个地方。
 :::
-
-### devServer
-
-- Type: `Object`
-
-  所有 [==webpack-dev-server== 的选项](https://webpack.js.org/configuration/dev-server/) 都支持。注意：
-
-  - 有些值像 `host`、`port` 和 `https` 可能会被命令行参数覆写。
-
-  - 有些值像 `publicPath` 和 `historyApiFallback` 不应该被修改，因为它们需要和开发服务器的 [publicPath](#publicPath) 同步以保障本地开发服务的工作。
-
-### devServer.proxy
-
-- Type: `string | Object`
-
-  如果你的前端应用和服务端 API 服务器没有运行在同一个主机上，你需要在开发环境下将 API 请求代理到 API服务器。这个问题可以通过 *luban.config.js* 中的 `devServer.proxy` 选项来配置。
-
-  `devServer.proxy` 可以是一个指向开发环境 API 服务器的字符串：
-
-  ```ts
-  // luban.config.ts
-  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
-
-  export default createProjectConfig({
-    devServer: {
-      proxy: "http://localhost:4000",
-    },
-  });
-  ```
-
-  这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到`http://localhost:4000`。
-
-  如果你想要更多的代理控制行为，也可以使用一个 `path: object` 成对的对象。完整的选项可以查阅 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#proxycontext-config) 。
-
-  ```ts
-  // luban.config.ts
-  import { createProjectConfig } from "@luban-cli/cli-plugin-service";
-
-  export default createProjectConfig({
-    devServer: {
-      proxy: {
-        "/api": {
-          target: "<url>",
-          ws: true,
-          changeOrigin: true,
-        },
-        "/foo": {
-          target: "<other_url>",
-        },
-      },
-    },
-  });
-  ```
 
 ### assetsLimit
 
@@ -260,6 +179,13 @@ export default createProjectConfig({
 - Default: `false`
 
   是否开启 mock server, 详细信息查阅 [Mock Server](../document/data-fetch.md#mock-server)。
+
+### ssr
+
+- Type: `boolean`
+- Default: `false`
+
+  是否开启服务端渲染, 详细信息查阅 [服务端渲染](../document/ssr.md)。
 
 ## Babel
 
@@ -318,15 +244,12 @@ export default createProjectConfig({
   },
   productionSourceMap: false,
   css: {
-    // 开发环境为 false，生产环境为 true
-    extract: undefined,
     // 开发环境为 true，生产环境为 false
     sourceMap: undefined,
     loaderOptions: {
       css: {},
       less: {},
       miniCss: {},
-      postcss: {},
     },
   },
   assetsLimit: 4096,
@@ -335,17 +258,60 @@ export default createProjectConfig({
   },
   // 选择 '数据获取' 特性时将开启此选项
   mock: false,
+  ssr: false,
 });
 ```
 
 同时传入 `createProjectConfig` 的对象应该被下面的 `ProjectConfig` 类型约束。
 
 ```typescript
+export type CssLoaderOptions = Partial<{
+  url: boolean | ((url: string, path: string) => boolean);
+  import: boolean | ((url: string, media: string, path: string) => boolean);
+  modules:
+    | boolean
+    | "global"
+    | "local"
+    | Partial<{
+        mode: "global" | "local";
+        localIdentName: string;
+        context: string;
+        hashPrefix: string;
+      }>;
+  sourceMap: boolean;
+  importLoaders: number;
+  localsConvention: string;
+  onlyLocals: boolean;
+  esModule: boolean;
+}>;
+
+export type PostcssLoaderOptions = Partial<{
+  exec: boolean;
+  parser: boolean | Parser;
+  syntax: boolean | Syntax;
+  stringifier: Stringifier;
+  config: {
+    path?: string;
+    context?: { env?: string; file?: { extname?: string; dirname?: string; basename?: string } };
+    options: Record<string, unknown>;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins: Plugin<any>[] | ((loader: webpack.loader.LoaderContext) => Plugin<any>[]);
+  sourceMap: boolean | string;
+}>;
+
+export type MiniCSSLoaderOptions = Partial<{
+  publicPath: string | ((url: string, path: string) => string);
+  emit: boolean;
+  esModule: boolean;
+}>;
+
+export type LessLoaderOptions = Partial<Less.Options & { sourceMap?: boolean }>;
+
 type OptionsOfCssLoader = {
-  css: Record<string, any>;
-  less: Record<string, any>;
-  postcss: Record<string, any>;
-  miniCss: Record<string, any>;
+  css: Partial<CssLoaderOptions>;
+  less: LessLoaderOptions;
+  miniCss: Partial<MiniCSSLoaderOptions>;
 };
 
 type AssetsDir = {
@@ -358,14 +324,7 @@ type AssetsDir = {
 
 type CssConfig = {
   /**
-   * @description 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到文档中的内联样式代码)
-   *
-   * @default process.env.NODE_ENV === "production"
-   */
-  extract: boolean;
-
-  /**
-   * @description 是否为 CSS 开启 source map
+   * @description 是否为 CSS/Less 开启 source map
    *
    * @default process.env.NODE_ENV === "development"
    */
@@ -373,11 +332,17 @@ type CssConfig = {
 
   /**
    * @description 一些处理 css 的 loader 的配置项
+   * 支持的 loader 有:
+   * [css-loader](https://www.npmjs.com/package/css-loader/v/3.4.0)
+   * [less-loader](https://www.npmjs.com/package/less-loader/v/5.0.0)
+   * [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin/v/1.4.1#publicPath)
+   *
+   * postcss-loader 可以配置 postcss.config.js
    */
   loaderOptions: Partial<OptionsOfCssLoader>;
 };
 
-type ProjectConfig = {
+export type ProjectConfig = {
   /**
    * @description 应用部署时的基本 URL
    *
@@ -402,7 +367,7 @@ type ProjectConfig = {
    * 媒体文件放在 `media` 目录下
    * 以上目录都是相对于 `outputDir`
    */
-  assetsDir: AssetsDir;
+  assetsDir: Partial<AssetsDir>;
 
   /**
    * @description 指定生成的 index.html 文件名或者相对路径（路径是相对于 `outputDir` 的）
@@ -429,32 +394,40 @@ type ProjectConfig = {
 
   /**
    * @description webpack 配置
-   * 如果这个值是一个对象，则会通过 `webpack-merge` 合并到最终的配置中
-   * 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数及可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
+   * 这个值是一个函数，接收被解析的配置和配置名称作为参数。
+   * 该函数可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本
+   * 被解析的配置只包括 ‘module’ 'plugins' 'externals', 同时也只能返回这三个配置项
    *
-   * @type {Object | Function | undefined}
+   * 即通过 `configureWebpack` 只允许修改 ‘module’ 'plugins' 'externals' 这三个配置项
+   *
+   * **不允许直接返回 `config` 参数**
+   *
+   * @type {Function | undefined}
    *
    * @default {() => undefined}
    */
-  configureWebpack:
-    | webpack.Configuration
-    | ((config: webpack.Configuration) => webpack.Configuration | void);
+  configureWebpack: (
+    config: WebpackRawConfigCallbackConfiguration,
+    id: WebpackConfigName,
+  ) => WebpackRawConfigCallbackConfiguration | void;
 
   /**
    * @description 是一个函数，会接收一个基于 `webpack-chain` 的 `Config` 实例
    * 允许对内部的 webpack 配置进行更细粒度的修改
+   * 通过 `chainWebpack` 只允许修改 ‘module’ 'plugins' 'externals' 这三个配置项
    *
    * @default {() => undefined}
    */
-  chainWebpack: (config: Config) => void;
+  chainWebpack: (config: UserConfig, id: WebpackConfigName) => void;
 
   /**
    * @description 一些解析 css 的配置选项
    */
-  css: CssConfig;
+  css: Partial<CssConfig>;
 
   /**
    * @description webpack-dev-server 的配置项
+   * @deprecated since 2.0
    */
   devServer: webpackDevServer.Configuration;
 
@@ -474,5 +447,10 @@ type ProjectConfig = {
    * 约定根目录下`mock/index.js` 为默认 mock 配置文件
    */
   mock: boolean;
+
+  /**
+   * @description 是否开启服务端渲染(server side rendering)
+   */
+  ssr: boolean;
 };
 ```

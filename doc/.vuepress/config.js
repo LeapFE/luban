@@ -1,3 +1,5 @@
+const version = require("../../lerna.json").version;
+
 module.exports = {
   title: "Luban",
   description: "🛠 插件化的 React 应用开发框架",
@@ -24,31 +26,33 @@ module.exports = {
         link: "https://github.com/leapFE/luban",
       },
       {
-        // TODO read lerna.json `version` field on branch master
-        text: "1.4.2",
+        text: version,
         link: "https://www.npmjs.com/package/@luban-cli/cli",
       },
     ],
     sidebar: {
       "/document": [
         "/document/",
-        "/document/installation",
         {
           title: "开始",
           collapsable: false,
-          children: ["/document/creating-project", "/document/cli-service"],
+          children: [
+            "/document/installation",
+            "/document/create-web-app",
+            "/document/create-component-lib",
+          ],
         },
         {
           title: "开发指南",
           collapsable: true,
           children: [
-            "/document/structure",
+            "/document/entry-file",
+            "/document/router-layout",
+            "/document/store",
             "/document/css",
             "/document/mode-and-env",
-            "/document/ui-library",
-            "/document/router",
-            "/document/typescript",
             "/document/data-fetch",
+            "/document/ssr",
           ],
         },
         {
@@ -59,9 +63,9 @@ module.exports = {
             "/document/webpack",
             "/document/browser-compatibility",
             "/document/html-and-static-assets",
-            "/document/store",
             "/document/unittest",
             "/document/deployment",
+            "/document/ssr-deployment-guide",
           ],
         },
       ],
