@@ -53,6 +53,7 @@ module.exports = {
             "/document/mode-and-env",
             "/document/data-fetch",
             "/document/ssr",
+            "/document/dev-component-lib",
           ],
         },
         {
