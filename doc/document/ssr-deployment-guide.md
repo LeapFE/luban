@@ -40,7 +40,7 @@ http {
     server {
         listen       80;
         # 注意将 server_name 替换为真实的域名
-        server_name  your.servername.com;
+        server_name  ssr.example.com;
 
         location / {
             proxy_set_header X_Real_IP $remote_addr;
@@ -178,7 +178,209 @@ RUN npm install && npm run build
 
 <img src="https://doc.traefik.io/traefik/assets/img/traefik-architecture.png" alt="traefik" style="zoom:30%;" />
 
+下面例子是如何在单机上通过 ==traefik== 部署一个 Nodejs 应用。
 
+### 部署 traefik
 
+这里使用 ==docker== 来部署 ==traefik==，其他方式安装 ==traefik== 查阅[安装 traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/)，需要准备以下配置文件：
 
+```shell
+mkdir -p traefik
+touch traefik/setup.yml
+touch traefik/acme.json
+touch traefik/whoami.yml
+```
 
+新建 *traefik* 目录，放置所有配置文件和一个 [whoami](https://hub.docker.com/r/traefik/whoami) 的服务配置文件，*setup.yml* 是运行 ==traefik== 容器的启动配置文件，内容如下：
+```yml
+# setup.yml
+version: "3.3"
+
+services:
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      # Replace postmaster@example.com by your own email
+      - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=acme.json"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme.json:/acme.json"
+    labels:
+      # Replace dashboard.example.com by your own domain
+      - "traefik.http.routers.traefik-secure.rule=Host(`dashboard.example.com`)"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+```
+
+在上面这个配置文件中，定义一个名叫 「traefik」的服务，并将该服务的容器命令为 "traefik"，使用 "traefik:v2.4" 作为容器镜像。定义了两组端口映射关系：将宿主机的 80 端口映射到容器的 80 端口和将宿主机的 443 端口映射到容器的 443 端口。
+
+在 `command` 指令中指定了容器启动后要执行的命令：
++ 13 至 14 行，开启 traefik 提供的 web UI dashboard，并告诉 traefik 监听 docker 的事件。
++ 15 至 16 行，定义了两个入口点，traefik 将会在 80 端口(HTTP)和 443 端口(HTTPS)监听进入的请求，并将请求转发给合适的路由去处理。
++ 17 至 21 行，定义了一个证书解析器 "myresolver"，并启用 ACME(自动证书生成环境)，使用 [HTTP-01](https://doc.traefik.io/traefik/https/acme/#httpchallenge) 验证方式来生成和更新 ACME 证书，*acme.json* 用于存放证书信息。 需要注意两点：需要将 "postmaster@example.com" 替换为真实的邮箱地址；*acme.json* 文件需要 600 权限。
+
+在指令 `labels` 中，定义了一个路由规则：路由名称为 "traefik-secure"，访问域名为 "dashboard.example.com"，注意将域名替换为真实的域名地址，同时该域名必须以 "https" 形式访问，由 "myresolver" 提供 TLS 证书；该路由最终由 traefik 内部 api 提供服务。
+
+在终端运行 `docker-compose -f setup.yml up -d`，不出意外一个名叫 "traefik" 的容器已经顺利的运行起来了，访问 https://dashboard.example.com，就可以访问由 traefik 提供的 dashboard 界面。
+
+![image-20210607111851582](https://i.loli.net/2021/06/07/BXDqEHpJwUR4SOK.png)
+
+接下来启动 whoami 容器，whoami 服务配置文件内容如下：
+
+```yml
+# whoami.yml
+version: "3.3"
+
+services:
+  whoami:
+    image: "traefik/whoami"
+    container_name: "whoami"
+    labels:
+      # Replace whoami.example.com by your own domain
+      - "traefik.http.routers.whoami.rule=Host(`whoami.example.com`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+```
+
+以 "traefik/whoami" 镜像作为容器 "traefik" 的镜像，指定访问域名，在浏览器中访问就会看到如下内容：
+
+![image-20210607111214909](https://i.loli.net/2021/06/07/aBfbnwhCPHYDcu1.png)
+
+#### 部署服务端渲染应用
+部署服务端渲染应用之前首先需要准备一个服务端渲染应用，可以在服务器上直接使用 luban 创建一个应用，也可以将本地已经创建好的应用上传到代码仓库，在服务器上拉取即可，亦或使用 ci 工具(Jenkins等)自动化部署。大致的思路是一样的，这里直接在服务器上使用 luban 创建一个应用，创建前确保安装了 Nodejs。
+```shell
+npx @luban-cli/cli init ssr
+```
+创建完 ssr 应用之后，进入该目录，添加三个配置文件：Dockerfile、.dockerignore 和 setup.yml
+```dockerfile
+# Dockerfile
+FROM node:10-alpine as client_builder
+WORKDIR /client
+COPY package.json package-lock.json /client/
+RUN npm install --ignore-scripts
+COPY . /client/
+RUN npm run build
+
+FROM node:10-alpine as server_builder
+WORKDIR /server
+COPY server/package.json server/package-lock.json /server/
+RUN npm install
+
+FROM node:10-alpine
+WORKDIR /app
+COPY server/index.js /app/index.js
+COPY --from=client_builder client/dist /app/dist
+COPY --from=server_builder server/node_modules /app/node_modules
+```
+
+```ignore
+# .dockerignore
+node_modules
+server/node_modules
+```
+
+```yml
+# setup.yml
+version: "3.3"
+
+services:
+  ssr-demo:
+    build: .
+    container_name: ssr-demo
+    expose:
+      - "80"
+    environment:
+      - "PORT=80"
+      - "NODE_ENV=production"
+    command: node index.js
+    labels:
+      - "traefik.http.routers.luban-secure.entrypoints=websecure"
+      # Replace ssr.example.com by your own domain
+      - "traefik.http.routers.luban-secure.rule=Host(`ssr.example.com`)"
+```
+
+修改 *.env.production* 中的 `PUBLIC_PATH`：
+```env {2}
+APP_SERVER=https://server.cn
+APP_PUBLIC_PATH=/assets/
+```
+
+开启服务端渲染模式:
+```ts {6}
+// luban.config.ts
+import { createProjectConfig } from "@luban-cli/cli-plugin-service";
+
+export default createProjectConfig({
+  publicPath: process.env.APP_PUBLIC_PATH,
+  ssr: true,
+});
+```
+
+新建 *server* 目录，作为服务端渲染的入口启动目录：
+```shell
+mkdir -p server
+touch server/index.js
+```
+
+安装 Express：
+```shell
+npm install express
+```
+
+编辑 *server/index.js*：
+```js
+const express = require("express");
+const { render } = require("./dist/server");
+
+const app = express();
+
+app.use("/assets/", express.static("dist"));
+
+app.use(async (req, res) => {
+  try {
+    const { document } = await render({ path: req.path });
+
+    res.send(document);
+  } catch (e) {
+    console.log(e);
+    res.send(`something wrong ${e}`);
+  }
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listening up at ${port}`);
+});
+```
+
+此时 *server* 目录的结构如下：
+```
+server
+  ├── package.json
+  ├── package-lock.json
+  ├── index.js
+```
+
+至此，一切准备完毕，在终端执行：
+```shell
+docker-compose -f setup.yml up -d --build
+```
+
+不出意外，一个名叫 "ssr-demo" 的容器就已经运行起来了，访问 "https://ssr.example.com" 便可以看到：
+
+![image-20210607153432644](https://i.loli.net/2021/06/07/KzNVIW3YFRX1Lvi.png)
+
+可以将上述过程在本地完成，在服务器上使用 Jenkins 和 git，最终只需要一条命令`docker-compose -f setup.yml up -d --build`便可以部署服务并自动生效。
