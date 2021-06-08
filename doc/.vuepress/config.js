@@ -1,7 +1,3 @@
-function getCliVersion() {
-  return require("./../../packages/@luban/cli/package.json").version;
-}
-
 module.exports = {
   title: "Luban",
   description: "🛠 插件化的 React 应用开发框架",
@@ -28,7 +24,7 @@ module.exports = {
         link: "https://github.com/leapFE/luban",
       },
       {
-        text: `${getCliVersion()}`,
+        text: process.env.__LUBAN_VERSION__,
         link: "https://www.npmjs.com/package/@luban-cli/cli",
       },
     ],
