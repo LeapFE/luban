@@ -1,10 +1,13 @@
 {
   "name": "document-server",
   "scripts": {
-    "serve": "node index.js"
+    "serve": "node index.js",
+    "koa": "node koa.js"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "koa": "^2.13.1",
+    "koa-static": "^5.0.0"
   },
   "keywords": [],
   "author": "",
