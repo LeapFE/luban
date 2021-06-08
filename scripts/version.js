@@ -12,8 +12,8 @@ const versionCommand = `lerna version ${args.join(" ")}`;
 
 console.log(versionCommand);
 
-const { code: publishCode } = shell.exec(versionCommand);
-if (publishCode === 1) {
+const { code: versionCode } = shell.exec(versionCommand);
+if (versionCode === 1) {
   console.error(`Failed: ${versionCommand}`);
   process.exit(1);
 }
