@@ -11,7 +11,7 @@ services:
     environment:
       - "PORT=80"
       - "NODE_ENV=production"
-    command: npm run serve
+    command: node index.js
     labels:
       - "traefik.http.routers.ssr.entrypoints=websecure"
       - "traefik.http.routers.ssr.rule=Host(`1x.luban.fun`)"
