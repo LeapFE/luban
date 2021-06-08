@@ -3,3 +3,4 @@ packages/**/**/*.js
 **/dist**
 packages/**/**/bin/*
 **/node_modules/**
+doc/**/*.js
