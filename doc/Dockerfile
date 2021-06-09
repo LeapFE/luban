@@ -12,6 +12,6 @@ RUN npm install
 
 FROM node:10-alpine
 WORKDIR /app
-COPY server/index.js /app/
+COPY server/index.js /app/index.js
 COPY --from=client_builder client/.vuepress/dist /app/dist
 COPY --from=server_builder server/node_modules /app/node_modules
