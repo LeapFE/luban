@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.7"
 
 services:
   luban-doc-v1:
@@ -13,5 +13,5 @@ services:
       - "NODE_ENV=production"
     command: node index.js
     labels:
-      - "traefik.http.routers.ssr.entrypoints=websecure"
-      - "traefik.http.routers.ssr.rule=Host(`1x.luban.fun`)"
+      - "traefik.http.routers.doc.entrypoints=websecure"
+      - "traefik.http.routers.doc.rule=Host(`v1.traefik.com`)"
