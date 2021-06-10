@@ -1,4 +1,5 @@
 module.exports = {
+  host: "127.0.0.1",
   title: "Luban",
   // description: "🛠 插件化的 React 应用开发框架",
   markdown: {
