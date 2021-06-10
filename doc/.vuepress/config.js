@@ -1,6 +1,6 @@
 module.exports = {
   title: "Luban",
-  description: "🛠 插件化的 React 应用开发框架",
+  // description: "🛠 插件化的 React 应用开发框架",
   markdown: {
     lineNumbers: true,
   },
@@ -26,6 +26,10 @@ module.exports = {
       {
         text: process.env.__LUBAN_VERSION__,
         link: "https://www.npmjs.com/package/@luban-cli/cli",
+      },
+      {
+        text: "2.x 文档",
+        link: "https://luban.fun",
       },
     ],
     sidebar: {
