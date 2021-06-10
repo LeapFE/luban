@@ -2,8 +2,8 @@
   "name": "doc",
   "description": "luban doc",
   "scripts": {
-    "doc:dev": "__LUBAN_VERSION__=1.4.3-next.0 vuepress dev . --open --temp .temp",
-    "doc:build": "__LUBAN_VERSION__=1.4.3-next.0 vuepress build . --temp .temp"
+    "doc:dev": "__LUBAN_VERSION__=1.4.3-next.1 vuepress dev . --open --temp .temp",
+    "doc:build": "__LUBAN_VERSION__=1.4.3-next.1 vuepress build . --temp .temp"
   },
   "devDependencies": {
     "@vuepress/plugin-active-header-links": "^1.8.2",
