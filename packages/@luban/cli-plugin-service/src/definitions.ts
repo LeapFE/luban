@@ -34,6 +34,10 @@ export type InlinePlugin = {
 
 export type ServicePlugin = InlinePlugin;
 
+export type WebpackConfiguration = webpack.Configuration & {
+  devServer?: webpackDevServer.Configuration;
+};
+
 export type WebpackChainCallback = (config: Config) => void;
 
 export type WebpackRawConfigCallback =
