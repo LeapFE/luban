@@ -36,6 +36,9 @@ try {
   process.exit(1);
 }
 
+shell.exec("git add -- .");
+shell.exec("git commit --no-verify -m 'chore:synchronization version'");
+
 const { code: pushCode } = shell.exec("git push --follow-tags --no-verify --atomic");
 if (pushCode === 1) {
   console.error("git push failed");
