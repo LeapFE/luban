@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  luban-doc-v1:
+    build: .
+    container_name: luban-doc-v1
+    ports:
+      - "3000:80"
+    expose:
+      - "80"
+    environment:
+      - "PORT=80"
+      - "NODE_ENV=production"
+    command: npm run serve
+    labels:
+      - "traefik.http.routers.doc.entrypoints=websecure"
+      - "traefik.http.routers.doc.rule=Host(`1x.traefik.com`)"

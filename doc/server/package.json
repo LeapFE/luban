@@ -1,0 +1,12 @@
+{
+  "name": "document-server",
+  "scripts": {
+    "serve": "http-server ./dist"
+  },
+  "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

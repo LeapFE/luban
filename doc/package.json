@@ -1,0 +1,21 @@
+{
+  "name": "doc",
+  "description": "luban doc",
+  "scripts": {
+    "doc:dev": "__LUBAN_VERSION__=1.4.3-next.1 vuepress dev . --open --temp .temp",
+    "doc:build": "__LUBAN_VERSION__=1.4.3-next.1 vuepress build . --temp .temp"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-active-header-links": "^1.8.2",
+    "@vuepress/plugin-back-to-top": "^1.8.2",
+    "@vuepress/plugin-last-updated": "1.8.2",
+    "@vuepress/plugin-medium-zoom": "^1.8.2",
+    "@vuepress/plugin-nprogress": "1.5.0",
+    "markdown-it-mark": "^3.0.0",
+    "vuepress": "^1.8.2",
+    "vuepress-theme-antdocs": "1.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

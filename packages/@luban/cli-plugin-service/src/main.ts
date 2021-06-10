@@ -24,19 +24,19 @@ type CssConfig = {
    *
    * @default process.env.NODE_ENV === "production"
    */
-  extract: boolean;
+  extract?: boolean;
 
   /**
    * @description 是否为 CSS 开启 source map
    *
    * @default process.env.NODE_ENV === "development"
    */
-  sourceMap: boolean;
+  sourceMap?: boolean;
 
   /**
    * @description 一些处理 css 的 loader 的配置项
    */
-  loaderOptions: Partial<OptionsOfCssLoader>;
+  loaderOptions?: Partial<OptionsOfCssLoader>;
 };
 
 export type ProjectConfig = {
