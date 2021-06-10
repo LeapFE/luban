@@ -4,14 +4,17 @@
   ],
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
-  "version": "1.4.3-next.1",
+  "version": "1.4.3-next.2",
   "useWorkspaces": true,
   "command": {
     "create": {
       "license": "MIT"
     },
     "publish": {
-      "allowBranch": ["master", "release-*"],
+      "allowBranch": [
+        "master",
+        "release-*"
+      ],
       "bump": "patch",
       "ignoreChanges": [
         "*.md",

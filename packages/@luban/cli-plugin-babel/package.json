@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-babel",
-  "version": "1.4.3-next.1",
+  "version": "1.4.3-next.2",
   "description": "cli-plugin-babel",
   "author": "front-end-captain <18810940932@163.com>",
   "homepage": "https://github.com/leapFE/luban/blob/master/packages/%40luban/cli-plugin-babel/README.md",
@@ -30,7 +30,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^1.4.3-next.1"
+    "@luban-cli/cli-shared-types": "^1.4.3-next.2"
   },
   "engines": {
     "node": ">=10"

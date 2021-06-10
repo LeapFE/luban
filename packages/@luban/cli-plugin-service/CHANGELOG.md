@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3-next.2](https://github.com/leapFE/luban/compare/v1.4.3-next.1...v1.4.3-next.2) (2021-06-10)
+
+
+### Bug Fixes
+
+* **plugin-service:** not send ipc message after start dev server ([e265dc3](https://github.com/leapFE/luban/commit/e265dc34c338128735993703a8af9b28f2f0e65a))
+
+
+
+
+
 ## [1.4.3-next.1](https://github.com/leapFE/luban/compare/v1.4.3-next.0...v1.4.3-next.1) (2021-06-10)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-service
