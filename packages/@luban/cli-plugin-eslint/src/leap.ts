@@ -11,7 +11,7 @@ export function eslintConfigLeap(api: GeneratorAPI): void {
     string | number | Record<string, any> | Array<string | Record<string, any>>
   >([["project", ["./tsconfig.json"]]]);
 
-  const eslintExtends = ["leap"];
+  const eslintExtends = ["leapfe"];
 
   const eslintEnv = new SimpleMapPolyfill<string, boolean>([["es2017", true]]);
 
@@ -25,7 +25,7 @@ export function eslintConfigLeap(api: GeneratorAPI): void {
     devDependencies: {
       eslint: "^6.8.0",
       "eslint-loader": "^3.0.3",
-      "eslint-config-leap": "^1.0.0",
+      "eslint-config-leapfe": "^2.0.5",
       "eslint-config-prettier": "^6.10.0",
       "eslint-plugin-react": "^7.16.0",
       "eslint-plugin-react-hooks": "^2.4.0",
