@@ -1,3 +1,6 @@
+/* eslint-disable */
+
+/* prettier-ignore-start */
 import { request } from "../request";
 
 import { ResponseData } from "../interface/public";
@@ -16,3 +19,4 @@ export function addUser(params: { name: string }) {
 export function delUser(params: { id: number }) {
   return request.delete<ResponseData<boolean>>(`/api/user/${params.id}`);
 }
+/* prettier-ignore-end */

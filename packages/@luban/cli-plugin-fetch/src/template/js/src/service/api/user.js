@@ -1,3 +1,6 @@
+/* eslint-disable */
+
+/* prettier-ignore-start */
 import { request } from "../request";
 
 
@@ -13,3 +16,4 @@ export function addUser(params) {
 export function delUser(params) {
   return request.delete(`/api/user/${params.id}`);
 }
+/* prettier-ignore-end */
