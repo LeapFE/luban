@@ -8,7 +8,7 @@ import portfinder from "portfinder";
 import WebpackDevServer = require("webpack-dev-server");
 import { Application } from "express";
 import chalk from "chalk";
-import { openBrowser, IpcMessenger, log, error, info } from "@luban-cli/cli-shared-utils";
+import { openBrowser, log, error, info } from "@luban-cli/cli-shared-utils";
 import { existsSync } from "fs";
 
 import { PluginAPI } from "./../lib/PluginAPI";
@@ -245,14 +245,6 @@ export default function(api: PluginAPI, options: ProjectConfig): void {
                   : "";
               openBrowser(localUrlForBrowser + pageUri);
             }
-
-            // Send final app URL
-            const ipc = new IpcMessenger();
-            ipc.send({
-              lubanServer: {
-                url: localUrlForBrowser,
-              },
-            });
 
             // resolve returned Promise
             // so other commands can do api.service.run('serve').then(...)
