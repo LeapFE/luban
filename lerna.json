@@ -11,7 +11,7 @@
       "license": "MIT"
     },
     "publish": {
-      "allowBranch": "master",
+      "allowBranch": ["master", "release-*"],
       "bump": "patch",
       "ignoreChanges": [
         "*.md",
@@ -23,7 +23,7 @@
       "message": "chore(release): publish"
     },
     "version": {
-      "allowBranch": "master",
+      "allowBranch": "*",
       "ignoreChanges": [
         "*.md",
         "scripts/**"
