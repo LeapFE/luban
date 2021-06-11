@@ -15,7 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ssr.entrypoints=websecure"
-      - "traefik.http.routers.ssr.rule=Host(`luban.fun`) || Host(`www.luban.com`)"
+      - "traefik.http.routers.ssr.rule=Host(`luban.fun`) || Host(`www.luban.fun`)"
 
 networks:
   proxy:
