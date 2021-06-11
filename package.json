@@ -19,6 +19,7 @@
     "version:prerelease": "node scripts/version.js prerelease --preid next",
     "publish:beta": "node scripts/publish.js --tag=beta",
     "publish:latest": "node scripts/publish.js --tag=latest",
+    "publish:v1": "node scripts/publish.js --tag=luban-1",
     "test:changed": "node scripts/test.js --onlyChanged",
     "test": "node scripts/test.js",
     "jest-coverage": "yarn jest --coverage --color -i .*@luban/.*/.*\\.test\\.ts$",
