@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         text: "更新记录",
-        link: "https://github.com/leapFE/luban/blob/master/CHANGELOG.md",
+        link: "https://github.com/leapFE/luban/blob/release-1.0/CHANGELOG.md",
       },
       {
         text: "GitHub",
