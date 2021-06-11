@@ -13,7 +13,7 @@ const request = axios.create({ baseURL: `${APP_SERVER}/api/` });
 export { request };
 ```
 
-其中 `APP_SERVER` 是 dotenv 文件中指定的环境变量，此处为请求接口服务地址，推荐通过 *src/service/env.ts* 来统一导出被注入的环境变量。关于如何配置请求拦截、取消、超时等，查阅 [axios](https://github.com/axios/axios) 获取更多信息。
+其中 `APP_SERVER` 是 dotenv 文件中指定的环境变量，此处为请求接口服务地址，推荐通过 *src/env.ts* 来统一导出被注入的环境变量。关于如何配置请求拦截、取消、超时等，查阅 [axios](https://github.com/axios/axios) 获取更多信息。
 
 解决了与服务端的通信问题，还需要将服务端返回的数据在组件中进行展示，Luban 内置了 [use-request](https://www.npmjs.com/package/@luban-hooks/use-request) 来完成这一步。在 *service/api/user.ts* 中默认放置了一些 service function，可以通过 ==use-request== 来调用这个函数:
 

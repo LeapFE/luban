@@ -14,7 +14,7 @@ Luban 为开发者提供了一个快速创建基于 React 第三方库的服务�
 
 终端运行 `npm run serve` 既可以在本地 3000 端口预览文档：
 
-![image-20210607175805532](https://i.loli.net/2021/06/07/6TanX3F8sZiR1Do.png)
+<img src="https://i.loli.net/2021/06/07/6TanX3F8sZiR1Do.png" alt="image-20210607153432644" style="zoom: 60%;" />
 
 *doczrc.js* 文件是配置文档表现形式的地方，可以配置文档的标题、描述、publicPath 和本地端口等。
 
@@ -32,7 +32,7 @@ Luban 为开发者提供了一个快速创建基于 React 第三方库的服务�
 
 终端运行 `npm run build` 将会构建产出 ESModule、CommonJs 和 UMD 模块的代码。
 
-终端云心 `npm run test` 将会运行所有单元测试用例，并输出测试报告。
+终端运行 `npm run test` 将会运行所有单元测试用例，并输出测试报告。
 
 ### 预发布
 
@@ -42,7 +42,7 @@ Luban 为开发者提供了一个快速创建基于 React 第三方库的服务�
 npm run release:next
 ```
 
-执行该脚本将会发布一个带有 **next** 标签包到 npm 官方仓库，同时在发布前将会运行 `test`，`eslint` 和 `build` 脚本，保障发布的包是通过测试且是新鲜构建的。
+执行该脚本将会发布一个带有 **next** 标签的包到 npm 官方仓库，同时在发布前将会运行 `test`，`eslint` 和 `build` 脚本，保障发布的包是通过测试且是新鲜构建的。
 
 随着该脚本的执行，包的版本也会跟着变化，由于指定的是 `prerelease` 版本，所以版本号将会变为 **0.0.2-0**。
 

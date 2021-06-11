@@ -78,7 +78,7 @@ console.log(process.env.APP_SERVER);
 除了以 `/^APP_/` 开头的环境变量外，还有一些特殊的环境变量也可以在应用中访问到：
 
 + `NODE_ENV` 将会是 `development` 、 `production` 中的一个。
-+ `BASE_URL` 取 `luban.config.js` 配置中的 `publicPath` 选项，即应用部署时的基础路径。
++ `BASE_URL` 取 `luban.config.ts` 配置中的 `publicPath` 选项，即应用部署时的基础路径。
 
 ## 只在本地有效的变量
 

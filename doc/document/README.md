@@ -9,7 +9,7 @@ Luban 是一个基于 [React.js](https://reactjs.org/) 的快速创建 React 应
 
 - 🧲 收敛技术栈、屏蔽底层差异、降低开发和维护成本
 - 📏 遵循约定优于配置，提供⼀套规范化的开发模式
-- 🔩 基于 [webpack](https://webpack.js.org/) 进⾏封装解决⼯程配置问题
+- 🔩 基于 [webpack](https://webpack.js.org/) 进行封装解决工程配置问题
 
 同时提供了以下特性：
 

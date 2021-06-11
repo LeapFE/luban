@@ -98,11 +98,11 @@ export default createProjectConfig({
 import { createProjectConfig } from "@luban-cli/cli-plugin-service";
 
 export default createProjectConfig({
- chainWebpack: (config, name) => {
-   if (name === "client") {
-	   // https://github.com/gajus/prepack-webpack-plugin
-     config.plugin("prepack").use(PrepackWebpackPlugin);       
-   }
+  chainWebpack: (config, name) => {
+    if (name === "client") {
+      // https://github.com/gajus/prepack-webpack-plugin
+      config.plugin("prepack").use(PrepackWebpackPlugin);       
+    }
   },
 });
 ```

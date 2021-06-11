@@ -26,12 +26,12 @@ app.listen(3000, () => {
 });
 ```
 
-在服务器上安装 PM2 后，可以在终端这样启动：
+在服务器上安装 PM2 后，在终端执行命令：
 ```shell
 pm2 start start.js --name <app_name> --watch
 ```
 
-这样应用会监听宿主机的 3000 端口，不过服务器一般不会向外网暴露 3000 端口，可以使用 [nginx](http://nginx.org/) 这样的具有反向代理功能的 http 服务将请求转发给 Nodejs 服务。
+这样应用会监听宿主机的 3000 端口，不过服务器一般不会向外网暴露 3000 端口，可以使用 [nginx](http://nginx.org/) 这样的具有反向代理功能的 http 服务将请求转发给具体的 Nodejs 服务。
 以下为精简过的 nginx 配置：
 
 ```text
@@ -53,14 +53,15 @@ http {
     # ...
 }
 ```
-将 `server_name` 配置为真实的 host 地址，就可以将指定访问域名的请求转发到 Nodejs 服务。
+将 `server_name` 配置为真实的 host 地址，就可以将指定访问域名的请求转发给具体的 Nodejs 服务。
 上述只是只是配置了 HTTP 服务，意味着只能以 HTTP 协议访问应用，如何配置 HTTPS 服务可以查阅[配置https服务](http://nginx.org/en/docs/http/configuring_https_servers.html)。
 
 ## 使用 Docker
-[docker](https://docs.docker.com/) 是一款可用于开发、搬用和运行容器应用的开放平台。利用 docker 可以应用构建为镜像，再将镜像以容器的形式启动，可以获得一致的运行环境和快速的部署、交付软件能力。
+[docker](https://docs.docker.com/) 是一款可用于开发、搬用和运行容器应用的开放平台。利用 docker 可以将应用构建为镜像，再将镜像以容器的形式启动，可以获得一致的运行环境和快速的部署、交付软件能力。
 
 1. 创建服务端侧工作目录
-    如果使用 [Express](https://expressjs.com/) 来构建服务，那么服务端侧的启动只有三部分依赖：Express 和客户端侧静态文件以及提供生成文档的 *server.js*，所以为了保持依赖最少，需要一个服务端侧工作空间：
+
+    如果使用 [Express](https://expressjs.com/) 来构建服务，那么服务端侧的启动只有三部分依赖：Express 和客户端侧静态文件以及提供生成HTML文档的 *server.js*，所以为了保持依赖最少，需要一个服务端侧工作目录：
 
   ```shell
   server
@@ -113,6 +114,7 @@ RUN npm install && npm run build
 :::
 
 3. 构建镜像
+
     构建镜像很简单，只需要指定一下镜像标签和版本：
 
   ```shell
@@ -122,13 +124,14 @@ RUN npm install && npm run build
 这样一个名叫 "my-ssr-app:v1" 的镜像就构建好了。
 
 4. 运行镜像
+
     将镜像运行为容器需要执行 `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]` 命令，并附带一些参数：
 
   ```shell
   docker run --detach --env PORT=3000 --expose 3000 --name my-ssr-app --publish 3000:3000 my-ssr-app:v1 node index.js
   ```
 
-上面这个命令的意思是：以 *my-ssr-app:v1* 为镜像启动一个名叫 *my-ssr-app* 的容器，并在后台运行这个容器，同时开放容器的 3000 端口并把宿主机的 3000 端口映射到容器的 3000 端口，最后在容器内执行 `node index.js` 命令，这个 Nodejs 应用就会监听容器的 3000 端口从而对外提供服务。
+上面这个命令的描述了：以 *my-ssr-app:v1* 为镜像启动一个名叫 *my-ssr-app* 的容器，并在后台运行这个容器，同时开放容器的 3000 端口并把宿主机的 3000 端口映射到容器的 3000 端口，最后在容器内执行 `node index.js` 命令，这个 Nodejs 应用就会监听容器的 3000 端口从而对外提供服务。
 
 如果使用 nginx 做反向代理，就可以将指定域名的请求转发到宿主机的 3000 端口，从而让 Nodejs 应用真正的对外提供服务。
 
@@ -176,7 +179,7 @@ RUN npm install && npm run build
 >2. 服务发现和负载均衡
 >3. 支持 [Docker](https://docs.docker.com)、[Kubernetes](https://kubernetes.io/)、[Http](https://developer.mozilla.org/zh-CN/docs/Web/HTTP) 和 [Redis](https://redis.io/) 等多种基础设施组件
 
-<img src="https://doc.traefik.io/traefik/assets/img/traefik-architecture.png" alt="traefik" style="zoom:30%;" />
+<img src="https://doc.traefik.io/traefik/assets/img/traefik-architecture.png" alt="traefik" style="zoom: 25%;" />
 
 下面例子是如何在单机上通过 ==traefik== 部署一个 Nodejs 应用。
 
@@ -225,18 +228,18 @@ services:
       - "traefik.http.routers.traefik-secure.service=api@internal"
 ```
 
-在上面这个配置文件中，定义一个名叫 「traefik」的服务，并将该服务的容器命令为 "traefik"，使用 "traefik:v2.4" 作为容器镜像。定义了两组端口映射关系：将宿主机的 80 端口映射到容器的 80 端口和将宿主机的 443 端口映射到容器的 443 端口。
+在上面这个配置文件中，定义一个名叫 「traefik」的服务，并将该服务的容器命名为 "traefik"，使用 "traefik:v2.4" 作为容器镜像。定义了两组端口映射关系：将宿主机的 80 端口映射到容器的 80 端口和将宿主机的 443 端口映射到容器的 443 端口。
 
 在 `command` 指令中指定了容器启动后要执行的命令：
 + 13 至 14 行，开启 traefik 提供的 web UI dashboard，并告诉 traefik 监听 docker 的事件。
 + 15 至 16 行，定义了两个入口点，traefik 将会在 80 端口(HTTP)和 443 端口(HTTPS)监听进入的请求，并将请求转发给合适的路由去处理。
-+ 17 至 21 行，定义了一个证书解析器 "myresolver"，并启用 ACME(自动证书生成环境)，使用 [HTTP-01](https://doc.traefik.io/traefik/https/acme/#httpchallenge) 验证方式来生成和更新 ACME 证书，*acme.json* 用于存放证书信息。 需要注意两点：需要将 "postmaster@example.com" 替换为真实的邮箱地址；*acme.json* 文件需要 600 权限。
++ 17 至 21 行，定义了一个证书解析器 "myresolver"，并启用 ACME(自动证书生成环境)，使用 [HTTP-01](https://doc.traefik.io/traefik/https/acme/#httpchallenge) 验证方式来生成和更新 ACME，*acme.json* 用于存放证书相关信息。 需要注意两点：需要将 "postmaster@example.com" 替换为真实的邮箱地址；*acme.json* 文件需要 600 权限。
 
 在指令 `labels` 中，定义了一个路由规则：路由名称为 "traefik-secure"，访问域名为 "dashboard.example.com"，注意将域名替换为真实的域名地址，同时该域名必须以 "https" 形式访问，由 "myresolver" 提供 TLS 证书；该路由最终由 traefik 内部 api 提供服务。
 
 在终端运行 `docker-compose -f setup.yml up -d`，不出意外一个名叫 "traefik" 的容器已经顺利的运行起来了，访问 https://dashboard.example.com，就可以访问由 traefik 提供的 dashboard 界面。
 
-![image-20210607111851582](https://i.loli.net/2021/06/07/BXDqEHpJwUR4SOK.png)
+<img src="https://i.loli.net/2021/06/07/BXDqEHpJwUR4SOK.png" alt="image-20210607111851582" style="zoom:50%;" />
 
 接下来启动 whoami 容器，whoami 服务配置文件内容如下：
 
@@ -257,10 +260,10 @@ services:
 
 以 "traefik/whoami" 镜像作为容器 "traefik" 的镜像，指定访问域名，在浏览器中访问就会看到如下内容：
 
-![image-20210607111214909](https://i.loli.net/2021/06/07/aBfbnwhCPHYDcu1.png)
+<img src="https://i.loli.net/2021/06/07/aBfbnwhCPHYDcu1.png" alt="image-20210607111214909" style="zoom:67%;" />
 
-#### 部署服务端渲染应用
-部署服务端渲染应用之前首先需要准备一个服务端渲染应用，可以在服务器上直接使用 luban 创建一个应用，也可以将本地已经创建好的应用上传到代码仓库，在服务器上拉取即可，亦或使用 ci 工具(Jenkins等)自动化部署。大致的思路是一样的，这里直接在服务器上使用 luban 创建一个应用，创建前确保安装了 Nodejs。
+### 部署服务端渲染应用
+部署服务端渲染应用之前首先需要准备一个服务端渲染应用，可以在服务器上直接使用 luban 创建一个应用，也可以将本地已经创建好的应用上传到代码仓库，在服务器上拉取即可，亦或使用 ci 工具(Jenkins等)自动化部署。大致的思路是一样的，这里直接在服务器上使用 Luban 创建一个应用，创建前确保安装了 Nodejs。
 ```shell
 npx @luban-cli/cli init ssr
 ```
@@ -381,6 +384,6 @@ docker-compose -f setup.yml up -d --build
 
 不出意外，一个名叫 "ssr-demo" 的容器就已经运行起来了，访问 "https://ssr.example.com" 便可以看到：
 
-![image-20210607153432644](https://i.loli.net/2021/06/07/KzNVIW3YFRX1Lvi.png)
+<img src="https://i.loli.net/2021/06/07/KzNVIW3YFRX1Lvi.png" alt="image-20210607153432644" style="zoom: 67%;" />
 
 可以将上述过程在本地完成，在服务器上使用 Jenkins 和 git，最终只需要一条命令`docker-compose -f setup.yml up -d --build`便可以部署服务并自动生效。

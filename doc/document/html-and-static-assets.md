@@ -90,7 +90,7 @@ import SomeImage from "~some-package/some-image.png";
 
 ### Base64 编译
 
-在 ==cli-plugin-service== 中，通过 ==file-loader== 用版本哈希值和正确的公共基础路径来决定最终的文件路径，再用 ==url-loader== 将小于 4kb 的资源内联，以减少 HTTP 请求的数量。可以在 *luban.config.js* 中配置 `assetsLimit` 来修改默认的内联文件大小限制：
+在 ==cli-plugin-service== 中，通过 ==file-loader== 用版本哈希值和正确的公共基础路径来决定最终的文件路径，再用 ==url-loader== 将小于 4kb 的资源内联，以减少 HTTP 请求的数量。可以在 *luban.config.ts* 中配置 `assetsLimit` 来修改默认的内联文件大小限制：
 
 ```ts
 // luban.config.ts

@@ -1,6 +1,6 @@
 # CSS 相关
 
-Luban 默认支持 *.css* 文件，同时默认支持 [PostCSS](https://postcss.org/)。仅支持一种 CSS 预处理器，即 [Less](http://lesscss.org/)，同时对 *.less* 文件开启 [CSSModule](https://github.com/css-modules/css-modules) 支持(*.css* 文件默认不支持此特性)。具体配置见[luban.config.js](../config/#luban-config-ts)。
+Luban 默认支持 *.css* 文件，同时默认支持 [PostCSS](https://postcss.org/)。仅支持一种 CSS 预处理器，即 [Less](http://lesscss.org/)，同时对 *.less* 文件开启 [CSSModule](https://github.com/css-modules/css-modules) 支持(*.css* 文件默认不支持此特性)。
 
 ::: tip 🙋
 基于 React 的样式方案社区存在着很多的技术方案，上面提到的 CSS Modules 也是 css-in-js 的一种。更多查阅 [StateOfCSS](https://2019.stateofcss.com/technologies/tools-overview/)
