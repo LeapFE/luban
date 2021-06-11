@@ -1,8 +1,9 @@
 const version = require("../../lerna.json").version;
 
 module.exports = {
+  host: "127.0.0.1",
   title: "Luban",
-  description: "🛠 插件化的 React 应用开发框架",
+  // description: "🛠 插件化的 React 应用开发框架",
   markdown: {
     lineNumbers: true,
   },
@@ -28,6 +29,10 @@ module.exports = {
       {
         text: version,
         link: "https://www.npmjs.com/package/@luban-cli/cli",
+      },
+      {
+        text: "1.x 文档",
+        link: "https://1x.luban.fun",
       },
     ],
     sidebar: {

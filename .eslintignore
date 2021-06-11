@@ -4,3 +4,4 @@ packages/**/**/*.js
 packages/**/**/bin/*
 **/node_modules/**
 packages/**/template/**
+doc/**/*.js

@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  luban-doc-v2:
+    build: .
+    container_name: luban-doc-v2
+    expose:
+      - "80"
+    networks:
+      - proxy
+    environment:
+      - "PORT=80"
+      - "NODE_ENV=production"
+    command: npm run serve
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ssr.entrypoints=websecure"
+      - "traefik.http.routers.ssr.rule=Host(`luban.fun`) || Host(`www.luban.com`)"
+
+networks:
+  proxy:
+    external: true

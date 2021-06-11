@@ -27,11 +27,7 @@
     "commit": "lint-staged && git-cz",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "clear": "rimraf packages/**/dist/",
-    "doc:dev": "vuepress dev doc --open --temp .temp",
-    "doc:build": "vuepress build doc --temp .temp",
-    "doc:pub": "vercel --prod",
-    "doc:pub:dev": "vercel"
+    "clear": "rimraf packages/**/dist/"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
@@ -44,11 +40,6 @@
     "@types/webpack": "4.41.27",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
-    "@vuepress/plugin-active-header-links": "1.8.2",
-    "@vuepress/plugin-back-to-top": "1.8.2",
-    "@vuepress/plugin-last-updated": "1.8.2",
-    "@vuepress/plugin-medium-zoom": "1.8.2",
-    "@vuepress/plugin-nprogress": "1.8.2",
     "commitizen": "^4.0.3",
     "core-js": "2.x",
     "cz-conventional-changelog": "^3.1.0",
@@ -58,14 +49,10 @@
     "jest": "^25.1.0",
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.7",
-    "markdown-it-mark": "^3.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^25.1.0",
-    "typescript": "^3.9.3",
-    "vercel": "^20.1.0",
-    "vuepress": "1.8.2",
-    "vuepress-theme-antdocs": "1.2.2"
+    "typescript": "^3.9.3"
   },
   "repository": "https://github.com/LeapFE/luban.git",
   "author": "front-end-captain <18810940932@163.com>",

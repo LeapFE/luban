@@ -34,6 +34,8 @@ build/Release
 # Dependency directories
 /node_modules
 /mock/node_modules
+/doc/node_modules
+/doc/server/node_modules
 packages/**/node_modules
 packages/**/dist
 

@@ -1,8 +1,8 @@
 ---
 home: true
-actionText: 开始 →
-actionLink: /document/installation
-footer: Open-source MIT Licensed | Copyright © 2020-present | front-end-captain
+heroText: Luban
+tagline: 🛠 插件化的 React 应用开发框架
+footer: MIT Licensed | Copyright © 2020-present front-end-captain
 editLink: false
 ---
 
