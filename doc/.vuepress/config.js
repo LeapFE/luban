@@ -1,5 +1,3 @@
-const version = require("../../lerna.json").version;
-
 module.exports = {
   host: "127.0.0.1",
   title: "Luban",
@@ -27,7 +25,7 @@ module.exports = {
         link: "https://github.com/leapFE/luban",
       },
       {
-        text: version,
+        text: process.env.__LUBAN_VERSION__,
         link: "https://www.npmjs.com/package/@luban-cli/cli",
       },
       {
