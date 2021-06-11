@@ -14,8 +14,8 @@ services:
     command: npm run serve
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ssr.entrypoints=websecure"
-      - "traefik.http.routers.ssr.rule=Host(`1x.luban.fun`)"
+      - "traefik.http.routers.doc-v1.entrypoints=websecure"
+      - "traefik.http.routers.doc-v1.rule=Host(`1x.luban.fun`)"
 
 networks:
   proxy:
