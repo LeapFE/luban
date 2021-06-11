@@ -186,7 +186,7 @@ class Creator extends BaseCreator {
       ${chalk.yellow("npm start")}
     `);
     log();
-    log(`🔗  More documentation to visit ${chalk.underline("https://luban.vercel.app")}`);
+    log(`🔗  More documentation to visit ${chalk.underline("https://luban.fun")}`);
     log();
     log(chalk.redBright("👩‍💻  Happy coding"));
 

@@ -22,7 +22,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ pageName }) => (
 
       <a
         className="link"
-        href="https://luban.vercel.app/"
+        href="https://luban.fun/"
         target="_blank"
         rel="noopener noreferrer"
       >
