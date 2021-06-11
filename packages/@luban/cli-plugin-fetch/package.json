@@ -1,6 +1,6 @@
 {
   "name": "@luban-cli/cli-plugin-fetch",
-  "version": "1.4.3-next.5",
+  "version": "1.4.3",
   "description": "cli-plugin-fetch",
   "keywords": [
     "fetch",
@@ -33,7 +33,7 @@
     "url": "https://github.com/leapFE/luban/issues"
   },
   "devDependencies": {
-    "@luban-cli/cli-shared-types": "^1.4.3-next.5"
+    "@luban-cli/cli-shared-types": "^1.4.3"
   },
   "engines": {
     "node": ">=10"

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://github.com/leapFE/luban/compare/v1.4.3-next.5...v1.4.3) (2021-06-11)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
+
+
+
+
+
 ## [1.4.3-next.5](https://github.com/leapFE/luban/compare/v1.4.3-next.4...v1.4.3-next.5) (2021-06-10)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
