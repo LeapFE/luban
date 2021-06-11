@@ -203,7 +203,7 @@ class Creator {
       ${chalk.yellow("npm start")}
     `);
     log();
-    log(`🔗  More documentation to visit ${chalk.underline("https://luban.now.sh")}`);
+    log(`🔗  More documentation to visit ${chalk.underline("https://1x.luban.fun")}`);
     log();
     log(chalk.redBright("👩‍💻  Happy coding"));
 

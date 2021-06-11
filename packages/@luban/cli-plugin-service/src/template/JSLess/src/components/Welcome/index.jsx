@@ -31,7 +31,7 @@ const Welcome = ({ pageName }) => (
       </p>
       <a
         className="App-link"
-        href="https://luban.now.sh"
+        href="https://1x.luban.fun"
         target="_blank"
         rel="noopener noreferrer"
       >

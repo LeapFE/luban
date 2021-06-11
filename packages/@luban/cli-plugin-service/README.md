@@ -1,3 +1,3 @@
 # @luban-cli/luban-cli-service
 
-移步 https://luban.now.sh/document/cli-service.html
+移步 https://1x.luban.fun/document/cli-service.html

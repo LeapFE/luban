@@ -15,4 +15,4 @@ npm i @luban-cli/cli -g
 luban init <project_name>
 ```
 
-查看详细文档请移步 https://luban.now.sh
+查看详细文档请移步 https://1x.luban.fun

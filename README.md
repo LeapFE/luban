@@ -3,7 +3,7 @@
 
 ## Documentation
 
-https://luban.now.sh/
+https://1x.luban.fun/
 
 ## License
 
