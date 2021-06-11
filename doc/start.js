@@ -6,7 +6,7 @@ const rawArgs = process.argv.slice(2);
 
 const command = `vuepress ${rawArgs.join(" ")}`;
 try {
-  const lernaConfigPath = path.resolve(__dirname, "../lerna.json");
+  const lernaConfigPath = path.resolve(__dirname, process.env.LERNA_PATH || "../lerna.json");
   const lernaConfig = readJSONSync(lernaConfigPath, { encoding: "utf-8" });
   const version = lernaConfig.version;
 
