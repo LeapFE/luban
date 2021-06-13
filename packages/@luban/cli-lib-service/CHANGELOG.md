@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.56](https://github.com/leapFE/luban/compare/v2.0.0-next.55...v2.0.0-next.56) (2021-06-13)
+
+
+### Bug Fixes
+
+* **cli-lib-service,cli-plugin-service:** remove unit test snap file ([388ca79](https://github.com/leapFE/luban/commit/388ca798ee935ffd849c395c90f26ac070c3550d))
+
+
+
+
+
 # [2.0.0-next.55](https://github.com/leapFE/luban/compare/v2.0.0-next.54...v2.0.0-next.55) (2021-06-13)
 
 **Note:** Version bump only for package @luban-cli/cli-lib-service
