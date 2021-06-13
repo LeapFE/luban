@@ -1,13 +1,10 @@
 # 安装
 
 ::: warning ⚠️ Node 版本要求
-Luban 需要 [Node.js](https://nodejs.org/) 10.0 或更高版本。你可以使用
+Luban 需要 [Node.js](https://nodejs.org/) 10.0 或更高版本。可以使用
 [nvm](https://github.com/creationix/nvm)在操作系统中管理多个 Node 版本。
 :::
 
-::: warning ⚠️ 操作系统要求 
-Luban 目前只在 MacOS 和 Linux 等类 Unix 操作系统上可以良好运行，在 Windows 操作系统运行 Luban 可能会发生未知异常。
-:::
 
 ::: warning ⚠️ 包管理工具要求
 Luban 目前只支持 NPM 官方的包管理工具 [npm](https://docs.npmjs.com)，并不支持 [yarn](https://yarnpkg.com/)、[bower](https://bower.io/) 等包管理工具。
