@@ -1,4 +1,4 @@
-import { LayoutProps } from "luban/definitions";
+import { LayoutProps } from "luban";
 import React, { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
 
