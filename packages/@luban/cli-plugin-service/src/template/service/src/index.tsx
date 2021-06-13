@@ -1,5 +1,5 @@
 import React from "react";
-import { run } from "@/.luban";
+import { run } from "luban";
 
 import { Layout } from "./layout";
 

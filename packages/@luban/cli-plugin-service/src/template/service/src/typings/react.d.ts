@@ -1,5 +1,5 @@
 import React from "react";
-import { Context as LubanPageContext } from "@/.luban";
+import { Context as LubanPageContext } from "luban";
 
 declare module "react" {
   export = React;

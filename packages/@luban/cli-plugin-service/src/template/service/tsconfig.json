@@ -30,7 +30,9 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "luban": ["src/.luban/index.ts"],
+      "luban/*": ["src/.luban/*"],
     },
 
     /* Linter Checks */

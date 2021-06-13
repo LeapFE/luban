@@ -1,5 +1,5 @@
 import React from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 
 import { Welcome } from "@/components/Welcome";
 

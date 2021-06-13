@@ -150,11 +150,6 @@ export interface ExtraPageProps {
 }
 
 
-export interface LayoutProps extends Omit<CustomRendererParams, "rendered"> {
-  originRouteList: Array<OriginNestedRouteItem>;
-  children: ReactElement;
-}
-
 export interface CustomRenderer {
   (params: CustomRendererParams): ReactElement;
 }

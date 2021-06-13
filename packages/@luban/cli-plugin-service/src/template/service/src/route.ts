@@ -2,7 +2,7 @@
  * DO NOT MOVE THIS FILE ELSEWHERE
  */
 
-import { route } from "@/.luban";
+import { route } from "luban";
 
 export default route({
   routes: [

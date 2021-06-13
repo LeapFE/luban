@@ -12,6 +12,7 @@ class Resolve implements ConfigPluginInstance {
         .add(api.resolve("node_modules"))
         .end()
         .alias.set("@", api.resolve("src"))
+        .set("luban", api.resolve("src/.luban"))
         .end();
 
       const aliasKeys = Object.keys(projectConfig.alias);

@@ -1,7 +1,8 @@
+import { ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { StaticContext } from "react-router";
 import { Config, Context as _Context } from "./store";
-import { OriginRouteConfig, ExtraPageProps } from "./definitions";
+import { OriginRouteConfig, ExtraPageProps, CustomRendererParams, OriginNestedRouteItem } from "./definitions";
 
 export interface EnhancedRouteComponentProps<
   M extends Record<PropertyKey, unknown> = {},
@@ -15,6 +16,11 @@ export interface EnhancedRouteComponentProps<
 
 export interface PreparerProps {
   initialing: boolean | null;
+}
+
+export interface LayoutProps extends Omit<CustomRendererParams, "rendered"> {
+  originRouteList: Array<OriginNestedRouteItem>;
+  children: ReactElement;
 }
 
 export interface Context extends _Context {}
