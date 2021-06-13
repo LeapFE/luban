@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.55](https://github.com/leapFE/luban/compare/v2.0.0-next.54...v2.0.0-next.55) (2021-06-13)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** add 'luban' alias to map src/.luban ([7715c55](https://github.com/leapFE/luban/commit/7715c55b5589e75cf8fc40a95587f3d165a47d88))
+
+
+
+
+
 # [2.0.0-next.54](https://github.com/leapFE/luban/compare/v2.0.0-next.53...v2.0.0-next.54) (2021-06-01)
 
 
