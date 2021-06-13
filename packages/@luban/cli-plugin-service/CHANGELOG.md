@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.54](https://github.com/leapFE/luban/compare/v2.0.0-next.53...v2.0.0-next.54) (2021-06-01)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** not require 'generateInjectedTag' and 'generateDocument' ([d27e76a](https://github.com/leapFE/luban/commit/d27e76a358e51032a8f5f127013b0103dcff7f09))
+
+
+
+
+
+# [2.0.0-next.53](https://github.com/leapFE/luban/compare/v2.0.0-next.52...v2.0.0-next.53) (2021-06-01)
+
+
+### Bug Fixes
+
+* correct require 'generateDocument' and 'generateInjectedHtmlTag' ([00ff655](https://github.com/leapFE/luban/commit/00ff655796416f7d3f45c386feb9e6b148bb053a))
+
+
+
+
+
+# [2.0.0-next.52](https://github.com/leapFE/luban/compare/v2.0.0-next.51...v2.0.0-next.52) (2021-06-01)
+
+
+### Features
+
+* **cli-plugin-service:** enable 'chainWebpack' in luban.config.ts ([9351f6e](https://github.com/leapFE/luban/commit/9351f6ef632b9f8cb8c44f4f23cce8a4b3bf00fe))
+* **cli-plugin-service:** enable modify css loaders options in luban.config.ts ([d8a9228](https://github.com/leapFE/luban/commit/d8a9228bfa2ca5d6ad079d8e415e88ff71c0fc48))
+
+
+
+
+
+# [2.0.0-next.51](https://github.com/leapFE/luban/compare/v2.0.0-next.50...v2.0.0-next.51) (2021-05-26)
+
+
+### Bug Fixes
+
+* **cli-plugin-unit-test:** except write 'src/component' dir when create 'lib' ([cfead9f](https://github.com/leapFE/luban/commit/cfead9f814a13c68138966c5c19fd9c9de5cbef5))
+
+
+
+
+
 # [2.0.0-next.50](https://github.com/leapFE/luban/compare/v2.0.0-next.49...v2.0.0-next.50) (2021-05-25)
 
 

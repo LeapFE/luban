@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.54](https://github.com/leapFE/luban/compare/v2.0.0-next.53...v2.0.0-next.54) (2021-06-01)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
+
+
+
+
+
+# [2.0.0-next.53](https://github.com/leapFE/luban/compare/v2.0.0-next.52...v2.0.0-next.53) (2021-06-01)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
+
+
+
+
+
+# [2.0.0-next.52](https://github.com/leapFE/luban/compare/v2.0.0-next.51...v2.0.0-next.52) (2021-06-01)
+
+**Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
+
+
+
+
+
+# [2.0.0-next.51](https://github.com/leapFE/luban/compare/v2.0.0-next.50...v2.0.0-next.51) (2021-05-26)
+
+
+### Bug Fixes
+
+* **cli-plugin-unit-test:** except write 'src/component' dir when create 'lib' ([cfead9f](https://github.com/leapFE/luban/commit/cfead9f814a13c68138966c5c19fd9c9de5cbef5))
+
+
+
+
+
 # [2.0.0-next.50](https://github.com/leapFE/luban/compare/v2.0.0-next.49...v2.0.0-next.50) (2021-05-25)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-unit-test
