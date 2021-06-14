@@ -43,11 +43,7 @@ http {
         server_name  ssr.example.com;
 
         location / {
-            proxy_set_header X_Real_IP $remote_addr;
-            proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
-            proxy_set_header Host $http_host;
             proxy_pass http://127.0.0.1:3000;
-            proxy_redirect off;
         }
     }
     # ...
