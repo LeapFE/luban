@@ -203,7 +203,9 @@ class Plugin implements ConfigPluginInstance {
 
       if (!isProduction) {
         webpackConfig.plugin("hmr").use(HotModuleReplacementPlugin);
-        webpackConfig.plugin("refresh").use(ReactRefreshWebpackPlugin);
+        webpackConfig
+          .plugin("refresh")
+          .use(ReactRefreshWebpackPlugin, [{ overlay: projectConfig.refreshOverlay }]);
       }
     });
   }

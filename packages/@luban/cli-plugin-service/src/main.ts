@@ -176,6 +176,12 @@ export type ProjectConfig = {
   devServer: webpackDevServer.Configuration;
 
   /**
+   * @description 是否禁用页面上的 error overlay
+   * @default false 默认启用
+   */
+  refreshOverlay: boolean;
+
+  /**
    * @description 图片等文件的最大 size
    * @default 4096
    */
