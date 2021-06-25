@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.57](https://github.com/LeapFE/luban/compare/v2.0.0-next.56...v2.0.0-next.57) (2021-06-25)
+
+
+### Bug Fixes
+
+* modify eslint config for scripts ([0e8b0d4](https://github.com/LeapFE/luban/commit/0e8b0d48f5398b10924b0b4e100af550a7a21a92))
+
+
+### Features
+
+* **cli-plugin-service:** enable/disable error overlay ([fe83ae1](https://github.com/LeapFE/luban/commit/fe83ae1eea0232cf8a6469aff11a56d31337e02a))
+
+
+
+
+
 # [2.0.0-next.56](https://github.com/LeapFE/luban/compare/v2.0.0-next.55...v2.0.0-next.56) (2021-06-13)
 
 
