@@ -31,6 +31,7 @@ const schema = createSchema((joi) =>
     ssr: joi.boolean(),
     configureWebpack: joi.function(),
     chainWebpack: joi.function(),
+    refreshOverlay: joi.boolean(),
   }),
 );
 
@@ -53,6 +54,7 @@ const defaultsProjectConfig: Partial<ProjectConfig> = {
   productionSourceMap: false,
   assetsLimit: 4096,
   alias: {},
+  refreshOverlay: true,
 };
 
 export function mergeProjectOptions(

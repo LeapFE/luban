@@ -97,7 +97,7 @@ npm run serve
   --allow-any-branch       允许发布任何分支, 默认 'false'
   --branch <branch>        指定允许发布的分支
   --run-scripts <scripts>  指定发布前要运行的脚本命令, 例如 --run-scripts 'test build'
-  --clean                  删除 node_modules 并重新安装, default 'false'
+  --clean                  删除 node_modules 并重新安装, 默认 false'
 ```
 
 该命令将会把构建后的产物发布到指定的仓库（默认 https://registry.npmjs.org/）。

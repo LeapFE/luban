@@ -48,7 +48,7 @@ export default createProjectConfig({
 
 ```tsx
 import React from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 import { UserItem } from "@/service/interface/user";
 import { getUserList } from "@/service/api/user";
 
@@ -125,7 +125,7 @@ Demo.getInitialProps = (context) => {
 在 *src/index.tsx* 文件中开启全局状态管理后，就可以在 `getInitialProps` 函数中消费和更新全局状态了，依然以获取数据 `users` 举例：
 ```tsx
 import React from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@/models";
@@ -160,7 +160,7 @@ export default Demo;
 
 ``` tsx
 import React from "react";
-import { Page, PreparerProps } from "@/.luban";
+import { Page, PreparerProps } from "luban";
 
 interface PreparerInitProps {
   authSuccess: boolean;
@@ -205,7 +205,7 @@ npm install @types/react-helmet@6.1.1 --save-dev
 在某一个路由组件中：
 ```ts {3,8,9,10,11,12,13,14,15,16}
 import React from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 import { Helmet } from "react-helmet";
 
 const Demo: Page<EnhancedRouteComponentProps> = ({ name }) => {
@@ -315,7 +315,7 @@ export function render(options: RenderOptions): Promise<{
 
 ```tsx {9,10,11}
 import React from "react";
-import { EnhancedRouteComponentProps } from "@/.luban";
+import { EnhancedRouteComponentProps } from "luban";
 
 class Example extends React.Component<EnhancedRouteComponentProps, unknown> {
   constructor(props: EnhancedRouteComponentProps) {
@@ -338,7 +338,7 @@ export default Example;
 
 ```tsx {5,6,7}
 import React, { useEffect } from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 
 const Example: Page<EnhancedRouteComponentProps> = ({ name }) => {
   useEffect(() => {
@@ -416,7 +416,7 @@ if (__IS_BROWSER__) {
 
 ```tsx {3,8,10,11,12,13}
 import React from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 import { useHistory } from "react-router-dom";
 
 import { Welcome } from "@/components/Welcome";

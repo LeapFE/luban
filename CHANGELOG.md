@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.57](https://github.com/LeapFE/luban/compare/v2.0.0-next.56...v2.0.0-next.57) (2021-06-25)
+
+
+### Bug Fixes
+
+* modify eslint config for scripts ([0e8b0d4](https://github.com/LeapFE/luban/commit/0e8b0d48f5398b10924b0b4e100af550a7a21a92))
+
+
+### Features
+
+* **cli-plugin-service:** enable/disable error overlay ([fe83ae1](https://github.com/LeapFE/luban/commit/fe83ae1eea0232cf8a6469aff11a56d31337e02a))
+
+
+
+
+
+# [2.0.0-next.56](https://github.com/LeapFE/luban/compare/v2.0.0-next.55...v2.0.0-next.56) (2021-06-13)
+
+
+### Bug Fixes
+
+* **cli-lib-service,cli-plugin-service:** remove unit test snap file ([388ca79](https://github.com/LeapFE/luban/commit/388ca798ee935ffd849c395c90f26ac070c3550d))
+* **cli-plugin-service:** path error in template(layout.tsx) ([95570ee](https://github.com/LeapFE/luban/commit/95570ee2edf4de8974eafb661f9cc5cf23ce3c4a))
+
+
+
+
+
+# [2.0.0-next.55](https://github.com/LeapFE/luban/compare/v2.0.0-next.54...v2.0.0-next.55) (2021-06-13)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** add 'luban' alias to map src/.luban ([7715c55](https://github.com/LeapFE/luban/commit/7715c55b5589e75cf8fc40a95587f3d165a47d88))
+* read luban version from process.env ([8ef194c](https://github.com/LeapFE/luban/commit/8ef194c3e64574cc45463fa9cce3da5f9c7c73c3))
+
+
+
+
+
 # [2.0.0-next.54](https://github.com/LeapFE/luban/compare/v2.0.0-next.53...v2.0.0-next.54) (2021-06-01)
 
 

@@ -14,12 +14,12 @@ Luban 内置了一个基于 [react-router](https://reacttraining.com/react-route
  * DO NOT MOVE THIS FILE ELSEWHERE
  */
 
-import { route } from "@/.luban";
+import { route } from "luban";
 
 export default route({
   mode: "hash",
   routes: [
-    // you routes ...
+    // routes ...
   ],
 });
 ```
@@ -74,7 +74,7 @@ meta?: RouteMetaData;
 然后在 *pages* 目录下添加 *example.tsx*:
 ```tsx
 import React from "react";
-import { EnhancedRouteComponentProps, Page } from "@/.luban";
+import { EnhancedRouteComponentProps, Page } from "luban";
 
 const Example: Page<EnhancedRouteComponentProps> = ({ name }) => {
   return <h1>{name}</h1>;
@@ -86,7 +86,7 @@ export default Example;
 当然也可以使用 class component:
 ```tsx
 import React from "react";
-import { EnhancedRouteComponentProps } from "@/.luban";
+import { EnhancedRouteComponentProps } from "luban";
 
 class Example extends React.Component<EnhancedRouteComponentProps, unknown> {
   constructor(props: EnhancedRouteComponentProps) {
@@ -113,7 +113,7 @@ export default Example;
 
 ```typescript{9}
 import React from "react";
-import { run } from "@/.luban";
+import { run } from "luban";
 
 import { Layout } from "./layout";
 
@@ -133,7 +133,7 @@ export default run({
 根据这些参数，可以实现对应用的自定义布局。
 
 ```tsx
-import { LayoutProps } from "@/.luban/definitions";
+import { LayoutProps } from "luban/definitions";
 import React, { FunctionComponent } from "react";
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
@@ -155,7 +155,7 @@ export { Layout };
 可以在创建应用路由之前做一些事情或者根据某些条件决定渲染什么：
 ```ts
 import React from "react";
-import { Page, PreparerProps } from "@/.luban";
+import { Page, PreparerProps } from "luban";
 
 const Preparer: Page<PreparerProps> = (props) => {
   // do something, data fetch or get localStorage data
