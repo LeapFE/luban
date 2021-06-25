@@ -173,6 +173,13 @@ sidebar: auto
 当使用 TypeScript 作为开发语言时，在此处配置别名后，还需要在 *tsconfig.json* 文件中进行同步。更多细节可查阅 [path-mapping](http://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)。
 :::
 
+### refreshOverlay
+
+- Type: `boolean`
+- Default: `true`
+
+Luban 2.0 使用了 [React Fast Refresh](https://github.com/facebook/react/issues/16604#issuecomment-528663101) 和 [HMR](https://v4.webpack.js.org/concepts/hot-module-replacement/) 在本地开发时获得快速的预览更新且保持组件状态不被重置。这一方案会默认带有一个友好错误提示的 error overlay，如果不需要它可以通过此配置开启或关闭。
+
 ### mock
 
 - Type: `boolean`
@@ -426,10 +433,10 @@ export type ProjectConfig = {
   css: Partial<CssConfig>;
 
   /**
-   * @description webpack-dev-server 的配置项
-   * @deprecated since 2.0
+   * @description 是否禁用页面上的 error overlay
+   * @default true 默认启用
    */
-  devServer: webpackDevServer.Configuration;
+  refreshOverlay: boolean;
 
   /**
    * @description 图片等文件的最大 size

@@ -177,7 +177,7 @@ export type ProjectConfig = {
 
   /**
    * @description 是否禁用页面上的 error overlay
-   * @default false 默认启用
+   * @default true 默认启用
    */
   refreshOverlay: boolean;
 
