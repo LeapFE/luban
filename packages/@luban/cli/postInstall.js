@@ -4,7 +4,7 @@ function showSuccessMessage() {
   console.log(chalk.green(`Success!\n`));
   console.log(
     chalk.cyan(`Thank you to use Luban! Please visit `) +
-      chalk.underline(`https://luban.now.sh`) +
+      chalk.underline(`https://luban.fun`) +
       chalk.cyan(` for more information.\n`),
   );
 }

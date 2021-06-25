@@ -168,7 +168,7 @@ class LibCreator extends BaseCreator {
     log(chalk.green("🌈  Create project successfully!"));
 
     log();
-    log(`🔗  More documentation to visit ${chalk.underline("https://luban.now.sh")}`);
+    log(`🔗  More documentation to visit ${chalk.underline("https://luban.fun")}`);
     log();
     log(chalk.redBright("👩‍💻  Happy coding"));
 
