@@ -13,7 +13,7 @@
   "parserOptions": {
     "ecmaVersion": 2018,
     "babelOptions": {
-      "configFile": "./babel.config.json"
+      "configFile": "../babel.config.json"
     }
   },
   "rules": {
