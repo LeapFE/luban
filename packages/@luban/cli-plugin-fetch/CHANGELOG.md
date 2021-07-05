@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/leapFE/luban/compare/v2.0.0...v2.0.1) (2021-07-05)
+
+
+### Bug Fixes
+
+* **cli-plugin-fetch:** update useRequest version and server function example ([c52b683](https://github.com/leapFE/luban/commit/c52b683e1b7884e86949ad5834ef59a6a70ea470))
+
+
+
+
+
 # [2.0.0](https://github.com/leapFE/luban/compare/v2.0.0-next.57...v2.0.0) (2021-06-25)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-fetch
