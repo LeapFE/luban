@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/leapFE/luban/compare/v2.0.1...v2.0.2) (2021-07-13)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** fix type error in template ([219bf05](https://github.com/leapFE/luban/commit/219bf054d495a02b26579ec770368ac036550f5f))
+
+
+
+
+
 ## [2.0.1](https://github.com/leapFE/luban/compare/v2.0.0...v2.0.1) (2021-07-05)
 
 
