@@ -23,8 +23,8 @@ const UserList: FunctionComponent = () => {
 
   const { run: putAddUser } = useRequest(addUser, {
     manual: true,
-    onSuccess: (_, __, res) => {
-      if (res.data.code === 1) {
+    onSuccess: (data) => {
+      if (data.code === 1) {
         fetchUserList({});
         setValue("");
       }
@@ -33,8 +33,8 @@ const UserList: FunctionComponent = () => {
 
   const { run: putDelUser } = useRequest(delUser, {
     manual: true,
-    onSuccess: (_, __, res) => {
-      if (res.data.code === 1) {
+    onSuccess: (data) => {
+      if (data.code === 1) {
         fetchUserList({});
         setValue("");
       }
