@@ -52,7 +52,9 @@ export function injectRouteComponentProps(
       window.__SHARED_DATA__ = {};
       this.setState({ loading: null });
 
-      if ((this.props.history && this.props.history.action !== "POP") || !window.__USE_SSR__) {
+      const isGetInitialProps = (this.props.history && this.props.history.action !== "POP") || !window.__USE_SSR__;
+      const hasStaticMethod = typeof WrappedComponent.getInitialProps === "function"
+      if (isGetInitialProps && hasStaticMethod) {
         await this.getInitialProps();
       }
     }
