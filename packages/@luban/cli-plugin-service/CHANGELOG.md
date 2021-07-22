@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/leapFE/luban/compare/v2.0.2...v2.0.3) (2021-07-22)
+
+
+### Bug Fixes
+
+* **cli-plugin-service:** page real has static method 'getInitialProps' then invoke it ([3753376](https://github.com/leapFE/luban/commit/3753376c4d37a169d1ee44258f3b071d4621dcf5))
+
+
+
+
+
 ## [2.0.2](https://github.com/leapFE/luban/compare/v2.0.1...v2.0.2) (2021-07-13)
 
 **Note:** Version bump only for package @luban-cli/cli-plugin-service
