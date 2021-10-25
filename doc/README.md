@@ -2,7 +2,7 @@
 home: true
 heroText: Luban
 tagline: 🛠 插件化的 React 应用开发框架
-footer: MIT Licensed | Copyright © 2020-present front-end-captain
+footer: MIT Licensed | Copyright © 2020-present <a target="_blank" href="https://github.com/front-end-captain">front-end-captain</a> <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2021014623号-2</a>
 editLink: false
 ---
 
