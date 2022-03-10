@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/LeapFE/luban/compare/v2.0.3...v2.0.4) (2022-03-10)
+
+
+### Bug Fixes
+
+* add for the record link in doc(home page) ([7c977a0](https://github.com/LeapFE/luban/commit/7c977a0746792e9625cf2eccc89d23af567790b6))
+* specified config file path for postcss-loader ([20f2d07](https://github.com/LeapFE/luban/commit/20f2d07e3b3064cf8169e274b3142f26adfb689f))
+
+
+
+
+
 ## [2.0.3](https://github.com/LeapFE/luban/compare/v2.0.2...v2.0.3) (2021-07-22)
 
 
