@@ -51,7 +51,7 @@
     "@types/webpack": "4.41.27",
     "@types/webpack-dev-server": "^3.11.3",
     "address": "^1.1.2",
-    "ansi-html": "^0.0.7",
+    "ansi-html": "^0.0.8",
     "body-parser": "^1.19.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "chalk": "^2.4.2",
