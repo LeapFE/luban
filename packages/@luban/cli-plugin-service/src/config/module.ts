@@ -125,7 +125,7 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("postcss")
         .loader("postcss-loader")
-        .options({ sourceMap })
+        .options({ sourceMap, config: { path: `${api.getContext()}/postcss.config.js` } })
         .end();
 
       webpackConfig.module
@@ -149,7 +149,7 @@ class Module implements ConfigPluginInstance {
         .end()
         .use("postcss-loader")
         .loader("postcss-loader")
-        .options({ sourceMap })
+        .options({ sourceMap, config: { path: `${api.getContext()}/postcss.config.js` } })
         .end()
         .use("less-loader")
         .loader("less-loader")
