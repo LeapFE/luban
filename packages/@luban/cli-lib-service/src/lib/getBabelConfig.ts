@@ -19,7 +19,9 @@ export function getBabelConfig(
       require.resolve("@babel/plugin-transform-runtime"),
       {
         useESModules: isCommonjsModuleStyle === false,
-        version: "^7.10.4",
+        // https://babeljs.io/docs/en/babel-plugin-transform-runtime#absoluteruntime
+        // worked by monorepo
+        absoluteRuntime: true,
       },
     ],
     require.resolve("@babel/plugin-transform-spread"),
