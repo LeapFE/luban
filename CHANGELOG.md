@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/LeapFE/luban/compare/v2.0.4...v2.0.5) (2022-05-11)
+
+
+### Bug Fixes
+
+* @babel/plugin-transform-runtime worked by monorepo ([9658660](https://github.com/LeapFE/luban/commit/96586603b37792b5b3f17f8390033d7a09983c33))
+
+
+
+
+
 ## [2.0.4](https://github.com/LeapFE/luban/compare/v2.0.3...v2.0.4) (2022-03-10)
 
 
